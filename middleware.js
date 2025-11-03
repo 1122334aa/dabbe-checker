@@ -1,10 +1,15 @@
 import express from 'express';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import fetch from 'node-fetch';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 
 // Static files
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -14,23 +19,6 @@ app.use((req, res, next) => {
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   next();
 });
-
-// API proxy endpoint'leri
-const createApiHandler = (endpoint) => async (req, res) => {
-  try {
-    const params = new URLSearchParams(req.query);
-    const response = await fetch(`https://api.kahin.org/kahinapi/${endpoint}?${params}`);
-    const data = await response.json();
-    
-    // Kahin ile ilgili bilgileri filtrele
-    const filteredData = filterKahinData(data);
-    
-    res.json(filteredData);
-  } catch (error) {
-    console.error('API hatası:', error);
-    res.status(500).json({ error: 'API hatası' });
-  }
-};
 
 // Kahin verilerini filtreleme fonksiyonu
 function filterKahinData(data) {
@@ -54,7 +42,7 @@ function filterKahinData(data) {
   return data;
 }
 
-// Tüm API endpoint'lerini oluştur
+// API endpoint'leri
 const apiEndpoints = {
   'tc': 'tc',
   'tcpro': 'tcpro',
@@ -84,17 +72,29 @@ const apiEndpoints = {
   'telegram': 'telegram.php'
 };
 
+// Tüm API endpoint'lerini oluştur
 for (const [route, endpoint] of Object.entries(apiEndpoints)) {
-  app.get(`/api/${route}`, createApiHandler(endpoint));
+  app.get(`/api/${route}`, async (req, res) => {
+    try {
+      console.log(`API isteği: ${endpoint}`, req.query);
+      const params = new URLSearchParams(req.query);
+      const response = await fetch(`https://api.kahin.org/kahinapi/${endpoint}?${params}`);
+      const data = await response.json();
+      const filteredData = filterKahinData(data);
+      res.json(filteredData);
+    } catch (error) {
+      console.error('API hatası:', error);
+      res.status(500).json({ error: 'API hatası' });
+    }
+  });
 }
 
-// Gelişmiş IP sorgu endpoint'i
+// Gelişmiş IP sorgu
 app.get('/api/gelismisip', async (req, res) => {
   try {
     const { ip } = req.query;
     const response = await fetch(`https://api.kahin.org/kahinapi/ip?domain=${ip}`);
     const data = await response.json();
-    
     const filteredData = filterKahinData(data);
     res.json(filteredData);
   } catch (error) {
@@ -103,7 +103,7 @@ app.get('/api/gelismisip', async (req, res) => {
   }
 });
 
-// Text indirme endpoint'i
+// Text indirme
 app.post('/api/download', (req, res) => {
   const { data, filename } = req.body;
   res.setHeader('Content-Type', 'text/plain');
@@ -111,11 +111,17 @@ app.post('/api/download', (req, res) => {
   res.send(data);
 });
 
-// Root route
+// Ana sayfa
 app.get('/', (req, res) => {
-  res.sendFile(process.cwd() + '/public/index.html');
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
+// 404 sayfası
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', '404.html'));
+});
+
+// Server başlat
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server ${PORT} portunda çalışıyor`);
