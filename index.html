@@ -408,6 +408,18 @@
             border: 1px solid var(--primary);
         }
 
+        .coming-soon {
+            text-align: center;
+            padding: 60px 20px;
+            opacity: 0.7;
+        }
+
+        .coming-soon i {
+            font-size: 4em;
+            margin-bottom: 20px;
+            color: var(--accent);
+        }
+
         @media (max-width: 1024px) {
             .container {
                 flex-direction: column;
@@ -482,11 +494,17 @@
                 <button class="tab-btn" onclick="openTab('ip-tab')">
                     <i class="fas fa-globe"></i>IP & Domain
                 </button>
+                <button class="tab-btn" onclick="openTab('discord-tab')">
+                    <i class="fab fa-discord"></i>Discord Sorgu
+                </button>
                 <button class="tab-btn" onclick="openTab('gelismisip-tab')">
                     <i class="fas fa-search-plus"></i>Gelişmiş IP
                 </button>
                 <button class="tab-btn" onclick="openTab('other-tab')">
                     <i class="fas fa-cogs"></i>Diğer Sorgular
+                </button>
+                <button class="tab-btn" onclick="openTab('database-tab')">
+                    <i class="fas fa-database"></i>Database
                 </button>
             </div>
         </div>
@@ -615,6 +633,18 @@
                 <button onclick="sorgula('telegram')">Telegram Sorgula</button>
             </div>
 
+            <!-- Discord Tab - YENİ EKLENDİ -->
+            <div id="discord-tab" class="tab-content">
+                <h2><i class="fab fa-discord"></i> Discord ID Sorgulama</h2>
+                <div class="form-group">
+                    <label>Discord ID:</label>
+                    <input type="text" id="discordId" placeholder="Discord ID girin (örn: 724180071354597406)">
+                </div>
+                <button onclick="sorgulaDiscord()" style="background: linear-gradient(45deg, #5865F2, #7289DA);">
+                    <i class="fab fa-discord"></i> Discord Sorgula
+                </button>
+            </div>
+
             <!-- Gelişmiş IP Tab -->
             <div id="gelismisip-tab" class="tab-content">
                 <h2><i class="fas fa-search-plus"></i> Gelişmiş IP Sorgulama</h2>
@@ -654,6 +684,16 @@
                     <input type="text" id="parsel" placeholder="Parsel" style="margin-top: 10px;">
                 </div>
                 <button onclick="sorgula('adaparsel')">Ada Parsel Sorgula</button>
+            </div>
+
+            <!-- Database Tab - YENİ EKLENDİ -->
+            <div id="database-tab" class="tab-content">
+                <h2><i class="fas fa-database"></i> Database</h2>
+                <div class="coming-soon">
+                    <i class="fas fa-tools"></i>
+                    <h3>Yakında Aktif Olacak</h3>
+                    <p>Database sorgulama özelliği yakında eklenecek...</p>
+                </div>
             </div>
 
             <div class="loading" id="loading">
@@ -790,6 +830,7 @@
             }
         }
 
+        // Sorgu yapma - TC HATASI FİXLENDİ
         async function sorgula(type) {
             if (!systemKey || !isKeyVerified) {
                 alert('❌ Önce key doğrulaması yapın!');
@@ -805,53 +846,68 @@
             result.classList.remove('active');
             
             let params = { key: systemKey };
+            let requiredField = '';
             
             switch(type) {
                 case 'tc': case 'tcpro': case 'hayathikayesi': case 'yas': case 'tapu': case 'isyeri': case 'adres': case 'hane': case 'apartman': case 'aile': case 'ailepro': case 'es': case 'sulale': case 'tcgsm':
-                    const tcValue = document.getElementById('tc' + (type === 'tcgsm' ? 'Gsm' : '')).value;
-                    if (!tcValue) { alert('TC girin!'); loading.classList.remove('active'); return; }
+                    const tcElement = document.getElementById('tc' + (type === 'tcgsm' ? 'Gsm' : (type === 'aile' || type === 'ailepro' || type === 'es' || type === 'sulale') ? 'Aile' : ''));
+                    const tcValue = tcElement ? tcElement.value : document.getElementById('tc').value;
+                    if (!tcValue) { 
+                        alert('TC kimlik numarası girin!'); 
+                        loading.classList.remove('active'); 
+                        return; 
+                    }
                     params.tc = tcValue;
                     break;
+                    
                 case 'gsmtc':
                     const gsmValue = document.getElementById('gsm').value;
-                    if (!gsmValue) { alert('GSM girin!'); loading.classList.remove('active'); return; }
+                    if (!gsmValue) { alert('GSM numarası girin!'); loading.classList.remove('active'); return; }
                     params.gsm = gsmValue;
                     break;
+                    
                 case 'adsoyad': case 'adsoyadpro':
                     params.ad = document.getElementById('ad').value || '';
                     params.soyad = document.getElementById('soyad').value || '';
                     params.il = document.getElementById('il').value || '';
                     params.ilce = document.getElementById('ilce').value || '';
                     break;
+                    
                 case 'adililce':
                     params.ad = document.getElementById('ad').value || '';
                     params.il = document.getElementById('il').value || '';
                     break;
+                    
                 case 'ip': case 'dns': case 'whois': case 'subdomain':
                     const domainValue = document.getElementById('domain').value;
-                    if (!domainValue) { alert('Domain girin!'); loading.classList.remove('active'); return; }
+                    if (!domainValue) { alert('IP/Domain girin!'); loading.classList.remove('active'); return; }
                     params.domain = domainValue;
                     break;
+                    
                 case 'leak':
                     const leakValue = document.getElementById('leakQuery').value;
                     if (!leakValue) { alert('E-posta girin!'); loading.classList.remove('active'); return; }
                     params.query = leakValue;
                     break;
+                    
                 case 'telegram':
                     const telegramValue = document.getElementById('telegramUser').value;
                     if (!telegramValue) { alert('Telegram kullanıcı adı girin!'); loading.classList.remove('active'); return; }
                     params.kullanici = telegramValue;
                     break;
+                    
                 case 'gelismisip':
                     const ipValue = document.getElementById('gelismisIp').value;
-                    if (!ipValue) { alert('IP girin!'); loading.classList.remove('active'); return; }
+                    if (!ipValue) { alert('IP adresi girin!'); loading.classList.remove('active'); return; }
                     params.ip = ipValue;
                     break;
+                    
                 case 'vergino':
                     const vergiValue = document.getElementById('vergiNo').value;
-                    if (!vergiValue) { alert('Vergi no girin!'); loading.classList.remove('active'); return; }
+                    if (!vergiValue) { alert('Vergi numarası girin!'); loading.classList.remove('active'); return; }
                     params.vergi = vergiValue;
                     break;
+                    
                 case 'adaparsel':
                     params.il = document.getElementById('ilAda').value || '';
                     params.ada = document.getElementById('ada').value || '';
@@ -862,6 +918,41 @@
             try {
                 const queryString = new URLSearchParams(params).toString();
                 const response = await fetch(`/api/${type}?${queryString}`);
+                const data = await response.json();
+                
+                resultData.textContent = JSON.stringify(data, null, 2);
+                currentResult = data;
+            } catch (error) {
+                resultData.textContent = 'Hata: ' + error.message;
+            } finally {
+                loading.classList.remove('active');
+                result.classList.add('active');
+            }
+        }
+
+        // DISCORD SORGUSU - YENİ EKLENDİ
+        async function sorgulaDiscord() {
+            if (!systemKey || !isKeyVerified) {
+                alert('❌ Önce key doğrulaması yapın!');
+                openTab('key-tab');
+                return;
+            }
+
+            const discordId = document.getElementById('discordId').value;
+            if (!discordId) {
+                alert('Discord ID girin!');
+                return;
+            }
+
+            const loading = document.getElementById('loading');
+            const result = document.getElementById('result');
+            const resultData = document.getElementById('resultData');
+            
+            loading.classList.add('active');
+            result.classList.remove('active');
+            
+            try {
+                const response = await fetch(`/api/discord?id=${discordId}&key=${systemKey}`);
                 const data = await response.json();
                 
                 resultData.textContent = JSON.stringify(data, null, 2);
@@ -951,7 +1042,6 @@
             }
         }
 
-        // KEY SİLME FONKSİYONU - YENİ EKLENDİ
         async function deleteKey(keyToDelete) {
             if (!confirm('Bu keyi silmek istediğinizden emin misiniz?\nBu key ile artık giriş yapılamayacak!')) {
                 return;
@@ -967,7 +1057,6 @@
 
                 if (data.success) {
                     updateKeysList(data.keys);
-                    // Eğer silinen key şu an kullanılıyorsa, kullanıcıyı key tab'ına yönlendir
                     if (systemKey === keyToDelete) {
                         systemKey = '';
                         isKeyVerified = false;
