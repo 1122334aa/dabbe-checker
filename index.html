@@ -257,6 +257,12 @@
             box-shadow: 0 8px 25px rgba(0, 255, 136, 0.5);
         }
 
+        .delete-btn {
+            background: linear-gradient(45deg, #ff4444, #ff0088) !important;
+            padding: 8px 15px !important;
+            font-size: 12px !important;
+        }
+
         .result {
             margin-top: 35px;
             padding: 25px;
@@ -391,6 +397,17 @@
             font-weight: 600;
         }
 
+        .key-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            margin: 5px 0;
+            background: rgba(0, 255, 136, 0.1);
+            border-radius: 8px;
+            border: 1px solid var(--primary);
+        }
+
         @media (max-width: 1024px) {
             .container {
                 flex-direction: column;
@@ -514,7 +531,7 @@
                 </div>
             </div>
 
-            <!-- Diğer Tablar -->
+            <!-- Ad Soyad Tab -->
             <div id="adsoyad-tab" class="tab-content">
                 <h2><i class="fas fa-user"></i> Ad Soyad Sorgulama</h2>
                 <div class="form-group">
@@ -540,7 +557,104 @@
                 </div>
             </div>
 
-            <!-- Diğer tablar buraya eklenebilir -->
+            <!-- GSM Tab -->
+            <div id="gsm-tab" class="tab-content">
+                <h2><i class="fas fa-mobile-alt"></i> GSM Sorgulama</h2>
+                <div class="form-group">
+                    <label>TC Kimlik No:</label>
+                    <input type="text" id="tcGsm" maxlength="11" placeholder="TC kimlik numarasını girin">
+                </div>
+                <button onclick="sorgula('tcgsm')">TC'den GSM Sorgula</button>
+                
+                <div class="form-group" style="margin-top: 30px;">
+                    <label>GSM Numarası:</label>
+                    <input type="text" id="gsm" placeholder="GSM numarasını girin">
+                </div>
+                <button onclick="sorgula('gsmtc')">GSM'den TC Sorgula</button>
+            </div>
+
+            <!-- Aile Tab -->
+            <div id="aile-tab" class="tab-content">
+                <h2><i class="fas fa-users"></i> Aile ve Akraba Sorgulama</h2>
+                <div class="form-group">
+                    <label>TC Kimlik No:</label>
+                    <input type="text" id="tcAile" maxlength="11" placeholder="TC kimlik numarasını girin">
+                </div>
+                <div class="btn-group">
+                    <button onclick="sorgula('aile')">Aile Sorgula</button>
+                    <button onclick="sorgula('ailepro')">Aile Pro Sorgula</button>
+                    <button onclick="sorgula('es')">Eş Sorgula</button>
+                    <button onclick="sorgula('sulale')">Sülale Sorgula</button>
+                </div>
+            </div>
+
+            <!-- IP Tab -->
+            <div id="ip-tab" class="tab-content">
+                <h2><i class="fas fa-globe"></i> IP ve Domain Sorgulama</h2>
+                <div class="form-group">
+                    <label>IP/Domain:</label>
+                    <input type="text" id="domain" placeholder="IP adresi veya domain girin">
+                </div>
+                <div class="btn-group">
+                    <button onclick="sorgula('ip')">IP Sorgula</button>
+                    <button onclick="sorgula('dns')">DNS Sorgula</button>
+                    <button onclick="sorgula('whois')">WHOIS Sorgula</button>
+                    <button onclick="sorgula('subdomain')">Subdomain Sorgula</button>
+                </div>
+                
+                <div class="form-group" style="margin-top: 30px;">
+                    <label>E-posta:</label>
+                    <input type="text" id="leakQuery" placeholder="E-posta adresi girin">
+                </div>
+                <button onclick="sorgula('leak')">Leak Sorgula</button>
+                
+                <div class="form-group" style="margin-top: 30px;">
+                    <label>Telegram Kullanıcı Adı:</label>
+                    <input type="text" id="telegramUser" placeholder="Telegram kullanıcı adı">
+                </div>
+                <button onclick="sorgula('telegram')">Telegram Sorgula</button>
+            </div>
+
+            <!-- Gelişmiş IP Tab -->
+            <div id="gelismisip-tab" class="tab-content">
+                <h2><i class="fas fa-search-plus"></i> Gelişmiş IP Sorgulama</h2>
+                <div class="form-group">
+                    <label>IP Adresi:</label>
+                    <input type="text" id="gelismisIp" placeholder="IPv4 adresi girin">
+                </div>
+                <button onclick="sorgula('gelismisip')">Detaylı IP Sorgula</button>
+            </div>
+
+            <!-- Diğer Sorgular Tab -->
+            <div id="other-tab" class="tab-content">
+                <h2><i class="fas fa-cogs"></i> Diğer Sorgular</h2>
+                
+                <div class="form-group">
+                    <label>TC Kimlik No:</label>
+                    <input type="text" id="tcOther" maxlength="11" placeholder="TC kimlik numarasını girin">
+                </div>
+                <div class="btn-group">
+                    <button onclick="sorgula('tapu')">Tapu Sorgula</button>
+                    <button onclick="sorgula('isyeri')">İşyeri Sorgula</button>
+                    <button onclick="sorgula('adres')">Adres Sorgula</button>
+                    <button onclick="sorgula('hane')">Hane Sorgula</button>
+                    <button onclick="sorgula('apartman')">Apartman Sorgula</button>
+                </div>
+                
+                <div class="form-group" style="margin-top: 30px;">
+                    <label>Vergi No:</label>
+                    <input type="text" id="vergiNo" placeholder="Vergi numarası girin">
+                </div>
+                <button onclick="sorgula('vergino')">Vergi No Sorgula</button>
+                
+                <div class="form-group" style="margin-top: 30px;">
+                    <label>Ada Parsel:</label>
+                    <input type="text" id="ilAda" placeholder="İl">
+                    <input type="text" id="ada" placeholder="Ada" style="margin-top: 10px;">
+                    <input type="text" id="parsel" placeholder="Parsel" style="margin-top: 10px;">
+                </div>
+                <button onclick="sorgula('adaparsel')">Ada Parsel Sorgula</button>
+            </div>
 
             <div class="loading" id="loading">
                 <div class="spinner"></div>
@@ -590,7 +704,7 @@
                 
                 <div style="margin-top: 20px;">
                     <h4><i class="fas fa-list"></i> Mevcut Keyler:</h4>
-                    <div id="currentKeys" style="background: rgba(0,0,0,0.4); padding: 15px; border-radius: 10px; margin-top: 10px; max-height: 120px; overflow-y: auto; border: 1px solid var(--primary);"></div>
+                    <div id="currentKeys" style="background: rgba(0,0,0,0.4); padding: 15px; border-radius: 10px; margin-top: 10px; max-height: 200px; overflow-y: auto; border: 1px solid var(--primary);"></div>
                 </div>
             </div>
 
@@ -837,11 +951,45 @@
             }
         }
 
+        // KEY SİLME FONKSİYONU - YENİ EKLENDİ
+        async function deleteKey(keyToDelete) {
+            if (!confirm('Bu keyi silmek istediğinizden emin misiniz?\nBu key ile artık giriş yapılamayacak!')) {
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/admin/delete-key', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ key: keyToDelete, sessionId: currentAdminSession })
+                });
+                const data = await response.json();
+
+                if (data.success) {
+                    updateKeysList(data.keys);
+                    // Eğer silinen key şu an kullanılıyorsa, kullanıcıyı key tab'ına yönlendir
+                    if (systemKey === keyToDelete) {
+                        systemKey = '';
+                        isKeyVerified = false;
+                        alert('❌ Kullandığınız key silindi! Lütfen yeni key girin.');
+                        openTab('key-tab');
+                    }
+                } else {
+                    alert('❌ Key silinemedi: ' + data.message);
+                }
+            } catch (error) {
+                alert('❌ Key silme hatası!');
+            }
+        }
+
         function updateKeysList(keys) {
             const keysDiv = document.getElementById('currentKeys');
             keysDiv.innerHTML = keys.map(key => `
-                <div style="padding: 5px; margin: 2px 0; background: rgba(0,255,136,0.1); border-radius: 5px;">
-                    🔑 ${key}
+                <div class="key-item">
+                    <span>🔑 ${key}</span>
+                    <button class="delete-btn" onclick="deleteKey('${key}')" title="Keyi Sil">
+                        <i class="fas fa-trash"></i>
+                    </button>
                 </div>
             `).join('');
         }
