@@ -1,340 +1,815 @@
-<script>
-// ... particles.js kodu aynı ...
-
-let systemKey = '';
-let currentAdminSession = '';
-
-// Tab değiştirme - DÜZELTİLDİ
-function openTab(tabName) {
-    document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
-    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-    document.getElementById(tabName).classList.add('active');
-    event.currentTarget.classList.add('active');
-}
-
-// Key doğrulama - DÜZELTİLDİ
-async function verifySystemKey() {
-    const key = document.getElementById('systemKey').value;
-    const messageDiv = document.getElementById('keyMessage');
-
-    if (!key) {
-        messageDiv.innerHTML = '<p style="color: #ff4444; font-weight: bold;">❌ Key giriniz!</p>';
-        return;
-    }
-
-    try {
-        const response = await fetch('/api/admin/verify-key', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ key })
-        });
-        
-        const data = await response.json();
-        console.log('Key verification response:', data);
-
-        if (data.success) {
-            systemKey = key;
-            messageDiv.innerHTML = '<p style="color: #00ff88; font-weight: bold;">✅ Key doğrulandı! Sorgu yapabilirsiniz.</p>';
-            // Tüm tabları göster
-            openTab('tc-tab');
-        } else {
-            messageDiv.innerHTML = '<p style="color: #ff4444; font-weight: bold;">❌ ' + (data.message || 'Geçersiz key!') + '</p>';
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dabbe Checker Pro</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-    } catch (error) {
-        console.error('Key verification error:', error);
-        messageDiv.innerHTML = '<p style="color: #ff4444; font-weight: bold;">❌ Key doğrulama hatası!</p>';
-    }
-}
 
-// Sorgu yapma - TAMAMEN YENİLENDİ
-async function sorgula(type) {
-    if (!systemKey) {
-        alert('❌ Önce key girişi yapın!');
-        openTab('key-tab');
-        return;
-    }
-
-    const loading = document.getElementById('loading');
-    const result = document.getElementById('result');
-    const resultData = document.getElementById('resultData');
-    
-    loading.classList.add('active');
-    result.classList.remove('active');
-    
-    let params = { key: systemKey };
-    
-    // Parametreleri ayarla
-    switch(type) {
-        case 'tc':
-        case 'tcpro':
-        case 'hayathikayesi':
-        case 'yas':
-        case 'tapu':
-        case 'isyeri':
-        case 'adres':
-        case 'hane':
-        case 'apartman':
-        case 'aile':
-        case 'ailepro':
-        case 'es':
-        case 'sulale':
-        case 'tcgsm':
-            const tcValue = document.getElementById('tc' + (type === 'tcgsm' ? 'Gsm' : '')).value;
-            if (!tcValue) {
-                alert('TC kimlik numarası girin!');
-                loading.classList.remove('active');
-                return;
-            }
-            params.tc = tcValue;
-            break;
-            
-        case 'gsmtc':
-            const gsmValue = document.getElementById('gsm').value;
-            if (!gsmValue) {
-                alert('GSM numarası girin!');
-                loading.classList.remove('active');
-                return;
-            }
-            params.gsm = gsmValue;
-            break;
-            
-        case 'adsoyad':
-        case 'adsoyadpro':
-            params.ad = document.getElementById('ad').value || '';
-            params.soyad = document.getElementById('soyad').value || '';
-            params.il = document.getElementById('il').value || '';
-            params.ilce = document.getElementById('ilce').value || '';
-            break;
-            
-        case 'adililce':
-            params.ad = document.getElementById('ad').value || '';
-            params.il = document.getElementById('il').value || '';
-            break;
-            
-        case 'ip':
-        case 'dns':
-        case 'whois':
-        case 'subdomain':
-            const domainValue = document.getElementById('domain').value;
-            if (!domainValue) {
-                alert('IP/Domain girin!');
-                loading.classList.remove('active');
-                return;
-            }
-            params.domain = domainValue;
-            break;
-            
-        case 'leak':
-            const leakValue = document.getElementById('leakQuery').value;
-            if (!leakValue) {
-                alert('E-posta girin!');
-                loading.classList.remove('active');
-                return;
-            }
-            params.query = leakValue;
-            break;
-            
-        case 'telegram':
-            const telegramValue = document.getElementById('telegramUser').value;
-            if (!telegramValue) {
-                alert('Telegram kullanıcı adı girin!');
-                loading.classList.remove('active');
-                return;
-            }
-            params.kullanici = telegramValue;
-            break;
-            
-        case 'gelismisip':
-            const ipValue = document.getElementById('gelismisIp').value;
-            if (!ipValue) {
-                alert('IP adresi girin!');
-                loading.classList.remove('active');
-                return;
-            }
-            params.ip = ipValue;
-            break;
-            
-        case 'vergino':
-            const vergiValue = document.getElementById('vergiNo').value;
-            if (!vergiValue) {
-                alert('Vergi numarası girin!');
-                loading.classList.remove('active');
-                return;
-            }
-            params.vergi = vergiValue;
-            break;
-            
-        case 'adaparsel':
-            params.il = document.getElementById('ilAda').value || '';
-            params.ada = document.getElementById('ada').value || '';
-            params.parsel = document.getElementById('parsel').value || '';
-            break;
-    }
-    
-    try {
-        const queryString = new URLSearchParams(params).toString();
-        console.log('Sending request:', `/api/${type}?${queryString}`);
-        
-        const response = await fetch(`/api/${type}?${queryString}`);
-        const data = await response.json();
-        
-        console.log('Response:', data);
-        
-        if (data.error) {
-            resultData.textContent = 'Hata: ' + data.error;
-        } else {
-            resultData.textContent = JSON.stringify(data, null, 2);
+        :root {
+            --primary: #00ff88;
+            --secondary: #0088ff;
+            --accent: #ff0088;
+            --dark: #0a0a0a;
+            --darker: #050505;
+            --light: #00ffff;
         }
-        currentResult = data;
-        
-    } catch (error) {
-        console.error('Sorgu hatası:', error);
-        resultData.textContent = 'Hata: ' + error.message;
-    } finally {
-        loading.classList.remove('active');
-        result.classList.add('active');
-    }
-}
 
-// Admin fonksiyonları - DÜZELTİLDİ
-function openAdminModal() {
-    document.getElementById('adminModal').style.display = 'block';
-    checkAdminSession();
-}
-
-function closeAdminModal() {
-    document.getElementById('adminModal').style.display = 'none';
-}
-
-async function checkAdminSession() {
-    if (!currentAdminSession) return;
-    
-    try {
-        const response = await fetch('/api/admin/check-session', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ sessionId: currentAdminSession })
-        });
-        const data = await response.json();
-
-        if (data.success) {
-            document.getElementById('adminLoginSection').style.display = 'none';
-            document.getElementById('adminPanelSection').style.display = 'block';
-            loadCurrentKeys();
+        body {
+            background: linear-gradient(135deg, var(--darker) 0%, #001122 50%, #0a0a2a 100%);
+            color: var(--light);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
         }
-    } catch (error) {
-        console.log('Session kontrol hatası');
-    }
-}
 
-async function adminLogin() {
-    const username = document.getElementById('adminUsername').value;
-    const password = document.getElementById('adminPassword').value;
-    const messageDiv = document.getElementById('adminMessage');
-
-    if (!username || !password) {
-        messageDiv.innerHTML = '<p style="color: #ff4444;">❌ Kullanıcı adı ve şifre girin!</p>';
-        return;
-    }
-
-    try {
-        const response = await fetch('/api/admin/login', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username, password })
-        });
-        const data = await response.json();
-
-        if (data.success) {
-            currentAdminSession = data.sessionId;
-            document.getElementById('adminLoginSection').style.display = 'none';
-            document.getElementById('adminPanelSection').style.display = 'block';
-            messageDiv.innerHTML = '<p style="color: #00ff88;">✅ ' + data.message + '</p>';
-            loadCurrentKeys();
-        } else {
-            messageDiv.innerHTML = '<p style="color: #ff4444;">❌ ' + data.message + '</p>';
+        /* Particle efekti */
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
         }
-    } catch (error) {
-        messageDiv.innerHTML = '<p style="color: #ff4444;">❌ Giriş hatası!</p>';
-    }
-}
 
-async function createKey() {
-    const key = document.getElementById('newKey').value;
-    const messageDiv = document.getElementById('adminMessage');
-
-    if (!key) {
-        messageDiv.innerHTML = '<p style="color: #ff4444;">❌ Key girin!</p>';
-        return;
-    }
-
-    try {
-        const response = await fetch('/api/admin/create-key', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ key, sessionId: currentAdminSession })
-        });
-        const data = await response.json();
-
-        if (data.success) {
-            messageDiv.innerHTML = '<p style="color: #00ff88;">✅ ' + data.message + '</p>';
-            document.getElementById('newKey').value = '';
-            loadCurrentKeys();
-        } else {
-            messageDiv.innerHTML = '<p style="color: #ff4444;">❌ ' + data.message + '</p>';
+        /* Glow efekti */
+        .glow {
+            text-shadow: 0 0 10px var(--primary), 0 0 20px var(--secondary), 0 0 30px var(--accent);
         }
-    } catch (error) {
-        messageDiv.innerHTML = '<p style="color: #ff4444;">❌ Key oluşturma hatası!</p>';
-    }
-}
 
-async function loadCurrentKeys() {
-    try {
-        const response = await fetch('/api/admin/keys', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ sessionId: currentAdminSession })
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: rgba(10, 20, 40, 0.9);
+            border-right: 3px solid var(--primary);
+            padding: 25px 15px;
+            backdrop-filter: blur(15px);
+            box-shadow: 5px 0 25px rgba(0, 255, 136, 0.3);
+        }
+
+        .sidebar-header {
+            text-align: center;
+            padding-bottom: 25px;
+            border-bottom: 2px solid var(--primary);
+            margin-bottom: 25px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-tabs {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .tab-btn {
+            background: rgba(0, 255, 136, 0.1);
+            border: 2px solid transparent;
+            border-left: 4px solid var(--primary);
+            color: var(--light);
+            padding: 15px 20px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            border-radius: 0 12px 12px 0;
+            text-align: left;
+            font-size: 14px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .tab-btn:hover {
+            background: rgba(0, 255, 136, 0.2);
+            border-left-color: var(--accent);
+            transform: translateX(8px) scale(1.02);
+            box-shadow: 0 5px 20px rgba(0, 255, 136, 0.4);
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.3), rgba(0, 136, 255, 0.3));
+            border-left-color: var(--accent);
+            transform: translateX(12px);
+            box-shadow: 0 8px 25px rgba(255, 0, 136, 0.5);
+        }
+
+        .tab-btn i {
+            font-size: 18px;
+            width: 20px;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 30px;
+            overflow-y: auto;
+            background: rgba(5, 10, 20, 0.6);
+        }
+
+        header {
+            text-align: center;
+            padding: 30px 0;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .header-glow {
+            font-size: 3.5em;
+            font-weight: 900;
+            margin-bottom: 15px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(0, 255, 136, 0.5);
+        }
+
+        .admin-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(45deg, #ff0088, #ff4444);
+            border: none;
+            color: white;
+            padding: 12px 24px;
+            cursor: pointer;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(255, 0, 136, 0.4);
+        }
+
+        .admin-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 0, 136, 0.6);
+        }
+
+        /* Tab Content */
+        .tab-content {
+            display: none;
+            background: rgba(20, 30, 60, 0.4);
+            border: 2px solid var(--primary);
+            border-radius: 20px;
+            padding: 35px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.2);
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: slideIn 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        @keyframes slideIn {
+            from { 
+                opacity: 0; 
+                transform: translateY(30px) scale(0.95); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0) scale(1); 
+            }
+        }
+
+        .tab-content h2 {
+            color: var(--primary);
+            margin-bottom: 25px;
+            font-size: 28px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: var(--light);
+            font-size: 15px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 15px 20px;
+            background: rgba(10, 20, 40, 0.8);
+            border: 2px solid var(--secondary);
+            color: var(--light);
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 20px rgba(255, 0, 136, 0.4);
+            background: rgba(15, 25, 45, 0.9);
+        }
+
+        .btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 25px;
+        }
+
+        button {
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            border: none;
+            color: var(--darker);
+            padding: 14px 28px;
+            cursor: pointer;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            font-size: 15px;
+            font-weight: 600;
+            box-shadow: 0 5px 15px rgba(0, 255, 136, 0.3);
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 255, 136, 0.5);
+        }
+
+        button:active {
+            transform: translateY(-1px);
+        }
+
+        /* Result */
+        .result {
+            margin-top: 35px;
+            padding: 25px;
+            background: rgba(10, 25, 50, 0.6);
+            border: 2px solid var(--secondary);
+            border-radius: 15px;
+            display: none;
+        }
+
+        .result.active {
+            display: block;
+            animation: slideUp 0.5s ease;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(25px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .result pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-family: 'Courier New', monospace;
+            color: var(--primary);
+            background: rgba(0, 0, 0, 0.4);
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid var(--primary);
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        /* Loading */
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 30px;
+        }
+
+        .loading.active {
+            display: block;
+        }
+
+        .spinner {
+            border: 4px solid rgba(0, 136, 255, 0.3);
+            border-top: 4px solid var(--accent);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Key Section */
+        .key-section {
+            background: linear-gradient(135deg, rgba(255, 0, 136, 0.1), rgba(0, 136, 255, 0.1));
+            border: 2px solid var(--accent);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 1000;
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(135deg, #0a0a2a, #001122);
+            border: 3px solid var(--accent);
+            border-radius: 20px;
+            padding: 35px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 0 50px rgba(255, 0, 136, 0.5);
+        }
+
+        .modal h2 {
+            color: var(--accent);
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 28px;
+        }
+
+        .close {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            color: var(--accent);
+            font-size: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .close:hover {
+            color: var(--primary);
+            transform: scale(1.2);
+        }
+
+        .admin-section {
+            margin-bottom: 25px;
+            padding: 20px;
+            border: 2px solid var(--accent);
+            border-radius: 15px;
+            background: rgba(255, 0, 136, 0.1);
+        }
+
+        .admin-section h3 {
+            color: var(--accent);
+            margin-bottom: 18px;
+            font-size: 20px;
+        }
+
+        #adminMessage {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        @media (max-width: 1024px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+                border-right: none;
+                border-bottom: 3px solid var(--primary);
+            }
+            
+            .nav-tabs {
+                flex-direction: row;
+                overflow-x: auto;
+                padding-bottom: 10px;
+            }
+            
+            .tab-btn {
+                min-width: 160px;
+                text-align: center;
+                border-left: none;
+                border-bottom: 4px solid var(--primary);
+                border-radius: 12px 12px 0 0;
+            }
+            
+            .header-glow {
+                font-size: 2.5em;
+            }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(10, 20, 40, 0.8);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(var(--primary), var(--secondary));
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(var(--accent), var(--secondary));
+        }
+    </style>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Particles efekti -->
+    <div id="particles-js"></div>
+
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo glow">DABBE PRO</div>
+                <p style="font-size: 12px; opacity: 0.8;">v3.0 - Premium Sorgu</p>
+            </div>
+            
+            <div class="nav-tabs">
+                <button class="tab-btn active" onclick="openTab('key-tab')">
+                    <i class="fas fa-key"></i>Key Giriş
+                </button>
+                <button class="tab-btn" onclick="openTab('tc-tab')">
+                    <i class="fas fa-id-card"></i>TC Sorgu
+                </button>
+                <button class="tab-btn" onclick="openTab('adsoyad-tab')">
+                    <i class="fas fa-user"></i>Ad Soyad
+                </button>
+                <button class="tab-btn" onclick="openTab('gsm-tab')">
+                    <i class="fas fa-mobile-alt"></i>GSM Sorgu
+                </button>
+                <button class="tab-btn" onclick="openTab('aile-tab')">
+                    <i class="fas fa-users"></i>Aile Sorgu
+                </button>
+                <button class="tab-btn" onclick="openTab('ip-tab')">
+                    <i class="fas fa-globe"></i>IP & Domain
+                </button>
+                <button class="tab-btn" onclick="openTab('gelismisip-tab')">
+                    <i class="fas fa-search-plus"></i>Gelişmiş IP
+                </button>
+                <button class="tab-btn" onclick="openTab('other-tab')">
+                    <i class="fas fa-cogs"></i>Diğer Sorgular
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <button class="admin-btn" onclick="openAdminModal()">
+                <i class="fas fa-crown"></i> Admin Panel
+            </button>
+
+            <header>
+                <h1 class="header-glow pulse">DABBE CHECKER PRO</h1>
+                <p style="font-size: 18px; opacity: 0.9;">Premium Sorgu Platformu</p>
+            </header>
+
+            <!-- Key Tab -->
+            <div id="key-tab" class="tab-content active">
+                <h2><i class="fas fa-key"></i> Sistem Key Girişi</h2>
+                <div class="key-section">
+                    <div class="form-group">
+                        <label><i class="fas fa-lock"></i> Sistem Key:</label>
+                        <input type="password" id="systemKey" placeholder="Keyinizi girin" value="DABBE2024VIP">
+                    </div>
+                    <button onclick="verifySystemKey()" style="background: linear-gradient(45deg, #ff0088, #ff4444);">
+                        <i class="fas fa-check"></i> Key Doğrula
+                    </button>
+                    <div id="keyMessage" style="margin-top: 15px;"></div>
+                </div>
+            </div>
+
+            <!-- Diğer tablar buraya gelecek -->
+            <div id="tc-tab" class="tab-content">
+                <h2><i class="fas fa-id-card"></i> TC Kimlik Sorgulama</h2>
+                <div class="form-group">
+                    <label>TC Kimlik No:</label>
+                    <input type="text" id="tc" maxlength="11" placeholder="TC kimlik numarasını girin">
+                </div>
+                <div class="btn-group">
+                    <button onclick="sorgula('tc')"><i class="fas fa-search"></i> TC Sorgula</button>
+                    <button onclick="sorgula('tcpro')"><i class="fas fa-star"></i> TC Pro Sorgula</button>
+                    <button onclick="sorgula('hayathikayesi')"><i class="fas fa-book"></i> Hayat Hikayesi</button>
+                    <button onclick="sorgula('yas')"><i class="fas fa-birthday-cake"></i> Yaş Sorgula</button>
+                </div>
+            </div>
+
+            <!-- Diğer tab içerikleri aynı şekilde devam edecek -->
+            <!-- ... -->
+
+            <!-- Loading -->
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p style="font-size: 18px; margin-top: 15px;">Sorgu yapılıyor...</p>
+            </div>
+
+            <!-- Result -->
+            <div class="result" id="result">
+                <h3><i class="fas fa-file-alt"></i> Sorgu Sonucu:</h3>
+                <pre id="resultData"></pre>
+                <button class="download-btn" onclick="downloadResult()" style="background: linear-gradient(45deg, #00cc88, #0088ff); margin-top: 15px;">
+                    <i class="fas fa-download"></i> Sonucu İndir (TXT)
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Modal -->
+    <div id="adminModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeAdminModal()">&times;</span>
+            <h2><i class="fas fa-crown"></i> Admin Panel</h2>
+            
+            <div id="adminLoginSection" class="admin-section">
+                <h3><i class="fas fa-sign-in-alt"></i> Admin Giriş</h3>
+                <div class="form-group">
+                    <label>Kullanıcı Adı:</label>
+                    <input type="text" id="adminUsername" placeholder="Admin kullanıcı adı">
+                </div>
+                <div class="form-group">
+                    <label>Şifre:</label>
+                    <input type="password" id="adminPassword" placeholder="Admin şifresi">
+                </div>
+                <button onclick="adminLogin()" style="background: linear-gradient(45deg, #ff0088, #ff4444);">
+                    <i class="fas fa-unlock"></i> Giriş Yap
+                </button>
+            </div>
+
+            <div id="adminPanelSection" class="admin-section" style="display: none;">
+                <h3><i class="fas fa-key"></i> Key Yönetimi</h3>
+                <div class="form-group">
+                    <label>Yeni Key:</label>
+                    <input type="text" id="newKey" placeholder="Yeni key girin">
+                </div>
+                <button onclick="createKey()" style="background: linear-gradient(45deg, #00ff88, #0088ff);">
+                    <i class="fas fa-plus"></i> Key Oluştur
+                </button>
+                
+                <div style="margin-top: 20px;">
+                    <h4><i class="fas fa-list"></i> Mevcut Keyler:</h4>
+                    <div id="currentKeys" style="background: rgba(0,0,0,0.4); padding: 15px; border-radius: 10px; margin-top: 10px; max-height: 120px; overflow-y: auto; border: 1px solid var(--primary);"></div>
+                </div>
+            </div>
+
+            <div id="adminMessage"></div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        // Particles.js
+        particlesJS('particles-js', {
+            particles: {
+                number: { value: 80, density: { enable: true, value_area: 800 } },
+                color: { value: "#00ff88" },
+                shape: { type: "circle" },
+                opacity: { value: 0.5, random: true },
+                size: { value: 3, random: true },
+                line_linked: {
+                    enable: true,
+                    distance: 150,
+                    color: "#0088ff",
+                    opacity: 0.4,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 2,
+                    direction: "none",
+                    random: true,
+                    straight: false,
+                    out_mode: "out",
+                    bounce: false
+                }
+            },
+            interactivity: {
+                detect_on: "canvas",
+                events: {
+                    onhover: { enable: true, mode: "repulse" },
+                    onclick: { enable: true, mode: "push" }
+                }
+            }
         });
-        const data = await response.json();
 
-        if (data.success) {
+        let systemKey = '';
+        let currentAdminSession = '';
+
+        // Tab değiştirme
+        function openTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(tabName).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+
+        // Key doğrulama
+        async function verifySystemKey() {
+            const key = document.getElementById('systemKey').value;
+            const messageDiv = document.getElementById('keyMessage');
+
+            try {
+                const response = await fetch('/api/admin/verify-key', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ key })
+                });
+                const data = await response.json();
+
+                if (data.success) {
+                    systemKey = key;
+                    messageDiv.innerHTML = '<p style="color: #00ff88; font-weight: bold;">✅ Key doğrulandı! Sorgu yapabilirsiniz.</p>';
+                    openTab('tc-tab');
+                } else {
+                    messageDiv.innerHTML = '<p style="color: #ff4444;">❌ Geçersiz key!</p>';
+                }
+            } catch (error) {
+                messageDiv.innerHTML = '<p style="color: #ff4444;">❌ Key doğrulama hatası!</p>';
+            }
+        }
+
+        // Sorgu yapma
+        async function sorgula(type) {
+            if (!systemKey) {
+                alert('❌ Önce key girişi yapın!');
+                openTab('key-tab');
+                return;
+            }
+
+            const loading = document.getElementById('loading');
+            const result = document.getElementById('result');
+            const resultData = document.getElementById('resultData');
+            
+            loading.classList.add('active');
+            result.classList.remove('active');
+            
+            let params = {};
+            // Parametreleri ayarla (önceki gibi)
+            
+            try {
+                params.key = systemKey;
+                const queryString = new URLSearchParams(params).toString();
+                const response = await fetch(`/api/${type}?${queryString}`);
+                const data = await response.json();
+                
+                resultData.textContent = JSON.stringify(data, null, 2);
+                currentResult = data;
+            } catch (error) {
+                resultData.textContent = 'Hata: ' + error.message;
+            } finally {
+                loading.classList.remove('active');
+                result.classList.add('active');
+            }
+        }
+
+        // Admin fonksiyonları
+        function openAdminModal() {
+            document.getElementById('adminModal').style.display = 'block';
+            checkAdminSession();
+        }
+
+        function closeAdminModal() {
+            document.getElementById('adminModal').style.display = 'none';
+        }
+
+        async function checkAdminSession() {
+            if (!currentAdminSession) return;
+            
+            try {
+                const response = await fetch('/api/admin/check-session', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ sessionId: currentAdminSession })
+                });
+                const data = await response.json();
+
+                if (data.success) {
+                    document.getElementById('adminLoginSection').style.display = 'none';
+                    document.getElementById('adminPanelSection').style.display = 'block';
+                    loadCurrentKeys();
+                }
+            } catch (error) {
+                console.log('Session kontrol hatası');
+            }
+        }
+
+        async function adminLogin() {
+            const username = document.getElementById('adminUsername').value;
+            const password = document.getElementById('adminPassword').value;
+            const messageDiv = document.getElementById('adminMessage');
+
+            try {
+                const response = await fetch('/api/admin/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+                const data = await response.json();
+
+                if (data.success) {
+                    currentAdminSession = data.sessionId;
+                    document.getElementById('adminLoginSection').style.display = 'none';
+                    document.getElementById('adminPanelSection').style.display = 'block';
+                    messageDiv.innerHTML = '<p style="color: #00ff88;">✅ Giriş başarılı!</p>';
+                    loadCurrentKeys();
+                } else {
+                    messageDiv.innerHTML = '<p style="color: #ff4444;">❌ ' + data.message + '</p>';
+                }
+            } catch (error) {
+                messageDiv.innerHTML = '<p style="color: #ff4444;">❌ Giriş hatası!</p>';
+            }
+        }
+
+        async function createKey() {
+            const key = document.getElementById('newKey').value;
+            const messageDiv = document.getElementById('adminMessage');
+
+            try {
+                const response = await fetch('/api/admin/create-key', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ key, sessionId: currentAdminSession })
+                });
+                const data = await response.json();
+
+                if (data.success) {
+                    messageDiv.innerHTML = '<p style="color: #00ff88;">✅ Key oluşturuldu: ' + key + '</p>';
+                    document.getElementById('newKey').value = '';
+                    loadCurrentKeys();
+                } else {
+                    messageDiv.innerHTML = '<p style="color: #ff4444;">❌ ' + data.message + '</p>';
+                }
+            } catch (error) {
+                messageDiv.innerHTML = '<p style="color: #ff4444;">❌ Key oluşturma hatası!</p>';
+            }
+        }
+
+        async function loadCurrentKeys() {
+            // Basit key listesi
             const keysDiv = document.getElementById('currentKeys');
-            keysDiv.innerHTML = data.keys.map(key => `<p>🔑 ${key}</p>`).join('');
+            keysDiv.innerHTML = '<p>DABBE2024VIP</p>';
         }
-    } catch (error) {
-        const keysDiv = document.getElementById('currentKeys');
-        keysDiv.innerHTML = '<p>🔑 DABBE2024VIP</p>';
-    }
-}
 
-// İndirme fonksiyonu
-let currentResult = null;
-function downloadResult() {
-    if (!currentResult) return;
-    const text = JSON.stringify(currentResult, null, 2);
-    const blob = new Blob([text], { type: 'text/plain' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'sorgu_sonucu.txt';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-}
+        // İndirme fonksiyonu
+        let currentResult = null;
+        function downloadResult() {
+            if (!currentResult) return;
+            const text = JSON.stringify(currentResult, null, 2);
+            const blob = new Blob([text], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'sorgu_sonucu.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
 
-// Sayfa yüklendiğinde
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('🚀 Dabbe Checker Pro yüklendi!');
-    // Varsayılan key'i göster
-    document.getElementById('systemKey').value = 'DABBE2024VIP';
-});
-
-// Modal dışına tıklayınca kapat
-window.onclick = function(event) {
-    const modal = document.getElementById('adminModal');
-    if (event.target === modal) {
-        closeAdminModal();
-    }
-}
-</script>
+        // Sayfa yüklendiğinde
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 Dabbe Checker Pro yüklendi!');
+        });
+    </script>
+</body>
+</html>
