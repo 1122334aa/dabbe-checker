@@ -78,7 +78,7 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
-  // KEY SİLME - YENİ EKLENDİ
+  // KEY SİLME
   if (req.method === 'POST' && req.url === '/api/admin/delete-key') {
     let body = '';
     req.on('data', chunk => body += chunk);
@@ -180,8 +180,42 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
+  // DISCORD ID SORGUSU - YENİ EKLENDİ
+  if (req.url.startsWith('/api/discord') && req.method === 'GET') {
+    const urlParts = req.url.split('?');
+    const searchParams = new URLSearchParams(urlParts[1] || '');
+    const key = searchParams.get('key');
+    const id = searchParams.get('id');
+    
+    if (!key || !adminKeys.has(key)) {
+      res.writeHead(401, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ error: 'Geçersiz key' }));
+      return;
+    }
+
+    if (!id) {
+      res.writeHead(400, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ error: 'Discord ID gerekli' }));
+      return;
+    }
+
+    try {
+      const apiUrl = `https://crawllchecker.xyz/crawll/crawlldc.php?id=${id}`;
+      const response = await fetch(apiUrl);
+      const data = await response.json();
+      
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify(data));
+      
+    } catch (error) {
+      res.writeHead(500, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ error: 'Discord API hatası' }));
+    }
+    return;
+  }
+
   // SORGULAMA API'LERİ - TÜMÜ AKTİF
-  if (req.url.startsWith('/api/') && req.method === 'GET' && !req.url.includes('admin')) {
+  if (req.url.startsWith('/api/') && req.method === 'GET' && !req.url.includes('admin') && !req.url.includes('discord')) {
     const urlParts = req.url.split('?');
     const path = urlParts[0].replace('/api/', '');
     
@@ -265,5 +299,5 @@ function deepFilterKahinData(data) {
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
   console.log('🚀 Server çalışıyor: http://localhost:' + PORT);
-  console.log('🔑 Default Key: discorddan alcan keyi yarramin başı');
+  console.log('🔑 Default Key: DABBE2024VIP');
 });
