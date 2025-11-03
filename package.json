@@ -2,6 +2,7 @@
   "name": "sorgu-sitesi",
   "version": "1.0.0",
   "description": "Dabbe Checker Sorgu Sistemi",
+  "type": "module",
   "main": "middleware.js",
   "scripts": {
     "dev": "node middleware.js"
