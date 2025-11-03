@@ -1,7 +1,7 @@
 {
   "name": "sorgu-sitesi",
   "version": "1.0.0",
-  "description": "Dabbe Checker Sorgu Sistemi",
+  "description": "Gelişmiş Sorgu Sistemi",
   "type": "module",
   "main": "middleware.js",
   "scripts": {
