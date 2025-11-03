@@ -1,15 +1,11 @@
 {
   "name": "sorgu-sitesi",
   "version": "1.0.0",
-  "description": "Gelişmiş Sorgu Sistemi",
   "type": "module",
-  "main": "middleware.js",
   "scripts": {
-    "dev": "node middleware.js"
+    "dev": "node server.js"
   },
   "dependencies": {
-    "express": "^4.18.2",
-    "cors": "^2.8.5",
     "node-fetch": "^3.3.1"
   }
 }
