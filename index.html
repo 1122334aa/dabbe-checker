@@ -12,16 +12,16 @@
         }
 
         body {
-            background: #0a0a0a;
-            color: #00ff00;
+            background: linear-gradient(135deg, #0a0a0a 0%, #001122 50%, #0a0a2a 100%);
+            color: #00ffff;
             font-family: 'Courier New', monospace;
             min-height: 100vh;
             overflow-x: hidden;
             position: relative;
         }
 
-        /* Yağmur efekti */
-        .rain {
+        /* Matrix efekti */
+        .matrix {
             position: fixed;
             top: 0;
             left: 0;
@@ -29,70 +29,82 @@
             height: 100%;
             pointer-events: none;
             z-index: -1;
-        }
-
-        .rain-drop {
-            position: absolute;
-            width: 1px;
-            height: 20px;
-            background: linear-gradient(transparent, #00ff00);
-            animation: rainFall linear infinite;
-        }
-
-        @keyframes rainFall {
-            0% {
-                transform: translateY(-100px);
-                opacity: 0;
-            }
-            10% {
-                opacity: 1;
-            }
-            90% {
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(100vh);
-                opacity: 0;
-            }
+            opacity: 0.1;
         }
 
         /* Glow efekti */
         .glow {
-            text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 30px #00ff00;
+            text-shadow: 0 0 10px #00ffff, 0 0 20px #0088ff, 0 0 30px #0044ff;
         }
 
         .container {
-            max-width: 1200px;
+            display: flex;
+            min-height: 100vh;
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 20px;
-            position: relative;
         }
 
-        .admin-btn {
-            position: absolute;
-            top: 20px;
-            right: 20px;
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            background: rgba(0, 20, 40, 0.8);
+            border-right: 2px solid #00ffff;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .sidebar-header {
+            text-align: center;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #00ffff;
+            margin-bottom: 20px;
+        }
+
+        .nav-tabs {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .tab-btn {
             background: transparent;
-            border: 1px solid #ff0000;
-            color: #ff0000;
-            padding: 8px 16px;
+            border: 1px solid #00ffff;
+            color: #00ffff;
+            padding: 15px;
             cursor: pointer;
-            border-radius: 5px;
             transition: all 0.3s ease;
+            border-radius: 8px;
+            text-align: left;
             font-size: 14px;
         }
 
-        .admin-btn:hover {
-            background: #ff0000;
-            color: #000;
-            box-shadow: 0 0 15px #ff0000;
+        .tab-btn:hover {
+            background: #00ffff;
+            color: #001122;
+            box-shadow: 0 0 15px #00ffff;
+            transform: translateX(5px);
+        }
+
+        .tab-btn.active {
+            background: #00ffff;
+            color: #001122;
+            box-shadow: 0 0 20px #00ffff;
+            transform: translateX(10px);
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
         }
 
         header {
             text-align: center;
-            padding: 40px 0;
-            border-bottom: 2px solid #00ff00;
-            margin-bottom: 40px;
+            padding: 30px 0;
+            border-bottom: 2px solid #00ffff;
+            margin-bottom: 30px;
+            position: relative;
         }
 
         h1 {
@@ -102,47 +114,42 @@
         }
 
         @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
+            0%, 100% { 
+                text-shadow: 0 0 10px #00ffff, 0 0 20px #0088ff, 0 0 30px #0044ff;
+            }
+            50% { 
+                text-shadow: 0 0 15px #00ffff, 0 0 30px #0088ff, 0 0 45px #0044ff;
+            }
         }
 
-        .nav-tabs {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 30px;
-        }
-
-        .tab-btn {
+        .admin-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
             background: transparent;
-            border: 1px solid #00ff00;
-            color: #00ff00;
-            padding: 12px 24px;
+            border: 1px solid #ff4444;
+            color: #ff4444;
+            padding: 10px 20px;
             cursor: pointer;
-            transition: all 0.3s ease;
             border-radius: 5px;
+            transition: all 0.3s ease;
+            font-size: 14px;
         }
 
-        .tab-btn:hover {
-            background: #00ff00;
+        .admin-btn:hover {
+            background: #ff4444;
             color: #000;
-            box-shadow: 0 0 15px #00ff00;
-        }
-
-        .tab-btn.active {
-            background: #00ff00;
-            color: #000;
-            box-shadow: 0 0 20px #00ff00;
+            box-shadow: 0 0 15px #ff4444;
         }
 
         .tab-content {
             display: none;
-            background: rgba(0, 255, 0, 0.05);
-            border: 1px solid #00ff00;
-            border-radius: 10px;
+            background: rgba(0, 40, 80, 0.3);
+            border: 1px solid #00ffff;
+            border-radius: 15px;
             padding: 30px;
             margin-bottom: 30px;
+            backdrop-filter: blur(5px);
         }
 
         .tab-content.active {
@@ -163,47 +170,51 @@
             display: block;
             margin-bottom: 8px;
             font-weight: bold;
+            color: #00ffff;
         }
 
         input, select {
             width: 100%;
             padding: 12px;
-            background: transparent;
-            border: 1px solid #00ff00;
-            color: #00ff00;
-            border-radius: 5px;
+            background: rgba(0, 20, 40, 0.8);
+            border: 1px solid #00ffff;
+            color: #00ffff;
+            border-radius: 8px;
             font-size: 16px;
+            transition: all 0.3s ease;
         }
 
         input:focus, select:focus {
             outline: none;
-            box-shadow: 0 0 10px #00ff00;
+            box-shadow: 0 0 10px #00ffff;
+            background: rgba(0, 30, 60, 0.9);
         }
 
         button {
             background: transparent;
-            border: 1px solid #00ff00;
-            color: #00ff00;
-            padding: 12px 30px;
+            border: 1px solid #00ffff;
+            color: #00ffff;
+            padding: 12px 25px;
             cursor: pointer;
-            border-radius: 5px;
+            border-radius: 8px;
             transition: all 0.3s ease;
-            font-size: 16px;
+            font-size: 14px;
             margin-right: 10px;
             margin-bottom: 10px;
         }
 
         button:hover {
-            background: #00ff00;
-            color: #000;
-            box-shadow: 0 0 15px #00ff00;
+            background: #00ffff;
+            color: #001122;
+            box-shadow: 0 0 15px #00ffff;
+            transform: translateY(-2px);
         }
 
         .result {
             margin-top: 30px;
             padding: 20px;
-            background: rgba(0, 255, 0, 0.1);
-            border: 1px solid #00ff00;
+            background: rgba(0, 40, 80, 0.5);
+            border: 1px solid #00ffff;
             border-radius: 10px;
             display: none;
         }
@@ -222,6 +233,7 @@
             white-space: pre-wrap;
             word-wrap: break-word;
             font-family: 'Courier New', monospace;
+            color: #00ff88;
         }
 
         .loading {
@@ -235,8 +247,8 @@
         }
 
         .spinner {
-            border: 3px solid #333;
-            border-top: 3px solid #00ff00;
+            border: 3px solid #003366;
+            border-top: 3px solid #00ffff;
             border-radius: 50%;
             width: 40px;
             height: 40px;
@@ -250,13 +262,22 @@
         }
 
         .download-btn {
-            background: #006600;
-            border-color: #00cc00;
+            background: #006666;
+            border-color: #00cccc;
         }
 
         .download-btn:hover {
-            background: #00cc00;
-            box-shadow: 0 0 20px #00cc00;
+            background: #00cccc;
+            box-shadow: 0 0 20px #00cccc;
+        }
+
+        /* Key Input */
+        .key-section {
+            background: rgba(255, 0, 0, 0.1);
+            border: 1px solid #ff4444;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
         }
 
         /* Admin Modal */
@@ -267,7 +288,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(0, 0, 0, 0.9);
             z-index: 1000;
         }
 
@@ -276,48 +297,70 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: #000;
-            border: 2px solid #ff0000;
-            border-radius: 10px;
+            background: linear-gradient(135deg, #0a0a2a 0%, #001122 100%);
+            border: 2px solid #ff4444;
+            border-radius: 15px;
             padding: 30px;
             width: 90%;
             max-width: 500px;
+            box-shadow: 0 0 30px #ff0000;
         }
 
         .modal h2 {
-            color: #ff0000;
+            color: #ff4444;
             text-align: center;
             margin-bottom: 20px;
+            text-shadow: 0 0 10px #ff0000;
         }
 
         .close {
             position: absolute;
-            top: 10px;
-            right: 15px;
-            color: #ff0000;
-            font-size: 24px;
+            top: 15px;
+            right: 20px;
+            color: #ff4444;
+            font-size: 28px;
             cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .close:hover {
+            color: #ff0000;
+            text-shadow: 0 0 10px #ff0000;
         }
 
         .admin-section {
             margin-bottom: 20px;
-            padding: 15px;
-            border: 1px solid #ff0000;
-            border-radius: 5px;
+            padding: 20px;
+            border: 1px solid #ff4444;
+            border-radius: 10px;
+            background: rgba(255, 0, 0, 0.1);
         }
 
         .admin-section h3 {
-            color: #ff0000;
-            margin-bottom: 10px;
+            color: #ff4444;
+            margin-bottom: 15px;
+            text-shadow: 0 0 5px #ff0000;
         }
 
         @media (max-width: 768px) {
-            .nav-tabs {
+            .container {
                 flex-direction: column;
             }
             
-            .tab-btn {
+            .sidebar {
                 width: 100%;
+                border-right: none;
+                border-bottom: 2px solid #00ffff;
+            }
+            
+            .nav-tabs {
+                flex-direction: row;
+                overflow-x: auto;
+            }
+            
+            .tab-btn {
+                min-width: 120px;
+                text-align: center;
             }
             
             h1 {
@@ -334,55 +377,80 @@
     </style>
 </head>
 <body>
-    <!-- Yağmur efekti -->
-    <div class="rain" id="rain"></div>
+    <!-- Matrix efekti -->
+    <div class="matrix" id="matrix"></div>
 
     <div class="container">
-        <!-- Admin Butonu -->
-        <button class="admin-btn" onclick="openAdminModal()">Admin Panel</button>
-
-        <header>
-            <h1 class="glow">Dabbe Checker</h1>
-            <p>Gelişmiş Oyun Platformu</p>
-        </header>
-
-        <div class="nav-tabs">
-            <button class="tab-btn active" onclick="openTab('tc-tab')">TC Sorgu</button>
-            <button class="tab-btn" onclick="openTab('adsoyad-tab')">Ad Soyad</button>
-            <button class="tab-btn" onclick="openTab('gsm-tab')">GSM Sorgu</button>
-            <button class="tab-btn" onclick="openTab('aile-tab')">Aile Sorgu</button>
-            <button class="tab-btn" onclick="openTab('ip-tab')">IP & Domain</button>
-            <button class="tab-btn" onclick="openTab('gelismisip-tab')">Gelişmiş IP</button>
-            <button class="tab-btn" onclick="openTab('other-tab')">Diğer Sorgular</button>
-        </div>
-
-        <!-- TC Sorgu Tab -->
-        <div id="tc-tab" class="tab-content active">
-            <h2>TC Kimlik Sorgulama</h2>
-            <div class="form-group">
-                <label>TC Kimlik No:</label>
-                <input type="text" id="tc" maxlength="11" placeholder="TC kimlik numarasını girin">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h3 class="glow">Dabbe Checker</h3>
+                <p style="font-size: 12px; opacity: 0.8;">V2.0</p>
             </div>
-            <button onclick="sorgula('tc')">TC Sorgula</button>
-            <button onclick="sorgula('tcpro')">TC Pro Sorgula</button>
-            <button onclick="sorgula('hayathikayesi')">Hayat Hikayesi</button>
-            <button onclick="sorgula('yas')">Yaş Sorgula</button>
+            
+            <div class="nav-tabs">
+                <button class="tab-btn active" onclick="openTab('key-tab')">🔑 Key Giriş</button>
+                <button class="tab-btn" onclick="openTab('tc-tab')">🆔 TC Sorgu</button>
+                <button class="tab-btn" onclick="openTab('adsoyad-tab')">👤 Ad Soyad</button>
+                <button class="tab-btn" onclick="openTab('gsm-tab')">📱 GSM Sorgu</button>
+                <button class="tab-btn" onclick="openTab('aile-tab')">👨‍👩‍👧‍👦 Aile Sorgu</button>
+                <button class="tab-btn" onclick="openTab('ip-tab')">🌐 IP & Domain</button>
+                <button class="tab-btn" onclick="openTab('gelismisip-tab')">🔍 Gelişmiş IP</button>
+                <button class="tab-btn" onclick="openTab('other-tab')">⚡ Diğer Sorgular</button>
+            </div>
         </div>
 
-        <!-- Diğer tab içerikleri aynı kalacak -->
-        <!-- ... (diğer tab içerikleri değişmedi) ... -->
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Admin Butonu -->
+            <button class="admin-btn" onclick="openAdminModal()">⚡ Admin Panel</button>
 
-        <!-- Loading -->
-        <div class="loading" id="loading">
-            <div class="spinner"></div>
-            <p>Sorgulanıyor...</p>
-        </div>
+            <header>
+                <h1 class="glow">DABBE CHECKER</h1>
+                <p>Gelişmiş Sorgu Platformu</p>
+            </header>
 
-        <!-- Result -->
-        <div class="result" id="result">
-            <h3>Sorgu Sonucu:</h3>
-            <pre id="resultData"></pre>
-            <button class="download-btn" onclick="downloadResult()">Sonucu İndir (TXT)</button>
+            <!-- Key Tab -->
+            <div id="key-tab" class="tab-content active">
+                <h2>🔑 Key Girişi</h2>
+                <div class="key-section">
+                    <div class="form-group">
+                        <label>Sistem Key:</label>
+                        <input type="password" id="systemKey" placeholder="Keyinizi girin">
+                    </div>
+                    <button onclick="verifySystemKey()">Key Doğrula</button>
+                    <div id="keyMessage"></div>
+                </div>
+            </div>
+
+            <!-- Diğer tablar aynı içerikle devam ediyor -->
+            <div id="tc-tab" class="tab-content">
+                <h2>🆔 TC Kimlik Sorgulama</h2>
+                <div class="form-group">
+                    <label>TC Kimlik No:</label>
+                    <input type="text" id="tc" maxlength="11" placeholder="TC kimlik numarasını girin">
+                </div>
+                <button onclick="sorgula('tc')">TC Sorgula</button>
+                <button onclick="sorgula('tcpro')">TC Pro Sorgula</button>
+                <button onclick="sorgula('hayathikayesi')">Hayat Hikayesi</button>
+                <button onclick="sorgula('yas')">Yaş Sorgula</button>
+            </div>
+
+            <!-- Diğer tab içerikleri buraya gelecek -->
+            <!-- ... (diğer tablar aynı) ... -->
+
+            <!-- Loading -->
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p>Sorgulanıyor...</p>
+            </div>
+
+            <!-- Result -->
+            <div class="result" id="result">
+                <h3>Sorgu Sonucu:</h3>
+                <pre id="resultData"></pre>
+                <button class="download-btn" onclick="downloadResult()">📥 Sonucu İndir (TXT)</button>
+            </div>
         </div>
     </div>
 
@@ -390,54 +458,74 @@
     <div id="adminModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeAdminModal()">&times;</span>
-            <h2>Admin Panel</h2>
+            <h2>⚡ Admin Panel</h2>
             
             <div id="adminLoginSection" class="admin-section">
                 <h3>Admin Giriş</h3>
                 <div class="form-group">
                     <label>Kullanıcı Adı:</label>
-                    <input type="text" id="adminUsername" placeholder="babaproDEhatuzcu31">
+                    <input type="text" id="adminUsername" placeholder="Kullanıcı adı">
                 </div>
                 <div class="form-group">
                     <label>Şifre:</label>
-                    <input type="password" id="adminPassword" placeholder="DaHİSekerc31">
+                    <input type="password" id="adminPassword" placeholder="Şifre">
                 </div>
-                <button onclick="adminLogin()">Giriş Yap</button>
+                <button onclick="adminLogin()">🔓 Giriş Yap</button>
             </div>
 
             <div id="adminPanelSection" class="admin-section" style="display: none;">
-                <h3>Key Yönetimi</h3>
+                <h3>🔑 Key Yönetimi</h3>
                 <div class="form-group">
                     <label>Yeni Key:</label>
                     <input type="text" id="newKey" placeholder="Yeni key girin">
                 </div>
-                <button onclick="createKey()">Key Oluştur</button>
+                <button onclick="createKey()">✅ Key Oluştur</button>
                 
-                <div class="form-group" style="margin-top: 20px;">
-                    <label>Key Doğrulama:</label>
-                    <input type="text" id="verifyKey" placeholder="Key girin">
+                <div style="margin-top: 15px;">
+                    <h4>Mevcut Keyler:</h4>
+                    <div id="currentKeys" style="background: rgba(0,0,0,0.3); padding: 10px; border-radius: 5px; margin-top: 10px; max-height: 100px; overflow-y: auto;"></div>
                 </div>
-                <button onclick="verifyKey()">Key Doğrula</button>
             </div>
 
-            <div id="adminMessage"></div>
+            <div id="adminMessage" style="margin-top: 15px;"></div>
         </div>
     </div>
 
     <script>
-        // Yağmur efekti oluştur
-        function createRain() {
-            const rain = document.getElementById('rain');
-            const drops = 100;
+        let currentSessionId = Math.random().toString(36).substr(2, 9);
+        let systemKey = '';
+        let currentAdminSession = '';
+
+        // Matrix efekti
+        function createMatrix() {
+            const matrix = document.getElementById('matrix');
+            const chars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
+            const fontSize = 14;
+            const columns = Math.floor(window.innerWidth / fontSize);
             
-            for (let i = 0; i < drops; i++) {
-                const drop = document.createElement('div');
-                drop.className = 'rain-drop';
-                drop.style.left = Math.random() * 100 + 'vw';
-                drop.style.animationDuration = (Math.random() * 2 + 1) + 's';
-                drop.style.animationDelay = Math.random() * 2 + 's';
-                rain.appendChild(drop);
+            const drops = Array(columns).fill(1);
+            
+            function draw() {
+                const ctx = document.createElement('canvas').getContext('2d');
+                ctx.fillStyle = 'rgba(0, 20, 40, 0.04)';
+                ctx.fillRect(0, 0, matrix.width, matrix.height);
+                
+                ctx.fillStyle = '#0f0';
+                ctx.font = fontSize + 'px monospace';
+                
+                drops.forEach((y, index) => {
+                    const text = chars[Math.floor(Math.random() * chars.length)];
+                    const x = index * fontSize;
+                    ctx.fillText(text, x, y * fontSize);
+                    
+                    if (y * fontSize > window.innerHeight && Math.random() > 0.975) {
+                        drops[index] = 0;
+                    }
+                    drops[index]++;
+                });
             }
+            
+            setInterval(draw, 33);
         }
 
         // Tab değiştirme
@@ -456,8 +544,45 @@
             event.currentTarget.classList.add('active');
         }
 
+        // Key doğrulama
+        async function verifySystemKey() {
+            const key = document.getElementById('systemKey').value;
+            const messageDiv = document.getElementById('keyMessage');
+
+            if (!key) {
+                messageDiv.innerHTML = '<p style="color: #ff4444">Key giriniz!</p>';
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/admin/verify-key', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ key })
+                });
+                const data = await response.json();
+
+                if (data.success) {
+                    systemKey = key;
+                    messageDiv.innerHTML = '<p style="color: #00ff88">✅ Key doğrulandı! Sorgu yapabilirsiniz.</p>';
+                    // Key tab'ını kapat, TC tab'ını aç
+                    openTab('tc-tab');
+                } else {
+                    messageDiv.innerHTML = '<p style="color: #ff4444">❌ Geçersiz key!</p>';
+                }
+            } catch (error) {
+                messageDiv.innerHTML = '<p style="color: #ff4444">Key doğrulama hatası!</p>';
+            }
+        }
+
         // Sorgu yapma
         async function sorgula(type) {
+            if (!systemKey) {
+                alert('Önce key girişi yapın!');
+                openTab('key-tab');
+                return;
+            }
+
             const loading = document.getElementById('loading');
             const result = document.getElementById('result');
             const resultData = document.getElementById('resultData');
@@ -524,6 +649,9 @@
                     break;
             }
             
+            // Key'i parametrelere ekle
+            params.key = systemKey;
+            
             try {
                 const queryString = new URLSearchParams(params).toString();
                 const response = await fetch(`${url}?${queryString}`);
@@ -560,10 +688,30 @@
         // Admin Panel Fonksiyonları
         function openAdminModal() {
             document.getElementById('adminModal').style.display = 'block';
+            checkAdminSession();
         }
 
         function closeAdminModal() {
             document.getElementById('adminModal').style.display = 'none';
+        }
+
+        async function checkAdminSession() {
+            try {
+                const response = await fetch('/api/admin/check-session', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ sessionId: currentAdminSession })
+                });
+                const data = await response.json();
+
+                if (data.success) {
+                    document.getElementById('adminLoginSection').style.display = 'none';
+                    document.getElementById('adminPanelSection').style.display = 'block';
+                    loadCurrentKeys();
+                }
+            } catch (error) {
+                // Session yok, login göster
+            }
         }
 
         async function adminLogin() {
@@ -575,19 +723,21 @@
                 const response = await fetch('/api/admin/login', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ username, password })
+                    body: JSON.stringify({ username, password, sessionId: currentSessionId })
                 });
                 const data = await response.json();
 
                 if (data.success) {
+                    currentAdminSession = currentSessionId;
                     document.getElementById('adminLoginSection').style.display = 'none';
                     document.getElementById('adminPanelSection').style.display = 'block';
-                    messageDiv.innerHTML = '<p style="color: #00ff00">Giriş başarılı!</p>';
+                    messageDiv.innerHTML = '<p style="color: #00ff88">✅ Giriş başarılı!</p>';
+                    loadCurrentKeys();
                 } else {
-                    messageDiv.innerHTML = '<p style="color: #ff0000">' + data.message + '</p>';
+                    messageDiv.innerHTML = '<p style="color: #ff4444">❌ ' + data.message + '</p>';
                 }
             } catch (error) {
-                messageDiv.innerHTML = '<p style="color: #ff0000">Giriş hatası: ' + error + '</p>';
+                messageDiv.innerHTML = '<p style="color: #ff4444">❌ Giriş hatası!</p>';
             }
         }
 
@@ -596,7 +746,7 @@
             const messageDiv = document.getElementById('adminMessage');
 
             if (!key) {
-                messageDiv.innerHTML = '<p style="color: #ff0000">Key boş olamaz!</p>';
+                messageDiv.innerHTML = '<p style="color: #ff4444">❌ Key boş olamaz!</p>';
                 return;
             }
 
@@ -604,47 +754,47 @@
                 const response = await fetch('/api/admin/create-key', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ key })
+                    body: JSON.stringify({ key, sessionId: currentAdminSession })
                 });
                 const data = await response.json();
 
                 if (data.success) {
-                    messageDiv.innerHTML = '<p style="color: #00ff00">Key başarıyla oluşturuldu: ' + key + '</p>';
+                    messageDiv.innerHTML = '<p style="color: #00ff88">✅ Key başarıyla oluşturuldu: ' + key + '</p>';
                     document.getElementById('newKey').value = '';
+                    loadCurrentKeys();
                 } else {
-                    messageDiv.innerHTML = '<p style="color: #ff0000">' + data.message + '</p>';
+                    messageDiv.innerHTML = '<p style="color: #ff4444">❌ ' + data.message + '</p>';
                 }
             } catch (error) {
-                messageDiv.innerHTML = '<p style="color: #ff0000">Key oluşturma hatası: ' + error + '</p>';
+                messageDiv.innerHTML = '<p style="color: #ff4444">❌ Key oluşturma hatası!</p>';
             }
         }
 
-        async function verifyKey() {
-            const key = document.getElementById('verifyKey').value;
-            const messageDiv = document.getElementById('adminMessage');
-
-            try {
-                const response = await fetch('/api/admin/verify-key', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ key })
-                });
-                const data = await response.json();
-
-                if (data.success) {
-                    messageDiv.innerHTML = '<p style="color: #00ff00">Key doğru! Panel erişimi sağlandı.</p>';
-                } else {
-                    messageDiv.innerHTML = '<p style="color: #ff0000">' + data.message + '</p>';
-                }
-            } catch (error) {
-                messageDiv.innerHTML = '<p style="color: #ff0000">Key doğrulama hatası: ' + error + '</p>';
-            }
+        async function loadCurrentKeys() {
+            // Bu fonksiyon mevcut key'leri göstermek için
+            const keysDiv = document.getElementById('currentKeys');
+            keysDiv.innerHTML = '<p>Keyler yükleniyor...</p>';
+            
+            // Gerçek uygulamada bu endpoint'i eklemek gerekir
+            setTimeout(() => {
+                keysDiv.innerHTML = '<p>DABBE2024VIP</p>';
+            }, 1000);
         }
 
         // Sayfa yüklendiğinde
         document.addEventListener('DOMContentLoaded', function() {
-            createRain();
+            createMatrix();
+            // Varsayılan key göster
+            document.getElementById('systemKey').value = 'DABBE2024VIP';
         });
+
+        // Modal dışına tıklayınca kapat
+        window.onclick = function(event) {
+            const modal = document.getElementById('adminModal');
+            if (event.target === modal) {
+                closeAdminModal();
+            }
+        }
     </script>
 </body>
 </html>
