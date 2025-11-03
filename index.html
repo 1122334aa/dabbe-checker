@@ -34,23 +34,73 @@
             line-height: 1.6;
             position: relative;
             overflow-x: hidden;
+            cursor: none;
         }
 
+        /* Büyük balkabağı arkaplan */
         body::before {
             content: '🎃';
             position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            font-size: 300px;
-            opacity: 0.05;
+            font-size: 500px;
+            opacity: 0.15;
             z-index: -1;
-            animation: float 6s ease-in-out infinite;
+            animation: float 8s ease-in-out infinite;
+            text-shadow: 0 0 50px rgba(220, 38, 38, 0.5);
         }
 
         @keyframes float {
-            0%, 100% { transform: translate(-50%, -50%) rotate(0deg); }
-            50% { transform: translate(-50%, -55%) rotate(5deg); }
+            0%, 100% { transform: translate(-50%, -50%) rotate(0deg) scale(1); }
+            25% { transform: translate(-50%, -52%) rotate(5deg) scale(1.05); }
+            50% { transform: translate(-50%, -50%) rotate(0deg) scale(1); }
+            75% { transform: translate(-50%, -48%) rotate(-5deg) scale(0.95); }
+        }
+
+        /* Mouse partikülleri */
+        #particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        .particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: #000000;
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0.7;
+            animation: particleFloat 2s ease-out forwards;
+        }
+
+        @keyframes particleFloat {
+            0% {
+                transform: translate(0, 0) scale(1);
+                opacity: 0.7;
+            }
+            100% {
+                transform: translate(var(--tx), var(--ty)) scale(0);
+                opacity: 0;
+            }
+        }
+
+        .custom-cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            background: rgba(220, 38, 38, 0.8);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10000;
+            mix-blend-mode: difference;
+            transition: transform 0.1s ease;
         }
 
         .container {
@@ -98,7 +148,7 @@
             border: 1px solid #334155;
             color: var(--light);
             padding: 12px 15px;
-            cursor: pointer;
+            cursor: none;
             transition: all 0.3s ease;
             border-radius: 8px;
             text-align: left;
@@ -155,7 +205,7 @@
             border: none;
             color: white;
             padding: 12px 24px;
-            cursor: pointer;
+            cursor: none;
             border-radius: 8px;
             font-weight: 600;
             transition: all 0.3s ease;
@@ -220,6 +270,7 @@
             border-radius: 8px;
             font-size: 14px;
             transition: all 0.3s ease;
+            cursor: none;
         }
 
         input:focus, select:focus {
@@ -240,7 +291,7 @@
             border: none;
             color: white;
             padding: 12px 20px;
-            cursor: pointer;
+            cursor: none;
             border-radius: 8px;
             transition: all 0.3s ease;
             font-size: 14px;
@@ -366,7 +417,7 @@
             right: 25px;
             color: #dc2626;
             font-size: 24px;
-            cursor: pointer;
+            cursor: none;
             transition: color 0.3s ease;
         }
 
@@ -451,6 +502,9 @@
             .header-title {
                 font-size: 2em;
             }
+            body::before {
+                font-size: 300px;
+            }
         }
 
         .success { 
@@ -474,25 +528,15 @@
             border-radius: 6px;
             border: 1px solid #f59e0b;
         }
-
-        .pumpkin-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(circle at 20% 50%, rgba(220, 38, 38, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(245, 158, 11, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 40% 80%, rgba(153, 27, 27, 0.1) 0%, transparent 50%);
-            z-index: -1;
-            opacity: 0.3;
-        }
     </style>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
-    <div class="pumpkin-bg"></div>
+    <!-- Özel cursor -->
+    <div class="custom-cursor"></div>
+    
+    <!-- Partikül konteyneri -->
+    <div id="particles"></div>
     
     <div class="container">
         <div class="sidebar">
@@ -758,11 +802,11 @@
                 <h3><i class="fas fa-sign-in-alt"></i> Admin Giriş</h3>
                 <div class="form-group">
                     <label>Kullanıcı Adı:</label>
-                    <input type="text" id="adminUsername" placeholder="Admin Adı">
+                    <input type="text" id="adminUsername" placeholder="babaproDEhatuzcu31">
                 </div>
                 <div class="form-group">
                     <label>Şifre:</label>
-                    <input type="password" id="adminPassword" placeholder="Admin Şifre">
+                    <input type="password" id="adminPassword" placeholder="DaHİSekerc31">
                 </div>
                 <button onclick="adminLogin()">
                     <i class="fas fa-unlock"></i> Giriş Yap
@@ -790,6 +834,101 @@
     </div>
 
     <script>
+        // Ses efektleri
+        const sounds = {
+            tabSwitch: new Audio('data:audio/wav;base64,UklGRigAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQQAAAAAAA=='),
+            query: new Audio('data:audio/wav;base64,UklGRigAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQQAAAAAAA=='),
+            error: new Audio('data:audio/wav;base64,UklGRigAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQQAAAAAAA==')
+        };
+
+        // Basit ses oluşturma (korkunç efektler için)
+        function createScarySound(type) {
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            if (type === 'tab') {
+                oscillator.type = 'sawtooth';
+                oscillator.frequency.setValueAtTime(200, audioContext.currentTime);
+                oscillator.frequency.exponentialRampToValueAtTime(50, audioContext.currentTime + 0.5);
+                gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+            } else if (type === 'query') {
+                oscillator.type = 'square';
+                oscillator.frequency.setValueAtTime(150, audioContext.currentTime);
+                oscillator.frequency.exponentialRampToValueAtTime(80, audioContext.currentTime + 0.3);
+                gainNode.gain.setValueAtTime(0.2, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
+            } else if (type === 'error') {
+                oscillator.type = 'triangle';
+                oscillator.frequency.setValueAtTime(100, audioContext.currentTime);
+                oscillator.frequency.exponentialRampToValueAtTime(300, audioContext.currentTime + 0.2);
+                gainNode.gain.setValueAtTime(0.4, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.2);
+            }
+            
+            oscillator.start();
+            oscillator.stop(audioContext.currentTime + 0.5);
+        }
+
+        // Mouse partikül efekti
+        function createParticles(x, y) {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 8;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                const angle = Math.random() * Math.PI * 2;
+                const distance = Math.random() * 50 + 20;
+                const tx = Math.cos(angle) * distance;
+                const ty = Math.sin(angle) * distance;
+                
+                particle.style.setProperty('--tx', `${tx}px`);
+                particle.style.setProperty('--ty', `${ty}px`);
+                particle.style.left = x + 'px';
+                particle.style.top = y + 'px';
+                
+                particlesContainer.appendChild(particle);
+                
+                setTimeout(() => {
+                    if (particle.parentNode) {
+                        particle.parentNode.removeChild(particle);
+                    }
+                }, 2000);
+            }
+        }
+
+        // Özel cursor
+        const cursor = document.querySelector('.custom-cursor');
+        let mouseX = 0, mouseY = 0;
+        let cursorX = 0, cursorY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            
+            // Partikül oluştur
+            if (Math.random() < 0.3) {
+                createParticles(e.clientX, e.clientY);
+            }
+        });
+
+        function updateCursor() {
+            cursorX += (mouseX - cursorX) * 0.1;
+            cursorY += (mouseY - cursorY) * 0.1;
+            
+            cursor.style.left = cursorX + 'px';
+            cursor.style.top = cursorY + 'px';
+            
+            requestAnimationFrame(updateCursor);
+        }
+        updateCursor();
+
         let systemKey = '';
         let currentAdminSession = '';
         let isKeyVerified = false;
@@ -797,10 +936,13 @@
 
         function openTab(tabName) {
             if (tabName !== 'key-tab' && !isKeyVerified) {
+                createScarySound('error');
                 alert('❌ Önce key doğrulaması yapın!');
                 openTab('key-tab');
                 return;
             }
+            
+            createScarySound('tab');
             
             document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
@@ -827,19 +969,24 @@
                     messageDiv.innerHTML = '<div class="success">✅ Key doğrulandı! Tüm sorgular aktif.</div>';
                     setTimeout(() => openTab('tc-tab'), 1000);
                 } else {
+                    createScarySound('error');
                     messageDiv.innerHTML = '<div class="error">❌ Geçersiz key!</div>';
                 }
             } catch (error) {
+                createScarySound('error');
                 messageDiv.innerHTML = '<div class="error">❌ Key doğrulama hatası!</div>';
             }
         }
 
         async function sorgula(type) {
             if (!systemKey || !isKeyVerified) {
+                createScarySound('error');
                 alert('❌ Önce key doğrulaması yapın!');
                 openTab('key-tab');
                 return;
             }
+
+            createScarySound('query');
 
             const loading = document.getElementById('loading');
             const result = document.getElementById('result');
@@ -853,31 +1000,31 @@
             switch(type) {
                 case 'tc': case 'tcpro': case 'hayathikayesi': case 'yas':
                     const tcValue = document.getElementById('tc').value;
-                    if (!tcValue) { alert('TC kimlik numarası girin!'); loading.classList.remove('active'); return; }
+                    if (!tcValue) { createScarySound('error'); alert('TC kimlik numarası girin!'); loading.classList.remove('active'); return; }
                     params.tc = tcValue;
                     break;
                     
                 case 'tapu': case 'isyeri': case 'adres': case 'hane': case 'apartman':
                     const tcOtherValue = document.getElementById('tcOther').value;
-                    if (!tcOtherValue) { alert('TC kimlik numarası girin!'); loading.classList.remove('active'); return; }
+                    if (!tcOtherValue) { createScarySound('error'); alert('TC kimlik numarası girin!'); loading.classList.remove('active'); return; }
                     params.tc = tcOtherValue;
                     break;
                     
                 case 'tcgsm':
                     const tcGsmValue = document.getElementById('tcGsm').value;
-                    if (!tcGsmValue) { alert('TC kimlik numarası girin!'); loading.classList.remove('active'); return; }
+                    if (!tcGsmValue) { createScarySound('error'); alert('TC kimlik numarası girin!'); loading.classList.remove('active'); return; }
                     params.tc = tcGsmValue;
                     break;
                     
                 case 'aile': case 'ailepro': case 'es': case 'sulale':
                     const tcAileValue = document.getElementById('tcAile').value;
-                    if (!tcAileValue) { alert('TC kimlik numarası girin!'); loading.classList.remove('active'); return; }
+                    if (!tcAileValue) { createScarySound('error'); alert('TC kimlik numarası girin!'); loading.classList.remove('active'); return; }
                     params.tc = tcAileValue;
                     break;
                     
                 case 'gsmtc':
                     const gsmValue = document.getElementById('gsm').value;
-                    if (!gsmValue) { alert('GSM numarası girin!'); loading.classList.remove('active'); return; }
+                    if (!gsmValue) { createScarySound('error'); alert('GSM numarası girin!'); loading.classList.remove('active'); return; }
                     params.gsm = gsmValue;
                     break;
                     
@@ -895,31 +1042,31 @@
                     
                 case 'ip': case 'dns': case 'whois': case 'subdomain':
                     const domainValue = document.getElementById('domain').value;
-                    if (!domainValue) { alert('IP/Domain girin!'); loading.classList.remove('active'); return; }
+                    if (!domainValue) { createScarySound('error'); alert('IP/Domain girin!'); loading.classList.remove('active'); return; }
                     params.domain = domainValue;
                     break;
                     
                 case 'leak':
                     const leakValue = document.getElementById('leakQuery').value;
-                    if (!leakValue) { alert('E-posta girin!'); loading.classList.remove('active'); return; }
+                    if (!leakValue) { createScarySound('error'); alert('E-posta girin!'); loading.classList.remove('active'); return; }
                     params.query = leakValue;
                     break;
                     
                 case 'telegram':
                     const telegramValue = document.getElementById('telegramUser').value;
-                    if (!telegramValue) { alert('Telegram kullanıcı adı girin!'); loading.classList.remove('active'); return; }
+                    if (!telegramValue) { createScarySound('error'); alert('Telegram kullanıcı adı girin!'); loading.classList.remove('active'); return; }
                     params.kullanici = telegramValue;
                     break;
                     
                 case 'gelismisip':
                     const ipValue = document.getElementById('gelismisIp').value;
-                    if (!ipValue) { alert('IP adresi girin!'); loading.classList.remove('active'); return; }
+                    if (!ipValue) { createScarySound('error'); alert('IP adresi girin!'); loading.classList.remove('active'); return; }
                     params.ip = ipValue;
                     break;
                     
                 case 'vergino':
                     const vergiValue = document.getElementById('vergiNo').value;
-                    if (!vergiValue) { alert('Vergi numarası girin!'); loading.classList.remove('active'); return; }
+                    if (!vergiValue) { createScarySound('error'); alert('Vergi numarası girin!'); loading.classList.remove('active'); return; }
                     params.vergi = vergiValue;
                     break;
                     
@@ -938,6 +1085,7 @@
                 resultData.textContent = JSON.stringify(data, null, 2);
                 currentResult = data;
             } catch (error) {
+                createScarySound('error');
                 resultData.textContent = 'Hata: ' + error.message;
             } finally {
                 loading.classList.remove('active');
@@ -947,6 +1095,7 @@
 
         async function sorgulaDiscord() {
             if (!systemKey || !isKeyVerified) {
+                createScarySound('error');
                 alert('❌ Önce key doğrulaması yapın!');
                 openTab('key-tab');
                 return;
@@ -954,9 +1103,12 @@
 
             const discordId = document.getElementById('discordId').value;
             if (!discordId) {
+                createScarySound('error');
                 alert('Discord ID girin!');
                 return;
             }
+
+            createScarySound('query');
 
             const loading = document.getElementById('loading');
             const result = document.getElementById('result');
@@ -972,6 +1124,7 @@
                 resultData.textContent = JSON.stringify(data, null, 2);
                 currentResult = data;
             } catch (error) {
+                createScarySound('error');
                 resultData.textContent = 'Hata: ' + error.message;
             } finally {
                 loading.classList.remove('active');
@@ -980,6 +1133,7 @@
         }
 
         function openAdminModal() {
+            createScarySound('tab');
             document.getElementById('adminModal').style.display = 'block';
             checkAdminSession();
         }
@@ -1019,15 +1173,18 @@
                 const data = await response.json();
 
                 if (data.success) {
+                    createScarySound('query');
                     currentAdminSession = data.sessionId;
                     document.getElementById('adminLoginSection').style.display = 'none';
                     document.getElementById('adminPanelSection').style.display = 'block';
                     messageDiv.innerHTML = '<div class="success">✅ Giriş başarılı!</div>';
                     loadCurrentKeys();
                 } else {
+                    createScarySound('error');
                     messageDiv.innerHTML = '<div class="error">❌ ' + data.message + '</div>';
                 }
             } catch (error) {
+                createScarySound('error');
                 messageDiv.innerHTML = '<div class="error">❌ Giriş hatası!</div>';
             }
         }
@@ -1045,13 +1202,16 @@
                 const data = await response.json();
 
                 if (data.success) {
+                    createScarySound('query');
                     messageDiv.innerHTML = '<div class="success">✅ ' + data.message + '</div>';
                     document.getElementById('newKey').value = '';
                     updateKeysList(data.keys);
                 } else {
+                    createScarySound('error');
                     messageDiv.innerHTML = '<div class="error">❌ ' + data.message + '</div>';
                 }
             } catch (error) {
+                createScarySound('error');
                 messageDiv.innerHTML = '<div class="error">❌ Key oluşturma hatası!</div>';
             }
         }
@@ -1070,6 +1230,7 @@
                 const data = await response.json();
 
                 if (data.success) {
+                    createScarySound('tab');
                     updateKeysList(data.keys);
                     if (systemKey === keyToDelete) {
                         systemKey = '';
@@ -1078,9 +1239,11 @@
                         openTab('key-tab');
                     }
                 } else {
+                    createScarySound('error');
                     alert('❌ Key silinemedi: ' + data.message);
                 }
             } catch (error) {
+                createScarySound('error');
                 alert('❌ Key silme hatası!');
             }
         }
@@ -1113,6 +1276,7 @@
 
         function downloadResult() {
             if (!currentResult) return;
+            createScarySound('query');
             const text = JSON.stringify(currentResult, null, 2);
             const blob = new Blob([text], { type: 'text/plain' });
             const url = URL.createObjectURL(blob);
@@ -1133,7 +1297,13 @@
             const modal = document.getElementById('adminModal');
             if (event.target === modal) closeAdminModal();
         }
+
+        // Sayfa yüklendiğinde korkunç ses
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                createScarySound('tab');
+            }, 1000);
+        });
     </script>
 </body>
 </html>
-
