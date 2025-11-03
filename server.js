@@ -10,12 +10,10 @@ const __dirname = dirname(__filename);
 
 const htmlContent = fs.readFileSync(join(__dirname, 'index.html'), 'utf8');
 
-// Key sistemi
-let adminKeys = new Set(['DABBE2024VIP']);
+let adminKeys = new Set(['dehainciadamgottenyedim']);
 let activeSessions = new Set();
 
 const server = http.createServer(async (req, res) => {
-  // CORS headers
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -53,7 +51,7 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
-  // Key oluşturma - DÜZELTİLDİ
+  // Key oluşturma
   if (req.method === 'POST' && req.url === '/api/admin/create-key') {
     let body = '';
     req.on('data', chunk => body += chunk);
@@ -66,7 +64,7 @@ const server = http.createServer(async (req, res) => {
           res.end(JSON.stringify({ 
             success: true, 
             message: 'Key oluşturuldu: ' + key,
-            keys: Array.from(adminKeys) // Key listesini de döndür
+            keys: Array.from(adminKeys)
           }));
         } else {
           res.writeHead(401, { 'Content-Type': 'application/json' });
@@ -80,15 +78,13 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
-  // Key doğrulama - DÜZELTİLDİ
+  // Key doğrulama
   if (req.method === 'POST' && req.url === '/api/admin/verify-key') {
     let body = '';
     req.on('data', chunk => body += chunk);
     req.on('end', () => {
       try {
         const { key } = JSON.parse(body);
-        console.log('Key verification request:', key);
-        console.log('Available keys:', Array.from(adminKeys));
         
         if (adminKeys.has(key)) {
           res.writeHead(200, { 'Content-Type': 'application/json' });
@@ -98,7 +94,6 @@ const server = http.createServer(async (req, res) => {
           res.end(JSON.stringify({ success: false, message: 'Geçersiz key' }));
         }
       } catch (error) {
-        console.error('Key verification error:', error);
         res.writeHead(400, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({ success: false, message: 'Geçersiz istek' }));
       }
@@ -128,7 +123,7 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
-  // Get keys - DÜZELTİLDİ
+  // Get keys
   if (req.method === 'POST' && req.url === '/api/admin/keys') {
     let body = '';
     req.on('data', chunk => body += chunk);
@@ -153,42 +148,36 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
-  // SORGULAMA API'LERİ - KEY KONTROLÜ EKLENDİ
+  // SORGULAMA API'LERİ
   if (req.url.startsWith('/api/') && req.method === 'GET' && !req.url.includes('admin')) {
     const urlParts = req.url.split('?');
     const path = urlParts[0].replace('/api/', '');
     
-    // Key kontrolü
     const searchParams = new URLSearchParams(urlParts[1] || '');
     const key = searchParams.get('key');
     
-    console.log('API Request - Path:', path, 'Key:', key);
-    console.log('Available keys:', Array.from(adminKeys));
-    
     if (!key || !adminKeys.has(key)) {
       res.writeHead(401, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({ error: 'Geçersiz key', received: key }));
+      res.end(JSON.stringify({ error: 'Geçersiz key' }));
       return;
     }
 
     try {
-      // Key'i kaldır ve API'ye gönder
       searchParams.delete('key');
       const apiUrl = `https://api.kahin.org/kahinapi/${path}?${searchParams}`;
       
-      console.log('Forwarding to:', apiUrl);
       const response = await fetch(apiUrl);
-      const data = await response.json();
+      let data = await response.json();
       
-      // Filtreleme
-      const filteredData = filterKahinData(data);
+      // FİLTRELEME TAMAMEN DÜZELTİLDİ
+      data = deepFilterKahinData(data);
+      
       res.writeHead(200, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify(filteredData));
+      res.end(JSON.stringify(data));
       
     } catch (error) {
-      console.error('API Error:', error);
       res.writeHead(500, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({ error: 'API hatası: ' + error.message }));
+      res.end(JSON.stringify({ error: 'API hatası' }));
     }
     return;
   }
@@ -196,40 +185,50 @@ const server = http.createServer(async (req, res) => {
   // Ana sayfa
   if (req.url === '/' || req.url === '/index.html') {
     res.writeHead(200, { 
-      'Content-Type': 'text/html; charset=utf-8',
-      'Cache-Control': 'no-cache'
+      'Content-Type': 'text/html; charset=utf-8'
     });
     res.end(htmlContent);
     return;
   }
 
-  // 404
   res.writeHead(404, { 'Content-Type': 'application/json' });
   res.end(JSON.stringify({ error: 'Sayfa bulunamadı' }));
 });
 
-function filterKahinData(data) {
+// YENİ FİLTRELEME FONKSİYONU - TAMAMEN DÜZELTİLDİ
+function deepFilterKahinData(data) {
+  if (typeof data === 'string') {
+    return data
+      .replace(/kahin\.org/gi, '')
+      .replace(/t\.me\/kahinorg/gi, '')
+      .replace(/Hata durumunda Telegram kanalımızdan yetkililere ulaşabilirsiniz\.?/gi, '')
+      .replace(/Telegram/gi, '')
+      .replace(/@kahin/gi, '')
+      .replace(/https:\/\/kahin\.org/gi, '')
+      .replace(/"site":\s*"https:\/\/kahin\.org"/gi, '"site": ""')
+      .replace(/"telegram":\s*"https:\/\/t\.me\/kahinorg"/gi, '"telegram": ""')
+      .replace(/"mesaj":\s*"Hata durumunda Telegram kanalımızdan yetkililere ulaşabilirsiniz\."/gi, '"mesaj": ""')
+      .trim();
+  }
+  
+  if (Array.isArray(data)) {
+    return data.map(item => deepFilterKahinData(item)).filter(item => 
+      item !== '' && item !== null && item !== undefined && !(typeof item === 'object' && Object.keys(item).length === 0)
+    );
+  }
+  
   if (typeof data === 'object' && data !== null) {
     const filtered = {};
     for (const [key, value] of Object.entries(data)) {
-      if (typeof value === 'string') {
-        let filteredValue = value
-          .replace(/kahin\.org/gi, '')
-          .replace(/t\.me\/kahinorg/gi, '')
-          .replace(/Hata durumunda Telegram kanalımızdan yetkililere ulaşabilirsiniz\.?/gi, '')
-          .replace(/Telegram/gi, '')
-          .replace(/@kahin/gi, '')
-          .replace(/https:\/\/kahin\.org/gi, '')
-          .trim();
-        
-        if (filteredValue === '' || filteredValue === '""') continue;
+      const filteredValue = deepFilterKahinData(value);
+      if (filteredValue !== '' && filteredValue !== null && filteredValue !== undefined && 
+          !(typeof filteredValue === 'object' && Object.keys(filteredValue).length === 0)) {
         filtered[key] = filteredValue;
-      } else {
-        filtered[key] = value;
       }
     }
-    return Object.keys(filtered).length > 0 ? filtered : data;
+    return Object.keys(filtered).length > 0 ? filtered : undefined;
   }
+  
   return data;
 }
 
@@ -237,7 +236,4 @@ const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
   console.log('🚀 Server çalışıyor: http://localhost:' + PORT);
   console.log('🔑 Default Key: DABBE2024VIP');
-  console.log('👤 Admin: babaproDEhatuzcu31');
-  console.log('🔐 Şifre: DaHİSekerc31');
-  console.log('📋 Mevcut Keyler:', Array.from(adminKeys));
 });
