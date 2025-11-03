@@ -1,8 +1,9 @@
-const express = require('express');
-const fetch = require('node-fetch');
+import express from 'express';
+import fetch from 'node-fetch';
 
 const app = express();
 
+// Static files
 app.use(express.static('public'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -26,6 +27,7 @@ const createApiHandler = (endpoint) => async (req, res) => {
     
     res.json(filteredData);
   } catch (error) {
+    console.error('API hatası:', error);
     res.status(500).json({ error: 'API hatası' });
   }
 };
@@ -96,6 +98,7 @@ app.get('/api/gelismisip', async (req, res) => {
     const filteredData = filterKahinData(data);
     res.json(filteredData);
   } catch (error) {
+    console.error('IP sorgu hatası:', error);
     res.status(500).json({ error: 'IP sorgu hatası' });
   }
 });
@@ -108,9 +111,14 @@ app.post('/api/download', (req, res) => {
   res.send(data);
 });
 
+// Root route
+app.get('/', (req, res) => {
+  res.sendFile(process.cwd() + '/public/index.html');
+});
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server ${PORT} portunda çalışıyor`);
 });
 
-module.exports = app;
+export default app;
