@@ -78,6 +78,38 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
+  // KEY SİLME - YENİ EKLENDİ
+  if (req.method === 'POST' && req.url === '/api/admin/delete-key') {
+    let body = '';
+    req.on('data', chunk => body += chunk);
+    req.on('end', () => {
+      try {
+        const { key, sessionId } = JSON.parse(body);
+        if (activeSessions.has(sessionId)) {
+          if (adminKeys.has(key)) {
+            adminKeys.delete(key);
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ 
+              success: true, 
+              message: 'Key silindi: ' + key,
+              keys: Array.from(adminKeys)
+            }));
+          } else {
+            res.writeHead(404, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ success: false, message: 'Key bulunamadı' }));
+          }
+        } else {
+          res.writeHead(401, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ success: false, message: 'Yetkisiz erişim' }));
+        }
+      } catch (error) {
+        res.writeHead(400, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ success: false, message: 'Geçersiz istek' }));
+      }
+    });
+    return;
+  }
+
   // Key doğrulama
   if (req.method === 'POST' && req.url === '/api/admin/verify-key') {
     let body = '';
@@ -148,7 +180,7 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
-  // SORGULAMA API'LERİ
+  // SORGULAMA API'LERİ - TÜMÜ AKTİF
   if (req.url.startsWith('/api/') && req.method === 'GET' && !req.url.includes('admin')) {
     const urlParts = req.url.split('?');
     const path = urlParts[0].replace('/api/', '');
@@ -169,7 +201,6 @@ const server = http.createServer(async (req, res) => {
       const response = await fetch(apiUrl);
       let data = await response.json();
       
-      // FİLTRELEME TAMAMEN DÜZELTİLDİ
       data = deepFilterKahinData(data);
       
       res.writeHead(200, { 'Content-Type': 'application/json' });
@@ -195,7 +226,6 @@ const server = http.createServer(async (req, res) => {
   res.end(JSON.stringify({ error: 'Sayfa bulunamadı' }));
 });
 
-// YENİ FİLTRELEME FONKSİYONU - TAMAMEN DÜZELTİLDİ
 function deepFilterKahinData(data) {
   if (typeof data === 'string') {
     return data
@@ -235,5 +265,5 @@ function deepFilterKahinData(data) {
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
   console.log('🚀 Server çalışıyor: http://localhost:' + PORT);
-  console.log('🔑 Default Key: DABBE2024VIP');
+  console.log('🔑 Default Key: discorddan alcan keyi yarramin başı');
 });
