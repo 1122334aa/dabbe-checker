@@ -2,14 +2,14 @@
   "version": 2,
   "builds": [
     {
-      "src": "middleware.js",
+      "src": "api/index.js",
       "use": "@vercel/node"
     }
   ],
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "/middleware.js"
+      "dest": "/api/index.js"
     }
   ]
 }
