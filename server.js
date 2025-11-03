@@ -10,12 +10,9 @@ const __dirname = dirname(__filename);
 
 const htmlContent = fs.readFileSync(join(__dirname, 'index.html'), 'utf8');
 
-// Admin sistemi
+// Key sistemi
 let adminKeys = new Set(['DABBE2024VIP']);
-let adminSessions = new Map();
-
-// Admin hash: babaproDEhatuzcu31:DaHİSekerc31
-const ADMIN_HASH = crypto.createHash('md5').update('babaproDEhatuzcu31:DaHİSekerc31').digest('hex');
+let activeSessions = new Set();
 
 const server = http.createServer(async (req, res) => {
   // CORS headers
@@ -23,12 +20,13 @@ const server = http.createServer(async (req, res) => {
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
-  // OPTIONS istekleri için
   if (req.method === 'OPTIONS') {
     res.writeHead(200);
     res.end();
     return;
   }
+
+  console.log(`${req.method} ${req.url}`);
 
   // Admin login
   if (req.method === 'POST' && req.url === '/api/admin/login') {
@@ -37,13 +35,10 @@ const server = http.createServer(async (req, res) => {
     req.on('end', () => {
       try {
         const { username, password } = JSON.parse(body);
-        const inputHash = crypto.createHash('md5').update(username + ':' + password).digest('hex');
         
-        console.log('Login attempt:', username, inputHash, ADMIN_HASH);
-        
-        if (inputHash === ADMIN_HASH) {
+        if (username === 'babaproDEhatuzcu31' && password === 'DaHİSekerc31') {
           const sessionId = crypto.randomBytes(16).toString('hex');
-          adminSessions.set(sessionId, Date.now());
+          activeSessions.add(sessionId);
           res.writeHead(200, { 'Content-Type': 'application/json' });
           res.end(JSON.stringify({ success: true, sessionId, message: 'Giriş başarılı' }));
         } else {
@@ -51,7 +46,6 @@ const server = http.createServer(async (req, res) => {
           res.end(JSON.stringify({ success: false, message: 'Hatalı kullanıcı adı veya şifre' }));
         }
       } catch (error) {
-        console.error('Login error:', error);
         res.writeHead(400, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({ success: false, message: 'Geçersiz istek' }));
       }
@@ -59,17 +53,21 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
-  // Key oluşturma
+  // Key oluşturma - DÜZELTİLDİ
   if (req.method === 'POST' && req.url === '/api/admin/create-key') {
     let body = '';
     req.on('data', chunk => body += chunk);
     req.on('end', () => {
       try {
         const { key, sessionId } = JSON.parse(body);
-        if (adminSessions.has(sessionId)) {
+        if (activeSessions.has(sessionId)) {
           adminKeys.add(key);
           res.writeHead(200, { 'Content-Type': 'application/json' });
-          res.end(JSON.stringify({ success: true, message: 'Key oluşturuldu: ' + key }));
+          res.end(JSON.stringify({ 
+            success: true, 
+            message: 'Key oluşturuldu: ' + key,
+            keys: Array.from(adminKeys) // Key listesini de döndür
+          }));
         } else {
           res.writeHead(401, { 'Content-Type': 'application/json' });
           res.end(JSON.stringify({ success: false, message: 'Yetkisiz erişim' }));
@@ -82,14 +80,16 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
-  // Key doğrulama
+  // Key doğrulama - DÜZELTİLDİ
   if (req.method === 'POST' && req.url === '/api/admin/verify-key') {
     let body = '';
     req.on('data', chunk => body += chunk);
     req.on('end', () => {
       try {
         const { key } = JSON.parse(body);
-        console.log('Key verification:', key, adminKeys);
+        console.log('Key verification request:', key);
+        console.log('Available keys:', Array.from(adminKeys));
+        
         if (adminKeys.has(key)) {
           res.writeHead(200, { 'Content-Type': 'application/json' });
           res.end(JSON.stringify({ success: true, message: 'Key doğru' }));
@@ -98,6 +98,7 @@ const server = http.createServer(async (req, res) => {
           res.end(JSON.stringify({ success: false, message: 'Geçersiz key' }));
         }
       } catch (error) {
+        console.error('Key verification error:', error);
         res.writeHead(400, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({ success: false, message: 'Geçersiz istek' }));
       }
@@ -112,7 +113,7 @@ const server = http.createServer(async (req, res) => {
     req.on('end', () => {
       try {
         const { sessionId } = JSON.parse(body);
-        if (adminSessions.has(sessionId)) {
+        if (activeSessions.has(sessionId)) {
           res.writeHead(200, { 'Content-Type': 'application/json' });
           res.end(JSON.stringify({ success: true, message: 'Session aktif' }));
         } else {
@@ -127,16 +128,19 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
-  // Get keys
+  // Get keys - DÜZELTİLDİ
   if (req.method === 'POST' && req.url === '/api/admin/keys') {
     let body = '';
     req.on('data', chunk => body += chunk);
     req.on('end', () => {
       try {
         const { sessionId } = JSON.parse(body);
-        if (adminSessions.has(sessionId)) {
+        if (activeSessions.has(sessionId)) {
           res.writeHead(200, { 'Content-Type': 'application/json' });
-          res.end(JSON.stringify({ success: true, keys: Array.from(adminKeys) }));
+          res.end(JSON.stringify({ 
+            success: true, 
+            keys: Array.from(adminKeys) 
+          }));
         } else {
           res.writeHead(401, { 'Content-Type': 'application/json' });
           res.end(JSON.stringify({ success: false, message: 'Yetkisiz' }));
@@ -149,31 +153,34 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
-  // Sorgu API'leri - DÜZELTİLDİ
+  // SORGULAMA API'LERİ - KEY KONTROLÜ EKLENDİ
   if (req.url.startsWith('/api/') && req.method === 'GET' && !req.url.includes('admin')) {
+    const urlParts = req.url.split('?');
+    const path = urlParts[0].replace('/api/', '');
+    
+    // Key kontrolü
+    const searchParams = new URLSearchParams(urlParts[1] || '');
+    const key = searchParams.get('key');
+    
+    console.log('API Request - Path:', path, 'Key:', key);
+    console.log('Available keys:', Array.from(adminKeys));
+    
+    if (!key || !adminKeys.has(key)) {
+      res.writeHead(401, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ error: 'Geçersiz key', received: key }));
+      return;
+    }
+
     try {
-      const url = new URL(req.url, `http://${req.headers.host}`);
-      const path = url.pathname.replace('/api/', '');
-      const searchParams = new URLSearchParams(url.search);
-      
-      // Key kontrolü - query parametresinden al
-      const key = searchParams.get('key');
-      console.log('API Request:', path, 'Key:', key);
-      
-      if (!key || !adminKeys.has(key)) {
-        res.writeHead(401, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ error: 'Geçersiz key', received: key }));
-        return;
-      }
-      
-      // API isteği - key'i çıkar
+      // Key'i kaldır ve API'ye gönder
       searchParams.delete('key');
-      const apiUrl = `https://api.kahin.org/kahinapi/${getApiEndpoint(path)}?${searchParams}`;
+      const apiUrl = `https://api.kahin.org/kahinapi/${path}?${searchParams}`;
       
       console.log('Forwarding to:', apiUrl);
       const response = await fetch(apiUrl);
       const data = await response.json();
       
+      // Filtreleme
       const filteredData = filterKahinData(data);
       res.writeHead(200, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify(filteredData));
@@ -188,7 +195,10 @@ const server = http.createServer(async (req, res) => {
 
   // Ana sayfa
   if (req.url === '/' || req.url === '/index.html') {
-    res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+    res.writeHead(200, { 
+      'Content-Type': 'text/html; charset=utf-8',
+      'Cache-Control': 'no-cache'
+    });
     res.end(htmlContent);
     return;
   }
@@ -197,39 +207,6 @@ const server = http.createServer(async (req, res) => {
   res.writeHead(404, { 'Content-Type': 'application/json' });
   res.end(JSON.stringify({ error: 'Sayfa bulunamadı' }));
 });
-
-function getApiEndpoint(path) {
-  const endpoints = {
-    'tc': 'tc',
-    'tcpro': 'tcpro', 
-    'hayathikayesi': 'hayathikayesi.php',
-    'adsoyad': 'adsoyad',
-    'adsoyadpro': 'adsoyadpro',
-    'tapu': 'tapu',
-    'isyeri': 'isyeri',
-    'vergino': 'vergino',
-    'yas': 'yas',
-    'tcgsm': 'tcgsm',
-    'gsmtc': 'gsmtc',
-    'adres': 'adres.php',
-    'hane': 'hane',
-    'apartman': 'apartman',
-    'adaparsel': 'adaparsel',
-    'adililce': 'adililce.php',
-    'aile': 'aile',
-    'ailepro': 'ailepro',
-    'es': 'es',
-    'sulale': 'sulale',
-    'ip': 'ip',
-    'dns': 'dns',
-    'whois': 'whois',
-    'subdomain': 'subdomain.php',
-    'leak': 'leak.php',
-    'telegram': 'telegram.php',
-    'gelismisip': 'ip'
-  };
-  return endpoints[path] || path;
-}
 
 function filterKahinData(data) {
   if (typeof data === 'object' && data !== null) {
@@ -251,14 +228,16 @@ function filterKahinData(data) {
         filtered[key] = value;
       }
     }
-    return filtered;
+    return Object.keys(filtered).length > 0 ? filtered : data;
   }
   return data;
 }
 
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
-  console.log(`🚀 Server ${PORT} portunda çalışıyor`);
-  console.log(`🔑 Default Key: DABBE2024VIP`);
-  console.log(`🔐 Admin Hash: ${ADMIN_HASH}`);
+  console.log('🚀 Server çalışıyor: http://localhost:' + PORT);
+  console.log('🔑 Default Key: DABBE2024VIP');
+  console.log('👤 Admin: babaproDEhatuzcu31');
+  console.log('🔐 Şifre: DaHİSekerc31');
+  console.log('📋 Mevcut Keyler:', Array.from(adminKeys));
 });
