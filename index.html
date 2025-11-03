@@ -17,11 +17,13 @@
             --accent: #ff0088;
             --dark: #0a0a0a;
             --darker: #050505;
-            --light: #00ffff;
+            --light: #ffffff;
+            --card-bg: rgba(20, 30, 60, 0.7);
+            --sidebar-bg: rgba(10, 20, 40, 0.95);
         }
 
         body {
-            background: #0a0a0a !important;
+            background: linear-gradient(135deg, #0a0a0a 0%, #001122 50%, #0a0a2a 100%);
             color: var(--light);
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             min-height: 100vh;
@@ -40,50 +42,64 @@
         }
 
         .pulse {
-            animation: pulse 2s infinite;
+            animation: pulse 3s infinite;
         }
 
         @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
+            0%, 100% { 
+                text-shadow: 0 0 10px var(--primary), 0 0 20px var(--secondary);
+            }
+            50% { 
+                text-shadow: 0 0 20px var(--primary), 0 0 40px var(--secondary), 0 0 60px var(--accent);
+            }
         }
 
         .container {
             display: flex;
             min-height: 100vh;
-            max-width: 1600px;
-            margin: 0 auto;
+            width: 100%;
+            margin: 0;
         }
 
         .sidebar {
             width: 280px;
-            background: rgba(10, 20, 40, 0.9);
+            background: var(--sidebar-bg);
             border-right: 3px solid var(--primary);
-            padding: 25px 15px;
-            backdrop-filter: blur(15px);
-            box-shadow: 5px 0 25px rgba(0, 255, 136, 0.3);
+            padding: 20px 15px;
+            backdrop-filter: blur(20px);
+            box-shadow: 5px 0 30px rgba(0, 255, 136, 0.3);
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 100;
         }
 
         .sidebar-header {
             text-align: center;
-            padding-bottom: 25px;
+            padding-bottom: 20px;
             border-bottom: 2px solid var(--primary);
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
 
         .logo {
             font-size: 24px;
             font-weight: bold;
             margin-bottom: 10px;
-            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            background: linear-gradient(45deg, var(--primary), var(--secondary), var(--accent));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            animation: logoGlow 4s infinite;
+        }
+
+        @keyframes logoGlow {
+            0%, 100% { filter: hue-rotate(0deg); }
+            50% { filter: hue-rotate(180deg); }
         }
 
         .nav-tabs {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 8px;
         }
 
         .tab-btn {
@@ -91,59 +107,69 @@
             border: 2px solid transparent;
             border-left: 4px solid var(--primary);
             color: var(--light);
-            padding: 15px 20px;
+            padding: 12px 15px;
             cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            border-radius: 0 12px 12px 0;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            border-radius: 0 10px 10px 0;
             text-align: left;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 500;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
         }
 
         .tab-btn:hover {
             background: rgba(0, 255, 136, 0.2);
             border-left-color: var(--accent);
-            transform: translateX(8px) scale(1.02);
-            box-shadow: 0 5px 20px rgba(0, 255, 136, 0.4);
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0, 255, 136, 0.3);
         }
 
         .tab-btn.active {
             background: linear-gradient(135deg, rgba(0, 255, 136, 0.3), rgba(0, 136, 255, 0.3));
             border-left-color: var(--accent);
-            transform: translateX(12px);
-            box-shadow: 0 8px 25px rgba(255, 0, 136, 0.5);
+            transform: translateX(8px);
+            box-shadow: 0 8px 20px rgba(255, 0, 136, 0.4);
         }
 
         .tab-btn i {
-            font-size: 18px;
-            width: 20px;
+            font-size: 16px;
+            width: 18px;
         }
 
         .main-content {
             flex: 1;
-            padding: 30px;
-            overflow-y: auto;
-            background: rgba(5, 10, 20, 0.6);
+            margin-left: 280px;
+            padding: 20px;
+            min-height: 100vh;
+            background: rgba(5, 10, 20, 0.4);
         }
 
         header {
             text-align: center;
-            padding: 30px 0;
-            margin-bottom: 40px;
+            padding: 20px 0;
+            margin-bottom: 30px;
             position: relative;
         }
 
         .header-glow {
-            font-size: 3.5em;
+            font-size: 2.8em;
             font-weight: 900;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
             background: linear-gradient(45deg, var(--primary), var(--secondary), var(--accent));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 30px rgba(0, 255, 136, 0.5);
+            animation: titleGlow 3s infinite;
+        }
+
+        @keyframes titleGlow {
+            0%, 100% { 
+                text-shadow: 0 0 20px rgba(0, 255, 136, 0.5), 0 0 40px rgba(0, 136, 255, 0.3);
+            }
+            50% { 
+                text-shadow: 0 0 30px rgba(0, 255, 136, 0.8), 0 0 60px rgba(0, 136, 255, 0.5), 0 0 80px rgba(255, 0, 136, 0.3);
+            }
         }
 
         .admin-btn {
@@ -153,39 +179,40 @@
             background: linear-gradient(45deg, #ff0088, #ff4444);
             border: none;
             color: white;
-            padding: 12px 24px;
+            padding: 10px 20px;
             cursor: pointer;
-            border-radius: 25px;
+            border-radius: 20px;
             transition: all 0.3s ease;
             font-weight: bold;
+            font-size: 14px;
             box-shadow: 0 5px 15px rgba(255, 0, 136, 0.4);
         }
 
         .admin-btn:hover {
-            transform: translateY(-3px);
+            transform: translateY(-2px);
             box-shadow: 0 8px 25px rgba(255, 0, 136, 0.6);
         }
 
         .tab-content {
             display: none;
-            background: rgba(20, 30, 60, 0.4);
+            background: var(--card-bg);
             border: 2px solid var(--primary);
-            border-radius: 20px;
-            padding: 35px;
-            margin-bottom: 30px;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
             backdrop-filter: blur(10px);
-            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.2);
+            box-shadow: 0 8px 25px rgba(0, 255, 136, 0.2);
         }
 
         .tab-content.active {
             display: block;
-            animation: slideIn 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            animation: slideIn 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
         @keyframes slideIn {
             from { 
                 opacity: 0; 
-                transform: translateY(30px) scale(0.95); 
+                transform: translateY(20px) scale(0.98); 
             }
             to { 
                 opacity: 1; 
@@ -195,90 +222,90 @@
 
         .tab-content h2 {
             color: var(--primary);
-            margin-bottom: 25px;
-            font-size: 28px;
+            margin-bottom: 20px;
+            font-size: 24px;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
         }
 
         .form-group {
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
 
         label {
             display: block;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             font-weight: 600;
             color: var(--light);
-            font-size: 15px;
+            font-size: 14px;
         }
 
         input, select {
             width: 100%;
-            padding: 15px 20px;
+            padding: 12px 15px;
             background: rgba(10, 20, 40, 0.8);
             border: 2px solid var(--secondary);
             color: var(--light);
-            border-radius: 12px;
-            font-size: 16px;
+            border-radius: 10px;
+            font-size: 14px;
             transition: all 0.3s ease;
         }
 
         input:focus, select:focus {
             outline: none;
             border-color: var(--accent);
-            box-shadow: 0 0 20px rgba(255, 0, 136, 0.4);
+            box-shadow: 0 0 15px rgba(255, 0, 136, 0.4);
             background: rgba(15, 25, 45, 0.9);
         }
 
         .btn-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin-top: 25px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            margin-top: 20px;
         }
 
         button {
             background: linear-gradient(45deg, var(--primary), var(--secondary));
             border: none;
             color: var(--darker);
-            padding: 14px 28px;
+            padding: 12px 20px;
             cursor: pointer;
-            border-radius: 12px;
+            border-radius: 10px;
             transition: all 0.3s ease;
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 600;
-            box-shadow: 0 5px 15px rgba(0, 255, 136, 0.3);
+            box-shadow: 0 4px 12px rgba(0, 255, 136, 0.3);
         }
 
         button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0, 255, 136, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 255, 136, 0.5);
         }
 
         .delete-btn {
             background: linear-gradient(45deg, #ff4444, #ff0088) !important;
-            padding: 8px 15px !important;
-            font-size: 12px !important;
+            padding: 6px 12px !important;
+            font-size: 11px !important;
         }
 
         .result {
-            margin-top: 35px;
-            padding: 25px;
+            margin-top: 25px;
+            padding: 20px;
             background: rgba(10, 25, 50, 0.6);
             border: 2px solid var(--secondary);
-            border-radius: 15px;
+            border-radius: 12px;
             display: none;
         }
 
         .result.active {
             display: block;
-            animation: slideUp 0.5s ease;
+            animation: slideUp 0.4s ease;
         }
 
         @keyframes slideUp {
-            from { opacity: 0; transform: translateY(25px); }
+            from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
@@ -288,17 +315,18 @@
             font-family: 'Courier New', monospace;
             color: var(--primary);
             background: rgba(0, 0, 0, 0.4);
-            padding: 20px;
-            border-radius: 10px;
+            padding: 15px;
+            border-radius: 8px;
             border: 1px solid var(--primary);
             max-height: 400px;
             overflow-y: auto;
+            font-size: 13px;
         }
 
         .loading {
             display: none;
             text-align: center;
-            padding: 30px;
+            padding: 25px;
         }
 
         .loading.active {
@@ -306,13 +334,13 @@
         }
 
         .spinner {
-            border: 4px solid rgba(0, 136, 255, 0.3);
-            border-top: 4px solid var(--accent);
+            border: 3px solid rgba(0, 136, 255, 0.3);
+            border-top: 3px solid var(--accent);
             border-radius: 50%;
-            width: 50px;
-            height: 50px;
+            width: 40px;
+            height: 40px;
             animation: spin 1s linear infinite;
-            margin: 0 auto 15px;
+            margin: 0 auto 10px;
         }
 
         @keyframes spin {
@@ -323,9 +351,9 @@
         .key-section {
             background: linear-gradient(135deg, rgba(255, 0, 136, 0.1), rgba(0, 136, 255, 0.1));
             border: 2px solid var(--accent);
-            border-radius: 15px;
-            padding: 25px;
-            margin-bottom: 25px;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
         }
 
         .modal {
@@ -346,112 +374,145 @@
             transform: translate(-50%, -50%);
             background: linear-gradient(135deg, #0a0a2a, #001122);
             border: 3px solid var(--accent);
-            border-radius: 20px;
-            padding: 35px;
+            border-radius: 15px;
+            padding: 25px;
             width: 90%;
-            max-width: 500px;
-            box-shadow: 0 0 50px rgba(255, 0, 136, 0.5);
+            max-width: 450px;
+            box-shadow: 0 0 40px rgba(255, 0, 136, 0.5);
         }
 
         .modal h2 {
             color: var(--accent);
             text-align: center;
-            margin-bottom: 25px;
-            font-size: 28px;
+            margin-bottom: 20px;
+            font-size: 24px;
         }
 
         .close {
             position: absolute;
-            top: 20px;
-            right: 25px;
+            top: 15px;
+            right: 20px;
             color: var(--accent);
-            font-size: 30px;
+            font-size: 28px;
             cursor: pointer;
             transition: all 0.3s ease;
         }
 
         .close:hover {
             color: var(--primary);
-            transform: scale(1.2);
+            transform: scale(1.1);
         }
 
         .admin-section {
-            margin-bottom: 25px;
-            padding: 20px;
+            margin-bottom: 20px;
+            padding: 15px;
             border: 2px solid var(--accent);
-            border-radius: 15px;
+            border-radius: 12px;
             background: rgba(255, 0, 136, 0.1);
         }
 
         .admin-section h3 {
             color: var(--accent);
-            margin-bottom: 18px;
-            font-size: 20px;
+            margin-bottom: 15px;
+            font-size: 18px;
         }
 
         #adminMessage {
-            margin-top: 20px;
-            padding: 15px;
-            border-radius: 10px;
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 8px;
             text-align: center;
             font-weight: 600;
+            font-size: 14px;
         }
 
         .key-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 12px;
-            margin: 5px 0;
+            padding: 6px 10px;
+            margin: 4px 0;
             background: rgba(0, 255, 136, 0.1);
-            border-radius: 8px;
+            border-radius: 6px;
             border: 1px solid var(--primary);
+            font-size: 13px;
         }
 
         .coming-soon {
             text-align: center;
-            padding: 60px 20px;
+            padding: 40px 20px;
             opacity: 0.7;
         }
 
         .coming-soon i {
-            font-size: 4em;
-            margin-bottom: 20px;
+            font-size: 3em;
+            margin-bottom: 15px;
             color: var(--accent);
         }
 
+        .section-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .query-section {
+            background: rgba(20, 30, 60, 0.5);
+            border: 1px solid var(--secondary);
+            border-radius: 10px;
+            padding: 15px;
+            backdrop-filter: blur(5px);
+        }
+
+        .query-section h4 {
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
         @media (max-width: 1024px) {
+            .sidebar {
+                width: 250px;
+            }
+            .main-content {
+                margin-left: 250px;
+            }
+        }
+
+        @media (max-width: 768px) {
             .container {
                 flex-direction: column;
             }
-            
             .sidebar {
+                position: relative;
                 width: 100%;
-                border-right: none;
-                border-bottom: 3px solid var(--primary);
+                height: auto;
             }
-            
+            .main-content {
+                margin-left: 0;
+            }
             .nav-tabs {
                 flex-direction: row;
                 overflow-x: auto;
-                padding-bottom: 10px;
             }
-            
             .tab-btn {
-                min-width: 160px;
+                min-width: 140px;
                 text-align: center;
                 border-left: none;
-                border-bottom: 4px solid var(--primary);
-                border-radius: 12px 12px 0 0;
+                border-bottom: 3px solid var(--primary);
+                border-radius: 10px 10px 0 0;
             }
-            
             .header-glow {
-                font-size: 2.5em;
+                font-size: 2em;
             }
         }
 
         ::-webkit-scrollbar {
-            width: 8px;
+            width: 6px;
         }
 
         ::-webkit-scrollbar-track {
@@ -460,7 +521,7 @@
 
         ::-webkit-scrollbar-thumb {
             background: linear-gradient(var(--primary), var(--secondary));
-            border-radius: 10px;
+            border-radius: 8px;
         }
     </style>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
@@ -471,8 +532,8 @@
     <div class="container">
         <div class="sidebar">
             <div class="sidebar-header">
-                <div class="logo glow">DABBE PRO</div>
-                <p style="font-size: 12px; opacity: 0.8;">v3.0 - Premium Sorgu</p>
+                <div class="logo">DABBE PRO</div>
+                <p style="font-size: 11px; opacity: 0.8;">v4.0 - Premium Sorgu</p>
             </div>
             
             <div class="nav-tabs">
@@ -511,12 +572,12 @@
 
         <div class="main-content">
             <button class="admin-btn" onclick="openAdminModal()">
-                <i class="fas fa-crown"></i> Admin Panel
+                <i class="fas fa-crown"></i> Admin
             </button>
 
             <header>
                 <h1 class="header-glow pulse">DABBE CHECKER PRO</h1>
-                <p style="font-size: 18px; opacity: 0.9;">Premium Sorgu Platformu</p>
+                <p style="font-size: 16px; opacity: 0.9;">Premium Sorgu Platformu</p>
             </header>
 
             <!-- Key Tab -->
@@ -584,7 +645,7 @@
                 </div>
                 <button onclick="sorgula('tcgsm')">TC'den GSM Sorgula</button>
                 
-                <div class="form-group" style="margin-top: 30px;">
+                <div class="form-group" style="margin-top: 20px;">
                     <label>GSM Numarası:</label>
                     <input type="text" id="gsm" placeholder="GSM numarasını girin">
                 </div>
@@ -620,20 +681,20 @@
                     <button onclick="sorgula('subdomain')">Subdomain Sorgula</button>
                 </div>
                 
-                <div class="form-group" style="margin-top: 30px;">
+                <div class="form-group" style="margin-top: 20px;">
                     <label>E-posta:</label>
                     <input type="text" id="leakQuery" placeholder="E-posta adresi girin">
                 </div>
                 <button onclick="sorgula('leak')">Leak Sorgula</button>
                 
-                <div class="form-group" style="margin-top: 30px;">
+                <div class="form-group" style="margin-top: 20px;">
                     <label>Telegram Kullanıcı Adı:</label>
                     <input type="text" id="telegramUser" placeholder="Telegram kullanıcı adı">
                 </div>
                 <button onclick="sorgula('telegram')">Telegram Sorgula</button>
             </div>
 
-            <!-- Discord Tab - YENİ EKLENDİ -->
+            <!-- Discord Tab -->
             <div id="discord-tab" class="tab-content">
                 <h2><i class="fab fa-discord"></i> Discord ID Sorgulama</h2>
                 <div class="form-group">
@@ -655,38 +716,49 @@
                 <button onclick="sorgula('gelismisip')">Detaylı IP Sorgula</button>
             </div>
 
-            <!-- Diğer Sorgular Tab -->
+            <!-- Diğer Sorgular Tab - YENİ DÜZEN -->
             <div id="other-tab" class="tab-content">
                 <h2><i class="fas fa-cogs"></i> Diğer Sorgular</h2>
                 
-                <div class="form-group">
-                    <label>TC Kimlik No:</label>
-                    <input type="text" id="tcOther" maxlength="11" placeholder="TC kimlik numarasını girin">
+                <div class="section-group">
+                    <!-- TC ile Sorgular -->
+                    <div class="query-section">
+                        <h4><i class="fas fa-id-card"></i> TC ile Sorgular</h4>
+                        <div class="form-group">
+                            <input type="text" id="tcOther" maxlength="11" placeholder="TC kimlik numarası">
+                        </div>
+                        <div class="btn-group">
+                            <button onclick="sorgula('tapu')">Tapu Sorgula</button>
+                            <button onclick="sorgula('isyeri')">İşyeri Sorgula</button>
+                            <button onclick="sorgula('adres')">Adres Sorgula</button>
+                            <button onclick="sorgula('hane')">Hane Sorgula</button>
+                            <button onclick="sorgula('apartman')">Apartman Sorgula</button>
+                        </div>
+                    </div>
+
+                    <!-- Vergi No Sorgusu -->
+                    <div class="query-section">
+                        <h4><i class="fas fa-file-invoice-dollar"></i> Vergi Sorgusu</h4>
+                        <div class="form-group">
+                            <input type="text" id="vergiNo" placeholder="Vergi numarası">
+                        </div>
+                        <button onclick="sorgula('vergino')" style="width: 100%;">Vergi No Sorgula</button>
+                    </div>
+
+                    <!-- Ada Parsel Sorgusu -->
+                    <div class="query-section">
+                        <h4><i class="fas fa-map-marked-alt"></i> Ada Parsel Sorgusu</h4>
+                        <div class="form-group">
+                            <input type="text" id="ilAda" placeholder="İl">
+                            <input type="text" id="ada" placeholder="Ada" style="margin-top: 8px;">
+                            <input type="text" id="parsel" placeholder="Parsel" style="margin-top: 8px;">
+                        </div>
+                        <button onclick="sorgula('adaparsel')" style="width: 100%;">Ada Parsel Sorgula</button>
+                    </div>
                 </div>
-                <div class="btn-group">
-                    <button onclick="sorgula('tapu')">Tapu Sorgula</button>
-                    <button onclick="sorgula('isyeri')">İşyeri Sorgula</button>
-                    <button onclick="sorgula('adres')">Adres Sorgula</button>
-                    <button onclick="sorgula('hane')">Hane Sorgula</button>
-                    <button onclick="sorgula('apartman')">Apartman Sorgula</button>
-                </div>
-                
-                <div class="form-group" style="margin-top: 30px;">
-                    <label>Vergi No:</label>
-                    <input type="text" id="vergiNo" placeholder="Vergi numarası girin">
-                </div>
-                <button onclick="sorgula('vergino')">Vergi No Sorgula</button>
-                
-                <div class="form-group" style="margin-top: 30px;">
-                    <label>Ada Parsel:</label>
-                    <input type="text" id="ilAda" placeholder="İl">
-                    <input type="text" id="ada" placeholder="Ada" style="margin-top: 10px;">
-                    <input type="text" id="parsel" placeholder="Parsel" style="margin-top: 10px;">
-                </div>
-                <button onclick="sorgula('adaparsel')">Ada Parsel Sorgula</button>
             </div>
 
-            <!-- Database Tab - YENİ EKLENDİ -->
+            <!-- Database Tab -->
             <div id="database-tab" class="tab-content">
                 <h2><i class="fas fa-database"></i> Database</h2>
                 <div class="coming-soon">
@@ -698,7 +770,7 @@
 
             <div class="loading" id="loading">
                 <div class="spinner"></div>
-                <p style="font-size: 18px; margin-top: 15px;">Sorgu yapılıyor...</p>
+                <p style="font-size: 16px; margin-top: 10px;">Sorgu yapılıyor...</p>
             </div>
 
             <div class="result" id="result">
@@ -742,9 +814,9 @@
                     <i class="fas fa-plus"></i> Key Oluştur
                 </button>
                 
-                <div style="margin-top: 20px;">
+                <div style="margin-top: 15px;">
                     <h4><i class="fas fa-list"></i> Mevcut Keyler:</h4>
-                    <div id="currentKeys" style="background: rgba(0,0,0,0.4); padding: 15px; border-radius: 10px; margin-top: 10px; max-height: 200px; overflow-y: auto; border: 1px solid var(--primary);"></div>
+                    <div id="currentKeys" style="background: rgba(0,0,0,0.4); padding: 12px; border-radius: 8px; margin-top: 8px; max-height: 150px; overflow-y: auto; border: 1px solid var(--primary);"></div>
                 </div>
             </div>
 
@@ -756,21 +828,21 @@
     <script>
         particlesJS('particles-js', {
             particles: {
-                number: { value: 80, density: { enable: true, value_area: 800 } },
+                number: { value: 60, density: { enable: true, value_area: 800 } },
                 color: { value: "#00ff88" },
                 shape: { type: "circle" },
-                opacity: { value: 0.5, random: true },
-                size: { value: 3, random: true },
+                opacity: { value: 0.3, random: true },
+                size: { value: 2, random: true },
                 line_linked: {
                     enable: true,
-                    distance: 150,
+                    distance: 120,
                     color: "#0088ff",
-                    opacity: 0.4,
+                    opacity: 0.2,
                     width: 1
                 },
                 move: {
                     enable: true,
-                    speed: 2,
+                    speed: 1.5,
                     direction: "none",
                     random: true,
                     straight: false,
@@ -830,7 +902,7 @@
             }
         }
 
-        // Sorgu yapma - TC HATASI FİXLENDİ
+        // Sorgu yapma - TC HATASI TAMAMEN FİXLENDİ
         async function sorgula(type) {
             if (!systemKey || !isKeyVerified) {
                 alert('❌ Önce key doğrulaması yapın!');
@@ -846,18 +918,30 @@
             result.classList.remove('active');
             
             let params = { key: systemKey };
-            let requiredField = '';
             
             switch(type) {
-                case 'tc': case 'tcpro': case 'hayathikayesi': case 'yas': case 'tapu': case 'isyeri': case 'adres': case 'hane': case 'apartman': case 'aile': case 'ailepro': case 'es': case 'sulale': case 'tcgsm':
-                    const tcElement = document.getElementById('tc' + (type === 'tcgsm' ? 'Gsm' : (type === 'aile' || type === 'ailepro' || type === 'es' || type === 'sulale') ? 'Aile' : ''));
-                    const tcValue = tcElement ? tcElement.value : document.getElementById('tc').value;
-                    if (!tcValue) { 
-                        alert('TC kimlik numarası girin!'); 
-                        loading.classList.remove('active'); 
-                        return; 
-                    }
+                case 'tc': case 'tcpro': case 'hayathikayesi': case 'yas':
+                    const tcValue = document.getElementById('tc').value;
+                    if (!tcValue) { alert('TC kimlik numarası girin!'); loading.classList.remove('active'); return; }
                     params.tc = tcValue;
+                    break;
+                    
+                case 'tapu': case 'isyeri': case 'adres': case 'hane': case 'apartman':
+                    const tcOtherValue = document.getElementById('tcOther').value;
+                    if (!tcOtherValue) { alert('TC kimlik numarası girin!'); loading.classList.remove('active'); return; }
+                    params.tc = tcOtherValue;
+                    break;
+                    
+                case 'tcgsm':
+                    const tcGsmValue = document.getElementById('tcGsm').value;
+                    if (!tcGsmValue) { alert('TC kimlik numarası girin!'); loading.classList.remove('active'); return; }
+                    params.tc = tcGsmValue;
+                    break;
+                    
+                case 'aile': case 'ailepro': case 'es': case 'sulale':
+                    const tcAileValue = document.getElementById('tcAile').value;
+                    if (!tcAileValue) { alert('TC kimlik numarası girin!'); loading.classList.remove('active'); return; }
+                    params.tc = tcAileValue;
                     break;
                     
                 case 'gsmtc':
@@ -930,7 +1014,7 @@
             }
         }
 
-        // DISCORD SORGUSU - YENİ EKLENDİ
+        // DISCORD SORGUSU
         async function sorgulaDiscord() {
             if (!systemKey || !isKeyVerified) {
                 alert('❌ Önce key doğrulaması yapın!');
