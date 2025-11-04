@@ -34,7 +34,6 @@
             line-height: 1.6;
             position: relative;
             overflow-x: hidden;
-            cursor: none;
         }
 
         /* Büyük balkabağı arkaplan */
@@ -56,51 +55,6 @@
             25% { transform: translate(-50%, -52%) rotate(5deg) scale(1.05); }
             50% { transform: translate(-50%, -50%) rotate(0deg) scale(1); }
             75% { transform: translate(-50%, -48%) rotate(-5deg) scale(0.95); }
-        }
-
-        /* Mouse partikülleri */
-        #particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 9999;
-        }
-
-        .particle {
-            position: absolute;
-            width: 6px;
-            height: 6px;
-            background: #000000;
-            border-radius: 50%;
-            pointer-events: none;
-            opacity: 0.7;
-            animation: particleFloat 2s ease-out forwards;
-        }
-
-        @keyframes particleFloat {
-            0% {
-                transform: translate(0, 0) scale(1);
-                opacity: 0.7;
-            }
-            100% {
-                transform: translate(var(--tx), var(--ty)) scale(0);
-                opacity: 0;
-            }
-        }
-
-        .custom-cursor {
-            position: fixed;
-            width: 20px;
-            height: 20px;
-            background: rgba(220, 38, 38, 0.8);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 10000;
-            mix-blend-mode: difference;
-            transition: transform 0.1s ease;
         }
 
         .container {
@@ -148,7 +102,7 @@
             border: 1px solid #334155;
             color: var(--light);
             padding: 12px 15px;
-            cursor: none;
+            cursor: pointer;
             transition: all 0.3s ease;
             border-radius: 8px;
             text-align: left;
@@ -205,7 +159,7 @@
             border: none;
             color: white;
             padding: 12px 24px;
-            cursor: none;
+            cursor: pointer;
             border-radius: 8px;
             font-weight: 600;
             transition: all 0.3s ease;
@@ -270,7 +224,6 @@
             border-radius: 8px;
             font-size: 14px;
             transition: all 0.3s ease;
-            cursor: none;
         }
 
         input:focus, select:focus {
@@ -291,7 +244,7 @@
             border: none;
             color: white;
             padding: 12px 20px;
-            cursor: none;
+            cursor: pointer;
             border-radius: 8px;
             transition: all 0.3s ease;
             font-size: 14px;
@@ -417,7 +370,7 @@
             right: 25px;
             color: #dc2626;
             font-size: 24px;
-            cursor: none;
+            cursor: pointer;
             transition: color 0.3s ease;
         }
 
@@ -481,6 +434,45 @@
             font-size: 16px;
         }
 
+        .premium-feature {
+            background: linear-gradient(45deg, #f59e0b, #dc2626);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 10px 0;
+            text-align: center;
+        }
+
+        .premium-feature i {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .account-details {
+            background: #0f172a;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            border: 1px solid #f59e0b;
+        }
+
+        .account-field {
+            display: flex;
+            margin-bottom: 8px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #334155;
+        }
+
+        .field-label {
+            width: 120px;
+            color: #f59e0b;
+            font-weight: 600;
+        }
+
+        .field-value {
+            flex: 1;
+            color: #10b981;
+        }
+
         @media (max-width: 768px) {
             .container {
                 flex-direction: column;
@@ -532,12 +524,6 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
-    <!-- Özel cursor -->
-    <div class="custom-cursor"></div>
-    
-    <!-- Partikül konteyneri -->
-    <div id="particles"></div>
-    
     <div class="container">
         <div class="sidebar">
             <div class="sidebar-header">
@@ -547,7 +533,16 @@
             
             <div class="nav-tabs">
                 <button class="tab-btn active" onclick="openTab('key-tab')">
-                    <i class="fas fa-key"></i>Key Giriş
+                    <i class="fas fa-key"></i>System Key
+                </button>
+                <button class="tab-btn" onclick="openTab('premium-key-tab')">
+                    <i class="fas fa-crown"></i>Premium Key
+                </button>
+                <button class="tab-btn premium-tab hidden" onclick="openTab('premium-page')">
+                    <i class="fas fa-star"></i>Premium Sayfa
+                </button>
+                <button class="tab-btn premium-tab hidden" onclick="openTab('tabii-account-tab')">
+                    <i class="fas fa-user"></i>Tabii Hesap Al
                 </button>
                 <button class="tab-btn" onclick="openTab('tc-tab')">
                     <i class="fas fa-id-card"></i>TC Sorgu
@@ -589,18 +584,82 @@
                 <p class="header-subtitle">Tüm Sorgular Aktif - Premium Platform</p>
             </header>
 
-            <!-- Key Tab -->
+            <!-- System Key Tab -->
             <div id="key-tab" class="tab-content active">
-                <h2><i class="fas fa-key"></i> Sistem Key Girişi</h2>
+                <h2><i class="fas fa-key"></i> System Key Girişi</h2>
                 <div class="key-section">
                     <div class="form-group">
-                        <label><i class="fas fa-lock"></i> Sistem Key:</label>
-                        <input type="text" id="systemKey" placeholder="Keyinizi girin" value="DABBE2024VIP">
+                        <label><i class="fas fa-lock"></i> System Key:</label>
+                        <input type="text" id="systemKey" placeholder="System keyinizi girin" value="DABBE2024VIP">
                     </div>
                     <button onclick="verifySystemKey()">
-                        <i class="fas fa-check"></i> Key Doğrula
+                        <i class="fas fa-check"></i> System Key Doğrula
                     </button>
-                    <div id="keyMessage" style="margin-top: 15px;"></div>
+                    <div id="systemKeyMessage" style="margin-top: 15px;"></div>
+                </div>
+            </div>
+
+            <!-- Premium Key Tab -->
+            <div id="premium-key-tab" class="tab-content">
+                <h2><i class="fas fa-crown"></i> Premium Key Girişi</h2>
+                <div class="key-section">
+                    <div class="form-group">
+                        <label><i class="fas fa-gem"></i> Premium Key:</label>
+                        <input type="text" id="premiumKey" placeholder="Premium keyinizi girin">
+                    </div>
+                    <button onclick="verifyPremiumKey()">
+                        <i class="fas fa-check"></i> Premium Key Doğrula
+                    </button>
+                    <div id="premiumKeyMessage" style="margin-top: 15px;"></div>
+                </div>
+            </div>
+
+            <!-- Premium Sayfa Tab -->
+            <div id="premium-page" class="tab-content">
+                <h2><i class="fas fa-star"></i> Premium Sayfa</h2>
+                <div class="premium-feature">
+                    <i class="fas fa-crown"></i>
+                    <h3>Premium Kullanıcı</h3>
+                    <p>Premium özelliklere hoş geldiniz!</p>
+                </div>
+                
+                <div class="premium-features">
+                    <div class="feature">
+                        <i class="fas fa-user-shield"></i>
+                        <h3>Özel Erişim</h3>
+                        <p>Premium içeriklere erişim</p>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-bolt"></i>
+                        <h3>Hızlı Sorgu</h3>
+                        <p>Premium sorgu hızı</p>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-gem"></i>
+                        <h3>Özel Özellikler</h3>
+                        <p>Sadece premium kullanıcılar</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabii Hesap Al Tab -->
+            <div id="tabii-account-tab" class="tab-content">
+                <h2><i class="fas fa-user-plus"></i> Tabii Hesap Al</h2>
+                <div class="key-section">
+                    <p>Tabii hesaplarından birini almak için butona tıklayın. Her hesap sadece bir kez alınabilir.</p>
+                    
+                    <div class="form-group">
+                        <label>Kullanılabilir Hesaplar:</label>
+                        <div id="availableAccountsInfo" style="color: #f59e0b; font-weight: 600;"></div>
+                    </div>
+                    
+                    <button onclick="getTabiiAccount()">
+                        <i class="fas fa-download"></i> Tabii Hesabı Al
+                    </button>
+                </div>
+                
+                <div id="tabiiAccountResult" class="account-details hidden">
+                    <!-- Hesap detayları buraya gelecek -->
                 </div>
             </div>
 
@@ -815,12 +874,21 @@
 
             <div id="adminPanelSection" class="admin-section" style="display: none;">
                 <h3><i class="fas fa-key"></i> Key Yönetimi</h3>
+                
                 <div class="form-group">
-                    <label>Yeni Key:</label>
-                    <input type="text" id="newKey" placeholder="Yeni key girin">
+                    <label>Yeni System Key:</label>
+                    <input type="text" id="newSystemKey" placeholder="Yeni system key girin">
                 </div>
-                <button onclick="createKey()">
-                    <i class="fas fa-plus"></i> Key Oluştur
+                <button onclick="createSystemKey()">
+                    <i class="fas fa-plus"></i> System Key Oluştur
+                </button>
+                
+                <div class="form-group" style="margin-top: 15px;">
+                    <label>Yeni Premium Key:</label>
+                    <input type="text" id="newPremiumKey" placeholder="Yeni premium key girin">
+                </div>
+                <button onclick="createPremiumKey()">
+                    <i class="fas fa-plus"></i> Premium Key Oluştur
                 </button>
                 
                 <div style="margin-top: 20px;">
@@ -834,128 +902,50 @@
     </div>
 
     <script>
-        // Ses efektleri
-        const sounds = {
-            tabSwitch: new Audio('data:audio/wav;base64,UklGRigAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQQAAAAAAA=='),
-            query: new Audio('data:audio/wav;base64,UklGRigAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQQAAAAAAA=='),
-            error: new Audio('data:audio/wav;base64,UklGRigAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQQAAAAAAA==')
-        };
-
-        // Basit ses oluşturma (korkunç efektler için)
-        function createScarySound(type) {
-            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            const oscillator = audioContext.createOscillator();
-            const gainNode = audioContext.createGain();
-            
-            oscillator.connect(gainNode);
-            gainNode.connect(audioContext.destination);
-            
-            if (type === 'tab') {
-                oscillator.type = 'sawtooth';
-                oscillator.frequency.setValueAtTime(200, audioContext.currentTime);
-                oscillator.frequency.exponentialRampToValueAtTime(50, audioContext.currentTime + 0.5);
-                gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
-                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
-            } else if (type === 'query') {
-                oscillator.type = 'square';
-                oscillator.frequency.setValueAtTime(150, audioContext.currentTime);
-                oscillator.frequency.exponentialRampToValueAtTime(80, audioContext.currentTime + 0.3);
-                gainNode.gain.setValueAtTime(0.2, audioContext.currentTime);
-                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
-            } else if (type === 'error') {
-                oscillator.type = 'triangle';
-                oscillator.frequency.setValueAtTime(100, audioContext.currentTime);
-                oscillator.frequency.exponentialRampToValueAtTime(300, audioContext.currentTime + 0.2);
-                gainNode.gain.setValueAtTime(0.4, audioContext.currentTime);
-                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.2);
-            }
-            
-            oscillator.start();
-            oscillator.stop(audioContext.currentTime + 0.5);
-        }
-
-        // Mouse partikül efekti
-        function createParticles(x, y) {
-            const particlesContainer = document.getElementById('particles');
-            const particleCount = 8;
-            
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                
-                const angle = Math.random() * Math.PI * 2;
-                const distance = Math.random() * 50 + 20;
-                const tx = Math.cos(angle) * distance;
-                const ty = Math.sin(angle) * distance;
-                
-                particle.style.setProperty('--tx', `${tx}px`);
-                particle.style.setProperty('--ty', `${ty}px`);
-                particle.style.left = x + 'px';
-                particle.style.top = y + 'px';
-                
-                particlesContainer.appendChild(particle);
-                
-                setTimeout(() => {
-                    if (particle.parentNode) {
-                        particle.parentNode.removeChild(particle);
-                    }
-                }, 2000);
-            }
-        }
-
-        // Özel cursor
-        const cursor = document.querySelector('.custom-cursor');
-        let mouseX = 0, mouseY = 0;
-        let cursorX = 0, cursorY = 0;
-
-        document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-            
-            // Partikül oluştur
-            if (Math.random() < 0.3) {
-                createParticles(e.clientX, e.clientY);
-            }
-        });
-
-        function updateCursor() {
-            cursorX += (mouseX - cursorX) * 0.1;
-            cursorY += (mouseY - cursorY) * 0.1;
-            
-            cursor.style.left = cursorX + 'px';
-            cursor.style.top = cursorY + 'px';
-            
-            requestAnimationFrame(updateCursor);
-        }
-        updateCursor();
-
         let systemKey = '';
+        let isSystemKeyVerified = false;
+        let isPremiumKeyVerified = false;
         let currentAdminSession = '';
-        let isKeyVerified = false;
         let currentResult = null;
 
         function openTab(tabName) {
-            if (tabName !== 'key-tab' && !isKeyVerified) {
-                createScarySound('error');
-                alert('❌ Önce key doğrulaması yapın!');
+            // System key gerektiren tablar
+            const systemTabs = ['tc-tab', 'adsoyad-tab', 'gsm-tab', 'aile-tab', 'ip-tab', 'discord-tab', 'gelismisip-tab', 'other-tab', 'database-tab'];
+            
+            // Premium key gerektiren tablar
+            const premiumTabs = ['premium-page', 'tabii-account-tab'];
+            
+            if (systemTabs.includes(tabName) && !isSystemKeyVerified) {
+                alert('❌ Önce system key doğrulaması yapın!');
                 openTab('key-tab');
                 return;
             }
             
-            createScarySound('tab');
+            if (premiumTabs.includes(tabName) && !isPremiumKeyVerified) {
+                alert('❌ Önce premium key doğrulaması yapın!');
+                openTab('premium-key-tab');
+                return;
+            }
             
             document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
             document.getElementById(tabName).classList.add('active');
             event.currentTarget.classList.add('active');
+            
+            // Premium tabları göster/gizle
+            if (isPremiumKeyVerified) {
+                document.querySelectorAll('.premium-tab').forEach(tab => tab.classList.remove('hidden'));
+            } else {
+                document.querySelectorAll('.premium-tab').forEach(tab => tab.classList.add('hidden'));
+            }
         }
 
         async function verifySystemKey() {
             const key = document.getElementById('systemKey').value;
-            const messageDiv = document.getElementById('keyMessage');
+            const messageDiv = document.getElementById('systemKeyMessage');
 
             try {
-                const response = await fetch('/api/admin/verify-key', {
+                const response = await fetch('/api/verify-system-key', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ key })
@@ -965,28 +955,166 @@
 
                 if (data.success) {
                     systemKey = key;
-                    isKeyVerified = true;
-                    messageDiv.innerHTML = '<div class="success">✅ Key doğrulandı! Tüm sorgular aktif.</div>';
+                    isSystemKeyVerified = true;
+                    messageDiv.innerHTML = '<div class="success">✅ System key doğrulandı! Tüm sorgular aktif.</div>';
                     setTimeout(() => openTab('tc-tab'), 1000);
                 } else {
-                    createScarySound('error');
-                    messageDiv.innerHTML = '<div class="error">❌ Geçersiz key!</div>';
+                    messageDiv.innerHTML = '<div class="error">❌ Geçersiz system key!</div>';
                 }
             } catch (error) {
-                createScarySound('error');
-                messageDiv.innerHTML = '<div class="error">❌ Key doğrulama hatası!</div>';
+                messageDiv.innerHTML = '<div class="error">❌ System key doğrulama hatası!</div>';
             }
         }
 
-        async function sorgula(type) {
-            if (!systemKey || !isKeyVerified) {
-                createScarySound('error');
-                alert('❌ Önce key doğrulaması yapın!');
-                openTab('key-tab');
+        async function verifyPremiumKey() {
+            const key = document.getElementById('premiumKey').value;
+            const messageDiv = document.getElementById('premiumKeyMessage');
+
+            try {
+                const response = await fetch('/api/validate-premium', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ key })
+                });
+                
+                const data = await response.json();
+
+                if (data.success) {
+                    isPremiumKeyVerified = true;
+                    messageDiv.innerHTML = '<div class="success">✅ Premium key doğrulandı! Premium özellikler aktif.</div>';
+                    
+                    // Premium tabları göster
+                    document.querySelectorAll('.premium-tab').forEach(tab => tab.classList.remove('hidden'));
+                    
+                    setTimeout(() => openTab('premium-page'), 1000);
+                } else {
+                    messageDiv.innerHTML = '<div class="error">❌ Geçersiz premium key!</div>';
+                }
+            } catch (error) {
+                messageDiv.innerHTML = '<div class="error">❌ Premium key doğrulama hatası!</div>';
+            }
+        }
+
+        async function getTabiiAccount() {
+            if (!isPremiumKeyVerified) {
+                alert('❌ Önce premium key doğrulaması yapın!');
+                openTab('premium-key-tab');
                 return;
             }
 
-            createScarySound('query');
+            const loading = document.getElementById('loading');
+            const resultDiv = document.getElementById('tabiiAccountResult');
+            
+            loading.classList.add('active');
+            
+            try {
+                const response = await fetch('/api/get-account');
+                const data = await response.json();
+                
+                if (data.success) {
+                    const account = data.account;
+                    
+                    // Tarih formatını düzenle
+                    const endDate = new Date(account.endDate);
+                    const formattedDate = endDate.toLocaleDateString('tr-TR', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    });
+                    
+                    resultDiv.innerHTML = `
+                        <h3><i class="fas fa-user-circle"></i> Tabii Hesap Detayları</h3>
+                        <div class="account-field">
+                            <div class="field-label">Index:</div>
+                            <div class="field-value">${account.index}</div>
+                        </div>
+                        <div class="account-field">
+                            <div class="field-label">Email:</div>
+                            <div class="field-value">${account.email}</div>
+                        </div>
+                        <div class="account-field">
+                            <div class="field-label">Şifre:</div>
+                            <div class="field-value">${account.password}</div>
+                        </div>
+                        <div class="account-field">
+                            <div class="field-label">Ad Soyad:</div>
+                            <div class="field-value">${account.name}</div>
+                        </div>
+                        <div class="account-field">
+                            <div class="field-label">Cinsiyet:</div>
+                            <div class="field-value">${account.gender}</div>
+                        </div>
+                        <div class="account-field">
+                            <div class="field-label">Doğum Tarihi:</div>
+                            <div class="field-value">${account.birthDate}</div>
+                        </div>
+                        <div class="account-field">
+                            <div class="field-label">Hesap Durumu:</div>
+                            <div class="field-value">${account.status}</div>
+                        </div>
+                        <div class="account-field">
+                            <div class="field-label">Paket:</div>
+                            <div class="field-value">${account.package}</div>
+                        </div>
+                        <div class="account-field">
+                            <div class="field-label">Durum:</div>
+                            <div class="field-value">${account.packageStatus}</div>
+                        </div>
+                        <div class="account-field">
+                            <div class="field-label">Bitiş Tarihi:</div>
+                            <div class="field-value">${formattedDate}</div>
+                        </div>
+                        <button onclick="copyAccountDetails()" style="margin-top: 15px; width: 100%;">
+                            <i class="fas fa-copy"></i> Hesap Bilgilerini Kopyala
+                        </button>
+                    `;
+                    
+                    resultDiv.classList.remove('hidden');
+                    updateAvailableAccounts();
+                } else {
+                    alert('❌ ' + data.message);
+                }
+            } catch (error) {
+                alert('❌ Hesap alma hatası: ' + error.message);
+            } finally {
+                loading.classList.remove('active');
+            }
+        }
+
+        async function updateAvailableAccounts() {
+            try {
+                const response = await fetch('/api/available-accounts');
+                const data = await response.json();
+                document.getElementById('availableAccountsInfo').textContent = 
+                    `${data.available} / ${data.total} hesap kullanılabilir`;
+            } catch (error) {
+                document.getElementById('availableAccountsInfo').textContent = 'Bilgi alınamadı';
+            }
+        }
+
+        function copyAccountDetails() {
+            const accountFields = document.querySelectorAll('.account-field');
+            let text = '🌟✧ TABİİ ACCOUNT DETAYLARI ✧🌟\n\n';
+            
+            accountFields.forEach(field => {
+                const label = field.querySelector('.field-label').textContent;
+                const value = field.querySelector('.field-value').textContent;
+                text += `${label}: ${value}\n`;
+            });
+            
+            navigator.clipboard.writeText(text).then(() => {
+                alert('✅ Hesap bilgileri kopyalandı!');
+            });
+        }
+
+        async function sorgula(type) {
+            if (!systemKey || !isSystemKeyVerified) {
+                alert('❌ Önce system key doğrulaması yapın!');
+                openTab('key-tab');
+                return;
+            }
 
             const loading = document.getElementById('loading');
             const result = document.getElementById('result');
@@ -1000,31 +1128,31 @@
             switch(type) {
                 case 'tc': case 'tcpro': case 'hayathikayesi': case 'yas':
                     const tcValue = document.getElementById('tc').value;
-                    if (!tcValue) { createScarySound('error'); alert('TC kimlik numarası girin!'); loading.classList.remove('active'); return; }
+                    if (!tcValue) { alert('TC kimlik numarası girin!'); loading.classList.remove('active'); return; }
                     params.tc = tcValue;
                     break;
                     
                 case 'tapu': case 'isyeri': case 'adres': case 'hane': case 'apartman':
                     const tcOtherValue = document.getElementById('tcOther').value;
-                    if (!tcOtherValue) { createScarySound('error'); alert('TC kimlik numarası girin!'); loading.classList.remove('active'); return; }
+                    if (!tcOtherValue) { alert('TC kimlik numarası girin!'); loading.classList.remove('active'); return; }
                     params.tc = tcOtherValue;
                     break;
                     
                 case 'tcgsm':
                     const tcGsmValue = document.getElementById('tcGsm').value;
-                    if (!tcGsmValue) { createScarySound('error'); alert('TC kimlik numarası girin!'); loading.classList.remove('active'); return; }
+                    if (!tcGsmValue) { alert('TC kimlik numarası girin!'); loading.classList.remove('active'); return; }
                     params.tc = tcGsmValue;
                     break;
                     
                 case 'aile': case 'ailepro': case 'es': case 'sulale':
                     const tcAileValue = document.getElementById('tcAile').value;
-                    if (!tcAileValue) { createScarySound('error'); alert('TC kimlik numarası girin!'); loading.classList.remove('active'); return; }
+                    if (!tcAileValue) { alert('TC kimlik numarası girin!'); loading.classList.remove('active'); return; }
                     params.tc = tcAileValue;
                     break;
                     
                 case 'gsmtc':
                     const gsmValue = document.getElementById('gsm').value;
-                    if (!gsmValue) { createScarySound('error'); alert('GSM numarası girin!'); loading.classList.remove('active'); return; }
+                    if (!gsmValue) { alert('GSM numarası girin!'); loading.classList.remove('active'); return; }
                     params.gsm = gsmValue;
                     break;
                     
@@ -1042,31 +1170,31 @@
                     
                 case 'ip': case 'dns': case 'whois': case 'subdomain':
                     const domainValue = document.getElementById('domain').value;
-                    if (!domainValue) { createScarySound('error'); alert('IP/Domain girin!'); loading.classList.remove('active'); return; }
+                    if (!domainValue) { alert('IP/Domain girin!'); loading.classList.remove('active'); return; }
                     params.domain = domainValue;
                     break;
                     
                 case 'leak':
                     const leakValue = document.getElementById('leakQuery').value;
-                    if (!leakValue) { createScarySound('error'); alert('E-posta girin!'); loading.classList.remove('active'); return; }
+                    if (!leakValue) { alert('E-posta girin!'); loading.classList.remove('active'); return; }
                     params.query = leakValue;
                     break;
                     
                 case 'telegram':
                     const telegramValue = document.getElementById('telegramUser').value;
-                    if (!telegramValue) { createScarySound('error'); alert('Telegram kullanıcı adı girin!'); loading.classList.remove('active'); return; }
+                    if (!telegramValue) { alert('Telegram kullanıcı adı girin!'); loading.classList.remove('active'); return; }
                     params.kullanici = telegramValue;
                     break;
                     
                 case 'gelismisip':
                     const ipValue = document.getElementById('gelismisIp').value;
-                    if (!ipValue) { createScarySound('error'); alert('IP adresi girin!'); loading.classList.remove('active'); return; }
+                    if (!ipValue) { alert('IP adresi girin!'); loading.classList.remove('active'); return; }
                     params.ip = ipValue;
                     break;
                     
                 case 'vergino':
                     const vergiValue = document.getElementById('vergiNo').value;
-                    if (!vergiValue) { createScarySound('error'); alert('Vergi numarası girin!'); loading.classList.remove('active'); return; }
+                    if (!vergiValue) { alert('Vergi numarası girin!'); loading.classList.remove('active'); return; }
                     params.vergi = vergiValue;
                     break;
                     
@@ -1085,7 +1213,6 @@
                 resultData.textContent = JSON.stringify(data, null, 2);
                 currentResult = data;
             } catch (error) {
-                createScarySound('error');
                 resultData.textContent = 'Hata: ' + error.message;
             } finally {
                 loading.classList.remove('active');
@@ -1094,21 +1221,17 @@
         }
 
         async function sorgulaDiscord() {
-            if (!systemKey || !isKeyVerified) {
-                createScarySound('error');
-                alert('❌ Önce key doğrulaması yapın!');
+            if (!systemKey || !isSystemKeyVerified) {
+                alert('❌ Önce system key doğrulaması yapın!');
                 openTab('key-tab');
                 return;
             }
 
             const discordId = document.getElementById('discordId').value;
             if (!discordId) {
-                createScarySound('error');
                 alert('Discord ID girin!');
                 return;
             }
-
-            createScarySound('query');
 
             const loading = document.getElementById('loading');
             const result = document.getElementById('result');
@@ -1124,7 +1247,6 @@
                 resultData.textContent = JSON.stringify(data, null, 2);
                 currentResult = data;
             } catch (error) {
-                createScarySound('error');
                 resultData.textContent = 'Hata: ' + error.message;
             } finally {
                 loading.classList.remove('active');
@@ -1133,30 +1255,11 @@
         }
 
         function openAdminModal() {
-            createScarySound('tab');
             document.getElementById('adminModal').style.display = 'block';
-            checkAdminSession();
         }
 
         function closeAdminModal() {
             document.getElementById('adminModal').style.display = 'none';
-        }
-
-        async function checkAdminSession() {
-            if (!currentAdminSession) return;
-            try {
-                const response = await fetch('/api/admin/check-session', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ sessionId: currentAdminSession })
-                });
-                const data = await response.json();
-                if (data.success) {
-                    document.getElementById('adminLoginSection').style.display = 'none';
-                    document.getElementById('adminPanelSection').style.display = 'block';
-                    loadCurrentKeys();
-                }
-            } catch (error) {}
         }
 
         async function adminLogin() {
@@ -1173,28 +1276,25 @@
                 const data = await response.json();
 
                 if (data.success) {
-                    createScarySound('query');
                     currentAdminSession = data.sessionId;
                     document.getElementById('adminLoginSection').style.display = 'none';
                     document.getElementById('adminPanelSection').style.display = 'block';
                     messageDiv.innerHTML = '<div class="success">✅ Giriş başarılı!</div>';
                     loadCurrentKeys();
                 } else {
-                    createScarySound('error');
                     messageDiv.innerHTML = '<div class="error">❌ ' + data.message + '</div>';
                 }
             } catch (error) {
-                createScarySound('error');
                 messageDiv.innerHTML = '<div class="error">❌ Giriş hatası!</div>';
             }
         }
 
-        async function createKey() {
-            const key = document.getElementById('newKey').value;
+        async function createSystemKey() {
+            const key = document.getElementById('newSystemKey').value;
             const messageDiv = document.getElementById('adminMessage');
 
             try {
-                const response = await fetch('/api/admin/create-key', {
+                const response = await fetch('/api/admin/create-system-key', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ key, sessionId: currentAdminSession })
@@ -1202,81 +1302,69 @@
                 const data = await response.json();
 
                 if (data.success) {
-                    createScarySound('query');
                     messageDiv.innerHTML = '<div class="success">✅ ' + data.message + '</div>';
-                    document.getElementById('newKey').value = '';
-                    updateKeysList(data.keys);
+                    document.getElementById('newSystemKey').value = '';
+                    loadCurrentKeys();
                 } else {
-                    createScarySound('error');
                     messageDiv.innerHTML = '<div class="error">❌ ' + data.message + '</div>';
                 }
             } catch (error) {
-                createScarySound('error');
-                messageDiv.innerHTML = '<div class="error">❌ Key oluşturma hatası!</div>';
+                messageDiv.innerHTML = '<div class="error">❌ System key oluşturma hatası!</div>';
             }
         }
 
-        async function deleteKey(keyToDelete) {
-            if (!confirm('Bu keyi silmek istediğinizden emin misiniz?\nBu key ile artık giriş yapılamayacak!')) {
-                return;
-            }
+        async function createPremiumKey() {
+            const key = document.getElementById('newPremiumKey').value;
+            const messageDiv = document.getElementById('adminMessage');
 
             try {
-                const response = await fetch('/api/admin/delete-key', {
+                const response = await fetch('/api/admin/create-premium-key', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ key: keyToDelete, sessionId: currentAdminSession })
+                    body: JSON.stringify({ key, sessionId: currentAdminSession })
                 });
                 const data = await response.json();
 
                 if (data.success) {
-                    createScarySound('tab');
-                    updateKeysList(data.keys);
-                    if (systemKey === keyToDelete) {
-                        systemKey = '';
-                        isKeyVerified = false;
-                        alert('❌ Kullandığınız key silindi! Lütfen yeni key girin.');
-                        openTab('key-tab');
-                    }
+                    messageDiv.innerHTML = '<div class="success">✅ ' + data.message + '</div>';
+                    document.getElementById('newPremiumKey').value = '';
+                    loadCurrentKeys();
                 } else {
-                    createScarySound('error');
-                    alert('❌ Key silinemedi: ' + data.message);
+                    messageDiv.innerHTML = '<div class="error">❌ ' + data.message + '</div>';
                 }
             } catch (error) {
-                createScarySound('error');
-                alert('❌ Key silme hatası!');
+                messageDiv.innerHTML = '<div class="error">❌ Premium key oluşturma hatası!</div>';
             }
-        }
-
-        function updateKeysList(keys) {
-            const keysDiv = document.getElementById('currentKeys');
-            keysDiv.innerHTML = keys.map(key => `
-                <div class="key-item">
-                    <span>🔑 ${key}</span>
-                    <button class="delete-btn" onclick="deleteKey('${key}')" title="Keyi Sil">
-                        <i class="fas fa-trash"></i>
-                    </button>
-                </div>
-            `).join('');
         }
 
         async function loadCurrentKeys() {
             try {
-                const response = await fetch('/api/admin/keys', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ sessionId: currentAdminSession })
-                });
+                const response = await fetch('/api/admin/keys');
                 const data = await response.json();
-                if (data.success) updateKeysList(data.keys);
+                if (data.success) {
+                    const keysDiv = document.getElementById('currentKeys');
+                    keysDiv.innerHTML = `
+                        <h5>System Keys:</h5>
+                        ${data.systemKeys.map(key => `
+                            <div class="key-item">
+                                <span>🔑 ${key}</span>
+                            </div>
+                        `).join('')}
+                        <h5 style="margin-top: 15px;">Premium Keys:</h5>
+                        ${data.premiumKeys.map(key => `
+                            <div class="key-item">
+                                <span>👑 ${key}</span>
+                            </div>
+                        `).join('')}
+                    `;
+                }
             } catch (error) {
-                updateKeysList(['DABBE2024VIP']);
+                document.getElementById('currentKeys').innerHTML = 'Keyler yüklenemedi';
             }
         }
 
         function downloadResult() {
             if (!currentResult) return;
-            createScarySound('query');
             const text = JSON.stringify(currentResult, null, 2);
             const blob = new Blob([text], { type: 'text/plain' });
             const url = URL.createObjectURL(blob);
@@ -1291,19 +1379,13 @@
 
         document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('systemKey').value = 'DABBE2024VIP';
+            updateAvailableAccounts();
         });
 
         window.onclick = function(event) {
             const modal = document.getElementById('adminModal');
             if (event.target === modal) closeAdminModal();
         }
-
-        // Sayfa yüklendiğinde korkunç ses
-        window.addEventListener('load', function() {
-            setTimeout(() => {
-                createScarySound('tab');
-            }, 1000);
-        });
     </script>
 </body>
 </html>
