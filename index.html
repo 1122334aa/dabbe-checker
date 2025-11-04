@@ -234,10 +234,32 @@
         }
 
         .btn-group {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            display: flex;
+            flex-direction: column;
             gap: 12px;
             margin-top: 25px;
+        }
+
+        .query-option {
+            background: linear-gradient(45deg, #1e293b, #334155);
+            border: 1px solid #dc2626;
+            color: white;
+            padding: 15px 20px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            font-weight: 600;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .query-option:hover {
+            background: linear-gradient(45deg, #dc2626, #f59e0b);
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(220, 38, 38, 0.4);
         }
 
         button {
@@ -488,6 +510,20 @@
             border-bottom: none;
         }
 
+        .query-form {
+            background: #1e293b;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+            border: 1px solid #334155;
+            display: none;
+        }
+
+        .query-form.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
         @media (max-width: 768px) {
             .container {
                 flex-direction: column;
@@ -602,7 +638,7 @@
                 <div class="key-section">
                     <div class="form-group">
                         <label><i class="fas fa-lock"></i> Sistem Key:</label>
-                        <input type="text" id="systemKey" placeholder="Keyinizi girin" value="Key İçin Discorda Girin...">
+                        <input type="text" id="systemKey" placeholder="Keyinizi girin" value="DABBE2024VIP">
                     </div>
                     <button onclick="verifySystemKey()">
                         <i class="fas fa-check"></i> Key Doğrula
@@ -629,100 +665,163 @@
             <!-- TC Tab -->
             <div id="tc-tab" class="tab-content">
                 <h2><i class="fas fa-id-card"></i> TC Kimlik Sorgulama</h2>
-                <div class="form-group">
-                    <label>TC Kimlik No:</label>
-                    <input type="text" id="tc" maxlength="11" placeholder="TC kimlik numarasını girin">
-                </div>
+                
                 <div class="btn-group">
-                    <button onclick="sorgula('tc')"><i class="fas fa-search"></i> TC Sorgula</button>
-                    <button onclick="sorgula('tcpro')"><i class="fas fa-star"></i> TC Pro Sorgula</button>
-                    <button onclick="sorgula('hayathikayesi')"><i class="fas fa-book"></i> Hayat Hikayesi</button>
-                    <button onclick="sorgula('yas')"><i class="fas fa-birthday-cake"></i> Yaş Sorgula</button>
+                    <div class="query-option" onclick="showQueryForm('tc', 'TC Sorgula')">
+                        <i class="fas fa-search"></i> TC Sorgula
+                    </div>
+                    <div class="query-option" onclick="showQueryForm('tcpro', 'TC Pro Sorgula')">
+                        <i class="fas fa-star"></i> TC Pro Sorgula
+                    </div>
+                    <div class="query-option" onclick="showQueryForm('hayathikayesi', 'Hayat Hikayesi')">
+                        <i class="fas fa-book"></i> Hayat Hikayesi
+                    </div>
+                    <div class="query-option" onclick="showQueryForm('yas', 'Yaş Sorgula')">
+                        <i class="fas fa-birthday-cake"></i> Yaş Sorgula
+                    </div>
+                </div>
+
+                <div id="tc-form" class="query-form">
+                    <h3 id="tc-form-title"></h3>
+                    <div class="form-group">
+                        <label>TC Kimlik No:</label>
+                        <input type="text" id="tc" maxlength="11" placeholder="TC kimlik numarasını girin">
+                    </div>
+                    <button onclick="executeTcQuery()">
+                        <i class="fas fa-play"></i> Sorguyu Çalıştır
+                    </button>
                 </div>
             </div>
 
             <!-- Ad Soyad Tab -->
             <div id="adsoyad-tab" class="tab-content">
                 <h2><i class="fas fa-user"></i> Ad Soyad Sorgulama</h2>
-                <div class="form-group">
-                    <label>Ad:</label>
-                    <input type="text" id="ad" placeholder="Ad">
-                </div>
-                <div class="form-group">
-                    <label>Soyad:</label>
-                    <input type="text" id="soyad" placeholder="Soyad">
-                </div>
-                <div class="form-group">
-                    <label>İl:</label>
-                    <input type="text" id="il" placeholder="İl">
-                </div>
-                <div class="form-group">
-                    <label>İlçe:</label>
-                    <input type="text" id="ilce" placeholder="İlçe">
-                </div>
+                
                 <div class="btn-group">
-                    <button onclick="sorgula('adsoyad')">Ad Soyad Sorgula</button>
-                    <button onclick="sorgula('adsoyadpro')">Ad Soyad Pro</button>
-                    <button onclick="sorgula('adililce')">Ad İl İlçe Sorgula</button>
+                    <div class="query-option" onclick="showAdSoyadForm('adsoyad', 'Ad Soyad Sorgula')">
+                        <i class="fas fa-user"></i> Ad Soyad Sorgula
+                    </div>
+                    <div class="query-option" onclick="showAdSoyadForm('adsoyadpro', 'Ad Soyad Pro')">
+                        <i class="fas fa-user-tie"></i> Ad Soyad Pro
+                    </div>
+                    <div class="query-option" onclick="showAdSoyadForm('adililce', 'Ad İl İlçe Sorgula')">
+                        <i class="fas fa-map-marker-alt"></i> Ad İl İlçe Sorgula
+                    </div>
+                </div>
+
+                <div id="adsoyad-form" class="query-form">
+                    <h3 id="adsoyad-form-title"></h3>
+                    <div class="form-group">
+                        <label>Ad:</label>
+                        <input type="text" id="ad" placeholder="Ad">
+                    </div>
+                    <div class="form-group">
+                        <label>Soyad:</label>
+                        <input type="text" id="soyad" placeholder="Soyad">
+                    </div>
+                    <div class="form-group">
+                        <label>İl:</label>
+                        <input type="text" id="il" placeholder="İl">
+                    </div>
+                    <div class="form-group">
+                        <label>İlçe:</label>
+                        <input type="text" id="ilce" placeholder="İlçe">
+                    </div>
+                    <button onclick="executeAdSoyadQuery()">
+                        <i class="fas fa-play"></i> Sorguyu Çalıştır
+                    </button>
                 </div>
             </div>
 
             <!-- GSM Tab -->
             <div id="gsm-tab" class="tab-content">
                 <h2><i class="fas fa-mobile-alt"></i> GSM Sorgulama</h2>
-                <div class="form-group">
-                    <label>TC Kimlik No:</label>
-                    <input type="text" id="tcGsm" maxlength="11" placeholder="TC kimlik numarasını girin">
-                </div>
-                <button onclick="sorgula('tcgsm')">TC'den GSM Sorgula</button>
                 
-                <div class="form-group" style="margin-top: 20px;">
-                    <label>GSM Numarası:</label>
-                    <input type="text" id="gsm" placeholder="GSM numarasını girin">
+                <div class="btn-group">
+                    <div class="query-option" onclick="showGsmForm('tcgsm', 'TC\'den GSM Sorgula')">
+                        <i class="fas fa-mobile-alt"></i> TC'den GSM Sorgula
+                    </div>
+                    <div class="query-option" onclick="showGsmForm('gsmtc', 'GSM\'den TC Sorgula')">
+                        <i class="fas fa-id-card"></i> GSM'den TC Sorgula
+                    </div>
                 </div>
-                <button onclick="sorgula('gsmtc')">GSM'den TC Sorgula</button>
+
+                <div id="gsm-form" class="query-form">
+                    <h3 id="gsm-form-title"></h3>
+                    <div id="gsm-form-content">
+                        <!-- Form içeriği dinamik olarak eklenecek -->
+                    </div>
+                    <button onclick="executeGsmQuery()">
+                        <i class="fas fa-play"></i> Sorguyu Çalıştır
+                    </button>
+                </div>
             </div>
 
             <!-- Aile Tab -->
             <div id="aile-tab" class="tab-content">
                 <h2><i class="fas fa-users"></i> Aile ve Akraba Sorgulama</h2>
-                <div class="form-group">
-                    <label>TC Kimlik No:</label>
-                    <input type="text" id="tcAile" maxlength="11" placeholder="TC kimlik numarasını girin">
-                </div>
+                
                 <div class="btn-group">
-                    <button onclick="sorgula('aile')">Aile Sorgula</button>
-                    <button onclick="sorgula('ailepro')">Aile Pro Sorgula</button>
-                    <button onclick="sorgula('es')">Eş Sorgula</button>
-                    <button onclick="sorgula('sulale')">Sülale Sorgula</button>
+                    <div class="query-option" onclick="showAileForm('aile', 'Aile Sorgula')">
+                        <i class="fas fa-users"></i> Aile Sorgula
+                    </div>
+                    <div class="query-option" onclick="showAileForm('ailepro', 'Aile Pro Sorgula')">
+                        <i class="fas fa-user-friends"></i> Aile Pro Sorgula
+                    </div>
+                    <div class="query-option" onclick="showAileForm('es', 'Eş Sorgula')">
+                        <i class="fas fa-heart"></i> Eş Sorgula
+                    </div>
+                    <div class="query-option" onclick="showAileForm('sulale', 'Sülale Sorgula')">
+                        <i class="fas fa-sitemap"></i> Sülale Sorgula
+                    </div>
+                </div>
+
+                <div id="aile-form" class="query-form">
+                    <h3 id="aile-form-title"></h3>
+                    <div class="form-group">
+                        <label>TC Kimlik No:</label>
+                        <input type="text" id="tcAile" maxlength="11" placeholder="TC kimlik numarasını girin">
+                    </div>
+                    <button onclick="executeAileQuery()">
+                        <i class="fas fa-play"></i> Sorguyu Çalıştır
+                    </button>
                 </div>
             </div>
 
             <!-- IP Tab -->
             <div id="ip-tab" class="tab-content">
                 <h2><i class="fas fa-globe"></i> IP ve Domain Sorgulama</h2>
-                <div class="form-group">
-                    <label>IP/Domain:</label>
-                    <input type="text" id="domain" placeholder="IP adresi veya domain girin">
-                </div>
+                
                 <div class="btn-group">
-                    <button onclick="sorgula('ip')">IP Sorgula</button>
-                    <button onclick="sorgula('dns')">DNS Sorgula</button>
-                    <button onclick="sorgula('whois')">WHOIS Sorgula</button>
-                    <button onclick="sorgula('subdomain')">Subdomain Sorgula</button>
+                    <div class="query-option" onclick="showIpForm('ip', 'IP Sorgula')">
+                        <i class="fas fa-globe"></i> IP Sorgula
+                    </div>
+                    <div class="query-option" onclick="showIpForm('dns', 'DNS Sorgula')">
+                        <i class="fas fa-network-wired"></i> DNS Sorgula
+                    </div>
+                    <div class="query-option" onclick="showIpForm('whois', 'WHOIS Sorgula')">
+                        <i class="fas fa-search"></i> WHOIS Sorgula
+                    </div>
+                    <div class="query-option" onclick="showIpForm('subdomain', 'Subdomain Sorgula')">
+                        <i class="fas fa-sitemap"></i> Subdomain Sorgula
+                    </div>
+                    <div class="query-option" onclick="showIpForm('leak', 'Leak Sorgula')">
+                        <i class="fas fa-envelope"></i> Leak Sorgula
+                    </div>
+                    <div class="query-option" onclick="showIpForm('telegram', 'Telegram Sorgula')">
+                        <i class="fab fa-telegram"></i> Telegram Sorgula
+                    </div>
                 </div>
-                
-                <div class="form-group" style="margin-top: 20px;">
-                    <label>E-posta:</label>
-                    <input type="text" id="leakQuery" placeholder="E-posta adresi girin">
+
+                <div id="ip-form" class="query-form">
+                    <h3 id="ip-form-title"></h3>
+                    <div id="ip-form-content">
+                        <!-- Form içeriği dinamik olarak eklenecek -->
+                    </div>
+                    <button onclick="executeIpQuery()">
+                        <i class="fas fa-play"></i> Sorguyu Çalıştır
+                    </button>
                 </div>
-                <button onclick="sorgula('leak')">Leak Sorgula</button>
-                
-                <div class="form-group" style="margin-top: 20px;">
-                    <label>Telegram Kullanıcı Adı:</label>
-                    <input type="text" id="telegramUser" placeholder="Telegram kullanıcı adı">
-                </div>
-                <button onclick="sorgula('telegram')">Telegram Sorgula</button>
             </div>
 
             <!-- Discord Tab -->
@@ -927,6 +1026,8 @@
         let isKeyVerified = false;
         let isPremiumVerified = false;
         let currentResult = null;
+        let currentQueryType = '';
+        let currentQueryCategory = '';
 
         function openTab(tabName) {
             // Premium sekmesine erişim kontrolü
@@ -952,6 +1053,9 @@
             if (tabName === 'premium-tab') {
                 updatePremiumContent();
             }
+
+            // Sorgu formlarını gizle
+            document.querySelectorAll('.query-form').forEach(form => form.classList.remove('active'));
         }
 
         function updatePremiumContent() {
@@ -965,6 +1069,111 @@
                 premiumContent.style.display = 'none';
                 premiumLocked.style.display = 'block';
             }
+        }
+
+        // TC Sorgu Formları
+        function showQueryForm(type, title) {
+            currentQueryType = type;
+            currentQueryCategory = 'tc';
+            document.getElementById('tc-form-title').textContent = title;
+            document.getElementById('tc-form').classList.add('active');
+        }
+
+        function executeTcQuery() {
+            sorgula(currentQueryType);
+        }
+
+        // Ad Soyad Sorgu Formları
+        function showAdSoyadForm(type, title) {
+            currentQueryType = type;
+            currentQueryCategory = 'adsoyad';
+            document.getElementById('adsoyad-form-title').textContent = title;
+            document.getElementById('adsoyad-form').classList.add('active');
+        }
+
+        function executeAdSoyadQuery() {
+            sorgula(currentQueryType);
+        }
+
+        // GSM Sorgu Formları
+        function showGsmForm(type, title) {
+            currentQueryType = type;
+            currentQueryCategory = 'gsm';
+            document.getElementById('gsm-form-title').textContent = title;
+            
+            let formContent = '';
+            if (type === 'tcgsm') {
+                formContent = `
+                    <div class="form-group">
+                        <label>TC Kimlik No:</label>
+                        <input type="text" id="tcGsm" maxlength="11" placeholder="TC kimlik numarasını girin">
+                    </div>
+                `;
+            } else if (type === 'gsmtc') {
+                formContent = `
+                    <div class="form-group">
+                        <label>GSM Numarası:</label>
+                        <input type="text" id="gsm" placeholder="GSM numarasını girin">
+                    </div>
+                `;
+            }
+            
+            document.getElementById('gsm-form-content').innerHTML = formContent;
+            document.getElementById('gsm-form').classList.add('active');
+        }
+
+        function executeGsmQuery() {
+            sorgula(currentQueryType);
+        }
+
+        // Aile Sorgu Formları
+        function showAileForm(type, title) {
+            currentQueryType = type;
+            currentQueryCategory = 'aile';
+            document.getElementById('aile-form-title').textContent = title;
+            document.getElementById('aile-form').classList.add('active');
+        }
+
+        function executeAileQuery() {
+            sorgula(currentQueryType);
+        }
+
+        // IP Sorgu Formları
+        function showIpForm(type, title) {
+            currentQueryType = type;
+            currentQueryCategory = 'ip';
+            document.getElementById('ip-form-title').textContent = title;
+            
+            let formContent = '';
+            if (['ip', 'dns', 'whois', 'subdomain'].includes(type)) {
+                formContent = `
+                    <div class="form-group">
+                        <label>IP/Domain:</label>
+                        <input type="text" id="domain" placeholder="IP adresi veya domain girin">
+                    </div>
+                `;
+            } else if (type === 'leak') {
+                formContent = `
+                    <div class="form-group">
+                        <label>E-posta:</label>
+                        <input type="text" id="leakQuery" placeholder="E-posta adresi girin">
+                    </div>
+                `;
+            } else if (type === 'telegram') {
+                formContent = `
+                    <div class="form-group">
+                        <label>Telegram Kullanıcı Adı:</label>
+                        <input type="text" id="telegramUser" placeholder="Telegram kullanıcı adı">
+                    </div>
+                `;
+            }
+            
+            document.getElementById('ip-form-content').innerHTML = formContent;
+            document.getElementById('ip-form').classList.add('active');
+        }
+
+        function executeIpQuery() {
+            sorgula(currentQueryType);
         }
 
         async function verifySystemKey() {
@@ -1467,4 +1676,3 @@
     </script>
 </body>
 </html>
-
