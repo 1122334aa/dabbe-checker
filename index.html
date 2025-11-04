@@ -124,6 +124,49 @@
             box-shadow: 0 0 15px rgba(220, 38, 38, 0.5);
         }
 
+        .submenu {
+            display: none;
+            margin-left: 20px;
+            margin-top: 5px;
+        }
+
+        .submenu.active {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .sub-tab-btn {
+            background: transparent;
+            border: 1px solid #475569;
+            color: var(--light);
+            padding: 10px 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 6px;
+            text-align: left;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 5px;
+            width: 100%;
+        }
+
+        .sub-tab-btn:hover {
+            background: #374151;
+            border-color: #dc2626;
+        }
+
+        .sub-tab-btn.active {
+            background: #dc2626;
+            border-color: #dc2626;
+        }
+
         .main-content {
             flex: 1;
             padding: 30px;
@@ -234,32 +277,10 @@
         }
 
         .btn-group {
-            display: flex;
-            flex-direction: column;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
             gap: 12px;
             margin-top: 25px;
-        }
-
-        .query-option {
-            background: linear-gradient(45deg, #1e293b, #334155);
-            border: 1px solid #dc2626;
-            color: white;
-            padding: 15px 20px;
-            cursor: pointer;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-            font-size: 14px;
-            font-weight: 600;
-            text-align: left;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .query-option:hover {
-            background: linear-gradient(45deg, #dc2626, #f59e0b);
-            transform: translateX(5px);
-            box-shadow: 0 5px 15px rgba(220, 38, 38, 0.4);
         }
 
         button {
@@ -510,20 +531,6 @@
             border-bottom: none;
         }
 
-        .query-form {
-            background: #1e293b;
-            border-radius: 8px;
-            padding: 20px;
-            margin-top: 20px;
-            border: 1px solid #334155;
-            display: none;
-        }
-
-        .query-form.active {
-            display: block;
-            animation: fadeIn 0.3s ease;
-        }
-
         @media (max-width: 768px) {
             .container {
                 flex-direction: column;
@@ -589,21 +596,99 @@
                 <button class="tab-btn" onclick="openTab('premium-key-tab')">
                     <i class="fas fa-crown"></i>Premium Key
                 </button>
-                <button class="tab-btn" onclick="openTab('tc-tab')">
-                    <i class="fas fa-id-card"></i>TC Sorgu
+                
+                <!-- TC Sorgu Accordion -->
+                <button class="tab-btn" onclick="toggleSubmenu('tc-submenu')">
+                    <i class="fas fa-id-card"></i>TC Sorgu <i class="fas fa-chevron-down" style="margin-left: auto; font-size: 12px;"></i>
                 </button>
-                <button class="tab-btn" onclick="openTab('adsoyad-tab')">
-                    <i class="fas fa-user"></i>Ad Soyad
+                <div id="tc-submenu" class="submenu">
+                    <button class="sub-tab-btn" onclick="openTab('tc-sorgula-tab')">
+                        <i class="fas fa-search"></i>TC Sorgula
+                    </button>
+                    <button class="sub-tab-btn" onclick="openTab('tc-pro-tab')">
+                        <i class="fas fa-star"></i>TC Pro Sorgula
+                    </button>
+                    <button class="sub-tab-btn" onclick="openTab('hayat-hikayesi-tab')">
+                        <i class="fas fa-book"></i>Hayat Hikayesi
+                    </button>
+                    <button class="sub-tab-btn" onclick="openTab('yas-sorgula-tab')">
+                        <i class="fas fa-birthday-cake"></i>Yaş Sorgula
+                    </button>
+                </div>
+
+                <!-- Ad Soyad Accordion -->
+                <button class="tab-btn" onclick="toggleSubmenu('adsoyad-submenu')">
+                    <i class="fas fa-user"></i>Ad Soyad <i class="fas fa-chevron-down" style="margin-left: auto; font-size: 12px;"></i>
                 </button>
-                <button class="tab-btn" onclick="openTab('gsm-tab')">
-                    <i class="fas fa-mobile-alt"></i>GSM Sorgu
+                <div id="adsoyad-submenu" class="submenu">
+                    <button class="sub-tab-btn" onclick="openTab('adsoyad-sorgula-tab')">
+                        <i class="fas fa-user"></i>Ad Soyad Sorgula
+                    </button>
+                    <button class="sub-tab-btn" onclick="openTab('adsoyad-pro-tab')">
+                        <i class="fas fa-user-tie"></i>Ad Soyad Pro
+                    </button>
+                    <button class="sub-tab-btn" onclick="openTab('adililce-tab')">
+                        <i class="fas fa-map-marker-alt"></i>Ad İl İlçe Sorgula
+                    </button>
+                </div>
+
+                <!-- GSM Sorgu Accordion -->
+                <button class="tab-btn" onclick="toggleSubmenu('gsm-submenu')">
+                    <i class="fas fa-mobile-alt"></i>GSM Sorgu <i class="fas fa-chevron-down" style="margin-left: auto; font-size: 12px;"></i>
                 </button>
-                <button class="tab-btn" onclick="openTab('aile-tab')">
-                    <i class="fas fa-users"></i>Aile Sorgu
+                <div id="gsm-submenu" class="submenu">
+                    <button class="sub-tab-btn" onclick="openTab('tc-gsm-tab')">
+                        <i class="fas fa-mobile-alt"></i>TC'den GSM Sorgula
+                    </button>
+                    <button class="sub-tab-btn" onclick="openTab('gsm-tc-tab')">
+                        <i class="fas fa-id-card"></i>GSM'den TC Sorgula
+                    </button>
+                </div>
+
+                <!-- Aile Sorgu Accordion -->
+                <button class="tab-btn" onclick="toggleSubmenu('aile-submenu')">
+                    <i class="fas fa-users"></i>Aile Sorgu <i class="fas fa-chevron-down" style="margin-left: auto; font-size: 12px;"></i>
                 </button>
-                <button class="tab-btn" onclick="openTab('ip-tab')">
-                    <i class="fas fa-globe"></i>IP & Domain
+                <div id="aile-submenu" class="submenu">
+                    <button class="sub-tab-btn" onclick="openTab('aile-sorgula-tab')">
+                        <i class="fas fa-users"></i>Aile Sorgula
+                    </button>
+                    <button class="sub-tab-btn" onclick="openTab('aile-pro-tab')">
+                        <i class="fas fa-user-friends"></i>Aile Pro Sorgula
+                    </button>
+                    <button class="sub-tab-btn" onclick="openTab('es-sorgula-tab')">
+                        <i class="fas fa-heart"></i>Eş Sorgula
+                    </button>
+                    <button class="sub-tab-btn" onclick="openTab('sulale-tab')">
+                        <i class="fas fa-sitemap"></i>Sülale Sorgula
+                    </button>
+                </div>
+
+                <!-- IP & Domain Accordion -->
+                <button class="tab-btn" onclick="toggleSubmenu('ip-submenu')">
+                    <i class="fas fa-globe"></i>IP & Domain <i class="fas fa-chevron-down" style="margin-left: auto; font-size: 12px;"></i>
                 </button>
+                <div id="ip-submenu" class="submenu">
+                    <button class="sub-tab-btn" onclick="openTab('ip-sorgula-tab')">
+                        <i class="fas fa-globe"></i>IP Sorgula
+                    </button>
+                    <button class="sub-tab-btn" onclick="openTab('dns-tab')">
+                        <i class="fas fa-network-wired"></i>DNS Sorgula
+                    </button>
+                    <button class="sub-tab-btn" onclick="openTab('whois-tab')">
+                        <i class="fas fa-search"></i>WHOIS Sorgula
+                    </button>
+                    <button class="sub-tab-btn" onclick="openTab('subdomain-tab')">
+                        <i class="fas fa-sitemap"></i>Subdomain Sorgula
+                    </button>
+                    <button class="sub-tab-btn" onclick="openTab('leak-tab')">
+                        <i class="fas fa-envelope"></i>Leak Sorgula
+                    </button>
+                    <button class="sub-tab-btn" onclick="openTab('telegram-tab')">
+                        <i class="fab fa-telegram"></i>Telegram Sorgula
+                    </button>
+                </div>
+
                 <button class="tab-btn" onclick="openTab('discord-tab')">
                     <i class="fab fa-discord"></i>Discord Sorgu
                 </button>
@@ -662,169 +747,233 @@
                 </div>
             </div>
 
-            <!-- TC Tab -->
-            <div id="tc-tab" class="tab-content">
-                <h2><i class="fas fa-id-card"></i> TC Kimlik Sorgulama</h2>
-                
-                <div class="btn-group">
-                    <div class="query-option" onclick="showQueryForm('tc', 'TC Sorgula')">
-                        <i class="fas fa-search"></i> TC Sorgula
-                    </div>
-                    <div class="query-option" onclick="showQueryForm('tcpro', 'TC Pro Sorgula')">
-                        <i class="fas fa-star"></i> TC Pro Sorgula
-                    </div>
-                    <div class="query-option" onclick="showQueryForm('hayathikayesi', 'Hayat Hikayesi')">
-                        <i class="fas fa-book"></i> Hayat Hikayesi
-                    </div>
-                    <div class="query-option" onclick="showQueryForm('yas', 'Yaş Sorgula')">
-                        <i class="fas fa-birthday-cake"></i> Yaş Sorgula
-                    </div>
+            <!-- TC Sorgu Tabları -->
+            <div id="tc-sorgula-tab" class="tab-content">
+                <h2><i class="fas fa-search"></i> TC Sorgula</h2>
+                <div class="form-group">
+                    <label>TC Kimlik No:</label>
+                    <input type="text" id="tcSorgula" maxlength="11" placeholder="TC kimlik numarasını girin">
                 </div>
-
-                <div id="tc-form" class="query-form">
-                    <h3 id="tc-form-title"></h3>
-                    <div class="form-group">
-                        <label>TC Kimlik No:</label>
-                        <input type="text" id="tc" maxlength="11" placeholder="TC kimlik numarasını girin">
-                    </div>
-                    <button onclick="executeTcQuery()">
-                        <i class="fas fa-play"></i> Sorguyu Çalıştır
-                    </button>
-                </div>
+                <button onclick="sorgula('tc')">
+                    <i class="fas fa-play"></i> Sorguyu Çalıştır
+                </button>
             </div>
 
-            <!-- Ad Soyad Tab -->
-            <div id="adsoyad-tab" class="tab-content">
-                <h2><i class="fas fa-user"></i> Ad Soyad Sorgulama</h2>
-                
-                <div class="btn-group">
-                    <div class="query-option" onclick="showAdSoyadForm('adsoyad', 'Ad Soyad Sorgula')">
-                        <i class="fas fa-user"></i> Ad Soyad Sorgula
-                    </div>
-                    <div class="query-option" onclick="showAdSoyadForm('adsoyadpro', 'Ad Soyad Pro')">
-                        <i class="fas fa-user-tie"></i> Ad Soyad Pro
-                    </div>
-                    <div class="query-option" onclick="showAdSoyadForm('adililce', 'Ad İl İlçe Sorgula')">
-                        <i class="fas fa-map-marker-alt"></i> Ad İl İlçe Sorgula
-                    </div>
+            <div id="tc-pro-tab" class="tab-content">
+                <h2><i class="fas fa-star"></i> TC Pro Sorgula</h2>
+                <div class="form-group">
+                    <label>TC Kimlik No:</label>
+                    <input type="text" id="tcPro" maxlength="11" placeholder="TC kimlik numarasını girin">
                 </div>
-
-                <div id="adsoyad-form" class="query-form">
-                    <h3 id="adsoyad-form-title"></h3>
-                    <div class="form-group">
-                        <label>Ad:</label>
-                        <input type="text" id="ad" placeholder="Ad">
-                    </div>
-                    <div class="form-group">
-                        <label>Soyad:</label>
-                        <input type="text" id="soyad" placeholder="Soyad">
-                    </div>
-                    <div class="form-group">
-                        <label>İl:</label>
-                        <input type="text" id="il" placeholder="İl">
-                    </div>
-                    <div class="form-group">
-                        <label>İlçe:</label>
-                        <input type="text" id="ilce" placeholder="İlçe">
-                    </div>
-                    <button onclick="executeAdSoyadQuery()">
-                        <i class="fas fa-play"></i> Sorguyu Çalıştır
-                    </button>
-                </div>
+                <button onclick="sorgula('tcpro')">
+                    <i class="fas fa-play"></i> Sorguyu Çalıştır
+                </button>
             </div>
 
-            <!-- GSM Tab -->
-            <div id="gsm-tab" class="tab-content">
-                <h2><i class="fas fa-mobile-alt"></i> GSM Sorgulama</h2>
-                
-                <div class="btn-group">
-                    <div class="query-option" onclick="showGsmForm('tcgsm', 'TC\'den GSM Sorgula')">
-                        <i class="fas fa-mobile-alt"></i> TC'den GSM Sorgula
-                    </div>
-                    <div class="query-option" onclick="showGsmForm('gsmtc', 'GSM\'den TC Sorgula')">
-                        <i class="fas fa-id-card"></i> GSM'den TC Sorgula
-                    </div>
+            <div id="hayat-hikayesi-tab" class="tab-content">
+                <h2><i class="fas fa-book"></i> Hayat Hikayesi</h2>
+                <div class="form-group">
+                    <label>TC Kimlik No:</label>
+                    <input type="text" id="tcHayat" maxlength="11" placeholder="TC kimlik numarasını girin">
                 </div>
-
-                <div id="gsm-form" class="query-form">
-                    <h3 id="gsm-form-title"></h3>
-                    <div id="gsm-form-content">
-                        <!-- Form içeriği dinamik olarak eklenecek -->
-                    </div>
-                    <button onclick="executeGsmQuery()">
-                        <i class="fas fa-play"></i> Sorguyu Çalıştır
-                    </button>
-                </div>
+                <button onclick="sorgula('hayathikayesi')">
+                    <i class="fas fa-play"></i> Sorguyu Çalıştır
+                </button>
             </div>
 
-            <!-- Aile Tab -->
-            <div id="aile-tab" class="tab-content">
-                <h2><i class="fas fa-users"></i> Aile ve Akraba Sorgulama</h2>
-                
-                <div class="btn-group">
-                    <div class="query-option" onclick="showAileForm('aile', 'Aile Sorgula')">
-                        <i class="fas fa-users"></i> Aile Sorgula
-                    </div>
-                    <div class="query-option" onclick="showAileForm('ailepro', 'Aile Pro Sorgula')">
-                        <i class="fas fa-user-friends"></i> Aile Pro Sorgula
-                    </div>
-                    <div class="query-option" onclick="showAileForm('es', 'Eş Sorgula')">
-                        <i class="fas fa-heart"></i> Eş Sorgula
-                    </div>
-                    <div class="query-option" onclick="showAileForm('sulale', 'Sülale Sorgula')">
-                        <i class="fas fa-sitemap"></i> Sülale Sorgula
-                    </div>
+            <div id="yas-sorgula-tab" class="tab-content">
+                <h2><i class="fas fa-birthday-cake"></i> Yaş Sorgula</h2>
+                <div class="form-group">
+                    <label>TC Kimlik No:</label>
+                    <input type="text" id="tcYas" maxlength="11" placeholder="TC kimlik numarasını girin">
                 </div>
-
-                <div id="aile-form" class="query-form">
-                    <h3 id="aile-form-title"></h3>
-                    <div class="form-group">
-                        <label>TC Kimlik No:</label>
-                        <input type="text" id="tcAile" maxlength="11" placeholder="TC kimlik numarasını girin">
-                    </div>
-                    <button onclick="executeAileQuery()">
-                        <i class="fas fa-play"></i> Sorguyu Çalıştır
-                    </button>
-                </div>
+                <button onclick="sorgula('yas')">
+                    <i class="fas fa-play"></i> Sorguyu Çalıştır
+                </button>
             </div>
 
-            <!-- IP Tab -->
-            <div id="ip-tab" class="tab-content">
-                <h2><i class="fas fa-globe"></i> IP ve Domain Sorgulama</h2>
-                
-                <div class="btn-group">
-                    <div class="query-option" onclick="showIpForm('ip', 'IP Sorgula')">
-                        <i class="fas fa-globe"></i> IP Sorgula
-                    </div>
-                    <div class="query-option" onclick="showIpForm('dns', 'DNS Sorgula')">
-                        <i class="fas fa-network-wired"></i> DNS Sorgula
-                    </div>
-                    <div class="query-option" onclick="showIpForm('whois', 'WHOIS Sorgula')">
-                        <i class="fas fa-search"></i> WHOIS Sorgula
-                    </div>
-                    <div class="query-option" onclick="showIpForm('subdomain', 'Subdomain Sorgula')">
-                        <i class="fas fa-sitemap"></i> Subdomain Sorgula
-                    </div>
-                    <div class="query-option" onclick="showIpForm('leak', 'Leak Sorgula')">
-                        <i class="fas fa-envelope"></i> Leak Sorgula
-                    </div>
-                    <div class="query-option" onclick="showIpForm('telegram', 'Telegram Sorgula')">
-                        <i class="fab fa-telegram"></i> Telegram Sorgula
-                    </div>
+            <!-- Ad Soyad Tabları -->
+            <div id="adsoyad-sorgula-tab" class="tab-content">
+                <h2><i class="fas fa-user"></i> Ad Soyad Sorgula</h2>
+                <div class="form-group">
+                    <label>Ad:</label>
+                    <input type="text" id="adSorgula" placeholder="Ad">
                 </div>
-
-                <div id="ip-form" class="query-form">
-                    <h3 id="ip-form-title"></h3>
-                    <div id="ip-form-content">
-                        <!-- Form içeriği dinamik olarak eklenecek -->
-                    </div>
-                    <button onclick="executeIpQuery()">
-                        <i class="fas fa-play"></i> Sorguyu Çalıştır
-                    </button>
+                <div class="form-group">
+                    <label>Soyad:</label>
+                    <input type="text" id="soyadSorgula" placeholder="Soyad">
                 </div>
+                <button onclick="sorgulaAdSoyad('adsoyad')">
+                    <i class="fas fa-play"></i> Sorguyu Çalıştır
+                </button>
             </div>
 
-            <!-- Discord Tab -->
+            <div id="adsoyad-pro-tab" class="tab-content">
+                <h2><i class="fas fa-user-tie"></i> Ad Soyad Pro</h2>
+                <div class="form-group">
+                    <label>Ad:</label>
+                    <input type="text" id="adPro" placeholder="Ad">
+                </div>
+                <div class="form-group">
+                    <label>Soyad:</label>
+                    <input type="text" id="soyadPro" placeholder="Soyad">
+                </div>
+                <button onclick="sorgulaAdSoyad('adsoyadpro')">
+                    <i class="fas fa-play"></i> Sorguyu Çalıştır
+                </button>
+            </div>
+
+            <div id="adililce-tab" class="tab-content">
+                <h2><i class="fas fa-map-marker-alt"></i> Ad İl İlçe Sorgula</h2>
+                <div class="form-group">
+                    <label>Ad:</label>
+                    <input type="text" id="adIl" placeholder="Ad">
+                </div>
+                <div class="form-group">
+                    <label>İl:</label>
+                    <input type="text" id="ilAd" placeholder="İl">
+                </div>
+                <button onclick="sorgulaAdIl('adililce')">
+                    <i class="fas fa-play"></i> Sorguyu Çalıştır
+                </button>
+            </div>
+
+            <!-- GSM Tabları -->
+            <div id="tc-gsm-tab" class="tab-content">
+                <h2><i class="fas fa-mobile-alt"></i> TC'den GSM Sorgula</h2>
+                <div class="form-group">
+                    <label>TC Kimlik No:</label>
+                    <input type="text" id="tcGsm" maxlength="11" placeholder="TC kimlik numarasını girin">
+                </div>
+                <button onclick="sorgula('tcgsm')">
+                    <i class="fas fa-play"></i> Sorguyu Çalıştır
+                </button>
+            </div>
+
+            <div id="gsm-tc-tab" class="tab-content">
+                <h2><i class="fas fa-id-card"></i> GSM'den TC Sorgula</h2>
+                <div class="form-group">
+                    <label>GSM Numarası:</label>
+                    <input type="text" id="gsmTc" placeholder="GSM numarasını girin">
+                </div>
+                <button onclick="sorgula('gsmtc')">
+                    <i class="fas fa-play"></i> Sorguyu Çalıştır
+                </button>
+            </div>
+
+            <!-- Aile Tabları -->
+            <div id="aile-sorgula-tab" class="tab-content">
+                <h2><i class="fas fa-users"></i> Aile Sorgula</h2>
+                <div class="form-group">
+                    <label>TC Kimlik No:</label>
+                    <input type="text" id="tcAile" maxlength="11" placeholder="TC kimlik numarasını girin">
+                </div>
+                <button onclick="sorgula('aile')">
+                    <i class="fas fa-play"></i> Sorguyu Çalıştır
+                </button>
+            </div>
+
+            <div id="aile-pro-tab" class="tab-content">
+                <h2><i class="fas fa-user-friends"></i> Aile Pro Sorgula</h2>
+                <div class="form-group">
+                    <label>TC Kimlik No:</label>
+                    <input type="text" id="tcAilePro" maxlength="11" placeholder="TC kimlik numarasını girin">
+                </div>
+                <button onclick="sorgula('ailepro')">
+                    <i class="fas fa-play"></i> Sorguyu Çalıştır
+                </button>
+            </div>
+
+            <div id="es-sorgula-tab" class="tab-content">
+                <h2><i class="fas fa-heart"></i> Eş Sorgula</h2>
+                <div class="form-group">
+                    <label>TC Kimlik No:</label>
+                    <input type="text" id="tcEs" maxlength="11" placeholder="TC kimlik numarasını girin">
+                </div>
+                <button onclick="sorgula('es')">
+                    <i class="fas fa-play"></i> Sorguyu Çalıştır
+                </button>
+            </div>
+
+            <div id="sulale-tab" class="tab-content">
+                <h2><i class="fas fa-sitemap"></i> Sülale Sorgula</h2>
+                <div class="form-group">
+                    <label>TC Kimlik No:</label>
+                    <input type="text" id="tcSulale" maxlength="11" placeholder="TC kimlik numarasını girin">
+                </div>
+                <button onclick="sorgula('sulale')">
+                    <i class="fas fa-play"></i> Sorguyu Çalıştır
+                </button>
+            </div>
+
+            <!-- IP Tabları -->
+            <div id="ip-sorgula-tab" class="tab-content">
+                <h2><i class="fas fa-globe"></i> IP Sorgula</h2>
+                <div class="form-group">
+                    <label>IP/Domain:</label>
+                    <input type="text" id="domainIp" placeholder="IP adresi veya domain girin">
+                </div>
+                <button onclick="sorgula('ip')">
+                    <i class="fas fa-play"></i> Sorguyu Çalıştır
+                </button>
+            </div>
+
+            <div id="dns-tab" class="tab-content">
+                <h2><i class="fas fa-network-wired"></i> DNS Sorgula</h2>
+                <div class="form-group">
+                    <label>IP/Domain:</label>
+                    <input type="text" id="domainDns" placeholder="IP adresi veya domain girin">
+                </div>
+                <button onclick="sorgula('dns')">
+                    <i class="fas fa-play"></i> Sorguyu Çalıştır
+                </button>
+            </div>
+
+            <div id="whois-tab" class="tab-content">
+                <h2><i class="fas fa-search"></i> WHOIS Sorgula</h2>
+                <div class="form-group">
+                    <label>IP/Domain:</label>
+                    <input type="text" id="domainWhois" placeholder="IP adresi veya domain girin">
+                </div>
+                <button onclick="sorgula('whois')">
+                    <i class="fas fa-play"></i> Sorguyu Çalıştır
+                </button>
+            </div>
+
+            <div id="subdomain-tab" class="tab-content">
+                <h2><i class="fas fa-sitemap"></i> Subdomain Sorgula</h2>
+                <div class="form-group">
+                    <label>IP/Domain:</label>
+                    <input type="text" id="domainSubdomain" placeholder="IP adresi veya domain girin">
+                </div>
+                <button onclick="sorgula('subdomain')">
+                    <i class="fas fa-play"></i> Sorguyu Çalıştır
+                </button>
+            </div>
+
+            <div id="leak-tab" class="tab-content">
+                <h2><i class="fas fa-envelope"></i> Leak Sorgula</h2>
+                <div class="form-group">
+                    <label>E-posta:</label>
+                    <input type="text" id="leakQuery" placeholder="E-posta adresi girin">
+                </div>
+                <button onclick="sorgula('leak')">
+                    <i class="fas fa-play"></i> Sorguyu Çalıştır
+                </button>
+            </div>
+
+            <div id="telegram-tab" class="tab-content">
+                <h2><i class="fab fa-telegram"></i> Telegram Sorgula</h2>
+                <div class="form-group">
+                    <label>Telegram Kullanıcı Adı:</label>
+                    <input type="text" id="telegramUser" placeholder="Telegram kullanıcı adı">
+                </div>
+                <button onclick="sorgula('telegram')">
+                    <i class="fas fa-play"></i> Sorguyu Çalıştır
+                </button>
+            </div>
+
+            <!-- Diğer Tablar (Aynı Kaldı) -->
             <div id="discord-tab" class="tab-content">
                 <h2><i class="fab fa-discord"></i> Discord ID Sorgulama</h2>
                 <div class="form-group">
@@ -836,7 +985,6 @@
                 </button>
             </div>
 
-            <!-- Gelişmiş IP Tab -->
             <div id="gelismisip-tab" class="tab-content">
                 <h2><i class="fas fa-search-plus"></i> Gelişmiş IP Sorgulama</h2>
                 <div class="form-group">
@@ -846,7 +994,6 @@
                 <button onclick="sorgula('gelismisip')">Detaylı IP Sorgula</button>
             </div>
 
-            <!-- Diğer Sorgular Tab -->
             <div id="other-tab" class="tab-content">
                 <h2><i class="fas fa-cogs"></i> Diğer Sorgular</h2>
                 
@@ -1020,14 +1167,28 @@
     </div>
 
     <script>
+        // Accordion fonksiyonu
+        function toggleSubmenu(submenuId) {
+            const submenu = document.getElementById(submenuId);
+            const allSubmenus = document.querySelectorAll('.submenu');
+            
+            // Diğer tüm submenüleri kapat
+            allSubmenus.forEach(menu => {
+                if (menu.id !== submenuId) {
+                    menu.classList.remove('active');
+                }
+            });
+            
+            // Tıklanan submenu'yu aç/kapat
+            submenu.classList.toggle('active');
+        }
+
         let systemKey = '';
         let premiumKey = '';
         let currentAdminSession = '';
         let isKeyVerified = false;
         let isPremiumVerified = false;
         let currentResult = null;
-        let currentQueryType = '';
-        let currentQueryCategory = '';
 
         function openTab(tabName) {
             // Premium sekmesine erişim kontrolü
@@ -1046,16 +1207,20 @@
             
             document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.sub-tab-btn').forEach(btn => btn.classList.remove('active'));
+            
             document.getElementById(tabName).classList.add('active');
-            event.currentTarget.classList.add('active');
+            
+            // Aktif butonu bul ve active class'ını ekle
+            const activeBtn = document.querySelector(`[onclick="openTab('${tabName}')"]`);
+            if (activeBtn) {
+                activeBtn.classList.add('active');
+            }
 
             // Premium sekmesi içeriğini güncelle
             if (tabName === 'premium-tab') {
                 updatePremiumContent();
             }
-
-            // Sorgu formlarını gizle
-            document.querySelectorAll('.query-form').forEach(form => form.classList.remove('active'));
         }
 
         function updatePremiumContent() {
@@ -1071,109 +1236,23 @@
             }
         }
 
-        // TC Sorgu Formları
-        function showQueryForm(type, title) {
-            currentQueryType = type;
-            currentQueryCategory = 'tc';
-            document.getElementById('tc-form-title').textContent = title;
-            document.getElementById('tc-form').classList.add('active');
-        }
-
-        function executeTcQuery() {
-            sorgula(currentQueryType);
-        }
-
-        // Ad Soyad Sorgu Formları
-        function showAdSoyadForm(type, title) {
-            currentQueryType = type;
-            currentQueryCategory = 'adsoyad';
-            document.getElementById('adsoyad-form-title').textContent = title;
-            document.getElementById('adsoyad-form').classList.add('active');
-        }
-
-        function executeAdSoyadQuery() {
-            sorgula(currentQueryType);
-        }
-
-        // GSM Sorgu Formları
-        function showGsmForm(type, title) {
-            currentQueryType = type;
-            currentQueryCategory = 'gsm';
-            document.getElementById('gsm-form-title').textContent = title;
-            
-            let formContent = '';
-            if (type === 'tcgsm') {
-                formContent = `
-                    <div class="form-group">
-                        <label>TC Kimlik No:</label>
-                        <input type="text" id="tcGsm" maxlength="11" placeholder="TC kimlik numarasını girin">
-                    </div>
-                `;
-            } else if (type === 'gsmtc') {
-                formContent = `
-                    <div class="form-group">
-                        <label>GSM Numarası:</label>
-                        <input type="text" id="gsm" placeholder="GSM numarasını girin">
-                    </div>
-                `;
+        // Yardımcı sorgu fonksiyonları
+        function sorgulaAdSoyad(type) {
+            if (type === 'adsoyad' || type === 'adsoyadpro') {
+                document.getElementById('ad').value = document.getElementById(type === 'adsoyad' ? 'adSorgula' : 'adPro').value;
+                document.getElementById('soyad').value = document.getElementById(type === 'adsoyad' ? 'soyadSorgula' : 'soyadPro').value;
+                document.getElementById('il').value = '';
+                document.getElementById('ilce').value = '';
             }
-            
-            document.getElementById('gsm-form-content').innerHTML = formContent;
-            document.getElementById('gsm-form').classList.add('active');
+            sorgula(type);
         }
 
-        function executeGsmQuery() {
-            sorgula(currentQueryType);
-        }
-
-        // Aile Sorgu Formları
-        function showAileForm(type, title) {
-            currentQueryType = type;
-            currentQueryCategory = 'aile';
-            document.getElementById('aile-form-title').textContent = title;
-            document.getElementById('aile-form').classList.add('active');
-        }
-
-        function executeAileQuery() {
-            sorgula(currentQueryType);
-        }
-
-        // IP Sorgu Formları
-        function showIpForm(type, title) {
-            currentQueryType = type;
-            currentQueryCategory = 'ip';
-            document.getElementById('ip-form-title').textContent = title;
-            
-            let formContent = '';
-            if (['ip', 'dns', 'whois', 'subdomain'].includes(type)) {
-                formContent = `
-                    <div class="form-group">
-                        <label>IP/Domain:</label>
-                        <input type="text" id="domain" placeholder="IP adresi veya domain girin">
-                    </div>
-                `;
-            } else if (type === 'leak') {
-                formContent = `
-                    <div class="form-group">
-                        <label>E-posta:</label>
-                        <input type="text" id="leakQuery" placeholder="E-posta adresi girin">
-                    </div>
-                `;
-            } else if (type === 'telegram') {
-                formContent = `
-                    <div class="form-group">
-                        <label>Telegram Kullanıcı Adı:</label>
-                        <input type="text" id="telegramUser" placeholder="Telegram kullanıcı adı">
-                    </div>
-                `;
-            }
-            
-            document.getElementById('ip-form-content').innerHTML = formContent;
-            document.getElementById('ip-form').classList.add('active');
-        }
-
-        function executeIpQuery() {
-            sorgula(currentQueryType);
+        function sorgulaAdIl(type) {
+            document.getElementById('ad').value = document.getElementById('adIl').value;
+            document.getElementById('il').value = document.getElementById('ilAd').value;
+            document.getElementById('soyad').value = '';
+            document.getElementById('ilce').value = '';
+            sorgula(type);
         }
 
         async function verifySystemKey() {
@@ -1193,7 +1272,7 @@
                     systemKey = key;
                     isKeyVerified = true;
                     messageDiv.innerHTML = '<div class="success">✅ Key doğrulandı! Tüm sorgular aktif.</div>';
-                    setTimeout(() => openTab('tc-tab'), 1000);
+                    setTimeout(() => openTab('tc-sorgula-tab'), 1000);
                 } else {
                     messageDiv.innerHTML = '<div class="error">❌ Geçersiz key!</div>';
                 }
@@ -1245,82 +1324,100 @@
             let params = { key: systemKey };
             
             switch(type) {
-                case 'tc': case 'tcpro': case 'hayathikayesi': case 'yas':
-                    const tcValue = document.getElementById('tc').value;
-                    if (!tcValue) { alert('TC kimlik numarası girin!'); loading.classList.remove('active'); return; }
-                    params.tc = tcValue;
+                case 'tc': 
+                    const tcSorgulaValue = document.getElementById('tcSorgula').value;
+                    if (!tcSorgulaValue) { alert('TC kimlik numarası girin!'); loading.classList.remove('active'); return; }
+                    params.tc = tcSorgulaValue;
                     break;
-                    
-                case 'tapu': case 'isyeri': case 'adres': case 'hane': case 'apartman':
-                    const tcOtherValue = document.getElementById('tcOther').value;
-                    if (!tcOtherValue) { alert('TC kimlik numarası girin!'); loading.classList.remove('active'); return; }
-                    params.tc = tcOtherValue;
+                case 'tcpro': 
+                    const tcProValue = document.getElementById('tcPro').value;
+                    if (!tcProValue) { alert('TC kimlik numarası girin!'); loading.classList.remove('active'); return; }
+                    params.tc = tcProValue;
                     break;
-                    
+                case 'hayathikayesi': 
+                    const tcHayatValue = document.getElementById('tcHayat').value;
+                    if (!tcHayatValue) { alert('TC kimlik numarası girin!'); loading.classList.remove('active'); return; }
+                    params.tc = tcHayatValue;
+                    break;
+                case 'yas': 
+                    const tcYasValue = document.getElementById('tcYas').value;
+                    if (!tcYasValue) { alert('TC kimlik numarası girin!'); loading.classList.remove('active'); return; }
+                    params.tc = tcYasValue;
+                    break;
                 case 'tcgsm':
                     const tcGsmValue = document.getElementById('tcGsm').value;
                     if (!tcGsmValue) { alert('TC kimlik numarası girin!'); loading.classList.remove('active'); return; }
                     params.tc = tcGsmValue;
                     break;
-                    
-                case 'aile': case 'ailepro': case 'es': case 'sulale':
+                case 'gsmtc':
+                    const gsmValue = document.getElementById('gsmTc').value;
+                    if (!gsmValue) { alert('GSM numarası girin!'); loading.classList.remove('active'); return; }
+                    params.gsm = gsmValue;
+                    break;
+                case 'aile': 
                     const tcAileValue = document.getElementById('tcAile').value;
                     if (!tcAileValue) { alert('TC kimlik numarası girin!'); loading.classList.remove('active'); return; }
                     params.tc = tcAileValue;
                     break;
-                    
-                case 'gsmtc':
-                    const gsmValue = document.getElementById('gsm').value;
-                    if (!gsmValue) { alert('GSM numarası girin!'); loading.classList.remove('active'); return; }
-                    params.gsm = gsmValue;
+                case 'ailepro': 
+                    const tcAileProValue = document.getElementById('tcAilePro').value;
+                    if (!tcAileProValue) { alert('TC kimlik numarası girin!'); loading.classList.remove('active'); return; }
+                    params.tc = tcAileProValue;
                     break;
-                    
+                case 'es': 
+                    const tcEsValue = document.getElementById('tcEs').value;
+                    if (!tcEsValue) { alert('TC kimlik numarası girin!'); loading.classList.remove('active'); return; }
+                    params.tc = tcEsValue;
+                    break;
+                case 'sulale': 
+                    const tcSulaleValue = document.getElementById('tcSulale').value;
+                    if (!tcSulaleValue) { alert('TC kimlik numarası girin!'); loading.classList.remove('active'); return; }
+                    params.tc = tcSulaleValue;
+                    break;
+                case 'ip': case 'dns': case 'whois': case 'subdomain':
+                    const domainValue = document.getElementById(`domain${type.charAt(0).toUpperCase() + type.slice(1)}`).value;
+                    if (!domainValue) { alert('IP/Domain girin!'); loading.classList.remove('active'); return; }
+                    params.domain = domainValue;
+                    break;
+                case 'leak':
+                    const leakValue = document.getElementById('leakQuery').value;
+                    if (!leakValue) { alert('E-posta girin!'); loading.classList.remove('active'); return; }
+                    params.query = leakValue;
+                    break;
+                case 'telegram':
+                    const telegramValue = document.getElementById('telegramUser').value;
+                    if (!telegramValue) { alert('Telegram kullanıcı adı girin!'); loading.classList.remove('active'); return; }
+                    params.kullanici = telegramValue;
+                    break;
+                case 'tapu': case 'isyeri': case 'adres': case 'hane': case 'apartman':
+                    const tcOtherValue = document.getElementById('tcOther').value;
+                    if (!tcOtherValue) { alert('TC kimlik numarası girin!'); loading.classList.remove('active'); return; }
+                    params.tc = tcOtherValue;
+                    break;
+                case 'gelismisip':
+                    const ipValue = document.getElementById('gelismisIp').value;
+                    if (!ipValue) { alert('IP adresi girin!'); loading.classList.remove('active'); return; }
+                    params.ip = ipValue;
+                    break;
+                case 'vergino':
+                    const vergiValue = document.getElementById('vergiNo').value;
+                    if (!vergiValue) { alert('Vergi numarası girin!'); loading.classList.remove('active'); return; }
+                    params.vergi = vergiValue;
+                    break;
+                case 'adaparsel':
+                    params.il = document.getElementById('ilAda').value || '';
+                    params.ada = document.getElementById('ada').value || '';
+                    params.parsel = document.getElementById('parsel').value || '';
+                    break;
                 case 'adsoyad': case 'adsoyadpro':
                     params.ad = document.getElementById('ad').value || '';
                     params.soyad = document.getElementById('soyad').value || '';
                     params.il = document.getElementById('il').value || '';
                     params.ilce = document.getElementById('ilce').value || '';
                     break;
-                    
                 case 'adililce':
                     params.ad = document.getElementById('ad').value || '';
                     params.il = document.getElementById('il').value || '';
-                    break;
-                    
-                case 'ip': case 'dns': case 'whois': case 'subdomain':
-                    const domainValue = document.getElementById('domain').value;
-                    if (!domainValue) { alert('IP/Domain girin!'); loading.classList.remove('active'); return; }
-                    params.domain = domainValue;
-                    break;
-                    
-                case 'leak':
-                    const leakValue = document.getElementById('leakQuery').value;
-                    if (!leakValue) { alert('E-posta girin!'); loading.classList.remove('active'); return; }
-                    params.query = leakValue;
-                    break;
-                    
-                case 'telegram':
-                    const telegramValue = document.getElementById('telegramUser').value;
-                    if (!telegramValue) { alert('Telegram kullanıcı adı girin!'); loading.classList.remove('active'); return; }
-                    params.kullanici = telegramValue;
-                    break;
-                    
-                case 'gelismisip':
-                    const ipValue = document.getElementById('gelismisIp').value;
-                    if (!ipValue) { alert('IP adresi girin!'); loading.classList.remove('active'); return; }
-                    params.ip = ipValue;
-                    break;
-                    
-                case 'vergino':
-                    const vergiValue = document.getElementById('vergiNo').value;
-                    if (!vergiValue) { alert('Vergi numarası girin!'); loading.classList.remove('active'); return; }
-                    params.vergi = vergiValue;
-                    break;
-                    
-                case 'adaparsel':
-                    params.il = document.getElementById('ilAda').value || '';
-                    params.ada = document.getElementById('ada').value || '';
-                    params.parsel = document.getElementById('parsel').value || '';
                     break;
             }
             
