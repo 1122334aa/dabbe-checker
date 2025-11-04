@@ -36,82 +36,6 @@
             overflow-x: hidden;
         }
 
-        /* Login/Register Modal */
-        .auth-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(15, 23, 42, 0.95);
-            z-index: 1000;
-        }
-
-        .auth-content {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: #1e293b;
-            border-radius: 12px;
-            padding: 30px;
-            width: 90%;
-            max-width: 400px;
-            border: 2px solid #dc2626;
-            box-shadow: 0 0 30px rgba(220, 38, 38, 0.5);
-        }
-
-        .auth-tabs {
-            display: flex;
-            margin-bottom: 20px;
-            border-bottom: 1px solid #334155;
-        }
-
-        .auth-tab {
-            flex: 1;
-            padding: 12px;
-            text-align: center;
-            background: transparent;
-            border: none;
-            color: #94a3b8;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .auth-tab.active {
-            color: #f59e0b;
-            border-bottom: 2px solid #f59e0b;
-        }
-
-        .auth-form {
-            display: none;
-        }
-
-        .auth-form.active {
-            display: block;
-            animation: fadeIn 0.3s ease;
-        }
-
-        .user-info {
-            position: absolute;
-            top: 20px;
-            right: 80px;
-            color: #f59e0b;
-            font-weight: 600;
-        }
-
-        .logout-btn {
-            background: #dc2626;
-            border: none;
-            color: white;
-            padding: 8px 15px;
-            border-radius: 6px;
-            cursor: pointer;
-            margin-left: 10px;
-            font-size: 12px;
-        }
-
         /* Büyük balkabağı arkaplan */
         body::before {
             content: '🎃';
@@ -631,13 +555,6 @@
             body::before {
                 font-size: 300px;
             }
-            .user-info {
-                position: relative;
-                top: 0;
-                right: 0;
-                text-align: center;
-                margin-bottom: 15px;
-            }
         }
 
         .success { 
@@ -665,55 +582,6 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
-    <!-- Login/Register Modal -->
-    <div id="authModal" class="auth-modal">
-        <div class="auth-content">
-            <span class="close" onclick="closeAuthModal()">&times;</span>
-            <h2 style="text-align: center; color: #f59e0b; margin-bottom: 20px;">
-                <i class="fas fa-user-shield"></i> DABBE PRO
-            </h2>
-            
-            <div class="auth-tabs">
-                <button class="auth-tab active" onclick="openAuthTab('login')">Giriş Yap</button>
-                <button class="auth-tab" onclick="openAuthTab('register')">Kayıt Ol</button>
-            </div>
-
-            <div id="loginForm" class="auth-form active">
-                <div class="form-group">
-                    <label><i class="fas fa-user"></i> Kullanıcı Adı:</label>
-                    <input type="text" id="loginUsername" placeholder="Kullanıcı adınız">
-                </div>
-                <div class="form-group">
-                    <label><i class="fas fa-lock"></i> Şifre:</label>
-                    <input type="password" id="loginPassword" placeholder="Şifreniz">
-                </div>
-                <button onclick="login()" style="width: 100%;">
-                    <i class="fas fa-sign-in-alt"></i> Giriş Yap
-                </button>
-            </div>
-
-            <div id="registerForm" class="auth-form">
-                <div class="form-group">
-                    <label><i class="fas fa-user"></i> Kullanıcı Adı:</label>
-                    <input type="text" id="registerUsername" placeholder="Kullanıcı adı seçin">
-                </div>
-                <div class="form-group">
-                    <label><i class="fas fa-lock"></i> Şifre:</label>
-                    <input type="password" id="registerPassword" placeholder="Şifre oluşturun">
-                </div>
-                <div class="form-group">
-                    <label><i class="fas fa-key"></i> Kayıt Key:</label>
-                    <input type="text" id="registerKey" placeholder="Kayıt için key girin">
-                </div>
-                <button onclick="register()" style="width: 100%; background: linear-gradient(45deg, #10b981, #059669);">
-                    <i class="fas fa-user-plus"></i> Kayıt Ol
-                </button>
-            </div>
-
-            <div id="authMessage" style="margin-top: 15px;"></div>
-        </div>
-    </div>
-
     <div class="container">
         <div class="sidebar">
             <div class="sidebar-header">
@@ -722,14 +590,6 @@
             </div>
             
             <div class="nav-tabs">
-                <!-- Kullanıcı bilgisi -->
-                <div id="userInfo" class="user-info" style="display: none;">
-                    <span id="usernameDisplay"></span>
-                    <button class="logout-btn" onclick="logout()">
-                        <i class="fas fa-sign-out-alt"></i> Çıkış
-                    </button>
-                </div>
-
                 <button class="tab-btn active" onclick="openTab('key-tab')">
                     <i class="fas fa-key"></i>Key Giriş
                 </button>
@@ -858,34 +718,34 @@
             </header>
 
             <!-- Key Tab -->
-<div id="key-tab" class="tab-content active">
-    <h2><i class="fas fa-key"></i> Sistem Key Girişi</h2>
-    <div class="key-section">
-        <div class="form-group">
-            <label><i class="fas fa-lock"></i> Sistem Key:</label>
-            <input type="text" id="systemKey" placeholder="Keyinizi girin" value="dehainciadamgottenyedim">
-        </div>
-        <button onclick="verifySystemKey()">
-            <i class="fas fa-check"></i> Key Doğrula
-        </button>
-        <div id="keyMessage" style="margin-top: 15px;"></div>
-    </div>
-</div>
+            <div id="key-tab" class="tab-content active">
+                <h2><i class="fas fa-key"></i> Sistem Key Girişi</h2>
+                <div class="key-section">
+                    <div class="form-group">
+                        <label><i class="fas fa-lock"></i> Sistem Key:</label>
+                        <input type="text" id="systemKey" placeholder="Keyinizi girin" value="DABBE2024VIP">
+                    </div>
+                    <button onclick="verifySystemKey()">
+                        <i class="fas fa-check"></i> Key Doğrula
+                    </button>
+                    <div id="keyMessage" style="margin-top: 15px;"></div>
+                </div>
+            </div>
 
-<!-- Premium Key Tab -->
-<div id="premium-key-tab" class="tab-content">
-    <h2><i class="fas fa-crown"></i> Premium Key Girişi</h2>
-    <div class="key-section">
-        <div class="form-group">
-            <label><i class="fas fa-crown"></i> Premium Key:</label>
-            <input type="text" id="premiumKey" placeholder="Premium keyinizi girin" value="dehainciadampremium">
-        </div>
-        <button onclick="verifyPremiumKey()" style="background: linear-gradient(45deg, #f59e0b, #d97706);">
-            <i class="fas fa-crown"></i> Premium Key Doğrula
-        </button>
-        <div id="premiumKeyMessage" style="margin-top: 15px;"></div>
-    </div>
-</div>
+            <!-- Premium Key Tab -->
+            <div id="premium-key-tab" class="tab-content">
+                <h2><i class="fas fa-crown"></i> Premium Key Girişi</h2>
+                <div class="key-section">
+                    <div class="form-group">
+                        <label><i class="fas fa-crown"></i> Premium Key:</label>
+                        <input type="text" id="premiumKey" placeholder="Premium keyinizi girin">
+                    </div>
+                    <button onclick="verifyPremiumKey()" style="background: linear-gradient(45deg, #f59e0b, #d97706);">
+                        <i class="fas fa-crown"></i> Premium Key Doğrula
+                    </button>
+                    <div id="premiumKeyMessage" style="margin-top: 15px;"></div>
+                </div>
+            </div>
 
             <!-- TC Sorgu Tabları -->
             <div id="tc-sorgula-tab" class="tab-content">
@@ -1304,14 +1164,6 @@
                     <h4><i class="fas fa-crown"></i> Premium Keyler:</h4>
                     <div id="currentPremiumKeys" style="margin-top: 10px;"></div>
                 </div>
-
-                <div style="margin-top: 20px;">
-                    <h4><i class="fas fa-users"></i> Kullanıcı Yönetimi</h4>
-                    <button onclick="loadUsers()" style="width: 100%; margin-bottom: 10px;">
-                        <i class="fas fa-sync"></i> Kullanıcıları Yenile
-                    </button>
-                    <div id="usersList" style="margin-top: 10px;"></div>
-                </div>
             </div>
 
             <div id="adminMessage"></div>
@@ -1319,8 +1171,22 @@
     </div>
 
     <script>
-        let currentUser = null;
-        let userSession = null;
+        // Accordion fonksiyonu
+        function toggleSubmenu(submenuId) {
+            const submenu = document.getElementById(submenuId);
+            const allSubmenus = document.querySelectorAll('.submenu');
+            
+            // Diğer tüm submenüleri kapat
+            allSubmenus.forEach(menu => {
+                if (menu.id !== submenuId) {
+                    menu.classList.remove('active');
+                }
+            });
+            
+            // Tıklanan submenu'yu aç/kapat
+            submenu.classList.toggle('active');
+        }
+
         let systemKey = '';
         let premiumKey = '';
         let currentAdminSession = '';
@@ -1328,135 +1194,18 @@
         let isPremiumVerified = false;
         let currentResult = null;
 
-        // Sayfa yüklendiğinde auth modal'ı göster
-        document.addEventListener('DOMContentLoaded', function() {
-            openAuthModal();
-            document.getElementById('systemKey').value = 'DABBE2024VIP';
-        });
-
-        // Auth Modal Fonksiyonları
-        function openAuthModal() {
-            document.getElementById('authModal').style.display = 'block';
-        }
-
-        function closeAuthModal() {
-            if (currentUser) {
-                document.getElementById('authModal').style.display = 'none';
-            }
-        }
-
-        function openAuthTab(tabName) {
-            document.querySelectorAll('.auth-form').forEach(form => form.classList.remove('active'));
-            document.querySelectorAll('.auth-tab').forEach(tab => tab.classList.remove('active'));
-            
-            document.getElementById(tabName + 'Form').classList.add('active');
-            event.target.classList.add('active');
-        }
-
-        async function login() {
-            const username = document.getElementById('loginUsername').value;
-            const password = document.getElementById('loginPassword').value;
-            const messageDiv = document.getElementById('authMessage');
-
-            try {
-                const response = await fetch('/api/login', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ username, password })
-                });
-                
-                const data = await response.json();
-
-                if (data.success) {
-                    currentUser = data.username;
-                    userSession = data.sessionId;
-                    
-                    document.getElementById('usernameDisplay').textContent = currentUser;
-                    document.getElementById('userInfo').style.display = 'block';
-                    document.getElementById('authModal').style.display = 'none';
-                    
-                    messageDiv.innerHTML = '<div class="success">✅ Giriş başarılı!</div>';
-                } else {
-                    messageDiv.innerHTML = '<div class="error">❌ ' + data.message + '</div>';
-                }
-            } catch (error) {
-                messageDiv.innerHTML = '<div class="error">❌ Giriş hatası!</div>';
-            }
-        }
-
-        async function register() {
-            const username = document.getElementById('registerUsername').value;
-            const password = document.getElementById('registerPassword').value;
-            const key = document.getElementById('registerKey').value;
-            const messageDiv = document.getElementById('authMessage');
-
-            if (!username || !password || !key) {
-                messageDiv.innerHTML = '<div class="error">❌ Tüm alanları doldurun!</div>';
-                return;
-            }
-
-            try {
-                const response = await fetch('/api/register', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ username, password, key })
-                });
-                
-                const data = await response.json();
-
-                if (data.success) {
-                    messageDiv.innerHTML = '<div class="success">✅ Kayıt başarılı! Giriş yapabilirsiniz.</div>';
-                    openAuthTab('login');
-                    document.getElementById('loginUsername').value = username;
-                } else {
-                    messageDiv.innerHTML = '<div class="error">❌ ' + data.message + '</div>';
-                }
-            } catch (error) {
-                messageDiv.innerHTML = '<div class="error">❌ Kayıt hatası!</div>';
-            }
-        }
-
-        async function logout() {
-            try {
-                await fetch('/api/logout', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ sessionId: userSession })
-                });
-            } catch (error) {
-                console.log('Logout error:', error);
-            }
-            
-            currentUser = null;
-            userSession = null;
-            document.getElementById('userInfo').style.display = 'none';
-            openAuthModal();
-        }
-
-        // Accordion fonksiyonu
-        function toggleSubmenu(submenuId) {
-            const submenu = document.getElementById(submenuId);
-            const allSubmenus = document.querySelectorAll('.submenu');
-            
-            allSubmenus.forEach(menu => {
-                if (menu.id !== submenuId) {
-                    menu.classList.remove('active');
-                }
-            });
-            
-            submenu.classList.toggle('active');
-        }
-
         function openTab(tabName) {
-            if (!currentUser && tabName !== 'key-tab' && tabName !== 'premium-key-tab') {
-                alert('❌ Önce giriş yapmalısınız!');
-                openAuthModal();
-                return;
-            }
-
+            // Premium sekmesine erişim kontrolü
             if (tabName === 'premium-tab' && !isPremiumVerified) {
                 alert('❌ Premium özelliklere erişmek için premium key girmeniz gerekiyor!');
                 openTab('premium-key-tab');
+                return;
+            }
+
+            // Diğer sekmeler için key kontrolü
+            if (tabName !== 'key-tab' && tabName !== 'premium-key-tab' && !isKeyVerified) {
+                alert('❌ Önce key doğrulaması yapın!');
+                openTab('key-tab');
                 return;
             }
             
@@ -1466,11 +1215,13 @@
             
             document.getElementById(tabName).classList.add('active');
             
+            // Aktif butonu bul ve active class'ını ekle
             const activeBtn = document.querySelector(`[onclick="openTab('${tabName}')"]`);
             if (activeBtn) {
                 activeBtn.classList.add('active');
             }
 
+            // Premium sekmesi içeriğini güncelle
             if (tabName === 'premium-tab') {
                 updatePremiumContent();
             }
@@ -1489,7 +1240,7 @@
             }
         }
 
-        // Sorgulama Fonksiyonları
+        // DÜZELTİLMİŞ SORGULAMA FONKSİYONLARI
         async function sorgula(type, inputId) {
             if (!systemKey || !isKeyVerified) {
                 alert('❌ Önce key doğrulaması yapın!');
@@ -1513,24 +1264,31 @@
                 return;
             }
 
+            // TC bazlı sorgular
             if (['tc', 'tcpro', 'hayathikayesi', 'yas', 'tcgsm', 'aile', 'ailepro', 'es', 'sulale', 'tapu', 'isyeri', 'adres', 'hane', 'apartman'].includes(type)) {
                 params.tc = inputValue;
             }
+            // GSM sorgusu
             else if (type === 'gsmtc') {
                 params.gsm = inputValue;
             }
+            // IP/Domain sorguları
             else if (['ip', 'dns', 'whois', 'subdomain'].includes(type)) {
                 params.domain = inputValue;
             }
+            // Leak sorgusu
             else if (type === 'leak') {
                 params.query = inputValue;
             }
+            // Telegram sorgusu
             else if (type === 'telegram') {
                 params.kullanici = inputValue;
             }
+            // Gelişmiş IP sorgusu
             else if (type === 'gelismisip') {
                 params.ip = inputValue;
             }
+            // Vergi no sorgusu
             else if (type === 'vergino') {
                 params.vergi = inputValue;
             }
@@ -1550,6 +1308,7 @@
             }
         }
 
+        // AD SOYAD SORGULARI DÜZELTİLDİ
         async function sorgulaAdSoyad(type) {
             if (!systemKey || !isKeyVerified) {
                 alert('❌ Önce key doğrulaması yapın!');
@@ -1578,6 +1337,7 @@
                 
                 params.ad = ad;
                 params.soyad = soyad;
+                // Ad Soyad sorgularında il ve ilçe gönderme
                 params.il = '';
                 params.ilce = '';
             }
@@ -1597,6 +1357,7 @@
             }
         }
 
+        // AD İL İLÇE SORGUSU DÜZELTİLDİ
         async function sorgulaAdIlIlce(type) {
             if (!systemKey || !isKeyVerified) {
                 alert('❌ Önce key doğrulaması yapın!');
@@ -1643,6 +1404,7 @@
             }
         }
 
+        // ADA PARSEL SORGUSU DÜZELTİLDİ
         async function sorgulaAdaparsel() {
             if (!systemKey || !isKeyVerified) {
                 alert('❌ Önce key doğrulaması yapın!');
@@ -1852,7 +1614,6 @@
             }
         }
 
-        // Admin Fonksiyonları
         function openAdminModal() {
             document.getElementById('adminModal').style.display = 'block';
             checkAdminSession();
@@ -1875,7 +1636,6 @@
                     document.getElementById('adminLoginSection').style.display = 'none';
                     document.getElementById('adminPanelSection').style.display = 'block';
                     loadCurrentKeys();
-                    loadUsers();
                 }
             } catch (error) {}
         }
@@ -1899,7 +1659,6 @@
                     document.getElementById('adminPanelSection').style.display = 'block';
                     messageDiv.innerHTML = '<div class="success">✅ Giriş başarılı!</div>';
                     loadCurrentKeys();
-                    loadUsers();
                 } else {
                     messageDiv.innerHTML = '<div class="error">❌ ' + data.message + '</div>';
                 }
@@ -2055,54 +1814,6 @@
             }
         }
 
-        async function loadUsers() {
-            try {
-                const response = await fetch('/api/admin/users', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ sessionId: currentAdminSession })
-                });
-                const data = await response.json();
-                if (data.success) {
-                    const usersList = document.getElementById('usersList');
-                    usersList.innerHTML = data.users.map(user => `
-                        <div class="key-item">
-                            <span>👤 ${user.username} - ${new Date(user.createdAt).toLocaleDateString('tr-TR')}</span>
-                            <button class="delete-btn" onclick="deleteUser('${user.id}')" title="Kullanıcıyı Sil">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </div>
-                    `).join('');
-                }
-            } catch (error) {
-                console.log('Kullanıcılar yüklenemedi:', error);
-            }
-        }
-
-        async function deleteUser(userId) {
-            if (!confirm('Bu kullanıcıyı silmek istediğinizden emin misiniz?\nBu işlem geri alınamaz!')) {
-                return;
-            }
-
-            try {
-                const response = await fetch('/api/admin/delete-user', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ userId, sessionId: currentAdminSession })
-                });
-                const data = await response.json();
-
-                if (data.success) {
-                    alert('✅ Kullanıcı başarıyla silindi!');
-                    loadUsers();
-                } else {
-                    alert('❌ Kullanıcı silinemedi: ' + data.message);
-                }
-            } catch (error) {
-                alert('❌ Kullanıcı silme hatası!');
-            }
-        }
-
         function downloadResult() {
             if (!currentResult) return;
             const text = JSON.stringify(currentResult, null, 2);
@@ -2117,14 +1828,14 @@
             URL.revokeObjectURL(url);
         }
 
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('systemKey').value = 'DABBE2024VIP';
+        });
+
         window.onclick = function(event) {
             const modal = document.getElementById('adminModal');
             if (event.target === modal) closeAdminModal();
-            
-            const authModal = document.getElementById('authModal');
-            if (event.target === authModal && currentUser) closeAuthModal();
         }
     </script>
 </body>
 </html>
-
