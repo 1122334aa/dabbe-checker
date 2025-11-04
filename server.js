@@ -25,7 +25,7 @@ function loadKeys() {
     } catch (error) {
         console.error('Key dosyası okunamadı:', error);
     }
-    return new Set(['DABBE2024VIP']);
+    return new Set(['dehainciadamgottenyedim']);
 }
 
 function saveKeys(keys) {
@@ -45,7 +45,7 @@ function loadPremiumKeys() {
     } catch (error) {
         console.error('Premium key dosyası okunamadı:', error);
     }
-    return new Set(['PREMIUM2024VIP']);
+    return new Set(['dehaincipremium']);
 }
 
 function savePremiumKeys(keys) {
@@ -591,3 +591,4 @@ server.listen(PORT, () => {
     console.log('💾 Key kayıt sistemi aktif');
     console.log('💎 Premium özellikler aktif');
 });
+
