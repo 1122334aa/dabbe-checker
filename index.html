@@ -224,6 +224,7 @@
             border-radius: 8px;
             font-size: 14px;
             transition: all 0.3s ease;
+            cursor: pointer;
         }
 
         input:focus, select:focus {
@@ -434,43 +435,57 @@
             font-size: 16px;
         }
 
-        .premium-feature {
-            background: linear-gradient(45deg, #f59e0b, #dc2626);
-            border-radius: 8px;
-            padding: 20px;
-            margin: 10px 0;
+        .premium-section {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            border: 2px solid #f59e0b;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 0 30px rgba(245, 158, 11, 0.3);
+        }
+
+        .premium-section h3 {
+            color: #f59e0b;
             text-align: center;
+            margin-bottom: 20px;
+            font-size: 28px;
         }
 
-        .premium-feature i {
-            font-size: 2em;
-            margin-bottom: 10px;
-        }
-
-        .account-details {
-            background: #0f172a;
-            border-radius: 8px;
-            padding: 20px;
+        .premium-feature {
+            display: flex;
+            align-items: center;
+            gap: 15px;
             margin: 15px 0;
+            padding: 15px;
+            background: rgba(245, 158, 11, 0.1);
+            border-radius: 8px;
             border: 1px solid #f59e0b;
         }
 
-        .account-field {
+        .premium-feature i {
+            color: #f59e0b;
+            font-size: 20px;
+        }
+
+        .account-details {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            border: 2px solid #10b981;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 20px 0;
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
+        }
+
+        .account-line {
             display: flex;
-            margin-bottom: 8px;
-            padding-bottom: 8px;
+            justify-content: space-between;
+            margin: 10px 0;
+            padding: 8px 0;
             border-bottom: 1px solid #334155;
         }
 
-        .field-label {
-            width: 120px;
-            color: #f59e0b;
-            font-weight: 600;
-        }
-
-        .field-value {
-            flex: 1;
-            color: #10b981;
+        .account-line:last-child {
+            border-bottom: none;
         }
 
         @media (max-width: 768px) {
@@ -533,16 +548,10 @@
             
             <div class="nav-tabs">
                 <button class="tab-btn active" onclick="openTab('key-tab')">
-                    <i class="fas fa-key"></i>System Key
+                    <i class="fas fa-key"></i>Key Giriş
                 </button>
                 <button class="tab-btn" onclick="openTab('premium-key-tab')">
                     <i class="fas fa-crown"></i>Premium Key
-                </button>
-                <button class="tab-btn premium-tab hidden" onclick="openTab('premium-page')">
-                    <i class="fas fa-star"></i>Premium Sayfa
-                </button>
-                <button class="tab-btn premium-tab hidden" onclick="openTab('tabii-account-tab')">
-                    <i class="fas fa-user"></i>Tabii Hesap Al
                 </button>
                 <button class="tab-btn" onclick="openTab('tc-tab')">
                     <i class="fas fa-id-card"></i>TC Sorgu
@@ -571,6 +580,9 @@
                 <button class="tab-btn" onclick="openTab('database-tab')">
                     <i class="fas fa-database"></i>Database
                 </button>
+                <button class="tab-btn" onclick="openTab('premium-tab')">
+                    <i class="fas fa-gem"></i>Premium
+                </button>
             </div>
         </div>
 
@@ -584,18 +596,18 @@
                 <p class="header-subtitle">Tüm Sorgular Aktif - Premium Platform</p>
             </header>
 
-            <!-- System Key Tab -->
+            <!-- Key Tab -->
             <div id="key-tab" class="tab-content active">
-                <h2><i class="fas fa-key"></i> System Key Girişi</h2>
+                <h2><i class="fas fa-key"></i> Sistem Key Girişi</h2>
                 <div class="key-section">
                     <div class="form-group">
-                        <label><i class="fas fa-lock"></i> System Key:</label>
-                        <input type="text" id="systemKey" placeholder="System keyinizi girin" value="DABBE2024VIP">
+                        <label><i class="fas fa-lock"></i> Sistem Key:</label>
+                        <input type="text" id="systemKey" placeholder="Keyinizi girin" value="DABBE2024VIP">
                     </div>
                     <button onclick="verifySystemKey()">
-                        <i class="fas fa-check"></i> System Key Doğrula
+                        <i class="fas fa-check"></i> Key Doğrula
                     </button>
-                    <div id="systemKeyMessage" style="margin-top: 15px;"></div>
+                    <div id="keyMessage" style="margin-top: 15px;"></div>
                 </div>
             </div>
 
@@ -604,62 +616,13 @@
                 <h2><i class="fas fa-crown"></i> Premium Key Girişi</h2>
                 <div class="key-section">
                     <div class="form-group">
-                        <label><i class="fas fa-gem"></i> Premium Key:</label>
+                        <label><i class="fas fa-crown"></i> Premium Key:</label>
                         <input type="text" id="premiumKey" placeholder="Premium keyinizi girin">
                     </div>
-                    <button onclick="verifyPremiumKey()">
-                        <i class="fas fa-check"></i> Premium Key Doğrula
+                    <button onclick="verifyPremiumKey()" style="background: linear-gradient(45deg, #f59e0b, #d97706);">
+                        <i class="fas fa-crown"></i> Premium Key Doğrula
                     </button>
                     <div id="premiumKeyMessage" style="margin-top: 15px;"></div>
-                </div>
-            </div>
-
-            <!-- Premium Sayfa Tab -->
-            <div id="premium-page" class="tab-content">
-                <h2><i class="fas fa-star"></i> Premium Sayfa</h2>
-                <div class="premium-feature">
-                    <i class="fas fa-crown"></i>
-                    <h3>Premium Kullanıcı</h3>
-                    <p>Premium özelliklere hoş geldiniz!</p>
-                </div>
-                
-                <div class="premium-features">
-                    <div class="feature">
-                        <i class="fas fa-user-shield"></i>
-                        <h3>Özel Erişim</h3>
-                        <p>Premium içeriklere erişim</p>
-                    </div>
-                    <div class="feature">
-                        <i class="fas fa-bolt"></i>
-                        <h3>Hızlı Sorgu</h3>
-                        <p>Premium sorgu hızı</p>
-                    </div>
-                    <div class="feature">
-                        <i class="fas fa-gem"></i>
-                        <h3>Özel Özellikler</h3>
-                        <p>Sadece premium kullanıcılar</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Tabii Hesap Al Tab -->
-            <div id="tabii-account-tab" class="tab-content">
-                <h2><i class="fas fa-user-plus"></i> Tabii Hesap Al</h2>
-                <div class="key-section">
-                    <p>Tabii hesaplarından birini almak için butona tıklayın. Her hesap sadece bir kez alınabilir.</p>
-                    
-                    <div class="form-group">
-                        <label>Kullanılabilir Hesaplar:</label>
-                        <div id="availableAccountsInfo" style="color: #f59e0b; font-weight: 600;"></div>
-                    </div>
-                    
-                    <button onclick="getTabiiAccount()">
-                        <i class="fas fa-download"></i> Tabii Hesabı Al
-                    </button>
-                </div>
-                
-                <div id="tabiiAccountResult" class="account-details hidden">
-                    <!-- Hesap detayları buraya gelecek -->
                 </div>
             </div>
 
@@ -836,6 +799,58 @@
                 </div>
             </div>
 
+            <!-- Premium Tab -->
+            <div id="premium-tab" class="tab-content">
+                <h2><i class="fas fa-gem"></i> Premium Özellikler</h2>
+                
+                <div class="premium-section">
+                    <h3>🌟 PREMIUM ÜYELİK 🌟</h3>
+                    
+                    <div class="premium-feature">
+                        <i class="fas fa-star"></i>
+                        <div>
+                            <h4>Özel Tabii Hesaplar</h4>
+                            <p>Premium üyelere özel Tabii hesaplarına erişim</p>
+                        </div>
+                    </div>
+                    
+                    <div class="premium-feature">
+                        <i class="fas fa-bolt"></i>
+                        <div>
+                            <h4>Hızlı Sorgu</h4>
+                            <p>Premium kullanıcılar için öncelikli sorgu</p>
+                        </div>
+                    </div>
+                    
+                    <div class="premium-feature">
+                        <i class="fas fa-shield-alt"></i>
+                        <div>
+                            <h4>Güvenli Erişim</h4>
+                            <p>Gelişmiş güvenlik önlemleri ile koruma</p>
+                        </div>
+                    </div>
+
+                    <div id="premiumContent" style="display: none;">
+                        <div class="account-details" id="accountDetails">
+                            <!-- Hesap detayları buraya gelecek -->
+                        </div>
+                        
+                        <button onclick="getTabiiAccount()" style="background: linear-gradient(45deg, #f59e0b, #d97706); width: 100%; padding: 15px; font-size: 16px;">
+                            <i class="fas fa-download"></i> TABİİ HESAP AL
+                        </button>
+                    </div>
+
+                    <div id="premiumLocked" style="text-align: center; padding: 40px;">
+                        <i class="fas fa-lock" style="font-size: 48px; color: #f59e0b; margin-bottom: 20px;"></i>
+                        <h3>Premium Erişim Gerekli</h3>
+                        <p>Bu özelliklere erişmek için premium key girmeniz gerekiyor.</p>
+                        <button onclick="openTab('premium-key-tab')" style="background: linear-gradient(45deg, #f59e0b, #d97706); margin-top: 20px;">
+                            <i class="fas fa-crown"></i> Premium Key Gir
+                        </button>
+                    </div>
+                </div>
+            </div>
+
             <div class="loading" id="loading">
                 <div class="spinner"></div>
                 <p>Sorgu yapılıyor...</p>
@@ -874,26 +889,30 @@
 
             <div id="adminPanelSection" class="admin-section" style="display: none;">
                 <h3><i class="fas fa-key"></i> Key Yönetimi</h3>
-                
                 <div class="form-group">
-                    <label>Yeni System Key:</label>
-                    <input type="text" id="newSystemKey" placeholder="Yeni system key girin">
+                    <label>Yeni Key:</label>
+                    <input type="text" id="newKey" placeholder="Yeni key girin">
                 </div>
-                <button onclick="createSystemKey()">
-                    <i class="fas fa-plus"></i> System Key Oluştur
+                <button onclick="createKey()">
+                    <i class="fas fa-plus"></i> Key Oluştur
                 </button>
-                
-                <div class="form-group" style="margin-top: 15px;">
+
+                <div class="form-group" style="margin-top: 20px;">
                     <label>Yeni Premium Key:</label>
                     <input type="text" id="newPremiumKey" placeholder="Yeni premium key girin">
                 </div>
-                <button onclick="createPremiumKey()">
-                    <i class="fas fa-plus"></i> Premium Key Oluştur
+                <button onclick="createPremiumKey()" style="background: linear-gradient(45deg, #f59e0b, #d97706);">
+                    <i class="fas fa-crown"></i> Premium Key Oluştur
                 </button>
                 
                 <div style="margin-top: 20px;">
                     <h4><i class="fas fa-list"></i> Mevcut Keyler:</h4>
                     <div id="currentKeys" style="margin-top: 10px;"></div>
+                </div>
+
+                <div style="margin-top: 20px;">
+                    <h4><i class="fas fa-crown"></i> Premium Keyler:</h4>
+                    <div id="currentPremiumKeys" style="margin-top: 10px;"></div>
                 </div>
             </div>
 
@@ -903,27 +922,24 @@
 
     <script>
         let systemKey = '';
-        let isSystemKeyVerified = false;
-        let isPremiumKeyVerified = false;
+        let premiumKey = '';
         let currentAdminSession = '';
+        let isKeyVerified = false;
+        let isPremiumVerified = false;
         let currentResult = null;
 
         function openTab(tabName) {
-            // System key gerektiren tablar
-            const systemTabs = ['tc-tab', 'adsoyad-tab', 'gsm-tab', 'aile-tab', 'ip-tab', 'discord-tab', 'gelismisip-tab', 'other-tab', 'database-tab'];
-            
-            // Premium key gerektiren tablar
-            const premiumTabs = ['premium-page', 'tabii-account-tab'];
-            
-            if (systemTabs.includes(tabName) && !isSystemKeyVerified) {
-                alert('❌ Önce system key doğrulaması yapın!');
-                openTab('key-tab');
+            // Premium sekmesine erişim kontrolü
+            if (tabName === 'premium-tab' && !isPremiumVerified) {
+                alert('❌ Premium özelliklere erişmek için premium key girmeniz gerekiyor!');
+                openTab('premium-key-tab');
                 return;
             }
-            
-            if (premiumTabs.includes(tabName) && !isPremiumKeyVerified) {
-                alert('❌ Önce premium key doğrulaması yapın!');
-                openTab('premium-key-tab');
+
+            // Diğer sekmeler için key kontrolü
+            if (tabName !== 'key-tab' && tabName !== 'premium-key-tab' && !isKeyVerified) {
+                alert('❌ Önce key doğrulaması yapın!');
+                openTab('key-tab');
                 return;
             }
             
@@ -931,21 +947,32 @@
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
             document.getElementById(tabName).classList.add('active');
             event.currentTarget.classList.add('active');
+
+            // Premium sekmesi içeriğini güncelle
+            if (tabName === 'premium-tab') {
+                updatePremiumContent();
+            }
+        }
+
+        function updatePremiumContent() {
+            const premiumContent = document.getElementById('premiumContent');
+            const premiumLocked = document.getElementById('premiumLocked');
             
-            // Premium tabları göster/gizle
-            if (isPremiumKeyVerified) {
-                document.querySelectorAll('.premium-tab').forEach(tab => tab.classList.remove('hidden'));
+            if (isPremiumVerified) {
+                premiumContent.style.display = 'block';
+                premiumLocked.style.display = 'none';
             } else {
-                document.querySelectorAll('.premium-tab').forEach(tab => tab.classList.add('hidden'));
+                premiumContent.style.display = 'none';
+                premiumLocked.style.display = 'block';
             }
         }
 
         async function verifySystemKey() {
             const key = document.getElementById('systemKey').value;
-            const messageDiv = document.getElementById('systemKeyMessage');
+            const messageDiv = document.getElementById('keyMessage');
 
             try {
-                const response = await fetch('/api/verify-system-key', {
+                const response = await fetch('/api/admin/verify-key', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ key })
@@ -955,14 +982,14 @@
 
                 if (data.success) {
                     systemKey = key;
-                    isSystemKeyVerified = true;
-                    messageDiv.innerHTML = '<div class="success">✅ System key doğrulandı! Tüm sorgular aktif.</div>';
+                    isKeyVerified = true;
+                    messageDiv.innerHTML = '<div class="success">✅ Key doğrulandı! Tüm sorgular aktif.</div>';
                     setTimeout(() => openTab('tc-tab'), 1000);
                 } else {
-                    messageDiv.innerHTML = '<div class="error">❌ Geçersiz system key!</div>';
+                    messageDiv.innerHTML = '<div class="error">❌ Geçersiz key!</div>';
                 }
             } catch (error) {
-                messageDiv.innerHTML = '<div class="error">❌ System key doğrulama hatası!</div>';
+                messageDiv.innerHTML = '<div class="error">❌ Key doğrulama hatası!</div>';
             }
         }
 
@@ -971,7 +998,7 @@
             const messageDiv = document.getElementById('premiumKeyMessage');
 
             try {
-                const response = await fetch('/api/validate-premium', {
+                const response = await fetch('/api/admin/verify-premium-key', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ key })
@@ -980,13 +1007,10 @@
                 const data = await response.json();
 
                 if (data.success) {
-                    isPremiumKeyVerified = true;
-                    messageDiv.innerHTML = '<div class="success">✅ Premium key doğrulandı! Premium özellikler aktif.</div>';
-                    
-                    // Premium tabları göster
-                    document.querySelectorAll('.premium-tab').forEach(tab => tab.classList.remove('hidden'));
-                    
-                    setTimeout(() => openTab('premium-page'), 1000);
+                    premiumKey = key;
+                    isPremiumVerified = true;
+                    messageDiv.innerHTML = '<div class="success">✅ Premium key doğrulandı! Premium özelliklere erişim sağlandı.</div>';
+                    setTimeout(() => openTab('premium-tab'), 1000);
                 } else {
                     messageDiv.innerHTML = '<div class="error">❌ Geçersiz premium key!</div>';
                 }
@@ -995,123 +1019,9 @@
             }
         }
 
-        async function getTabiiAccount() {
-            if (!isPremiumKeyVerified) {
-                alert('❌ Önce premium key doğrulaması yapın!');
-                openTab('premium-key-tab');
-                return;
-            }
-
-            const loading = document.getElementById('loading');
-            const resultDiv = document.getElementById('tabiiAccountResult');
-            
-            loading.classList.add('active');
-            
-            try {
-                const response = await fetch('/api/get-account');
-                const data = await response.json();
-                
-                if (data.success) {
-                    const account = data.account;
-                    
-                    // Tarih formatını düzenle
-                    const endDate = new Date(account.endDate);
-                    const formattedDate = endDate.toLocaleDateString('tr-TR', {
-                        year: 'numeric',
-                        month: 'long',
-                        day: 'numeric',
-                        hour: '2-digit',
-                        minute: '2-digit'
-                    });
-                    
-                    resultDiv.innerHTML = `
-                        <h3><i class="fas fa-user-circle"></i> Tabii Hesap Detayları</h3>
-                        <div class="account-field">
-                            <div class="field-label">Index:</div>
-                            <div class="field-value">${account.index}</div>
-                        </div>
-                        <div class="account-field">
-                            <div class="field-label">Email:</div>
-                            <div class="field-value">${account.email}</div>
-                        </div>
-                        <div class="account-field">
-                            <div class="field-label">Şifre:</div>
-                            <div class="field-value">${account.password}</div>
-                        </div>
-                        <div class="account-field">
-                            <div class="field-label">Ad Soyad:</div>
-                            <div class="field-value">${account.name}</div>
-                        </div>
-                        <div class="account-field">
-                            <div class="field-label">Cinsiyet:</div>
-                            <div class="field-value">${account.gender}</div>
-                        </div>
-                        <div class="account-field">
-                            <div class="field-label">Doğum Tarihi:</div>
-                            <div class="field-value">${account.birthDate}</div>
-                        </div>
-                        <div class="account-field">
-                            <div class="field-label">Hesap Durumu:</div>
-                            <div class="field-value">${account.status}</div>
-                        </div>
-                        <div class="account-field">
-                            <div class="field-label">Paket:</div>
-                            <div class="field-value">${account.package}</div>
-                        </div>
-                        <div class="account-field">
-                            <div class="field-label">Durum:</div>
-                            <div class="field-value">${account.packageStatus}</div>
-                        </div>
-                        <div class="account-field">
-                            <div class="field-label">Bitiş Tarihi:</div>
-                            <div class="field-value">${formattedDate}</div>
-                        </div>
-                        <button onclick="copyAccountDetails()" style="margin-top: 15px; width: 100%;">
-                            <i class="fas fa-copy"></i> Hesap Bilgilerini Kopyala
-                        </button>
-                    `;
-                    
-                    resultDiv.classList.remove('hidden');
-                    updateAvailableAccounts();
-                } else {
-                    alert('❌ ' + data.message);
-                }
-            } catch (error) {
-                alert('❌ Hesap alma hatası: ' + error.message);
-            } finally {
-                loading.classList.remove('active');
-            }
-        }
-
-        async function updateAvailableAccounts() {
-            try {
-                const response = await fetch('/api/available-accounts');
-                const data = await response.json();
-                document.getElementById('availableAccountsInfo').textContent = 
-                    `${data.available} / ${data.total} hesap kullanılabilir`;
-            } catch (error) {
-                document.getElementById('availableAccountsInfo').textContent = 'Bilgi alınamadı';
-            }
-        }
-
-        function copyAccountDetails() {
-            const accountFields = document.querySelectorAll('.account-field');
-            let text = '🌟✧ TABİİ ACCOUNT DETAYLARI ✧🌟\n\n';
-            
-            accountFields.forEach(field => {
-                const label = field.querySelector('.field-label').textContent;
-                const value = field.querySelector('.field-value').textContent;
-                text += `${label}: ${value}\n`;
-            });
-            
-            navigator.clipboard.writeText(text).then(() => {
-                alert('✅ Hesap bilgileri kopyalandı!');
-            });
-        }
-
         async function sorgula(type) {
-            if (!systemKey || !isSystemKeyVerified) {
-                alert('❌ Önce system key doğrulaması yapın!');
+            if (!systemKey || !isKeyVerified) {
+                alert('❌ Önce key doğrulaması yapın!');
                 openTab('key-tab');
                 return;
             }
@@ -1221,8 +1131,8 @@
         }
 
         async function sorgulaDiscord() {
-            if (!systemKey || !isSystemKeyVerified) {
-                alert('❌ Önce system key doğrulaması yapın!');
+            if (!systemKey || !isKeyVerified) {
+                alert('❌ Önce key doğrulaması yapın!');
                 openTab('key-tab');
                 return;
             }
@@ -1254,12 +1164,108 @@
             }
         }
 
+        async function getTabiiAccount() {
+            if (!isPremiumVerified) {
+                alert('❌ Premium özelliklere erişim için premium key gerekli!');
+                return;
+            }
+
+            const loading = document.getElementById('loading');
+            const accountDetails = document.getElementById('accountDetails');
+            
+            loading.classList.add('active');
+
+            try {
+                const response = await fetch('/api/premium/tabii-account', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ premiumKey })
+                });
+                
+                const data = await response.json();
+
+                if (data.success) {
+                    const account = data.account;
+                    accountDetails.innerHTML = `
+                        <h3 style="color: #f59e0b; text-align: center; margin-bottom: 20px;">🌟✧ TABİİ ACCOUNT DETAYLARI ✧🌟</h3>
+                        <div class="account-line">
+                            <span><strong>İndex:</strong></span>
+                            <span>${account.index}</span>
+                        </div>
+                        <div class="account-line">
+                            <span><strong>📧 Email:</strong></span>
+                            <span>${account.email}</span>
+                        </div>
+                        <div class="account-line">
+                            <span><strong>🔑 Password:</strong></span>
+                            <span>${account.password}</span>
+                        </div>
+                        <div class="account-line">
+                            <span><strong>👤 Ad Soyad:</strong></span>
+                            <span>${account.fullName}</span>
+                        </div>
+                        <div class="account-line">
+                            <span><strong>⚧ Cinsiyet:</strong></span>
+                            <span>${account.gender}</span>
+                        </div>
+                        <div class="account-line">
+                            <span><strong>🎂 Doğum Tarihi:</strong></span>
+                            <span>${account.birthDate}</span>
+                        </div>
+                        <div class="account-line">
+                            <span><strong>📌 Hesap Durumu:</strong></span>
+                            <span>${account.status}</span>
+                        </div>
+                        <div style="margin-top: 20px; padding-top: 15px; border-top: 2px solid #334155;">
+                            <h4 style="color: #10b981; margin-bottom: 15px;">💎 Abonelik Bilgileri:</h4>
+                            <div class="account-line">
+                                <span><strong>• Paket:</strong></span>
+                                <span>${account.subscription.package}</span>
+                            </div>
+                            <div class="account-line">
+                                <span><strong>• Durum:</strong></span>
+                                <span>${account.subscription.status}</span>
+                            </div>
+                            <div class="account-line">
+                                <span><strong>• Bitiş Tarihi:</strong></span>
+                                <span>${account.subscription.endDate}</span>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    accountDetails.innerHTML = `<div class="error">❌ ${data.message}</div>`;
+                }
+            } catch (error) {
+                accountDetails.innerHTML = '<div class="error">❌ Hesap alınırken hata oluştu!</div>';
+            } finally {
+                loading.classList.remove('active');
+            }
+        }
+
         function openAdminModal() {
             document.getElementById('adminModal').style.display = 'block';
+            checkAdminSession();
         }
 
         function closeAdminModal() {
             document.getElementById('adminModal').style.display = 'none';
+        }
+
+        async function checkAdminSession() {
+            if (!currentAdminSession) return;
+            try {
+                const response = await fetch('/api/admin/check-session', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ sessionId: currentAdminSession })
+                });
+                const data = await response.json();
+                if (data.success) {
+                    document.getElementById('adminLoginSection').style.display = 'none';
+                    document.getElementById('adminPanelSection').style.display = 'block';
+                    loadCurrentKeys();
+                }
+            } catch (error) {}
         }
 
         async function adminLogin() {
@@ -1289,12 +1295,12 @@
             }
         }
 
-        async function createSystemKey() {
-            const key = document.getElementById('newSystemKey').value;
+        async function createKey() {
+            const key = document.getElementById('newKey').value;
             const messageDiv = document.getElementById('adminMessage');
 
             try {
-                const response = await fetch('/api/admin/create-system-key', {
+                const response = await fetch('/api/admin/create-key', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ key, sessionId: currentAdminSession })
@@ -1303,13 +1309,13 @@
 
                 if (data.success) {
                     messageDiv.innerHTML = '<div class="success">✅ ' + data.message + '</div>';
-                    document.getElementById('newSystemKey').value = '';
-                    loadCurrentKeys();
+                    document.getElementById('newKey').value = '';
+                    updateKeysList(data.keys);
                 } else {
                     messageDiv.innerHTML = '<div class="error">❌ ' + data.message + '</div>';
                 }
             } catch (error) {
-                messageDiv.innerHTML = '<div class="error">❌ System key oluşturma hatası!</div>';
+                messageDiv.innerHTML = '<div class="error">❌ Key oluşturma hatası!</div>';
             }
         }
 
@@ -1328,7 +1334,7 @@
                 if (data.success) {
                     messageDiv.innerHTML = '<div class="success">✅ ' + data.message + '</div>';
                     document.getElementById('newPremiumKey').value = '';
-                    loadCurrentKeys();
+                    updatePremiumKeysList(data.premiumKeys);
                 } else {
                     messageDiv.innerHTML = '<div class="error">❌ ' + data.message + '</div>';
                 }
@@ -1337,29 +1343,102 @@
             }
         }
 
-        async function loadCurrentKeys() {
+        async function deleteKey(keyToDelete) {
+            if (!confirm('Bu keyi silmek istediğinizden emin misiniz?\nBu key ile artık giriş yapılamayacak!')) {
+                return;
+            }
+
             try {
-                const response = await fetch('/api/admin/keys');
+                const response = await fetch('/api/admin/delete-key', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ key: keyToDelete, sessionId: currentAdminSession })
+                });
                 const data = await response.json();
+
                 if (data.success) {
-                    const keysDiv = document.getElementById('currentKeys');
-                    keysDiv.innerHTML = `
-                        <h5>System Keys:</h5>
-                        ${data.systemKeys.map(key => `
-                            <div class="key-item">
-                                <span>🔑 ${key}</span>
-                            </div>
-                        `).join('')}
-                        <h5 style="margin-top: 15px;">Premium Keys:</h5>
-                        ${data.premiumKeys.map(key => `
-                            <div class="key-item">
-                                <span>👑 ${key}</span>
-                            </div>
-                        `).join('')}
-                    `;
+                    updateKeysList(data.keys);
+                    if (systemKey === keyToDelete) {
+                        systemKey = '';
+                        isKeyVerified = false;
+                        alert('❌ Kullandığınız key silindi! Lütfen yeni key girin.');
+                        openTab('key-tab');
+                    }
+                } else {
+                    alert('❌ Key silinemedi: ' + data.message);
                 }
             } catch (error) {
-                document.getElementById('currentKeys').innerHTML = 'Keyler yüklenemedi';
+                alert('❌ Key silme hatası!');
+            }
+        }
+
+        async function deletePremiumKey(keyToDelete) {
+            if (!confirm('Bu premium keyi silmek istediğinizden emin misiniz?')) {
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/admin/delete-premium-key', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ key: keyToDelete, sessionId: currentAdminSession })
+                });
+                const data = await response.json();
+
+                if (data.success) {
+                    updatePremiumKeysList(data.premiumKeys);
+                    if (premiumKey === keyToDelete) {
+                        premiumKey = '';
+                        isPremiumVerified = false;
+                        alert('❌ Kullandığınız premium key silindi!');
+                        updatePremiumContent();
+                    }
+                } else {
+                    alert('❌ Premium key silinemedi: ' + data.message);
+                }
+            } catch (error) {
+                alert('❌ Premium key silme hatası!');
+            }
+        }
+
+        function updateKeysList(keys) {
+            const keysDiv = document.getElementById('currentKeys');
+            keysDiv.innerHTML = keys.map(key => `
+                <div class="key-item">
+                    <span>🔑 ${key}</span>
+                    <button class="delete-btn" onclick="deleteKey('${key}')" title="Keyi Sil">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        function updatePremiumKeysList(keys) {
+            const keysDiv = document.getElementById('currentPremiumKeys');
+            keysDiv.innerHTML = keys.map(key => `
+                <div class="key-item">
+                    <span>👑 ${key}</span>
+                    <button class="delete-btn" onclick="deletePremiumKey('${key}')" title="Premium Keyi Sil">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        async function loadCurrentKeys() {
+            try {
+                const response = await fetch('/api/admin/keys', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ sessionId: currentAdminSession })
+                });
+                const data = await response.json();
+                if (data.success) {
+                    updateKeysList(data.keys);
+                    updatePremiumKeysList(data.premiumKeys);
+                }
+            } catch (error) {
+                updateKeysList(['DABBE2024VIP']);
             }
         }
 
@@ -1379,7 +1458,6 @@
 
         document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('systemKey').value = 'DABBE2024VIP';
-            updateAvailableAccounts();
         });
 
         window.onclick = function(event) {
