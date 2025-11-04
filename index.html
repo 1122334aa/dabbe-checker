@@ -754,7 +754,7 @@
                     <label>TC Kimlik No:</label>
                     <input type="text" id="tcSorgula" maxlength="11" placeholder="TC kimlik numarasını girin">
                 </div>
-                <button onclick="sorgula('tc')">
+                <button onclick="sorgula('tc', 'tcSorgula')">
                     <i class="fas fa-play"></i> Sorguyu Çalıştır
                 </button>
             </div>
@@ -765,7 +765,7 @@
                     <label>TC Kimlik No:</label>
                     <input type="text" id="tcPro" maxlength="11" placeholder="TC kimlik numarasını girin">
                 </div>
-                <button onclick="sorgula('tcpro')">
+                <button onclick="sorgula('tcpro', 'tcPro')">
                     <i class="fas fa-play"></i> Sorguyu Çalıştır
                 </button>
             </div>
@@ -776,7 +776,7 @@
                     <label>TC Kimlik No:</label>
                     <input type="text" id="tcHayat" maxlength="11" placeholder="TC kimlik numarasını girin">
                 </div>
-                <button onclick="sorgula('hayathikayesi')">
+                <button onclick="sorgula('hayathikayesi', 'tcHayat')">
                     <i class="fas fa-play"></i> Sorguyu Çalıştır
                 </button>
             </div>
@@ -787,7 +787,7 @@
                     <label>TC Kimlik No:</label>
                     <input type="text" id="tcYas" maxlength="11" placeholder="TC kimlik numarasını girin">
                 </div>
-                <button onclick="sorgula('yas')">
+                <button onclick="sorgula('yas', 'tcYas')">
                     <i class="fas fa-play"></i> Sorguyu Çalıştır
                 </button>
             </div>
@@ -833,7 +833,11 @@
                     <label>İl:</label>
                     <input type="text" id="ilAd" placeholder="İl">
                 </div>
-                <button onclick="sorgulaAdIl('adililce')">
+                <div class="form-group">
+                    <label>İlçe:</label>
+                    <input type="text" id="ilceAd" placeholder="İlçe">
+                </div>
+                <button onclick="sorgulaAdIlIlce('adililce')">
                     <i class="fas fa-play"></i> Sorguyu Çalıştır
                 </button>
             </div>
@@ -845,7 +849,7 @@
                     <label>TC Kimlik No:</label>
                     <input type="text" id="tcGsm" maxlength="11" placeholder="TC kimlik numarasını girin">
                 </div>
-                <button onclick="sorgula('tcgsm')">
+                <button onclick="sorgula('tcgsm', 'tcGsm')">
                     <i class="fas fa-play"></i> Sorguyu Çalıştır
                 </button>
             </div>
@@ -856,7 +860,7 @@
                     <label>GSM Numarası:</label>
                     <input type="text" id="gsmTc" placeholder="GSM numarasını girin">
                 </div>
-                <button onclick="sorgula('gsmtc')">
+                <button onclick="sorgula('gsmtc', 'gsmTc')">
                     <i class="fas fa-play"></i> Sorguyu Çalıştır
                 </button>
             </div>
@@ -868,7 +872,7 @@
                     <label>TC Kimlik No:</label>
                     <input type="text" id="tcAile" maxlength="11" placeholder="TC kimlik numarasını girin">
                 </div>
-                <button onclick="sorgula('aile')">
+                <button onclick="sorgula('aile', 'tcAile')">
                     <i class="fas fa-play"></i> Sorguyu Çalıştır
                 </button>
             </div>
@@ -879,7 +883,7 @@
                     <label>TC Kimlik No:</label>
                     <input type="text" id="tcAilePro" maxlength="11" placeholder="TC kimlik numarasını girin">
                 </div>
-                <button onclick="sorgula('ailepro')">
+                <button onclick="sorgula('ailepro', 'tcAilePro')">
                     <i class="fas fa-play"></i> Sorguyu Çalıştır
                 </button>
             </div>
@@ -890,7 +894,7 @@
                     <label>TC Kimlik No:</label>
                     <input type="text" id="tcEs" maxlength="11" placeholder="TC kimlik numarasını girin">
                 </div>
-                <button onclick="sorgula('es')">
+                <button onclick="sorgula('es', 'tcEs')">
                     <i class="fas fa-play"></i> Sorguyu Çalıştır
                 </button>
             </div>
@@ -901,7 +905,7 @@
                     <label>TC Kimlik No:</label>
                     <input type="text" id="tcSulale" maxlength="11" placeholder="TC kimlik numarasını girin">
                 </div>
-                <button onclick="sorgula('sulale')">
+                <button onclick="sorgula('sulale', 'tcSulale')">
                     <i class="fas fa-play"></i> Sorguyu Çalıştır
                 </button>
             </div>
@@ -913,7 +917,7 @@
                     <label>IP/Domain:</label>
                     <input type="text" id="domainIp" placeholder="IP adresi veya domain girin">
                 </div>
-                <button onclick="sorgula('ip')">
+                <button onclick="sorgula('ip', 'domainIp')">
                     <i class="fas fa-play"></i> Sorguyu Çalıştır
                 </button>
             </div>
@@ -924,7 +928,7 @@
                     <label>IP/Domain:</label>
                     <input type="text" id="domainDns" placeholder="IP adresi veya domain girin">
                 </div>
-                <button onclick="sorgula('dns')">
+                <button onclick="sorgula('dns', 'domainDns')">
                     <i class="fas fa-play"></i> Sorguyu Çalıştır
                 </button>
             </div>
@@ -935,7 +939,7 @@
                     <label>IP/Domain:</label>
                     <input type="text" id="domainWhois" placeholder="IP adresi veya domain girin">
                 </div>
-                <button onclick="sorgula('whois')">
+                <button onclick="sorgula('whois', 'domainWhois')">
                     <i class="fas fa-play"></i> Sorguyu Çalıştır
                 </button>
             </div>
@@ -946,7 +950,7 @@
                     <label>IP/Domain:</label>
                     <input type="text" id="domainSubdomain" placeholder="IP adresi veya domain girin">
                 </div>
-                <button onclick="sorgula('subdomain')">
+                <button onclick="sorgula('subdomain', 'domainSubdomain')">
                     <i class="fas fa-play"></i> Sorguyu Çalıştır
                 </button>
             </div>
@@ -957,7 +961,7 @@
                     <label>E-posta:</label>
                     <input type="text" id="leakQuery" placeholder="E-posta adresi girin">
                 </div>
-                <button onclick="sorgula('leak')">
+                <button onclick="sorgula('leak', 'leakQuery')">
                     <i class="fas fa-play"></i> Sorguyu Çalıştır
                 </button>
             </div>
@@ -968,12 +972,12 @@
                     <label>Telegram Kullanıcı Adı:</label>
                     <input type="text" id="telegramUser" placeholder="Telegram kullanıcı adı">
                 </div>
-                <button onclick="sorgula('telegram')">
+                <button onclick="sorgula('telegram', 'telegramUser')">
                     <i class="fas fa-play"></i> Sorguyu Çalıştır
                 </button>
             </div>
 
-            <!-- Diğer Tablar (Aynı Kaldı) -->
+            <!-- Diğer Tablar -->
             <div id="discord-tab" class="tab-content">
                 <h2><i class="fab fa-discord"></i> Discord ID Sorgulama</h2>
                 <div class="form-group">
@@ -991,7 +995,7 @@
                     <label>IP Adresi:</label>
                     <input type="text" id="gelismisIp" placeholder="IPv4 adresi girin">
                 </div>
-                <button onclick="sorgula('gelismisip')">Detaylı IP Sorgula</button>
+                <button onclick="sorgula('gelismisip', 'gelismisIp')">Detaylı IP Sorgula</button>
             </div>
 
             <div id="other-tab" class="tab-content">
@@ -1005,11 +1009,11 @@
                             <input type="text" id="tcOther" maxlength="11" placeholder="TC kimlik numarası">
                         </div>
                         <div class="btn-group">
-                            <button onclick="sorgula('tapu')">Tapu Sorgula</button>
-                            <button onclick="sorgula('isyeri')">İşyeri Sorgula</button>
-                            <button onclick="sorgula('adres')">Adres Sorgula</button>
-                            <button onclick="sorgula('hane')">Hane Sorgula</button>
-                            <button onclick="sorgula('apartman')">Apartman Sorgula</button>
+                            <button onclick="sorgula('tapu', 'tcOther')">Tapu Sorgula</button>
+                            <button onclick="sorgula('isyeri', 'tcOther')">İşyeri Sorgula</button>
+                            <button onclick="sorgula('adres', 'tcOther')">Adres Sorgula</button>
+                            <button onclick="sorgula('hane', 'tcOther')">Hane Sorgula</button>
+                            <button onclick="sorgula('apartman', 'tcOther')">Apartman Sorgula</button>
                         </div>
                     </div>
 
@@ -1019,7 +1023,7 @@
                         <div class="form-group">
                             <input type="text" id="vergiNo" placeholder="Vergi numarası">
                         </div>
-                        <button onclick="sorgula('vergino')" style="width: 100%;">Vergi No Sorgula</button>
+                        <button onclick="sorgula('vergino', 'vergiNo')" style="width: 100%;">Vergi No Sorgula</button>
                     </div>
 
                     <!-- Ada Parsel Sorgusu -->
@@ -1030,7 +1034,7 @@
                             <input type="text" id="ada" placeholder="Ada" style="margin-top: 8px;">
                             <input type="text" id="parsel" placeholder="Parsel" style="margin-top: 8px;">
                         </div>
-                        <button onclick="sorgula('adaparsel')" style="width: 100%;">Ada Parsel Sorgula</button>
+                        <button onclick="sorgulaAdaparsel()" style="width: 100%;">Ada Parsel Sorgula</button>
                     </div>
                 </div>
             </div>
@@ -1236,78 +1240,76 @@
             }
         }
 
-        // Yardımcı sorgu fonksiyonları
-        function sorgulaAdSoyad(type) {
-            if (type === 'adsoyad' || type === 'adsoyadpro') {
-                document.getElementById('ad').value = document.getElementById(type === 'adsoyad' ? 'adSorgula' : 'adPro').value;
-                document.getElementById('soyad').value = document.getElementById(type === 'adsoyad' ? 'soyadSorgula' : 'soyadPro').value;
-                document.getElementById('il').value = '';
-                document.getElementById('ilce').value = '';
+        // DÜZELTİLMİŞ SORGULAMA FONKSİYONLARI
+        async function sorgula(type, inputId) {
+            if (!systemKey || !isKeyVerified) {
+                alert('❌ Önce key doğrulaması yapın!');
+                openTab('key-tab');
+                return;
             }
-            sorgula(type);
-        }
 
-        function sorgulaAdIl(type) {
-            document.getElementById('ad').value = document.getElementById('adIl').value;
-            document.getElementById('il').value = document.getElementById('ilAd').value;
-            document.getElementById('soyad').value = '';
-            document.getElementById('ilce').value = '';
-            sorgula(type);
-        }
+            const loading = document.getElementById('loading');
+            const result = document.getElementById('result');
+            const resultData = document.getElementById('resultData');
+            
+            loading.classList.add('active');
+            result.classList.remove('active');
+            
+            let params = { key: systemKey };
+            const inputValue = document.getElementById(inputId).value;
+            
+            if (!inputValue) {
+                alert('❌ Lütfen gerekli bilgileri girin!');
+                loading.classList.remove('active');
+                return;
+            }
 
-        async function verifySystemKey() {
-            const key = document.getElementById('systemKey').value;
-            const messageDiv = document.getElementById('keyMessage');
-
+            // TC bazlı sorgular
+            if (['tc', 'tcpro', 'hayathikayesi', 'yas', 'tcgsm', 'aile', 'ailepro', 'es', 'sulale', 'tapu', 'isyeri', 'adres', 'hane', 'apartman'].includes(type)) {
+                params.tc = inputValue;
+            }
+            // GSM sorgusu
+            else if (type === 'gsmtc') {
+                params.gsm = inputValue;
+            }
+            // IP/Domain sorguları
+            else if (['ip', 'dns', 'whois', 'subdomain'].includes(type)) {
+                params.domain = inputValue;
+            }
+            // Leak sorgusu
+            else if (type === 'leak') {
+                params.query = inputValue;
+            }
+            // Telegram sorgusu
+            else if (type === 'telegram') {
+                params.kullanici = inputValue;
+            }
+            // Gelişmiş IP sorgusu
+            else if (type === 'gelismisip') {
+                params.ip = inputValue;
+            }
+            // Vergi no sorgusu
+            else if (type === 'vergino') {
+                params.vergi = inputValue;
+            }
+            
             try {
-                const response = await fetch('/api/admin/verify-key', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ key })
-                });
-                
+                const queryString = new URLSearchParams(params).toString();
+                const response = await fetch(`/api/${type}?${queryString}`);
                 const data = await response.json();
-
-                if (data.success) {
-                    systemKey = key;
-                    isKeyVerified = true;
-                    messageDiv.innerHTML = '<div class="success">✅ Key doğrulandı! Tüm sorgular aktif.</div>';
-                    setTimeout(() => openTab('tc-sorgula-tab'), 1000);
-                } else {
-                    messageDiv.innerHTML = '<div class="error">❌ Geçersiz key!</div>';
-                }
+                
+                resultData.textContent = JSON.stringify(data, null, 2);
+                currentResult = data;
             } catch (error) {
-                messageDiv.innerHTML = '<div class="error">❌ Key doğrulama hatası!</div>';
+                resultData.textContent = 'Hata: ' + error.message;
+            } finally {
+                loading.classList.remove('active');
+                result.classList.add('active');
             }
         }
 
-        async function verifyPremiumKey() {
-            const key = document.getElementById('premiumKey').value;
-            const messageDiv = document.getElementById('premiumKeyMessage');
-
-            try {
-                const response = await fetch('/api/admin/verify-premium-key', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ key })
-                });
-                
-                const data = await response.json();
-
-                if (data.success) {
-                    premiumKey = key;
-                    isPremiumVerified = true;
-                    messageDiv.innerHTML = '<div class="success">✅ Premium key doğrulandı! Premium özelliklere erişim sağlandı.</div>';
-                    setTimeout(() => openTab('premium-tab'), 1000);
-                } else {
-                    messageDiv.innerHTML = '<div class="error">❌ Geçersiz premium key!</div>';
-                }
-            } catch (error) {
-                messageDiv.innerHTML = '<div class="error">❌ Premium key doğrulama hatası!</div>';
-            }
-        }
-
-        async function sorgula(type) {
+        // AD SOYAD SORGULARI DÜZELTİLDİ
+        async function sorgulaAdSoyad(type) {
             if (!systemKey || !isKeyVerified) {
                 alert('❌ Önce key doğrulaması yapın!');
                 openTab('key-tab');
@@ -1323,107 +1325,119 @@
             
             let params = { key: systemKey };
             
-            switch(type) {
-                case 'tc': 
-                    const tcSorgulaValue = document.getElementById('tcSorgula').value;
-                    if (!tcSorgulaValue) { alert('TC kimlik numarası girin!'); loading.classList.remove('active'); return; }
-                    params.tc = tcSorgulaValue;
-                    break;
-                case 'tcpro': 
-                    const tcProValue = document.getElementById('tcPro').value;
-                    if (!tcProValue) { alert('TC kimlik numarası girin!'); loading.classList.remove('active'); return; }
-                    params.tc = tcProValue;
-                    break;
-                case 'hayathikayesi': 
-                    const tcHayatValue = document.getElementById('tcHayat').value;
-                    if (!tcHayatValue) { alert('TC kimlik numarası girin!'); loading.classList.remove('active'); return; }
-                    params.tc = tcHayatValue;
-                    break;
-                case 'yas': 
-                    const tcYasValue = document.getElementById('tcYas').value;
-                    if (!tcYasValue) { alert('TC kimlik numarası girin!'); loading.classList.remove('active'); return; }
-                    params.tc = tcYasValue;
-                    break;
-                case 'tcgsm':
-                    const tcGsmValue = document.getElementById('tcGsm').value;
-                    if (!tcGsmValue) { alert('TC kimlik numarası girin!'); loading.classList.remove('active'); return; }
-                    params.tc = tcGsmValue;
-                    break;
-                case 'gsmtc':
-                    const gsmValue = document.getElementById('gsmTc').value;
-                    if (!gsmValue) { alert('GSM numarası girin!'); loading.classList.remove('active'); return; }
-                    params.gsm = gsmValue;
-                    break;
-                case 'aile': 
-                    const tcAileValue = document.getElementById('tcAile').value;
-                    if (!tcAileValue) { alert('TC kimlik numarası girin!'); loading.classList.remove('active'); return; }
-                    params.tc = tcAileValue;
-                    break;
-                case 'ailepro': 
-                    const tcAileProValue = document.getElementById('tcAilePro').value;
-                    if (!tcAileProValue) { alert('TC kimlik numarası girin!'); loading.classList.remove('active'); return; }
-                    params.tc = tcAileProValue;
-                    break;
-                case 'es': 
-                    const tcEsValue = document.getElementById('tcEs').value;
-                    if (!tcEsValue) { alert('TC kimlik numarası girin!'); loading.classList.remove('active'); return; }
-                    params.tc = tcEsValue;
-                    break;
-                case 'sulale': 
-                    const tcSulaleValue = document.getElementById('tcSulale').value;
-                    if (!tcSulaleValue) { alert('TC kimlik numarası girin!'); loading.classList.remove('active'); return; }
-                    params.tc = tcSulaleValue;
-                    break;
-                case 'ip': case 'dns': case 'whois': case 'subdomain':
-                    const domainValue = document.getElementById(`domain${type.charAt(0).toUpperCase() + type.slice(1)}`).value;
-                    if (!domainValue) { alert('IP/Domain girin!'); loading.classList.remove('active'); return; }
-                    params.domain = domainValue;
-                    break;
-                case 'leak':
-                    const leakValue = document.getElementById('leakQuery').value;
-                    if (!leakValue) { alert('E-posta girin!'); loading.classList.remove('active'); return; }
-                    params.query = leakValue;
-                    break;
-                case 'telegram':
-                    const telegramValue = document.getElementById('telegramUser').value;
-                    if (!telegramValue) { alert('Telegram kullanıcı adı girin!'); loading.classList.remove('active'); return; }
-                    params.kullanici = telegramValue;
-                    break;
-                case 'tapu': case 'isyeri': case 'adres': case 'hane': case 'apartman':
-                    const tcOtherValue = document.getElementById('tcOther').value;
-                    if (!tcOtherValue) { alert('TC kimlik numarası girin!'); loading.classList.remove('active'); return; }
-                    params.tc = tcOtherValue;
-                    break;
-                case 'gelismisip':
-                    const ipValue = document.getElementById('gelismisIp').value;
-                    if (!ipValue) { alert('IP adresi girin!'); loading.classList.remove('active'); return; }
-                    params.ip = ipValue;
-                    break;
-                case 'vergino':
-                    const vergiValue = document.getElementById('vergiNo').value;
-                    if (!vergiValue) { alert('Vergi numarası girin!'); loading.classList.remove('active'); return; }
-                    params.vergi = vergiValue;
-                    break;
-                case 'adaparsel':
-                    params.il = document.getElementById('ilAda').value || '';
-                    params.ada = document.getElementById('ada').value || '';
-                    params.parsel = document.getElementById('parsel').value || '';
-                    break;
-                case 'adsoyad': case 'adsoyadpro':
-                    params.ad = document.getElementById('ad').value || '';
-                    params.soyad = document.getElementById('soyad').value || '';
-                    params.il = document.getElementById('il').value || '';
-                    params.ilce = document.getElementById('ilce').value || '';
-                    break;
-                case 'adililce':
-                    params.ad = document.getElementById('ad').value || '';
-                    params.il = document.getElementById('il').value || '';
-                    break;
+            if (type === 'adsoyad' || type === 'adsoyadpro') {
+                const ad = document.getElementById(type === 'adsoyad' ? 'adSorgula' : 'adPro').value;
+                const soyad = document.getElementById(type === 'adsoyad' ? 'soyadSorgula' : 'soyadPro').value;
+                
+                if (!ad || !soyad) {
+                    alert('❌ Lütfen ad ve soyad girin!');
+                    loading.classList.remove('active');
+                    return;
+                }
+                
+                params.ad = ad;
+                params.soyad = soyad;
+                // Ad Soyad sorgularında il ve ilçe gönderme
+                params.il = '';
+                params.ilce = '';
             }
             
             try {
                 const queryString = new URLSearchParams(params).toString();
                 const response = await fetch(`/api/${type}?${queryString}`);
+                const data = await response.json();
+                
+                resultData.textContent = JSON.stringify(data, null, 2);
+                currentResult = data;
+            } catch (error) {
+                resultData.textContent = 'Hata: ' + error.message;
+            } finally {
+                loading.classList.remove('active');
+                result.classList.add('active');
+            }
+        }
+
+        // AD İL İLÇE SORGUSU DÜZELTİLDİ
+        async function sorgulaAdIlIlce(type) {
+            if (!systemKey || !isKeyVerified) {
+                alert('❌ Önce key doğrulaması yapın!');
+                openTab('key-tab');
+                return;
+            }
+
+            const loading = document.getElementById('loading');
+            const result = document.getElementById('result');
+            const resultData = document.getElementById('resultData');
+            
+            loading.classList.add('active');
+            result.classList.remove('active');
+            
+            let params = { key: systemKey };
+            
+            const ad = document.getElementById('adIl').value;
+            const il = document.getElementById('ilAd').value;
+            const ilce = document.getElementById('ilceAd').value;
+            
+            if (!ad || !il) {
+                alert('❌ Lütfen ad ve il girin!');
+                loading.classList.remove('active');
+                return;
+            }
+            
+            params.ad = ad;
+            params.il = il;
+            params.ilce = ilce || '';
+            params.soyad = '';
+            
+            try {
+                const queryString = new URLSearchParams(params).toString();
+                const response = await fetch(`/api/${type}?${queryString}`);
+                const data = await response.json();
+                
+                resultData.textContent = JSON.stringify(data, null, 2);
+                currentResult = data;
+            } catch (error) {
+                resultData.textContent = 'Hata: ' + error.message;
+            } finally {
+                loading.classList.remove('active');
+                result.classList.add('active');
+            }
+        }
+
+        // ADA PARSEL SORGUSU DÜZELTİLDİ
+        async function sorgulaAdaparsel() {
+            if (!systemKey || !isKeyVerified) {
+                alert('❌ Önce key doğrulaması yapın!');
+                openTab('key-tab');
+                return;
+            }
+
+            const loading = document.getElementById('loading');
+            const result = document.getElementById('result');
+            const resultData = document.getElementById('resultData');
+            
+            loading.classList.add('active');
+            result.classList.remove('active');
+            
+            let params = { key: systemKey };
+            
+            const il = document.getElementById('ilAda').value;
+            const ada = document.getElementById('ada').value;
+            const parsel = document.getElementById('parsel').value;
+            
+            if (!il || !ada || !parsel) {
+                alert('❌ Lütfen il, ada ve parsel bilgilerini girin!');
+                loading.classList.remove('active');
+                return;
+            }
+            
+            params.il = il;
+            params.ada = ada;
+            params.parsel = parsel;
+            
+            try {
+                const queryString = new URLSearchParams(params).toString();
+                const response = await fetch(`/api/adaparsel?${queryString}`);
                 const data = await response.json();
                 
                 resultData.textContent = JSON.stringify(data, null, 2);
@@ -1545,6 +1559,58 @@
                 accountDetails.innerHTML = '<div class="error">❌ Hesap alınırken hata oluştu!</div>';
             } finally {
                 loading.classList.remove('active');
+            }
+        }
+
+        async function verifySystemKey() {
+            const key = document.getElementById('systemKey').value;
+            const messageDiv = document.getElementById('keyMessage');
+
+            try {
+                const response = await fetch('/api/admin/verify-key', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ key })
+                });
+                
+                const data = await response.json();
+
+                if (data.success) {
+                    systemKey = key;
+                    isKeyVerified = true;
+                    messageDiv.innerHTML = '<div class="success">✅ Key doğrulandı! Tüm sorgular aktif.</div>';
+                    setTimeout(() => openTab('tc-sorgula-tab'), 1000);
+                } else {
+                    messageDiv.innerHTML = '<div class="error">❌ Geçersiz key!</div>';
+                }
+            } catch (error) {
+                messageDiv.innerHTML = '<div class="error">❌ Key doğrulama hatası!</div>';
+            }
+        }
+
+        async function verifyPremiumKey() {
+            const key = document.getElementById('premiumKey').value;
+            const messageDiv = document.getElementById('premiumKeyMessage');
+
+            try {
+                const response = await fetch('/api/admin/verify-premium-key', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ key })
+                });
+                
+                const data = await response.json();
+
+                if (data.success) {
+                    premiumKey = key;
+                    isPremiumVerified = true;
+                    messageDiv.innerHTML = '<div class="success">✅ Premium key doğrulandı! Premium özelliklere erişim sağlandı.</div>';
+                    setTimeout(() => openTab('premium-tab'), 1000);
+                } else {
+                    messageDiv.innerHTML = '<div class="error">❌ Geçersiz premium key!</div>';
+                }
+            } catch (error) {
+                messageDiv.innerHTML = '<div class="error">❌ Premium key doğrulama hatası!</div>';
             }
         }
 
