@@ -11,7 +11,7 @@ const __dirname = dirname(__filename);
 
 const htmlContent = fs.readFileSync(join(__dirname, 'index.html'), 'utf8');
 
-// Key'leri dosyadan kaydet/oku
+// Dosya yolları
 const KEYS_FILE = join(__dirname, 'keys.json');
 const PREMIUM_KEYS_FILE = join(__dirname, 'premium_keys.json');
 const ACCOUNTS_FILE = join(__dirname, 'accounts.txt');
@@ -27,7 +27,7 @@ function loadKeys() {
     } catch (error) {
         console.error('Key dosyası okunamadı:', error);
     }
-    return new Set(['dehainciadamgottenyedim']);
+    return new Set(['DABBE2024VIP']);
 }
 
 function saveKeys(keys) {
@@ -47,7 +47,7 @@ function loadPremiumKeys() {
     } catch (error) {
         console.error('Premium key dosyası okunamadı:', error);
     }
-    return new Set(['dehaincipremium']);
+    return new Set(['PREMIUM2024VIP']);
 }
 
 function savePremiumKeys(keys) {
@@ -78,7 +78,6 @@ function saveUsedAccounts(usedAccounts) {
     }
 }
 
-// Kullanıcı yönetimi fonksiyonları
 function loadUsers() {
     try {
         if (fs.existsSync(USERS_FILE)) {
@@ -102,7 +101,6 @@ function saveUsers(users) {
 function getRandomAccount() {
     try {
         if (!fs.existsSync(ACCOUNTS_FILE)) {
-            // Örnek hesap oluştur
             const sampleAccount = `🌟✧ TABİİ ACCOUNT DETAYLARI ✧🌟
 İndex: 1
 ━━━━━━━━━━━━━━━━━━━━━━━━
@@ -136,7 +134,6 @@ function getRandomAccount() {
 
         const randomAccount = availableAccounts[Math.floor(Math.random() * availableAccounts.length)];
         
-        // Kullanılan hesaplara ekle
         const emailMatch = randomAccount.match(/📧 Email:\s*(.+)/);
         if (emailMatch) {
             usedAccounts.add(emailMatch[1].trim());
@@ -198,6 +195,7 @@ function parseAccount(accountText) {
 let adminKeys = loadKeys();
 let premiumKeys = loadPremiumKeys();
 let activeSessions = new Set();
+let userSessions = new Map();
 
 const server = http.createServer(async (req, res) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -212,7 +210,7 @@ const server = http.createServer(async (req, res) => {
 
     console.log(`${req.method} ${req.url}`);
 
-    // KAYIT OLMA endpoint'i
+    // KAYIT OLMA
     if (req.method === 'POST' && req.url === '/api/register') {
         let body = '';
         req.on('data', chunk => body += chunk);
@@ -220,7 +218,6 @@ const server = http.createServer(async (req, res) => {
             try {
                 const { username, password, key } = JSON.parse(body);
                 
-                // Key kontrolü
                 if (!key || !adminKeys.has(key)) {
                     res.writeHead(400, { 'Content-Type': 'application/json' });
                     res.end(JSON.stringify({ success: false, message: 'Geçersiz veya kullanılmış key' }));
@@ -229,17 +226,14 @@ const server = http.createServer(async (req, res) => {
 
                 const users = loadUsers();
                 
-                // Kullanıcı adı kontrolü
                 if (users.find(u => u.username === username)) {
                     res.writeHead(400, { 'Content-Type': 'application/json' });
                     res.end(JSON.stringify({ success: false, message: 'Kullanıcı adı zaten alınmış' }));
                     return;
                 }
 
-                // Şifreyi hashle
                 const hashedPassword = await bcrypt.hash(password, 10);
                 
-                // Yeni kullanıcı oluştur
                 const newUser = {
                     id: crypto.randomBytes(8).toString('hex'),
                     username,
@@ -250,7 +244,6 @@ const server = http.createServer(async (req, res) => {
                 users.push(newUser);
                 saveUsers(users);
                 
-                // Key'i kullanılmış olarak işaretle
                 adminKeys.delete(key);
                 saveKeys(adminKeys);
                 
@@ -265,7 +258,7 @@ const server = http.createServer(async (req, res) => {
         return;
     }
 
-    // GİRİŞ YAPMA endpoint'i
+    // GİRİŞ YAPMA
     if (req.method === 'POST' && req.url === '/api/login') {
         let body = '';
         req.on('data', chunk => body += chunk);
@@ -288,9 +281,8 @@ const server = http.createServer(async (req, res) => {
                     return;
                 }
 
-                // Giriş başarılı - session oluştur
                 const sessionId = crypto.randomBytes(16).toString('hex');
-                activeSessions.add(sessionId);
+                userSessions.set(sessionId, { username: user.username, userId: user.id });
                 
                 res.writeHead(200, { 'Content-Type': 'application/json' });
                 res.end(JSON.stringify({ 
@@ -308,8 +300,54 @@ const server = http.createServer(async (req, res) => {
         return;
     }
 
+    // KULLANICI DOĞRULAMA
+    if (req.method === 'POST' && req.url === '/api/verify-user') {
+        let body = '';
+        req.on('data', chunk => body += chunk);
+        req.on('end', () => {
+            try {
+                const { sessionId } = JSON.parse(body);
+                const userSession = userSessions.get(sessionId);
+                
+                if (userSession) {
+                    res.writeHead(200, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify({ 
+                        success: true, 
+                        username: userSession.username 
+                    }));
+                } else {
+                    res.writeHead(401, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify({ success: false, message: 'Oturum geçersiz' }));
+                }
+            } catch (error) {
+                res.writeHead(400, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ success: false, message: 'Geçersiz istek' }));
+            }
+        });
+        return;
+    }
+
+    // ÇIKIŞ YAPMA
+    if (req.method === 'POST' && req.url === '/api/logout') {
+        let body = '';
+        req.on('data', chunk => body += chunk);
+        req.on('end', () => {
+            try {
+                const { sessionId } = JSON.parse(body);
+                userSessions.delete(sessionId);
+                
+                res.writeHead(200, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ success: true, message: 'Çıkış başarılı' }));
+            } catch (error) {
+                res.writeHead(400, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ success: false, message: 'Geçersiz istek' }));
+            }
+        });
+        return;
+    }
+
     // ADMIN - Tüm kullanıcıları getir
-    if (req.method === 'GET' && req.url === '/api/admin/users') {
+    if (req.method === 'POST' && req.url === '/api/admin/users') {
         let body = '';
         req.on('data', chunk => body += chunk);
         req.on('end', () => {
@@ -317,7 +355,6 @@ const server = http.createServer(async (req, res) => {
                 const { sessionId } = JSON.parse(body);
                 if (activeSessions.has(sessionId)) {
                     const users = loadUsers();
-                    // Şifreleri gizle
                     const usersWithoutPasswords = users.map(user => ({
                         id: user.id,
                         username: user.username,
@@ -369,7 +406,7 @@ const server = http.createServer(async (req, res) => {
         return;
     }
 
-    // Admin login
+    // ADMIN GİRİŞ
     if (req.method === 'POST' && req.url === '/api/admin/login') {
         let body = '';
         req.on('data', chunk => body += chunk);
@@ -394,7 +431,7 @@ const server = http.createServer(async (req, res) => {
         return;
     }
 
-    // Key oluşturma
+    // KEY OLUŞTURMA
     if (req.method === 'POST' && req.url === '/api/admin/create-key') {
         let body = '';
         req.on('data', chunk => body += chunk);
@@ -422,7 +459,7 @@ const server = http.createServer(async (req, res) => {
         return;
     }
 
-    // Premium key oluşturma
+    // PREMIUM KEY OLUŞTURMA
     if (req.method === 'POST' && req.url === '/api/admin/create-premium-key') {
         let body = '';
         req.on('data', chunk => body += chunk);
@@ -450,7 +487,7 @@ const server = http.createServer(async (req, res) => {
         return;
     }
 
-    // Key silme
+    // KEY SİLME
     if (req.method === 'POST' && req.url === '/api/admin/delete-key') {
         let body = '';
         req.on('data', chunk => body += chunk);
@@ -483,7 +520,7 @@ const server = http.createServer(async (req, res) => {
         return;
     }
 
-    // Premium key silme
+    // PREMIUM KEY SİLME
     if (req.method === 'POST' && req.url === '/api/admin/delete-premium-key') {
         let body = '';
         req.on('data', chunk => body += chunk);
@@ -516,7 +553,7 @@ const server = http.createServer(async (req, res) => {
         return;
     }
 
-    // Key doğrulama
+    // KEY DOĞRULAMA
     if (req.method === 'POST' && req.url === '/api/admin/verify-key') {
         let body = '';
         req.on('data', chunk => body += chunk);
@@ -539,7 +576,7 @@ const server = http.createServer(async (req, res) => {
         return;
     }
 
-    // Premium key doğrulama
+    // PREMIUM KEY DOĞRULAMA
     if (req.method === 'POST' && req.url === '/api/admin/verify-premium-key') {
         let body = '';
         req.on('data', chunk => body += chunk);
@@ -562,7 +599,7 @@ const server = http.createServer(async (req, res) => {
         return;
     }
 
-    // Tabii hesap alma
+    // TABİİ HESAP ALMA
     if (req.method === 'POST' && req.url === '/api/premium/tabii-account') {
         let body = '';
         req.on('data', chunk => body += chunk);
@@ -599,7 +636,7 @@ const server = http.createServer(async (req, res) => {
         return;
     }
 
-    // Session kontrol
+    // SESSION KONTROL
     if (req.method === 'POST' && req.url === '/api/admin/check-session') {
         let body = '';
         req.on('data', chunk => body += chunk);
@@ -621,7 +658,7 @@ const server = http.createServer(async (req, res) => {
         return;
     }
 
-    // Get keys
+    // KEY LİSTESİ
     if (req.method === 'POST' && req.url === '/api/admin/keys') {
         let body = '';
         req.on('data', chunk => body += chunk);
@@ -714,7 +751,7 @@ const server = http.createServer(async (req, res) => {
         return;
     }
 
-    // Ana sayfa
+    // ANA SAYFA
     if (req.url === '/' || req.url === '/index.html') {
         res.writeHead(200, { 
             'Content-Type': 'text/html; charset=utf-8'
