@@ -558,6 +558,8 @@ function deepFilterKahinData(data) {
             .replace(/https:\/\/kahin\.org/gi, '')
             .replace(/"site":\s*"https:\/\/kahin\.org"/gi, '"site": ""')
             .replace(/"telegram":\s*"https:\/\/t\.me\/kahinorg"/gi, '"telegram": ""')
+            .replace(/"adminler": "Signal: ahmetulyaman | : @worexus"/gi, '"adminler": ""')
+            .replace(/""detay": "Apilerde Herhangi Bir Teknik Hatada Ahmet Yaman veya Worex'e Ulaşabilirsiniz, İyi Günler!"/gi, '"detay": ""')
             .replace(/"mesaj":\s*"Hata durumunda Telegram kanalımızdan yetkililere ulaşabilirsiniz\."/gi, '"mesaj": ""')
             .trim();
     }
@@ -591,4 +593,5 @@ server.listen(PORT, () => {
     console.log('💾 Key kayıt sistemi aktif');
     console.log('💎 Premium özellikler aktif');
 });
+
 
