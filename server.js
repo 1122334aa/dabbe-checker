@@ -1,167 +1,552 @@
-import express from 'express';
-import fs from 'fs';
-import path from 'path';
-import cors from 'cors';
-import fetch from 'node-fetch';
+import http from 'http';
 import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
+import fs from 'fs';
+import fetch from 'node-fetch';
+import crypto from 'crypto';
 
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const __dirname = dirname(__filename);
 
-const app = express();
-const PORT = process.env.PORT || 3000;
+const htmlContent = fs.readFileSync(join(__dirname, 'index.html'), 'utf8');
 
-// Middleware
-app.use(cors());
-app.use(express.json());
-app.use(express.static('public'));
+// Key'leri dosyadan kaydet/oku
+const KEYS_FILE = join(__dirname, 'keys.json');
+const PREMIUM_KEYS_FILE = join(__dirname, 'premium_keys.json');
+const ACCOUNTS_FILE = join(__dirname, 'accounts.txt');
+const USED_ACCOUNTS_FILE = join(__dirname, 'used_accounts.txt');
 
-// Veritabanı dosyaları
-const ACCOUNTS_FILE = path.join(__dirname, 'tabii_cleaned.txt');
-const USED_ACCOUNTS_FILE = path.join(__dirname, 'data', 'used_accounts.json');
-const PREMIUM_KEYS_FILE = path.join(__dirname, 'data', 'premium_keys.json');
-const SYSTEM_KEYS_FILE = path.join(__dirname, 'data', 'system_keys.json');
-
-// Klasörleri oluştur
-const dataDir = path.join(__dirname, 'data');
-if (!fs.existsSync(dataDir)) {
-    fs.mkdirSync(dataDir, { recursive: true });
+function loadKeys() {
+    try {
+        if (fs.existsSync(KEYS_FILE)) {
+            const data = fs.readFileSync(KEYS_FILE, 'utf8');
+            return new Set(JSON.parse(data));
+        }
+    } catch (error) {
+        console.error('Key dosyası okunamadı:', error);
+    }
+    return new Set(['DABBE2024VIP']);
 }
 
-// Premium keys dosyasını oluştur (eğer yoksa)
-if (!fs.existsSync(PREMIUM_KEYS_FILE)) {
-    const defaultPremiumKeys = [
-        { key: "PREMIUM2025", used: false },
-        { key: "TABII123", used: false },
-        { key: "VIPACCESS", used: false },
-        { key: "GOLD2025", used: false },
-        { key: "DIAMOND123", used: false }
-    ];
-    fs.writeFileSync(PREMIUM_KEYS_FILE, JSON.stringify(defaultPremiumKeys, null, 2));
+function saveKeys(keys) {
+    try {
+        fs.writeFileSync(KEYS_FILE, JSON.stringify(Array.from(keys)), 'utf8');
+    } catch (error) {
+        console.error('Key dosyası yazılamadı:', error);
+    }
 }
 
-// System keys dosyasını oluştur (eğer yoksa)
-if (!fs.existsSync(SYSTEM_KEYS_FILE)) {
-    const defaultSystemKeys = [
-        { key: "DABBE2024VIP", used: false },
-        { key: "DEHADAM2024", used: false },
-        { key: "BABAPRO31", used: false }
-    ];
-    fs.writeFileSync(SYSTEM_KEYS_FILE, JSON.stringify(defaultSystemKeys, null, 2));
+function loadPremiumKeys() {
+    try {
+        if (fs.existsSync(PREMIUM_KEYS_FILE)) {
+            const data = fs.readFileSync(PREMIUM_KEYS_FILE, 'utf8');
+            return new Set(JSON.parse(data));
+        }
+    } catch (error) {
+        console.error('Premium key dosyası okunamadı:', error);
+    }
+    return new Set(['PREMIUM2024VIP']);
 }
 
-// Kullanılmış hesaplar dosyasını oluştur (eğer yoksa)
-if (!fs.existsSync(USED_ACCOUNTS_FILE)) {
-    fs.writeFileSync(USED_ACCOUNTS_FILE, JSON.stringify([]));
+function savePremiumKeys(keys) {
+    try {
+        fs.writeFileSync(PREMIUM_KEYS_FILE, JSON.stringify(Array.from(keys)), 'utf8');
+    } catch (error) {
+        console.error('Premium key dosyası yazılamadı:', error);
+    }
 }
 
-// Hesapları parse etme fonksiyonu
-function parseAccountsFromTxt(content) {
-    const accounts = [];
-    const accountBlocks = content.split('🌟✧ TABİİ ACCOUNT DETAYLARI ✧🌟').filter(block => block.trim());
+function loadUsedAccounts() {
+    try {
+        if (fs.existsSync(USED_ACCOUNTS_FILE)) {
+            const data = fs.readFileSync(USED_ACCOUNTS_FILE, 'utf8');
+            return new Set(data.split('\n').filter(line => line.trim()));
+        }
+    } catch (error) {
+        console.error('Kullanılmış hesaplar dosyası okunamadı:', error);
+    }
+    return new Set();
+}
+
+function saveUsedAccounts(usedAccounts) {
+    try {
+        fs.writeFileSync(USED_ACCOUNTS_FILE, Array.from(usedAccounts).join('\n'), 'utf8');
+    } catch (error) {
+        console.error('Kullanılmış hesaplar dosyası yazılamadı:', error);
+    }
+}
+
+function getRandomAccount() {
+    try {
+        if (!fs.existsSync(ACCOUNTS_FILE)) {
+            // Örnek hesap oluştur
+            const sampleAccount = `🌟✧ TABİİ ACCOUNT DETAYLARI ✧🌟
+İndex: 1
+━━━━━━━━━━━━━━━━━━━━━━━━
+📧 Email: gulveragvc@gmail.com
+🔑 Password: Gmail123.
+👤 Ad Soyad: gülvera Güvenç 
+⚧ Cinsiyet: Kız
+🎂 Doğum Tarihi: 2004-05-05
+📌 Hesap Durumu: Subscribed
+━━━━━━━━━━━━━━━━━━━━━━━━
+💎 Abonelik Bilgileri:
+• Paket: Ücretsiz
+• Durum: Active
+• Bitiş Tarihi: 2025-11-29T01:20:36Z
+━━━━━━━━━━━━━━━━━━━━━━━━`;
+            fs.writeFileSync(ACCOUNTS_FILE, sampleAccount);
+        }
+
+        const data = fs.readFileSync(ACCOUNTS_FILE, 'utf8');
+        const accounts = data.split('━━━━━━━━━━━━━━━━━━━━━━━━\n━━━━━━━━━━━━━━━━━━━━━━━━').filter(acc => acc.trim());
+        
+        const usedAccounts = loadUsedAccounts();
+        const availableAccounts = accounts.filter(account => {
+            const emailMatch = account.match(/📧 Email:\s*(.+)/);
+            return emailMatch && !usedAccounts.has(emailMatch[1].trim());
+        });
+
+        if (availableAccounts.length === 0) {
+            return null;
+        }
+
+        const randomAccount = availableAccounts[Math.floor(Math.random() * availableAccounts.length)];
+        
+        // Kullanılan hesaplara ekle
+        const emailMatch = randomAccount.match(/📧 Email:\s*(.+)/);
+        if (emailMatch) {
+            usedAccounts.add(emailMatch[1].trim());
+            saveUsedAccounts(usedAccounts);
+        }
+
+        return parseAccount(randomAccount);
+    } catch (error) {
+        console.error('Hesap okuma hatası:', error);
+        return null;
+    }
+}
+
+function parseAccount(accountText) {
+    const lines = accountText.split('\n').filter(line => line.trim());
     
-    for (const block of accountBlocks) {
-        const lines = block.split('\n').filter(line => line.trim());
-        
-        const account = {
-            index: null,
-            email: null,
-            password: null,
-            name: null,
-            gender: null,
-            birthDate: null,
-            status: null,
-            package: null,
-            packageStatus: null,
-            endDate: null
-        };
-        
-        for (const line of lines) {
-            if (line.includes('İndex:')) {
-                account.index = parseInt(line.split('İndex:')[1].trim());
-            } else if (line.includes('📧 Email:')) {
-                account.email = line.split('📧 Email:')[1].trim();
-            } else if (line.includes('🔑 Password:')) {
-                account.password = line.split('🔑 Password:')[1].trim();
-            } else if (line.includes('👤 Ad Soyad:')) {
-                account.name = line.split('👤 Ad Soyad:')[1].trim();
-            } else if (line.includes('⚧ Cinsiyet:')) {
-                account.gender = line.split('⚧ Cinsiyet:')[1].trim();
-            } else if (line.includes('🎂 Doğum Tarihi:')) {
-                account.birthDate = line.split('🎂 Doğum Tarihi:')[1].trim();
-            } else if (line.includes('📌 Hesap Durumu:')) {
-                account.status = line.split('📌 Hesap Durumu:')[1].trim();
-            } else if (line.includes('• Paket:')) {
-                account.package = line.split('• Paket:')[1].trim();
-            } else if (line.includes('• Durum:')) {
-                account.packageStatus = line.split('• Durum:')[1].trim();
-            } else if (line.includes('• Bitiş Tarihi:')) {
-                account.endDate = line.split('• Bitiş Tarihi:')[1].trim();
+    const account = {
+        index: '',
+        email: '',
+        password: '',
+        fullName: '',
+        gender: '',
+        birthDate: '',
+        status: '',
+        subscription: {
+            package: '',
+            status: '',
+            endDate: ''
+        }
+    };
+
+    lines.forEach(line => {
+        if (line.includes('İndex:')) {
+            account.index = line.split('İndex:')[1]?.trim() || '';
+        } else if (line.includes('📧 Email:')) {
+            account.email = line.split('📧 Email:')[1]?.trim() || '';
+        } else if (line.includes('🔑 Password:')) {
+            account.password = line.split('🔑 Password:')[1]?.trim() || '';
+        } else if (line.includes('👤 Ad Soyad:')) {
+            account.fullName = line.split('👤 Ad Soyad:')[1]?.trim() || '';
+        } else if (line.includes('⚧ Cinsiyet:')) {
+            account.gender = line.split('⚧ Cinsiyet:')[1]?.trim() || '';
+        } else if (line.includes('🎂 Doğum Tarihi:')) {
+            account.birthDate = line.split('🎂 Doğum Tarihi:')[1]?.trim() || '';
+        } else if (line.includes('📌 Hesap Durumu:')) {
+            account.status = line.split('📌 Hesap Durumu:')[1]?.trim() || '';
+        } else if (line.includes('• Paket:')) {
+            account.subscription.package = line.split('• Paket:')[1]?.trim() || '';
+        } else if (line.includes('• Durum:')) {
+            account.subscription.status = line.split('• Durum:')[1]?.trim() || '';
+        } else if (line.includes('• Bitiş Tarihi:')) {
+            account.subscription.endDate = line.split('• Bitiş Tarihi:')[1]?.trim() || '';
+        }
+    });
+
+    return account;
+}
+
+let adminKeys = loadKeys();
+let premiumKeys = loadPremiumKeys();
+let activeSessions = new Set();
+
+const server = http.createServer(async (req, res) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+    if (req.method === 'OPTIONS') {
+        res.writeHead(200);
+        res.end();
+        return;
+    }
+
+    console.log(`${req.method} ${req.url}`);
+
+    // Admin login
+    if (req.method === 'POST' && req.url === '/api/admin/login') {
+        let body = '';
+        req.on('data', chunk => body += chunk);
+        req.on('end', () => {
+            try {
+                const { username, password } = JSON.parse(body);
+                
+                if (username === 'babaproDEhatuzcu31' && password === 'DaHİSekerc31') {
+                    const sessionId = crypto.randomBytes(16).toString('hex');
+                    activeSessions.add(sessionId);
+                    res.writeHead(200, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify({ success: true, sessionId, message: 'Giriş başarılı' }));
+                } else {
+                    res.writeHead(401, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify({ success: false, message: 'Hatalı kullanıcı adı veya şifre' }));
+                }
+            } catch (error) {
+                res.writeHead(400, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ success: false, message: 'Geçersiz istek' }));
             }
-        }
+        });
+        return;
+    }
+
+    // Key oluşturma
+    if (req.method === 'POST' && req.url === '/api/admin/create-key') {
+        let body = '';
+        req.on('data', chunk => body += chunk);
+        req.on('end', () => {
+            try {
+                const { key, sessionId } = JSON.parse(body);
+                if (activeSessions.has(sessionId)) {
+                    adminKeys.add(key);
+                    saveKeys(adminKeys);
+                    res.writeHead(200, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify({ 
+                        success: true, 
+                        message: 'Key oluşturuldu: ' + key,
+                        keys: Array.from(adminKeys)
+                    }));
+                } else {
+                    res.writeHead(401, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify({ success: false, message: 'Yetkisiz erişim' }));
+                }
+            } catch (error) {
+                res.writeHead(400, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ success: false, message: 'Geçersiz istek' }));
+            }
+        });
+        return;
+    }
+
+    // Premium key oluşturma
+    if (req.method === 'POST' && req.url === '/api/admin/create-premium-key') {
+        let body = '';
+        req.on('data', chunk => body += chunk);
+        req.on('end', () => {
+            try {
+                const { key, sessionId } = JSON.parse(body);
+                if (activeSessions.has(sessionId)) {
+                    premiumKeys.add(key);
+                    savePremiumKeys(premiumKeys);
+                    res.writeHead(200, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify({ 
+                        success: true, 
+                        message: 'Premium key oluşturuldu: ' + key,
+                        premiumKeys: Array.from(premiumKeys)
+                    }));
+                } else {
+                    res.writeHead(401, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify({ success: false, message: 'Yetkisiz erişim' }));
+                }
+            } catch (error) {
+                res.writeHead(400, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ success: false, message: 'Geçersiz istek' }));
+            }
+        });
+        return;
+    }
+
+    // Key silme
+    if (req.method === 'POST' && req.url === '/api/admin/delete-key') {
+        let body = '';
+        req.on('data', chunk => body += chunk);
+        req.on('end', () => {
+            try {
+                const { key, sessionId } = JSON.parse(body);
+                if (activeSessions.has(sessionId)) {
+                    if (adminKeys.has(key)) {
+                        adminKeys.delete(key);
+                        saveKeys(adminKeys);
+                        res.writeHead(200, { 'Content-Type': 'application/json' });
+                        res.end(JSON.stringify({ 
+                            success: true, 
+                            message: 'Key silindi: ' + key,
+                            keys: Array.from(adminKeys)
+                        }));
+                    } else {
+                        res.writeHead(404, { 'Content-Type': 'application/json' });
+                        res.end(JSON.stringify({ success: false, message: 'Key bulunamadı' }));
+                    }
+                } else {
+                    res.writeHead(401, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify({ success: false, message: 'Yetkisiz erişim' }));
+                }
+            } catch (error) {
+                res.writeHead(400, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ success: false, message: 'Geçersiz istek' }));
+            }
+        });
+        return;
+    }
+
+    // Premium key silme
+    if (req.method === 'POST' && req.url === '/api/admin/delete-premium-key') {
+        let body = '';
+        req.on('data', chunk => body += chunk);
+        req.on('end', () => {
+            try {
+                const { key, sessionId } = JSON.parse(body);
+                if (activeSessions.has(sessionId)) {
+                    if (premiumKeys.has(key)) {
+                        premiumKeys.delete(key);
+                        savePremiumKeys(premiumKeys);
+                        res.writeHead(200, { 'Content-Type': 'application/json' });
+                        res.end(JSON.stringify({ 
+                            success: true, 
+                            message: 'Premium key silindi: ' + key,
+                            premiumKeys: Array.from(premiumKeys)
+                        }));
+                    } else {
+                        res.writeHead(404, { 'Content-Type': 'application/json' });
+                        res.end(JSON.stringify({ success: false, message: 'Premium key bulunamadı' }));
+                    }
+                } else {
+                    res.writeHead(401, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify({ success: false, message: 'Yetkisiz erişim' }));
+                }
+            } catch (error) {
+                res.writeHead(400, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ success: false, message: 'Geçersiz istek' }));
+            }
+        });
+        return;
+    }
+
+    // Key doğrulama
+    if (req.method === 'POST' && req.url === '/api/admin/verify-key') {
+        let body = '';
+        req.on('data', chunk => body += chunk);
+        req.on('end', () => {
+            try {
+                const { key } = JSON.parse(body);
+                
+                if (adminKeys.has(key)) {
+                    res.writeHead(200, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify({ success: true, message: 'Key doğru' }));
+                } else {
+                    res.writeHead(401, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify({ success: false, message: 'Geçersiz key' }));
+                }
+            } catch (error) {
+                res.writeHead(400, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ success: false, message: 'Geçersiz istek' }));
+            }
+        });
+        return;
+    }
+
+    // Premium key doğrulama
+    if (req.method === 'POST' && req.url === '/api/admin/verify-premium-key') {
+        let body = '';
+        req.on('data', chunk => body += chunk);
+        req.on('end', () => {
+            try {
+                const { key } = JSON.parse(body);
+                
+                if (premiumKeys.has(key)) {
+                    res.writeHead(200, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify({ success: true, message: 'Premium key doğru' }));
+                } else {
+                    res.writeHead(401, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify({ success: false, message: 'Geçersiz premium key' }));
+                }
+            } catch (error) {
+                res.writeHead(400, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ success: false, message: 'Geçersiz istek' }));
+            }
+        });
+        return;
+    }
+
+    // Tabii hesap alma
+    if (req.method === 'POST' && req.url === '/api/premium/tabii-account') {
+        let body = '';
+        req.on('data', chunk => body += chunk);
+        req.on('end', () => {
+            try {
+                const { premiumKey } = JSON.parse(body);
+                
+                if (!premiumKey || !premiumKeys.has(premiumKey)) {
+                    res.writeHead(401, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify({ success: false, message: 'Geçersiz premium key' }));
+                    return;
+                }
+
+                const account = getRandomAccount();
+                if (account) {
+                    res.writeHead(200, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify({ 
+                        success: true, 
+                        message: 'Hesap başarıyla alındı',
+                        account: account
+                    }));
+                } else {
+                    res.writeHead(404, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify({ 
+                        success: false, 
+                        message: 'Mevcut hesap kalmadı' 
+                    }));
+                }
+            } catch (error) {
+                res.writeHead(500, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ success: false, message: 'Sunucu hatası' }));
+            }
+        });
+        return;
+    }
+
+    // Session kontrol
+    if (req.method === 'POST' && req.url === '/api/admin/check-session') {
+        let body = '';
+        req.on('data', chunk => body += chunk);
+        req.on('end', () => {
+            try {
+                const { sessionId } = JSON.parse(body);
+                if (activeSessions.has(sessionId)) {
+                    res.writeHead(200, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify({ success: true, message: 'Session aktif' }));
+                } else {
+                    res.writeHead(401, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify({ success: false, message: 'Session geçersiz' }));
+                }
+            } catch (error) {
+                res.writeHead(400, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ success: false, message: 'Geçersiz istek' }));
+            }
+        });
+        return;
+    }
+
+    // Get keys
+    if (req.method === 'POST' && req.url === '/api/admin/keys') {
+        let body = '';
+        req.on('data', chunk => body += chunk);
+        req.on('end', () => {
+            try {
+                const { sessionId } = JSON.parse(body);
+                if (activeSessions.has(sessionId)) {
+                    res.writeHead(200, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify({ 
+                        success: true, 
+                        keys: Array.from(adminKeys),
+                        premiumKeys: Array.from(premiumKeys)
+                    }));
+                } else {
+                    res.writeHead(401, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify({ success: false, message: 'Yetkisiz' }));
+                }
+            } catch (error) {
+                res.writeHead(400, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ success: false, message: 'Geçersiz istek' }));
+            }
+        });
+        return;
+    }
+
+    // DISCORD ID SORGUSU
+    if (req.url.startsWith('/api/discord') && req.method === 'GET') {
+        const urlParts = req.url.split('?');
+        const searchParams = new URLSearchParams(urlParts[1] || '');
+        const key = searchParams.get('key');
+        const id = searchParams.get('id');
         
-        // Tüm alanlar doluysa hesabı ekle
-        if (Object.values(account).every(value => value !== null)) {
-            accounts.push(account);
+        if (!key || !adminKeys.has(key)) {
+            res.writeHead(401, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ error: 'Geçersiz key' }));
+            return;
         }
-    }
-    
-    return accounts;
-}
 
-// Kullanılmış hesapları yükle
-function getUsedAccounts() {
-    try {
-        return JSON.parse(fs.readFileSync(USED_ACCOUNTS_FILE, 'utf8'));
-    } catch (error) {
-        return [];
-    }
-}
+        if (!id) {
+            res.writeHead(400, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ error: 'Discord ID gerekli' }));
+            return;
+        }
 
-// Kullanılmış hesap ekle
-function addUsedAccount(accountIndex) {
-    const usedAccounts = getUsedAccounts();
-    if (!usedAccounts.includes(accountIndex)) {
-        usedAccounts.push(accountIndex);
-        fs.writeFileSync(USED_ACCOUNTS_FILE, JSON.stringify(usedAccounts, null, 2));
+        try {
+            const apiUrl = `https://crawllchecker.xyz/crawll/crawlldc.php?id=${id}`;
+            const response = await fetch(apiUrl);
+            const data = await response.json();
+            
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify(data));
+            
+        } catch (error) {
+            res.writeHead(500, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ error: 'Discord API hatası' }));
+        }
+        return;
     }
-}
 
-// System key kontrolü
-function validateSystemKey(key) {
-    try {
-        const systemKeys = JSON.parse(fs.readFileSync(SYSTEM_KEYS_FILE, 'utf8'));
-        const keyObj = systemKeys.find(k => k.key === key && !k.used);
-        return !!keyObj;
-    } catch (error) {
-        return false;
-    }
-}
-
-// Premium key kontrolü
-function validatePremiumKey(key) {
-    try {
-        const premiumKeys = JSON.parse(fs.readFileSync(PREMIUM_KEYS_FILE, 'utf8'));
-        const keyObj = premiumKeys.find(k => k.key === key && !k.used);
+    // SORGULAMA API'LERİ
+    if (req.url.startsWith('/api/') && req.method === 'GET' && !req.url.includes('admin') && !req.url.includes('discord') && !req.url.includes('premium')) {
+        const urlParts = req.url.split('?');
+        const path = urlParts[0].replace('/api/', '');
         
-        if (keyObj) {
-            // Key'i kullanılmış olarak işaretle
-            keyObj.used = true;
-            fs.writeFileSync(PREMIUM_KEYS_FILE, JSON.stringify(premiumKeys, null, 2));
-            return true;
+        const searchParams = new URLSearchParams(urlParts[1] || '');
+        const key = searchParams.get('key');
+        
+        if (!key || !adminKeys.has(key)) {
+            res.writeHead(401, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ error: 'Geçersiz key' }));
+            return;
         }
-        return false;
-    } catch (error) {
-        return false;
+
+        try {
+            searchParams.delete('key');
+            const apiUrl = `https://api.kahin.org/kahinapi/${path}?${searchParams}`;
+            
+            const response = await fetch(apiUrl);
+            let data = await response.json();
+            
+            data = deepFilterKahinData(data);
+            
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify(data));
+            
+        } catch (error) {
+            res.writeHead(500, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ error: 'API hatası' }));
+        }
+        return;
     }
-}
 
-// Admin giriş kontrolü
-function adminLogin(username, password) {
-    return username === 'babaproDEhatuzcu31' && password === 'DaHİSekerc31';
-}
+    // Ana sayfa
+    if (req.url === '/' || req.url === '/index.html') {
+        res.writeHead(200, { 
+            'Content-Type': 'text/html; charset=utf-8'
+        });
+        res.end(htmlContent);
+        return;
+    }
 
-// Kahin API veri filtresi
+    res.writeHead(404, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ error: 'Sayfa bulunamadı' }));
+});
+
 function deepFilterKahinData(data) {
     if (typeof data === 'string') {
         return data
@@ -198,405 +583,11 @@ function deepFilterKahinData(data) {
     return data;
 }
 
-// Rotalar
-
-// Ana sayfa
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+const PORT = process.env.PORT || 3000;
+server.listen(PORT, () => {
+    console.log('🚀 Server çalışıyor: http://localhost:' + PORT);
+    console.log('🔑 Default Key: DABBE2024VIP');
+    console.log('👑 Default Premium Key: PREMIUM2024VIP');
+    console.log('💾 Key kayıt sistemi aktif');
+    console.log('💎 Premium özellikler aktif');
 });
-
-// System key doğrulama
-app.post('/api/verify-system-key', (req, res) => {
-    const { key } = req.body;
-    
-    if (!key) {
-        return res.status(400).json({ success: false, message: 'System key gereklidir' });
-    }
-    
-    const isValid = validateSystemKey(key);
-    
-    if (isValid) {
-        res.json({ success: true, message: 'System key başarıyla doğrulandı' });
-    } else {
-        res.status(400).json({ success: false, message: 'Geçersiz system key' });
-    }
-});
-
-// Premium key doğrulama
-app.post('/api/validate-premium', (req, res) => {
-    const { key } = req.body;
-    
-    if (!key) {
-        return res.status(400).json({ success: false, message: 'Premium key gereklidir' });
-    }
-    
-    const isValid = validatePremiumKey(key);
-    
-    if (isValid) {
-        res.json({ success: true, message: 'Premium key başarıyla doğrulandı' });
-    } else {
-        res.status(400).json({ success: false, message: 'Geçersiz premium key' });
-    }
-});
-
-// Hesap alma
-app.get('/api/get-account', (req, res) => {
-    try {
-        // tabii_cleaned.txt dosyasını oku
-        if (!fs.existsSync(ACCOUNTS_FILE)) {
-            return res.status(404).json({ success: false, message: 'Hesap dosyası bulunamadı' });
-        }
-        
-        const content = fs.readFileSync(ACCOUNTS_FILE, 'utf8');
-        const accounts = parseAccountsFromTxt(content);
-        
-        if (accounts.length === 0) {
-            return res.status(404).json({ success: false, message: 'Hesap bulunamadı' });
-        }
-        
-        // Kullanılmış hesapları al
-        const usedAccounts = getUsedAccounts();
-        
-        // Kullanılmamış hesapları filtrele
-        const availableAccounts = accounts.filter(acc => !usedAccounts.includes(acc.index));
-        
-        if (availableAccounts.length === 0) {
-            return res.status(404).json({ success: false, message: 'Tüm hesaplar kullanılmış' });
-        }
-        
-        // Rastgele bir hesap seç
-        const randomAccount = availableAccounts[Math.floor(Math.random() * availableAccounts.length)];
-        
-        // Hesabı kullanılmış olarak işaretle
-        addUsedAccount(randomAccount.index);
-        
-        res.json({ success: true, account: randomAccount });
-        
-    } catch (error) {
-        console.error('Hesap alma hatası:', error);
-        res.status(500).json({ success: false, message: 'Sunucu hatası' });
-    }
-});
-
-// Kullanılabilir hesap sayısını getir
-app.get('/api/available-accounts', (req, res) => {
-    try {
-        if (!fs.existsSync(ACCOUNTS_FILE)) {
-            return res.json({ available: 0, total: 0 });
-        }
-        
-        const content = fs.readFileSync(ACCOUNTS_FILE, 'utf8');
-        const accounts = parseAccountsFromTxt(content);
-        const usedAccounts = getUsedAccounts();
-        const availableAccounts = accounts.filter(acc => !usedAccounts.includes(acc.index));
-        
-        res.json({ 
-            available: availableAccounts.length, 
-            total: accounts.length 
-        });
-        
-    } catch (error) {
-        console.error('Hesap sayısı alma hatası:', error);
-        res.status(500).json({ available: 0, total: 0 });
-    }
-});
-
-// Admin giriş
-app.post('/api/admin/login', (req, res) => {
-    const { username, password } = req.body;
-    
-    if (!username || !password) {
-        return res.status(400).json({ success: false, message: 'Kullanıcı adı ve şifre gereklidir' });
-    }
-    
-    const isValid = adminLogin(username, password);
-    
-    if (isValid) {
-        // Basit session ID oluştur
-        const sessionId = Math.random().toString(36).substring(2) + Date.now().toString(36);
-        res.json({ success: true, sessionId, message: 'Admin girişi başarılı' });
-    } else {
-        res.status(401).json({ success: false, message: 'Geçersiz kullanıcı adı veya şifre' });
-    }
-});
-
-// System key oluşturma
-app.post('/api/admin/create-system-key', (req, res) => {
-    const { key } = req.body;
-    
-    if (!key) {
-        return res.status(400).json({ success: false, message: 'Key gereklidir' });
-    }
-    
-    try {
-        const systemKeys = JSON.parse(fs.readFileSync(SYSTEM_KEYS_FILE, 'utf8'));
-        systemKeys.push({ key, used: false });
-        fs.writeFileSync(SYSTEM_KEYS_FILE, JSON.stringify(systemKeys, null, 2));
-        
-        res.json({ success: true, message: 'System key oluşturuldu', keys: systemKeys });
-    } catch (error) {
-        res.status(500).json({ success: false, message: 'Key oluşturma hatası' });
-    }
-});
-
-// Premium key oluşturma
-app.post('/api/admin/create-premium-key', (req, res) => {
-    const { key } = req.body;
-    
-    if (!key) {
-        return res.status(400).json({ success: false, message: 'Key gereklidir' });
-    }
-    
-    try {
-        const premiumKeys = JSON.parse(fs.readFileSync(PREMIUM_KEYS_FILE, 'utf8'));
-        premiumKeys.push({ key, used: false });
-        fs.writeFileSync(PREMIUM_KEYS_FILE, JSON.stringify(premiumKeys, null, 2));
-        
-        res.json({ success: true, message: 'Premium key oluşturuldu', keys: premiumKeys });
-    } catch (error) {
-        res.status(500).json({ success: false, message: 'Key oluşturma hatası' });
-    }
-});
-
-// Mevcut keyleri getir
-app.get('/api/admin/keys', (req, res) => {
-    try {
-        const systemKeys = JSON.parse(fs.readFileSync(SYSTEM_KEYS_FILE, 'utf8'));
-        const premiumKeys = JSON.parse(fs.readFileSync(PREMIUM_KEYS_FILE, 'utf8'));
-        
-        res.json({ 
-            success: true, 
-            systemKeys: systemKeys.map(k => k.key),
-            premiumKeys: premiumKeys.map(k => k.key)
-        });
-    } catch (error) {
-        res.status(500).json({ success: false, message: 'Keyler yüklenemedi' });
-    }
-});
-
-// Discord ID sorgulama - GERÇEK API
-app.get('/api/discord', async (req, res) => {
-    const { id, key } = req.query;
-    
-    if (!key || !validateSystemKey(key)) {
-        return res.status(401).json({ error: 'Geçersiz system key' });
-    }
-    
-    if (!id) {
-        return res.status(400).json({ error: 'Discord ID gerekli' });
-    }
-    
-    try {
-        // Gerçek Discord API'si
-        const response = await fetch(`https://crawllchecker.xyz/crawll/crawlldc.php?id=${id}`);
-        
-        if (!response.ok) {
-            throw new Error(`Discord API error: ${response.status}`);
-        }
-        
-        const data = await response.json();
-        
-        res.json(data);
-        
-    } catch (error) {
-        console.error('Discord API hatası:', error);
-        
-        // Fallback: Örnek discord verisi
-        const discordData = {
-            id: id,
-            username: "user_" + id,
-            discriminator: "0000",
-            avatar: null,
-            public_flags: 0,
-            flags: 0,
-            banner: null,
-            accent_color: null,
-            global_name: "User " + id,
-            avatar_decoration: null,
-            display_name: "User " + id,
-            banner_color: "#000000"
-        };
-        
-        res.json(discordData);
-    }
-});
-
-// Diğer sorgular için endpoint - GERÇEK KAHİN API
-app.get('/api/:type', async (req, res) => {
-    const { type } = req.params;
-    const { key, ...queryParams } = req.query;
-    
-    if (!key || !validateSystemKey(key)) {
-        return res.status(401).json({ error: 'Geçersiz system key' });
-    }
-    
-    try {
-        // Gerçek Kahin API'ye istek at
-        const apiUrl = `https://api.kahin.org/kahinapi/${type}?${new URLSearchParams(queryParams)}`;
-        const response = await fetch(apiUrl);
-        
-        if (!response.ok) {
-            throw new Error(`Kahin API error: ${response.status}`);
-        }
-        
-        let data = await response.json();
-        
-        // Kahin verilerini filtrele
-        data = deepFilterKahinData(data);
-        
-        res.json(data);
-        
-    } catch (error) {
-        console.error('API sorgu hatası:', error);
-        
-        // Fallback: Örnek veri döndür
-        const sampleResults = {
-            tc: {
-                tc: queryParams.tc,
-                ad: "Ahmet",
-                soyad: "Yılmaz",
-                dogum_tarihi: "1990-01-01",
-                anne_adi: "Fatma",
-                baba_adi: "Mehmet",
-                dogum_yeri: "İstanbul",
-                nufus_il: "İstanbul",
-                nufus_ilce: "Kadıköy",
-                aile_sira_no: "1",
-                cilt_no: "1",
-                sirano: "1"
-            },
-            adsoyad: {
-                ad: queryParams.ad,
-                soyad: queryParams.soyad,
-                kayitlar: [
-                    {
-                        tc: "12345678901",
-                        il: queryParams.il,
-                        ilce: queryParams.ilce,
-                        anne_adi: "Fatma",
-                        baba_adi: "Mehmet",
-                        dogum_tarihi: "1990-01-01"
-                    }
-                ]
-            },
-            aile: {
-                tc: queryParams.tc,
-                aile_uyeleri: [
-                    { 
-                        ad: "Ayşe", 
-                        soyad: "Yılmaz", 
-                        yakinlik: "Anne", 
-                        tc: "12345678902",
-                        dogum_tarihi: "1965-03-15" 
-                    },
-                    { 
-                        ad: "Mehmet", 
-                        soyad: "Yılmaz", 
-                        yakinlik: "Baba", 
-                        tc: "12345678903",
-                        dogum_tarihi: "1963-07-22" 
-                    },
-                    { 
-                        ad: "Zeynep", 
-                        soyad: "Yılmaz", 
-                        yakinlik: "Kardeş", 
-                        tc: "12345678904",
-                        dogum_tarihi: "1995-11-08" 
-                    }
-                ]
-            },
-            gsmtc: {
-                gsm: queryParams.gsm,
-                tc: "12345678901",
-                ad: "Ahmet",
-                soyad: "Yılmaz",
-                operator: "Turkcell",
-                hat_durumu: "Aktif",
-                kayit_tarihi: "2020-05-15"
-            },
-            tcgsm: {
-                tc: queryParams.tc,
-                gsm: "5551234567",
-                operator: "Turkcell",
-                hat_durumu: "Aktif",
-                kayit_tarihi: "2020-05-15"
-            },
-            hayathikayesi: {
-                tc: queryParams.tc,
-                hikaye: [
-                    { tarih: "1990", olay: "Doğum" },
-                    { tarih: "2006", olay: "Lise mezuniyeti" },
-                    { tarih: "2010", olay: "Üniversite mezuniyeti" },
-                    { tarih: "2015", olay: "İşe giriş" }
-                ]
-            },
-            tapu: {
-                tc: queryParams.tc,
-                tapular: [
-                    {
-                        il: "İstanbul",
-                        ilce: "Kadıköy",
-                        ada: "123",
-                        parsel: "456",
-                        nitelik: "Arsa"
-                    }
-                ]
-            },
-            ip: {
-                ip: queryParams.domain,
-                ulke: "Türkiye",
-                sehir: "İstanbul",
-                isp: "Turk Telekom",
-                zaman_dilimi: "UTC+3"
-            }
-        };
-        
-        const result = sampleResults[type] || { 
-            message: `${type} sorgusu tamamlandı`, 
-            data: queryParams,
-            timestamp: new Date().toISOString()
-        };
-        
-        res.json(result);
-    }
-});
-
-// Vercel için özel route
-app.get('/api/health', (req, res) => {
-    res.json({ 
-        status: 'OK', 
-        message: 'Server çalışıyor',
-        timestamp: new Date().toISOString()
-    });
-});
-
-// 404 handler
-app.use('*', (req, res) => {
-    res.status(404).json({ error: 'Route bulunamadı' });
-});
-
-// Error handler
-app.use((err, req, res, next) => {
-    console.error('Server error:', err);
-    res.status(500).json({ error: 'Internal server error' });
-});
-
-// Sunucuyu başlat
-const server = app.listen(PORT, () => {
-    console.log(`🚀 Server ${PORT} portunda çalışıyor`);
-    console.log(`🌐 http://localhost:${PORT}`);
-    console.log(`🔑 System Keys: DABBE2024VIP, DEHADAM2024, BABAPRO31`);
-    console.log(`👑 Premium Keys: PREMIUM2025, TABII123, VIPACCESS`);
-    console.log(`👤 Admin: babaproDEhatuzcu31 / DaHİSekerc31`);
-    console.log(`📁 Hesap Dosyası: tabii_cleaned.txt`);
-});
-
-// Graceful shutdown
-process.on('SIGTERM', () => {
-    console.log('SIGTERM received, shutting down gracefully');
-    server.close(() => {
-        console.log('Process terminated');
-    });
-});
-
-export default app;
