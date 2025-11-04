@@ -14,7 +14,7 @@ const htmlContent = fs.readFileSync(join(__dirname, 'index.html'), 'utf8');
 // Dosya yolları
 const KEYS_FILE = join(__dirname, 'keys.json');
 const PREMIUM_KEYS_FILE = join(__dirname, 'premium_keys.json');
-const ACCOUNTS_FILE = join(__dirname, 'tabii_cleaned.txt');
+const ACCOUNTS_FILE = join(__dirname, 'accounts.txt');
 const USED_ACCOUNTS_FILE = join(__dirname, 'used_accounts.txt');
 const USERS_FILE = join(__dirname, 'users.json');
 
@@ -27,7 +27,8 @@ function loadKeys() {
     } catch (error) {
         console.error('Key dosyası okunamadı:', error);
     }
-    return new Set(['dehainciadamgottenyedim']);
+    // Varsayılan key'ler
+    return new Set(['dehainciadamgottenyedim', 'DABBE2024VIP']);
 }
 
 function saveKeys(keys) {
@@ -47,7 +48,8 @@ function loadPremiumKeys() {
     } catch (error) {
         console.error('Premium key dosyası okunamadı:', error);
     }
-    return new Set(['dehaincipremium']);
+    // Varsayılan premium key'ler
+    return new Set(['dehainciadampremium', 'PREMIUM2024VIP']);
 }
 
 function savePremiumKeys(keys) {
@@ -803,10 +805,10 @@ function deepFilterKahinData(data) {
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
     console.log('🚀 Server çalışıyor: http://localhost:' + PORT);
-    console.log('🔑 Default Key: DABBE2024VIP');
-    console.log('👑 Default Premium Key: PREMIUM2024VIP');
+    console.log('🔑 Normal Keyler:', Array.from(adminKeys));
+    console.log('👑 Premium Keyler:', Array.from(premiumKeys));
     console.log('💾 Key kayıt sistemi aktif');
     console.log('💎 Premium özellikler aktif');
     console.log('👥 Kullanıcı kayıt/giriş sistemi aktif');
+    console.log('🔐 Admin Giriş: babaproDEhatuzcu31 / DaHİSekerc31');
 });
-
