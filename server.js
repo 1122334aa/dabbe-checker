@@ -12,7 +12,7 @@ app.use(express.json());
 app.use(express.static('public'));
 
 // Veritabanı dosyaları
-const ACCOUNTS_FILE = path.join(__dirname, 'data', 'accounts.txt');
+const ACCOUNTS_FILE = path.join(__dirname, 'data', 'tabii_cleaned.txt');
 const USED_ACCOUNTS_FILE = path.join(__dirname, 'data', 'used_accounts.json');
 const PREMIUM_KEYS_FILE = path.join(__dirname, 'data', 'premium_keys.json');
 const SYSTEM_KEYS_FILE = path.join(__dirname, 'data', 'system_keys.json');
@@ -26,11 +26,11 @@ if (!fs.existsSync(dataDir)) {
 // Premium keys dosyasını oluştur (eğer yoksa)
 if (!fs.existsSync(PREMIUM_KEYS_FILE)) {
     const defaultPremiumKeys = [
-        { key: "PREMIUM2025", used: false },
-        { key: "TABII123", used: false },
-        { key: "VIPACCESS", used: false },
-        { key: "GOLD2025", used: false },
-        { key: "DIAMOND123", used: false }
+        { key: "dehainci31", used: false },
+        { key: "dehainci32", used: false },
+        { key: "dehainci33", used: false },
+        { key: "dehainci34", used: false },
+        { key: "dehainci35", used: false }
     ];
     fs.writeFileSync(PREMIUM_KEYS_FILE, JSON.stringify(defaultPremiumKeys, null, 2));
 }
@@ -38,9 +38,9 @@ if (!fs.existsSync(PREMIUM_KEYS_FILE)) {
 // System keys dosyasını oluştur (eğer yoksa)
 if (!fs.existsSync(SYSTEM_KEYS_FILE)) {
     const defaultSystemKeys = [
-        { key: "DABBE2024VIP", used: false },
-        { key: "DEHADAM2024", used: false },
-        { key: "BABAPRO31", used: false }
+        { key: "dehainciadamgottenyedim", used: false },
+        { key: "dehainciadamgottenyedim1", used: false },
+        { key: "dehainciadamgottenyedim2", used: false }
     ];
     fs.writeFileSync(SYSTEM_KEYS_FILE, JSON.stringify(defaultSystemKeys, null, 2));
 }
@@ -419,3 +419,4 @@ app.listen(PORT, () => {
     console.log(`👑 Premium Keys: PREMIUM2025, TABII123, VIPACCESS`);
     console.log(`👤 Admin: babaproDEhatuzcu31 / DaHİSekerc31`);
 });
+
