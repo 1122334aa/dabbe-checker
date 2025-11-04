@@ -4,6 +4,7 @@ import { dirname, join } from 'path';
 import fs from 'fs';
 import fetch from 'node-fetch';
 import crypto from 'crypto';
+import bcrypt from 'bcrypt';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -15,6 +16,7 @@ const KEYS_FILE = join(__dirname, 'keys.json');
 const PREMIUM_KEYS_FILE = join(__dirname, 'premium_keys.json');
 const ACCOUNTS_FILE = join(__dirname, 'accounts.txt');
 const USED_ACCOUNTS_FILE = join(__dirname, 'used_accounts.txt');
+const USERS_FILE = join(__dirname, 'users.json');
 
 function loadKeys() {
     try {
@@ -73,6 +75,27 @@ function saveUsedAccounts(usedAccounts) {
         fs.writeFileSync(USED_ACCOUNTS_FILE, Array.from(usedAccounts).join('\n'), 'utf8');
     } catch (error) {
         console.error('Kullanılmış hesaplar dosyası yazılamadı:', error);
+    }
+}
+
+// Kullanıcı yönetimi fonksiyonları
+function loadUsers() {
+    try {
+        if (fs.existsSync(USERS_FILE)) {
+            const data = fs.readFileSync(USERS_FILE, 'utf8');
+            return JSON.parse(data);
+        }
+    } catch (error) {
+        console.error('Kullanıcı dosyası okunamadı:', error);
+    }
+    return [];
+}
+
+function saveUsers(users) {
+    try {
+        fs.writeFileSync(USERS_FILE, JSON.stringify(users, null, 2), 'utf8');
+    } catch (error) {
+        console.error('Kullanıcı dosyası yazılamadı:', error);
     }
 }
 
@@ -188,6 +211,163 @@ const server = http.createServer(async (req, res) => {
     }
 
     console.log(`${req.method} ${req.url}`);
+
+    // KAYIT OLMA endpoint'i
+    if (req.method === 'POST' && req.url === '/api/register') {
+        let body = '';
+        req.on('data', chunk => body += chunk);
+        req.on('end', async () => {
+            try {
+                const { username, password, key } = JSON.parse(body);
+                
+                // Key kontrolü
+                if (!key || !adminKeys.has(key)) {
+                    res.writeHead(400, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify({ success: false, message: 'Geçersiz veya kullanılmış key' }));
+                    return;
+                }
+
+                const users = loadUsers();
+                
+                // Kullanıcı adı kontrolü
+                if (users.find(u => u.username === username)) {
+                    res.writeHead(400, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify({ success: false, message: 'Kullanıcı adı zaten alınmış' }));
+                    return;
+                }
+
+                // Şifreyi hashle
+                const hashedPassword = await bcrypt.hash(password, 10);
+                
+                // Yeni kullanıcı oluştur
+                const newUser = {
+                    id: crypto.randomBytes(8).toString('hex'),
+                    username,
+                    password: hashedPassword,
+                    createdAt: new Date().toISOString()
+                };
+                
+                users.push(newUser);
+                saveUsers(users);
+                
+                // Key'i kullanılmış olarak işaretle
+                adminKeys.delete(key);
+                saveKeys(adminKeys);
+                
+                res.writeHead(200, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ success: true, message: 'Kayıt başarılı' }));
+                
+            } catch (error) {
+                res.writeHead(500, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ success: false, message: 'Sunucu hatası' }));
+            }
+        });
+        return;
+    }
+
+    // GİRİŞ YAPMA endpoint'i
+    if (req.method === 'POST' && req.url === '/api/login') {
+        let body = '';
+        req.on('data', chunk => body += chunk);
+        req.on('end', async () => {
+            try {
+                const { username, password } = JSON.parse(body);
+                const users = loadUsers();
+                
+                const user = users.find(u => u.username === username);
+                if (!user) {
+                    res.writeHead(401, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify({ success: false, message: 'Kullanıcı adı veya şifre hatalı' }));
+                    return;
+                }
+
+                const passwordMatch = await bcrypt.compare(password, user.password);
+                if (!passwordMatch) {
+                    res.writeHead(401, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify({ success: false, message: 'Kullanıcı adı veya şifre hatalı' }));
+                    return;
+                }
+
+                // Giriş başarılı - session oluştur
+                const sessionId = crypto.randomBytes(16).toString('hex');
+                activeSessions.add(sessionId);
+                
+                res.writeHead(200, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ 
+                    success: true, 
+                    message: 'Giriş başarılı',
+                    sessionId,
+                    username: user.username
+                }));
+                
+            } catch (error) {
+                res.writeHead(500, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ success: false, message: 'Sunucu hatası' }));
+            }
+        });
+        return;
+    }
+
+    // ADMIN - Tüm kullanıcıları getir
+    if (req.method === 'GET' && req.url === '/api/admin/users') {
+        let body = '';
+        req.on('data', chunk => body += chunk);
+        req.on('end', () => {
+            try {
+                const { sessionId } = JSON.parse(body);
+                if (activeSessions.has(sessionId)) {
+                    const users = loadUsers();
+                    // Şifreleri gizle
+                    const usersWithoutPasswords = users.map(user => ({
+                        id: user.id,
+                        username: user.username,
+                        createdAt: user.createdAt
+                    }));
+                    res.writeHead(200, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify({ success: true, users: usersWithoutPasswords }));
+                } else {
+                    res.writeHead(401, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify({ success: false, message: 'Yetkisiz erişim' }));
+                }
+            } catch (error) {
+                res.writeHead(400, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ success: false, message: 'Geçersiz istek' }));
+            }
+        });
+        return;
+    }
+
+    // ADMIN - Kullanıcı sil
+    if (req.method === 'POST' && req.url === '/api/admin/delete-user') {
+        let body = '';
+        req.on('data', chunk => body += chunk);
+        req.on('end', () => {
+            try {
+                const { userId, sessionId } = JSON.parse(body);
+                if (activeSessions.has(sessionId)) {
+                    let users = loadUsers();
+                    const initialLength = users.length;
+                    users = users.filter(user => user.id !== userId);
+                    
+                    if (users.length < initialLength) {
+                        saveUsers(users);
+                        res.writeHead(200, { 'Content-Type': 'application/json' });
+                        res.end(JSON.stringify({ success: true, message: 'Kullanıcı başarıyla silindi' }));
+                    } else {
+                        res.writeHead(404, { 'Content-Type': 'application/json' });
+                        res.end(JSON.stringify({ success: false, message: 'Kullanıcı bulunamadı' }));
+                    }
+                } else {
+                    res.writeHead(401, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify({ success: false, message: 'Yetkisiz erişim' }));
+                }
+            } catch (error) {
+                res.writeHead(400, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ success: false, message: 'Geçersiz istek' }));
+            }
+        });
+        return;
+    }
 
     // Admin login
     if (req.method === 'POST' && req.url === '/api/admin/login') {
@@ -590,5 +770,5 @@ server.listen(PORT, () => {
     console.log('👑 Default Premium Key: PREMIUM2024VIP');
     console.log('💾 Key kayıt sistemi aktif');
     console.log('💎 Premium özellikler aktif');
+    console.log('👥 Kullanıcı kayıt/giriş sistemi aktif');
 });
-
