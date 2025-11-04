@@ -1,8 +1,12 @@
-const express = require('express');
-const fs = require('fs');
-const path = require('path');
-const cors = require('cors');
-const fetch = require('node-fetch');
+import express from 'express';
+import fs from 'fs';
+import path from 'path';
+import cors from 'cors';
+import fetch from 'node-fetch';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -595,4 +599,4 @@ process.on('SIGTERM', () => {
     });
 });
 
-module.exports = app;
+export default app;
