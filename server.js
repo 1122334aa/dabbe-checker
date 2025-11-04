@@ -13,7 +13,7 @@ const htmlContent = fs.readFileSync(join(__dirname, 'index.html'), 'utf8');
 // Key'leri dosyadan kaydet/oku
 const KEYS_FILE = join(__dirname, 'keys.json');
 const PREMIUM_KEYS_FILE = join(__dirname, 'premium_keys.json');
-const ACCOUNTS_FILE = join(__dirname, 'accounts.txt');
+const ACCOUNTS_FILE = join(__dirname, 'tabii_cleaned.txt');
 const USED_ACCOUNTS_FILE = join(__dirname, 'used_accounts.txt');
 
 function loadKeys() {
@@ -25,7 +25,7 @@ function loadKeys() {
     } catch (error) {
         console.error('Key dosyası okunamadı:', error);
     }
-    return new Set(['DABBE2024VIP']);
+    return new Set(['dehainciadamgottenyedim']);
 }
 
 function saveKeys(keys) {
@@ -45,7 +45,7 @@ function loadPremiumKeys() {
     } catch (error) {
         console.error('Premium key dosyası okunamadı:', error);
     }
-    return new Set(['PREMIUM2024VIP']);
+    return new Set(['dehainciadampremium']);
 }
 
 function savePremiumKeys(keys) {
@@ -591,3 +591,4 @@ server.listen(PORT, () => {
     console.log('💾 Key kayıt sistemi aktif');
     console.log('💎 Premium özellikler aktif');
 });
+
