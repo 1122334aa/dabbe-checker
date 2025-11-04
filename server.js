@@ -14,7 +14,7 @@ const htmlContent = fs.readFileSync(join(__dirname, 'index.html'), 'utf8');
 // Dosya yolları
 const KEYS_FILE = join(__dirname, 'keys.json');
 const PREMIUM_KEYS_FILE = join(__dirname, 'premium_keys.json');
-const ACCOUNTS_FILE = join(__dirname, 'accounts.txt');
+const ACCOUNTS_FILE = join(__dirname, 'tabii_cleaned.txt');
 const USED_ACCOUNTS_FILE = join(__dirname, 'used_accounts.txt');
 const USERS_FILE = join(__dirname, 'users.json');
 
@@ -812,3 +812,4 @@ server.listen(PORT, () => {
     console.log('👥 Kullanıcı kayıt/giriş sistemi aktif');
     console.log('🔐 Admin Giriş: babaproDEhatuzcu31 / DaHİSekerc31');
 });
+
