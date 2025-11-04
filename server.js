@@ -12,7 +12,7 @@ app.use(express.json());
 app.use(express.static('public'));
 
 // Veritabanı dosyaları
-const ACCOUNTS_FILE = path.join(__dirname, 'data', 'tabii_cleaned.txt');
+const ACCOUNTS_FILE = path.join(__dirname, 'tabii_cleaned.txt');
 const USED_ACCOUNTS_FILE = path.join(__dirname, 'data', 'used_accounts.json');
 const PREMIUM_KEYS_FILE = path.join(__dirname, 'data', 'premium_keys.json');
 const SYSTEM_KEYS_FILE = path.join(__dirname, 'data', 'system_keys.json');
@@ -26,11 +26,11 @@ if (!fs.existsSync(dataDir)) {
 // Premium keys dosyasını oluştur (eğer yoksa)
 if (!fs.existsSync(PREMIUM_KEYS_FILE)) {
     const defaultPremiumKeys = [
-        { key: "dehainci31", used: false },
-        { key: "dehainci32", used: false },
-        { key: "dehainci33", used: false },
-        { key: "dehainci34", used: false },
-        { key: "dehainci35", used: false }
+        { key: "PREMIUM2025", used: false },
+        { key: "TABII123", used: false },
+        { key: "VIPACCESS", used: false },
+        { key: "GOLD2025", used: false },
+        { key: "DIAMOND123", used: false }
     ];
     fs.writeFileSync(PREMIUM_KEYS_FILE, JSON.stringify(defaultPremiumKeys, null, 2));
 }
@@ -38,9 +38,9 @@ if (!fs.existsSync(PREMIUM_KEYS_FILE)) {
 // System keys dosyasını oluştur (eğer yoksa)
 if (!fs.existsSync(SYSTEM_KEYS_FILE)) {
     const defaultSystemKeys = [
-        { key: "dehainciadamgottenyedim", used: false },
-        { key: "dehainciadamgottenyedim1", used: false },
-        { key: "dehainciadamgottenyedim2", used: false }
+        { key: "DABBE2024VIP", used: false },
+        { key: "DEHADAM2024", used: false },
+        { key: "BABAPRO31", used: false }
     ];
     fs.writeFileSync(SYSTEM_KEYS_FILE, JSON.stringify(defaultSystemKeys, null, 2));
 }
@@ -156,6 +156,43 @@ function adminLogin(username, password) {
     return username === 'babaproDEhatuzcu31' && password === 'DaHİSekerc31';
 }
 
+// Kahin API veri filtresi
+function deepFilterKahinData(data) {
+    if (typeof data === 'string') {
+        return data
+            .replace(/kahin\.org/gi, '')
+            .replace(/t\.me\/kahinorg/gi, '')
+            .replace(/Hata durumunda Telegram kanalımızdan yetkililere ulaşabilirsiniz\.?/gi, '')
+            .replace(/Telegram/gi, '')
+            .replace(/@kahin/gi, '')
+            .replace(/https:\/\/kahin\.org/gi, '')
+            .replace(/"site":\s*"https:\/\/kahin\.org"/gi, '"site": ""')
+            .replace(/"telegram":\s*"https:\/\/t\.me\/kahinorg"/gi, '"telegram": ""')
+            .replace(/"mesaj":\s*"Hata durumunda Telegram kanalımızdan yetkililere ulaşabilirsiniz\."/gi, '"mesaj": ""')
+            .trim();
+    }
+    
+    if (Array.isArray(data)) {
+        return data.map(item => deepFilterKahinData(item)).filter(item => 
+            item !== '' && item !== null && item !== undefined && !(typeof item === 'object' && Object.keys(item).length === 0)
+        );
+    }
+    
+    if (typeof data === 'object' && data !== null) {
+        const filtered = {};
+        for (const [key, value] of Object.entries(data)) {
+            const filteredValue = deepFilterKahinData(value);
+            if (filteredValue !== '' && filteredValue !== null && filteredValue !== undefined && 
+                !(typeof filteredValue === 'object' && Object.keys(filteredValue).length === 0)) {
+                filtered[key] = filteredValue;
+            }
+        }
+        return Object.keys(filtered).length > 0 ? filtered : undefined;
+    }
+    
+    return data;
+}
+
 // Rotalar
 
 // Ana sayfa
@@ -200,7 +237,7 @@ app.post('/api/validate-premium', (req, res) => {
 // Hesap alma
 app.get('/api/get-account', (req, res) => {
     try {
-        // accounts.txt dosyasını oku
+        // tabii_cleaned.txt dosyasını oku
         if (!fs.existsSync(ACCOUNTS_FILE)) {
             return res.status(404).json({ success: false, message: 'Hesap dosyası bulunamadı' });
         }
@@ -280,7 +317,7 @@ app.post('/api/admin/login', (req, res) => {
 
 // System key oluşturma
 app.post('/api/admin/create-system-key', (req, res) => {
-    const { key, sessionId } = req.body;
+    const { key } = req.body;
     
     if (!key) {
         return res.status(400).json({ success: false, message: 'Key gereklidir' });
@@ -299,7 +336,7 @@ app.post('/api/admin/create-system-key', (req, res) => {
 
 // Premium key oluşturma
 app.post('/api/admin/create-premium-key', (req, res) => {
-    const { key, sessionId } = req.body;
+    const { key } = req.body;
     
     if (!key) {
         return res.status(400).json({ success: false, message: 'Key gereklidir' });
@@ -367,56 +404,129 @@ app.get('/api/discord', async (req, res) => {
     }
 });
 
-// Diğer sorgular için örnek endpoint
-app.get('/api/:type', (req, res) => {
+// Diğer sorgular için endpoint
+app.get('/api/:type', async (req, res) => {
     const { type } = req.params;
-    const { key } = req.query;
+    const { key, ...queryParams } = req.query;
     
     if (!key || !validateSystemKey(key)) {
         return res.status(401).json({ error: 'Geçersiz system key' });
     }
     
-    // Örnek sorgu sonuçları
-    const sampleResults = {
-        tc: {
-            tc: req.query.tc,
-            ad: "Ahmet",
-            soyad: "Yılmaz",
-            dogum_tarihi: "1990-01-01",
-            anne_adi: "Fatma",
-            baba_adi: "Mehmet",
-            dogum_yeri: "İstanbul"
-        },
-        adsoyad: {
-            ad: req.query.ad,
-            soyad: req.query.soyad,
-            kayitlar: [
-                {
-                    tc: "12345678901",
-                    il: req.query.il,
-                    ilce: req.query.ilce
-                }
-            ]
-        },
-        aile: {
-            tc: req.query.tc,
-            aile_uyeleri: [
-                { ad: "Ayşe", soyad: "Yılmaz", yakinlik: "Anne" },
-                { ad: "Mehmet", soyad: "Yılmaz", yakinlik: "Baba" }
-            ]
+    try {
+        // Kahin API'ye istek at
+        const apiUrl = `https://api.kahin.org/kahinapi/${type}?${new URLSearchParams(queryParams)}`;
+        const response = await fetch(apiUrl);
+        
+        if (!response.ok) {
+            throw new Error(`API error: ${response.status}`);
         }
-    };
-    
-    const result = sampleResults[type] || { message: `${type} sorgusu tamamlandı`, data: req.query };
-    res.json(result);
+        
+        let data = await response.json();
+        
+        // Kahin verilerini filtrele
+        data = deepFilterKahinData(data);
+        
+        res.json(data);
+        
+    } catch (error) {
+        console.error('API sorgu hatası:', error);
+        
+        // Fallback: Örnek veri döndür
+        const sampleResults = {
+            tc: {
+                tc: queryParams.tc,
+                ad: "Ahmet",
+                soyad: "Yılmaz",
+                dogum_tarihi: "1990-01-01",
+                anne_adi: "Fatma",
+                baba_adi: "Mehmet",
+                dogum_yeri: "İstanbul",
+                nufus_il: "İstanbul",
+                nufus_ilce: "Kadıköy"
+            },
+            adsoyad: {
+                ad: queryParams.ad,
+                soyad: queryParams.soyad,
+                kayitlar: [
+                    {
+                        tc: "12345678901",
+                        il: queryParams.il,
+                        ilce: queryParams.ilce,
+                        anne_adi: "Fatma",
+                        baba_adi: "Mehmet"
+                    }
+                ]
+            },
+            aile: {
+                tc: queryParams.tc,
+                aile_uyeleri: [
+                    { ad: "Ayşe", soyad: "Yılmaz", yakinlik: "Anne", tc: "12345678902" },
+                    { ad: "Mehmet", soyad: "Yılmaz", yakinlik: "Baba", tc: "12345678903" },
+                    { ad: "Zeynep", soyad: "Yılmaz", yakinlik: "Kardeş", tc: "12345678904" }
+                ]
+            },
+            gsmtc: {
+                gsm: queryParams.gsm,
+                tc: "12345678901",
+                ad: "Ahmet",
+                soyad: "Yılmaz",
+                operator: "Turkcell"
+            },
+            tcgsm: {
+                tc: queryParams.tc,
+                gsm: "5551234567",
+                operator: "Turkcell",
+                hat_durumu: "Aktif"
+            }
+        };
+        
+        const result = sampleResults[type] || { 
+            message: `${type} sorgusu tamamlandı`, 
+            data: queryParams,
+            timestamp: new Date().toISOString()
+        };
+        
+        res.json(result);
+    }
+});
+
+// Vercel için özel route
+app.get('/api/health', (req, res) => {
+    res.json({ 
+        status: 'OK', 
+        message: 'Server çalışıyor',
+        timestamp: new Date().toISOString()
+    });
+});
+
+// 404 handler
+app.use('*', (req, res) => {
+    res.status(404).json({ error: 'Route bulunamadı' });
+});
+
+// Error handler
+app.use((err, req, res, next) => {
+    console.error('Server error:', err);
+    res.status(500).json({ error: 'Internal server error' });
 });
 
 // Sunucuyu başlat
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
     console.log(`🚀 Server ${PORT} portunda çalışıyor`);
     console.log(`🌐 http://localhost:${PORT}`);
     console.log(`🔑 System Keys: DABBE2024VIP, DEHADAM2024, BABAPRO31`);
     console.log(`👑 Premium Keys: PREMIUM2025, TABII123, VIPACCESS`);
     console.log(`👤 Admin: babaproDEhatuzcu31 / DaHİSekerc31`);
+    console.log(`📁 Hesap Dosyası: tabii_cleaned.txt`);
 });
 
+// Graceful shutdown
+process.on('SIGTERM', () => {
+    console.log('SIGTERM received, shutting down gracefully');
+    server.close(() => {
+        console.log('Process terminated');
+    });
+});
+
+module.exports = app;
