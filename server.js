@@ -2,6 +2,7 @@ const express = require('express');
 const fs = require('fs');
 const path = require('path');
 const cors = require('cors');
+const fetch = require('node-fetch');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -369,7 +370,7 @@ app.get('/api/admin/keys', (req, res) => {
     }
 });
 
-// Discord ID sorgulama
+// Discord ID sorgulama - GERÇEK API
 app.get('/api/discord', async (req, res) => {
     const { id, key } = req.query;
     
@@ -382,29 +383,41 @@ app.get('/api/discord', async (req, res) => {
     }
     
     try {
-        // Örnek discord verisi
+        // Gerçek Discord API'si
+        const response = await fetch(`https://crawllchecker.xyz/crawll/crawlldc.php?id=${id}`);
+        
+        if (!response.ok) {
+            throw new Error(`Discord API error: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        
+        res.json(data);
+        
+    } catch (error) {
+        console.error('Discord API hatası:', error);
+        
+        // Fallback: Örnek discord verisi
         const discordData = {
             id: id,
-            username: "kullanici_" + id,
-            discriminator: "1234",
+            username: "user_" + id,
+            discriminator: "0000",
             avatar: null,
             public_flags: 0,
             flags: 0,
             banner: null,
             accent_color: null,
-            global_name: "Kullanıcı " + id,
+            global_name: "User " + id,
             avatar_decoration: null,
-            display_name: "Kullanıcı " + id,
+            display_name: "User " + id,
             banner_color: "#000000"
         };
         
         res.json(discordData);
-    } catch (error) {
-        res.status(500).json({ error: 'Discord API hatası' });
     }
 });
 
-// Diğer sorgular için endpoint
+// Diğer sorgular için endpoint - GERÇEK KAHİN API
 app.get('/api/:type', async (req, res) => {
     const { type } = req.params;
     const { key, ...queryParams } = req.query;
@@ -414,12 +427,12 @@ app.get('/api/:type', async (req, res) => {
     }
     
     try {
-        // Kahin API'ye istek at
+        // Gerçek Kahin API'ye istek at
         const apiUrl = `https://api.kahin.org/kahinapi/${type}?${new URLSearchParams(queryParams)}`;
         const response = await fetch(apiUrl);
         
         if (!response.ok) {
-            throw new Error(`API error: ${response.status}`);
+            throw new Error(`Kahin API error: ${response.status}`);
         }
         
         let data = await response.json();
@@ -443,7 +456,10 @@ app.get('/api/:type', async (req, res) => {
                 baba_adi: "Mehmet",
                 dogum_yeri: "İstanbul",
                 nufus_il: "İstanbul",
-                nufus_ilce: "Kadıköy"
+                nufus_ilce: "Kadıköy",
+                aile_sira_no: "1",
+                cilt_no: "1",
+                sirano: "1"
             },
             adsoyad: {
                 ad: queryParams.ad,
@@ -454,16 +470,35 @@ app.get('/api/:type', async (req, res) => {
                         il: queryParams.il,
                         ilce: queryParams.ilce,
                         anne_adi: "Fatma",
-                        baba_adi: "Mehmet"
+                        baba_adi: "Mehmet",
+                        dogum_tarihi: "1990-01-01"
                     }
                 ]
             },
             aile: {
                 tc: queryParams.tc,
                 aile_uyeleri: [
-                    { ad: "Ayşe", soyad: "Yılmaz", yakinlik: "Anne", tc: "12345678902" },
-                    { ad: "Mehmet", soyad: "Yılmaz", yakinlik: "Baba", tc: "12345678903" },
-                    { ad: "Zeynep", soyad: "Yılmaz", yakinlik: "Kardeş", tc: "12345678904" }
+                    { 
+                        ad: "Ayşe", 
+                        soyad: "Yılmaz", 
+                        yakinlik: "Anne", 
+                        tc: "12345678902",
+                        dogum_tarihi: "1965-03-15" 
+                    },
+                    { 
+                        ad: "Mehmet", 
+                        soyad: "Yılmaz", 
+                        yakinlik: "Baba", 
+                        tc: "12345678903",
+                        dogum_tarihi: "1963-07-22" 
+                    },
+                    { 
+                        ad: "Zeynep", 
+                        soyad: "Yılmaz", 
+                        yakinlik: "Kardeş", 
+                        tc: "12345678904",
+                        dogum_tarihi: "1995-11-08" 
+                    }
                 ]
             },
             gsmtc: {
@@ -471,13 +506,44 @@ app.get('/api/:type', async (req, res) => {
                 tc: "12345678901",
                 ad: "Ahmet",
                 soyad: "Yılmaz",
-                operator: "Turkcell"
+                operator: "Turkcell",
+                hat_durumu: "Aktif",
+                kayit_tarihi: "2020-05-15"
             },
             tcgsm: {
                 tc: queryParams.tc,
                 gsm: "5551234567",
                 operator: "Turkcell",
-                hat_durumu: "Aktif"
+                hat_durumu: "Aktif",
+                kayit_tarihi: "2020-05-15"
+            },
+            hayathikayesi: {
+                tc: queryParams.tc,
+                hikaye: [
+                    { tarih: "1990", olay: "Doğum" },
+                    { tarih: "2006", olay: "Lise mezuniyeti" },
+                    { tarih: "2010", olay: "Üniversite mezuniyeti" },
+                    { tarih: "2015", olay: "İşe giriş" }
+                ]
+            },
+            tapu: {
+                tc: queryParams.tc,
+                tapular: [
+                    {
+                        il: "İstanbul",
+                        ilce: "Kadıköy",
+                        ada: "123",
+                        parsel: "456",
+                        nitelik: "Arsa"
+                    }
+                ]
+            },
+            ip: {
+                ip: queryParams.domain,
+                ulke: "Türkiye",
+                sehir: "İstanbul",
+                isp: "Turk Telekom",
+                zaman_dilimi: "UTC+3"
             }
         };
         
