@@ -897,6 +897,30 @@
             border: 1px solid #f59e0b;
             text-shadow: 0 0 5px rgba(245, 158, 11, 0.3);
         }
+
+        /* YENİ EKLENEN STİLLER */
+        .locked-content {
+            text-align: center;
+            padding: 60px 25px;
+            color: #94a3b8;
+            background: rgba(30, 41, 59, 0.6);
+            border-radius: 12px;
+            border: 2px dashed #475569;
+        }
+
+        .locked-content i {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: #475569;
+        }
+
+        .query-content {
+            display: block;
+        }
+
+        .query-content.hidden {
+            display: none;
+        }
     </style>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
@@ -1082,304 +1106,492 @@
                 <!-- TC Sorgu Tabları -->
                 <div id="tc-sorgula-tab" class="tab-content">
                     <h2><i class="fas fa-search"></i> TC Sorgula</h2>
-                    <div class="form-group">
-                        <label>TC Kimlik No:</label>
-                        <input type="text" id="tcSorgula" maxlength="11" placeholder="TC kimlik numarasını girin">
+                    <div id="tc-sorgula-content">
+                        <div class="locked-content" id="tc-sorgula-locked">
+                            <i class="fas fa-lock"></i>
+                            <h3>Key Gerekli</h3>
+                            <p>Bu sorguyu kullanmak için önce key doğrulaması yapmalısınız.</p>
+                        </div>
+                        <div class="query-content hidden" id="tc-sorgula-query">
+                            <div class="form-group">
+                                <label>TC Kimlik No:</label>
+                                <input type="text" id="tcSorgula" maxlength="11" placeholder="TC kimlik numarasını girin">
+                            </div>
+                            <button onclick="sorgula('tc', 'tcSorgula')">
+                                <i class="fas fa-play"></i> Sorguyu Çalıştır
+                            </button>
+                        </div>
                     </div>
-                    <button onclick="sorgula('tc', 'tcSorgula')">
-                        <i class="fas fa-play"></i> Sorguyu Çalıştır
-                    </button>
                 </div>
 
                 <div id="tc-pro-tab" class="tab-content">
                     <h2><i class="fas fa-star"></i> TC Pro Sorgula</h2>
-                    <div class="form-group">
-                        <label>TC Kimlik No:</label>
-                        <input type="text" id="tcPro" maxlength="11" placeholder="TC kimlik numarasını girin">
+                    <div id="tc-pro-content">
+                        <div class="locked-content" id="tc-pro-locked">
+                            <i class="fas fa-lock"></i>
+                            <h3>Key Gerekli</h3>
+                            <p>Bu sorguyu kullanmak için önce key doğrulaması yapmalısınız.</p>
+                        </div>
+                        <div class="query-content hidden" id="tc-pro-query">
+                            <div class="form-group">
+                                <label>TC Kimlik No:</label>
+                                <input type="text" id="tcPro" maxlength="11" placeholder="TC kimlik numarasını girin">
+                            </div>
+                            <button onclick="sorgula('tcpro', 'tcPro')">
+                                <i class="fas fa-play"></i> Sorguyu Çalıştır
+                            </button>
+                        </div>
                     </div>
-                    <button onclick="sorgula('tcpro', 'tcPro')">
-                        <i class="fas fa-play"></i> Sorguyu Çalıştır
-                    </button>
                 </div>
 
                 <div id="yas-sorgula-tab" class="tab-content">
                     <h2><i class="fas fa-birthday-cake"></i> Yaş Sorgula</h2>
-                    <div class="form-group">
-                        <label>TC Kimlik No:</label>
-                        <input type="text" id="tcYas" maxlength="11" placeholder="TC kimlik numarasını girin">
+                    <div id="yas-sorgula-content">
+                        <div class="locked-content" id="yas-sorgula-locked">
+                            <i class="fas fa-lock"></i>
+                            <h3>Key Gerekli</h3>
+                            <p>Bu sorguyu kullanmak için önce key doğrulaması yapmalısınız.</p>
+                        </div>
+                        <div class="query-content hidden" id="yas-sorgula-query">
+                            <div class="form-group">
+                                <label>TC Kimlik No:</label>
+                                <input type="text" id="tcYas" maxlength="11" placeholder="TC kimlik numarasını girin">
+                            </div>
+                            <button onclick="sorgula('yas', 'tcYas')">
+                                <i class="fas fa-play"></i> Sorguyu Çalıştır
+                            </button>
+                        </div>
                     </div>
-                    <button onclick="sorgula('yas', 'tcYas')">
-                        <i class="fas fa-play"></i> Sorguyu Çalıştır
-                    </button>
                 </div>
 
                 <!-- Ad Soyad Tabları -->
                 <div id="adsoyad-sorgula-tab" class="tab-content">
                     <h2><i class="fas fa-user"></i> Ad Soyad Sorgula</h2>
-                    <div class="form-group">
-                        <label>Ad:</label>
-                        <input type="text" id="adSorgula" placeholder="Ad">
+                    <div id="adsoyad-sorgula-content">
+                        <div class="locked-content" id="adsoyad-sorgula-locked">
+                            <i class="fas fa-lock"></i>
+                            <h3>Key Gerekli</h3>
+                            <p>Bu sorguyu kullanmak için önce key doğrulaması yapmalısınız.</p>
+                        </div>
+                        <div class="query-content hidden" id="adsoyad-sorgula-query">
+                            <div class="form-group">
+                                <label>Ad:</label>
+                                <input type="text" id="adSorgula" placeholder="Ad">
+                            </div>
+                            <div class="form-group">
+                                <label>Soyad:</label>
+                                <input type="text" id="soyadSorgula" placeholder="Soyad">
+                            </div>
+                            <button onclick="sorgulaAdSoyad('adsoyad')">
+                                <i class="fas fa-play"></i> Sorguyu Çalıştır
+                            </button>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label>Soyad:</label>
-                        <input type="text" id="soyadSorgula" placeholder="Soyad">
-                    </div>
-                    <button onclick="sorgulaAdSoyad('adsoyad')">
-                        <i class="fas fa-play"></i> Sorguyu Çalıştır
-                    </button>
                 </div>
 
                 <div id="adsoyad-pro-tab" class="tab-content">
                     <h2><i class="fas fa-user-tie"></i> Ad Soyad Pro</h2>
-                    <div class="form-group">
-                        <label>Ad:</label>
-                        <input type="text" id="adPro" placeholder="Ad">
+                    <div id="adsoyad-pro-content">
+                        <div class="locked-content" id="adsoyad-pro-locked">
+                            <i class="fas fa-lock"></i>
+                            <h3>Key Gerekli</h3>
+                            <p>Bu sorguyu kullanmak için önce key doğrulaması yapmalısınız.</p>
+                        </div>
+                        <div class="query-content hidden" id="adsoyad-pro-query">
+                            <div class="form-group">
+                                <label>Ad:</label>
+                                <input type="text" id="adPro" placeholder="Ad">
+                            </div>
+                            <div class="form-group">
+                                <label>Soyad:</label>
+                                <input type="text" id="soyadPro" placeholder="Soyad">
+                            </div>
+                            <button onclick="sorgulaAdSoyad('adsoyadpro')">
+                                <i class="fas fa-play"></i> Sorguyu Çalıştır
+                            </button>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label>Soyad:</label>
-                        <input type="text" id="soyadPro" placeholder="Soyad">
-                    </div>
-                    <button onclick="sorgulaAdSoyad('adsoyadpro')">
-                        <i class="fas fa-play"></i> Sorguyu Çalıştır
-                    </button>
                 </div>
 
                 <div id="adililce-tab" class="tab-content">
                     <h2><i class="fas fa-map-marker-alt"></i> Ad İl İlçe Sorgula</h2>
-                    <div class="form-group">
-                        <label>Ad:</label>
-                        <input type="text" id="adIl" placeholder="Ad">
+                    <div id="adililce-content">
+                        <div class="locked-content" id="adililce-locked">
+                            <i class="fas fa-lock"></i>
+                            <h3>Key Gerekli</h3>
+                            <p>Bu sorguyu kullanmak için önce key doğrulaması yapmalısınız.</p>
+                        </div>
+                        <div class="query-content hidden" id="adililce-query">
+                            <div class="form-group">
+                                <label>Ad:</label>
+                                <input type="text" id="adIl" placeholder="Ad">
+                            </div>
+                            <div class="form-group">
+                                <label>İl:</label>
+                                <input type="text" id="ilAd" placeholder="İl">
+                            </div>
+                            <div class="form-group">
+                                <label>İlçe:</label>
+                                <input type="text" id="ilceAd" placeholder="İlçe">
+                            </div>
+                            <button onclick="sorgulaAdIlIlce('adililce')">
+                                <i class="fas fa-play"></i> Sorguyu Çalıştır
+                            </button>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label>İl:</label>
-                        <input type="text" id="ilAd" placeholder="İl">
-                    </div>
-                    <div class="form-group">
-                        <label>İlçe:</label>
-                        <input type="text" id="ilceAd" placeholder="İlçe">
-                    </div>
-                    <button onclick="sorgulaAdIlIlce('adililce')">
-                        <i class="fas fa-play"></i> Sorguyu Çalıştır
-                    </button>
                 </div>
 
                 <!-- GSM Tabları -->
                 <div id="tc-gsm-tab" class="tab-content">
                     <h2><i class="fas fa-mobile-alt"></i> TC'den GSM Sorgula</h2>
-                    <div class="form-group">
-                        <label>TC Kimlik No:</label>
-                        <input type="text" id="tcGsm" maxlength="11" placeholder="TC kimlik numarasını girin">
+                    <div id="tc-gsm-content">
+                        <div class="locked-content" id="tc-gsm-locked">
+                            <i class="fas fa-lock"></i>
+                            <h3>Key Gerekli</h3>
+                            <p>Bu sorguyu kullanmak için önce key doğrulaması yapmalısınız.</p>
+                        </div>
+                        <div class="query-content hidden" id="tc-gsm-query">
+                            <div class="form-group">
+                                <label>TC Kimlik No:</label>
+                                <input type="text" id="tcGsm" maxlength="11" placeholder="TC kimlik numarasını girin">
+                            </div>
+                            <button onclick="sorgula('tcgsm', 'tcGsm')">
+                                <i class="fas fa-play"></i> Sorguyu Çalıştır
+                            </button>
+                        </div>
                     </div>
-                    <button onclick="sorgula('tcgsm', 'tcGsm')">
-                        <i class="fas fa-play"></i> Sorguyu Çalıştır
-                    </button>
                 </div>
 
                 <div id="gsm-tc-tab" class="tab-content">
                     <h2><i class="fas fa-id-card"></i> GSM'den TC Sorgula</h2>
-                    <div class="form-group">
-                        <label>GSM Numarası:</label>
-                        <input type="text" id="gsmTc" placeholder="GSM numarasını girin">
+                    <div id="gsm-tc-content">
+                        <div class="locked-content" id="gsm-tc-locked">
+                            <i class="fas fa-lock"></i>
+                            <h3>Key Gerekli</h3>
+                            <p>Bu sorguyu kullanmak için önce key doğrulaması yapmalısınız.</p>
+                        </div>
+                        <div class="query-content hidden" id="gsm-tc-query">
+                            <div class="form-group">
+                                <label>GSM Numarası:</label>
+                                <input type="text" id="gsmTc" placeholder="GSM numarasını girin">
+                            </div>
+                            <button onclick="sorgula('gsmtc', 'gsmTc')">
+                                <i class="fas fa-play"></i> Sorguyu Çalıştır
+                            </button>
+                        </div>
                     </div>
-                    <button onclick="sorgula('gsmtc', 'gsmTc')">
-                        <i class="fas fa-play"></i> Sorguyu Çalıştır
-                    </button>
                 </div>
 
                 <!-- Aile Tabları -->
                 <div id="aile-sorgula-tab" class="tab-content">
                     <h2><i class="fas fa-users"></i> Aile Sorgula</h2>
-                    <div class="form-group">
-                        <label>TC Kimlik No:</label>
-                        <input type="text" id="tcAile" maxlength="11" placeholder="TC kimlik numarasını girin">
+                    <div id="aile-sorgula-content">
+                        <div class="locked-content" id="aile-sorgula-locked">
+                            <i class="fas fa-lock"></i>
+                            <h3>Key Gerekli</h3>
+                            <p>Bu sorguyu kullanmak için önce key doğrulaması yapmalısınız.</p>
+                        </div>
+                        <div class="query-content hidden" id="aile-sorgula-query">
+                            <div class="form-group">
+                                <label>TC Kimlik No:</label>
+                                <input type="text" id="tcAile" maxlength="11" placeholder="TC kimlik numarasını girin">
+                            </div>
+                            <button onclick="sorgula('aile', 'tcAile')">
+                                <i class="fas fa-play"></i> Sorguyu Çalıştır
+                            </button>
+                        </div>
                     </div>
-                    <button onclick="sorgula('aile', 'tcAile')">
-                        <i class="fas fa-play"></i> Sorguyu Çalıştır
-                    </button>
                 </div>
 
                 <div id="aile-pro-tab" class="tab-content">
                     <h2><i class="fas fa-user-friends"></i> Aile Pro Sorgula</h2>
-                    <div class="form-group">
-                        <label>TC Kimlik No:</label>
-                        <input type="text" id="tcAilePro" maxlength="11" placeholder="TC kimlik numarasını girin">
+                    <div id="aile-pro-content">
+                        <div class="locked-content" id="aile-pro-locked">
+                            <i class="fas fa-lock"></i>
+                            <h3>Key Gerekli</h3>
+                            <p>Bu sorguyu kullanmak için önce key doğrulaması yapmalısınız.</p>
+                        </div>
+                        <div class="query-content hidden" id="aile-pro-query">
+                            <div class="form-group">
+                                <label>TC Kimlik No:</label>
+                                <input type="text" id="tcAilePro" maxlength="11" placeholder="TC kimlik numarasını girin">
+                            </div>
+                            <button onclick="sorgula('ailepro', 'tcAilePro')">
+                                <i class="fas fa-play"></i> Sorguyu Çalıştır
+                            </button>
+                        </div>
                     </div>
-                    <button onclick="sorgula('ailepro', 'tcAilePro')">
-                        <i class="fas fa-play"></i> Sorguyu Çalıştır
-                    </button>
                 </div>
 
                 <div id="es-sorgula-tab" class="tab-content">
                     <h2><i class="fas fa-heart"></i> Eş Sorgula</h2>
-                    <div class="form-group">
-                        <label>TC Kimlik No:</label>
-                        <input type="text" id="tcEs" maxlength="11" placeholder="TC kimlik numarasını girin">
+                    <div id="es-sorgula-content">
+                        <div class="locked-content" id="es-sorgula-locked">
+                            <i class="fas fa-lock"></i>
+                            <h3>Key Gerekli</h3>
+                            <p>Bu sorguyu kullanmak için önce key doğrulaması yapmalısınız.</p>
+                        </div>
+                        <div class="query-content hidden" id="es-sorgula-query">
+                            <div class="form-group">
+                                <label>TC Kimlik No:</label>
+                                <input type="text" id="tcEs" maxlength="11" placeholder="TC kimlik numarasını girin">
+                            </div>
+                            <button onclick="sorgula('es', 'tcEs')">
+                                <i class="fas fa-play"></i> Sorguyu Çalıştır
+                            </button>
+                        </div>
                     </div>
-                    <button onclick="sorgula('es', 'tcEs')">
-                        <i class="fas fa-play"></i> Sorguyu Çalıştır
-                    </button>
                 </div>
 
                 <div id="sulale-tab" class="tab-content">
                     <h2><i class="fas fa-sitemap"></i> Sülale Sorgula</h2>
-                    <div class="form-group">
-                        <label>TC Kimlik No:</label>
-                        <input type="text" id="tcSulale" maxlength="11" placeholder="TC kimlik numarasını girin">
+                    <div id="sulale-content">
+                        <div class="locked-content" id="sulale-locked">
+                            <i class="fas fa-lock"></i>
+                            <h3>Key Gerekli</h3>
+                            <p>Bu sorguyu kullanmak için önce key doğrulaması yapmalısınız.</p>
+                        </div>
+                        <div class="query-content hidden" id="sulale-query">
+                            <div class="form-group">
+                                <label>TC Kimlik No:</label>
+                                <input type="text" id="tcSulale" maxlength="11" placeholder="TC kimlik numarasını girin">
+                            </div>
+                            <button onclick="sorgula('sulale', 'tcSulale')">
+                                <i class="fas fa-play"></i> Sorguyu Çalıştır
+                            </button>
+                        </div>
                     </div>
-                    <button onclick="sorgula('sulale', 'tcSulale')">
-                        <i class="fas fa-play"></i> Sorguyu Çalıştır
-                    </button>
                 </div>
 
                 <!-- IP Tabları -->
                 <div id="ip-sorgula-tab" class="tab-content">
                     <h2><i class="fas fa-globe"></i> IP Sorgula</h2>
-                    <div class="form-group">
-                        <label>IP/Domain:</label>
-                        <input type="text" id="domainIp" placeholder="IP adresi veya domain girin">
+                    <div id="ip-sorgula-content">
+                        <div class="locked-content" id="ip-sorgula-locked">
+                            <i class="fas fa-lock"></i>
+                            <h3>Key Gerekli</h3>
+                            <p>Bu sorguyu kullanmak için önce key doğrulaması yapmalısınız.</p>
+                        </div>
+                        <div class="query-content hidden" id="ip-sorgula-query">
+                            <div class="form-group">
+                                <label>IP/Domain:</label>
+                                <input type="text" id="domainIp" placeholder="IP adresi veya domain girin">
+                            </div>
+                            <button onclick="sorgula('ip', 'domainIp')">
+                                <i class="fas fa-play"></i> Sorguyu Çalıştır
+                            </button>
+                        </div>
                     </div>
-                    <button onclick="sorgula('ip', 'domainIp')">
-                        <i class="fas fa-play"></i> Sorguyu Çalıştır
-                    </button>
                 </div>
 
                 <div id="dns-tab" class="tab-content">
                     <h2><i class="fas fa-network-wired"></i> DNS Sorgula</h2>
-                    <div class="form-group">
-                        <label>IP/Domain:</label>
-                        <input type="text" id="domainDns" placeholder="IP adresi veya domain girin">
+                    <div id="dns-content">
+                        <div class="locked-content" id="dns-locked">
+                            <i class="fas fa-lock"></i>
+                            <h3>Key Gerekli</h3>
+                            <p>Bu sorguyu kullanmak için önce key doğrulaması yapmalısınız.</p>
+                        </div>
+                        <div class="query-content hidden" id="dns-query">
+                            <div class="form-group">
+                                <label>IP/Domain:</label>
+                                <input type="text" id="domainDns" placeholder="IP adresi veya domain girin">
+                            </div>
+                            <button onclick="sorgula('dns', 'domainDns')">
+                                <i class="fas fa-play"></i> Sorguyu Çalıştır
+                            </button>
+                        </div>
                     </div>
-                    <button onclick="sorgula('dns', 'domainDns')">
-                        <i class="fas fa-play"></i> Sorguyu Çalıştır
-                    </button>
                 </div>
 
                 <div id="whois-tab" class="tab-content">
                     <h2><i class="fas fa-search"></i> WHOIS Sorgula</h2>
-                    <div class="form-group">
-                        <label>IP/Domain:</label>
-                        <input type="text" id="domainWhois" placeholder="IP adresi veya domain girin">
+                    <div id="whois-content">
+                        <div class="locked-content" id="whois-locked">
+                            <i class="fas fa-lock"></i>
+                            <h3>Key Gerekli</h3>
+                            <p>Bu sorguyu kullanmak için önce key doğrulaması yapmalısınız.</p>
+                        </div>
+                        <div class="query-content hidden" id="whois-query">
+                            <div class="form-group">
+                                <label>IP/Domain:</label>
+                                <input type="text" id="domainWhois" placeholder="IP adresi veya domain girin">
+                            </div>
+                            <button onclick="sorgula('whois', 'domainWhois')">
+                                <i class="fas fa-play"></i> Sorguyu Çalıştır
+                            </button>
+                        </div>
                     </div>
-                    <button onclick="sorgula('whois', 'domainWhois')">
-                        <i class="fas fa-play"></i> Sorguyu Çalıştır
-                    </button>
                 </div>
 
                 <div id="subdomain-tab" class="tab-content">
                     <h2><i class="fas fa-sitemap"></i> Subdomain Sorgula</h2>
-                    <div class="form-group">
-                        <label>IP/Domain:</label>
-                        <input type="text" id="domainSubdomain" placeholder="IP adresi veya domain girin">
+                    <div id="subdomain-content">
+                        <div class="locked-content" id="subdomain-locked">
+                            <i class="fas fa-lock"></i>
+                            <h3>Key Gerekli</h3>
+                            <p>Bu sorguyu kullanmak için önce key doğrulaması yapmalısınız.</p>
+                        </div>
+                        <div class="query-content hidden" id="subdomain-query">
+                            <div class="form-group">
+                                <label>IP/Domain:</label>
+                                <input type="text" id="domainSubdomain" placeholder="IP adresi veya domain girin">
+                            </div>
+                            <button onclick="sorgula('subdomain', 'domainSubdomain')">
+                                <i class="fas fa-play"></i> Sorguyu Çalıştır
+                            </button>
+                        </div>
                     </div>
-                    <button onclick="sorgula('subdomain', 'domainSubdomain')">
-                        <i class="fas fa-play"></i> Sorguyu Çalıştır
-                    </button>
                 </div>
 
                 <div id="leak-tab" class="tab-content">
                     <h2><i class="fas fa-envelope"></i> Leak Sorgula</h2>
-                    <div class="form-group">
-                        <label>E-posta:</label>
-                        <input type="text" id="leakQuery" placeholder="E-posta adresi girin">
+                    <div id="leak-content">
+                        <div class="locked-content" id="leak-locked">
+                            <i class="fas fa-lock"></i>
+                            <h3>Key Gerekli</h3>
+                            <p>Bu sorguyu kullanmak için önce key doğrulaması yapmalısınız.</p>
+                        </div>
+                        <div class="query-content hidden" id="leak-query">
+                            <div class="form-group">
+                                <label>E-posta:</label>
+                                <input type="text" id="leakQuery" placeholder="E-posta adresi girin">
+                            </div>
+                            <button onclick="sorgula('leak', 'leakQuery')">
+                                <i class="fas fa-play"></i> Sorguyu Çalıştır
+                            </button>
+                        </div>
                     </div>
-                    <button onclick="sorgula('leak', 'leakQuery')">
-                        <i class="fas fa-play"></i> Sorguyu Çalıştır
-                    </button>
                 </div>
 
                 <div id="telegram-tab" class="tab-content">
                     <h2><i class="fab fa-telegram"></i> Telegram Sorgula</h2>
-                    <div class="form-group">
-                        <label>Telegram Kullanıcı Adı:</label>
-                        <input type="text" id="telegramUser" placeholder="Telegram kullanıcı adı">
+                    <div id="telegram-content">
+                        <div class="locked-content" id="telegram-locked">
+                            <i class="fas fa-lock"></i>
+                            <h3>Key Gerekli</h3>
+                            <p>Bu sorguyu kullanmak için önce key doğrulaması yapmalısınız.</p>
+                        </div>
+                        <div class="query-content hidden" id="telegram-query">
+                            <div class="form-group">
+                                <label>Telegram Kullanıcı Adı:</label>
+                                <input type="text" id="telegramUser" placeholder="Telegram kullanıcı adı">
+                            </div>
+                            <button onclick="sorgula('telegram', 'telegramUser')">
+                                <i class="fas fa-play"></i> Sorguyu Çalıştır
+                            </button>
+                        </div>
                     </div>
-                    <button onclick="sorgula('telegram', 'telegramUser')">
-                        <i class="fas fa-play"></i> Sorguyu Çalıştır
-                    </button>
                 </div>
 
                 <!-- Discord Tab -->
                 <div id="discord-tab" class="tab-content">
                     <h2><i class="fab fa-discord"></i> Discord ID Sorgulama</h2>
-                    <div class="form-group">
-                        <label>Discord ID:</label>
-                        <input type="text" id="discordId" placeholder="Discord ID girin (örn: 724180071354597406)">
+                    <div id="discord-content">
+                        <div class="locked-content" id="discord-locked">
+                            <i class="fas fa-lock"></i>
+                            <h3>Key Gerekli</h3>
+                            <p>Bu sorguyu kullanmak için önce key doğrulaması yapmalısınız.</p>
+                        </div>
+                        <div class="query-content hidden" id="discord-query">
+                            <div class="form-group">
+                                <label>Discord ID:</label>
+                                <input type="text" id="discordId" placeholder="Discord ID girin (örn: 724180071354597406)">
+                            </div>
+                            <button onclick="sorgulaDiscord()" style="background: linear-gradient(45deg, #5865F2, #7289DA);">
+                                <i class="fab fa-discord"></i> Discord Sorgula
+                            </button>
+                        </div>
                     </div>
-                    <button onclick="sorgulaDiscord()" style="background: linear-gradient(45deg, #5865F2, #7289DA);">
-                        <i class="fab fa-discord"></i> Discord Sorgula
-                    </button>
                 </div>
 
                 <!-- Gelişmiş IP Tab -->
                 <div id="gelismisip-tab" class="tab-content">
                     <h2><i class="fas fa-search-plus"></i> Gelişmiş IP Sorgulama</h2>
-                    <div class="form-group">
-                        <label>IP Adresi:</label>
-                        <input type="text" id="gelismisIp" placeholder="IPv4 adresi girin">
+                    <div id="gelismisip-content">
+                        <div class="locked-content" id="gelismisip-locked">
+                            <i class="fas fa-lock"></i>
+                            <h3>Key Gerekli</h3>
+                            <p>Bu sorguyu kullanmak için önce key doğrulaması yapmalısınız.</p>
+                        </div>
+                        <div class="query-content hidden" id="gelismisip-query">
+                            <div class="form-group">
+                                <label>IP Adresi:</label>
+                                <input type="text" id="gelismisIp" placeholder="IPv4 adresi girin">
+                            </div>
+                            <button onclick="sorgula('gelismisip', 'gelismisIp')">
+                                <i class="fas fa-search-plus"></i> Detaylı IP Sorgula
+                            </button>
+                        </div>
                     </div>
-                    <button onclick="sorgula('gelismisip', 'gelismisIp')">
-                        <i class="fas fa-search-plus"></i> Detaylı IP Sorgula
-                    </button>
                 </div>
 
                 <!-- Diğer Sorgular Tab -->
                 <div id="other-tab" class="tab-content">
                     <h2><i class="fas fa-cogs"></i> Diğer Sorgular</h2>
-                    
-                    <div class="section-group">
-                        <!-- TC ile Sorgular -->
-                        <div class="query-section">
-                            <h4><i class="fas fa-id-card"></i> TC ile Sorgular</h4>
-                            <div class="form-group">
-                                <input type="text" id="tcOther" maxlength="11" placeholder="TC kimlik numarası">
-                            </div>
-                            <div class="btn-group">
-                                <button onclick="sorgula('tapu', 'tcOther')">Tapu Sorgula</button>
-                                <button onclick="sorgula('isyeri', 'tcOther')">İşyeri Sorgula</button>
-                                <button onclick="sorgula('adres', 'tcOther')">Adres Sorgula</button>
-                                <button onclick="sorgula('hane', 'tcOther')">Hane Sorgula</button>
-                                <button onclick="sorgula('apartman', 'tcOther')">Apartman Sorgula</button>
-                            </div>
+                    <div id="other-content">
+                        <div class="locked-content" id="other-locked">
+                            <i class="fas fa-lock"></i>
+                            <h3>Key Gerekli</h3>
+                            <p>Bu sorguları kullanmak için önce key doğrulaması yapmalısınız.</p>
                         </div>
+                        <div class="query-content hidden" id="other-query">
+                            <div class="section-group">
+                                <!-- TC ile Sorgular -->
+                                <div class="query-section">
+                                    <h4><i class="fas fa-id-card"></i> TC ile Sorgular</h4>
+                                    <div class="form-group">
+                                        <input type="text" id="tcOther" maxlength="11" placeholder="TC kimlik numarası">
+                                    </div>
+                                    <div class="btn-group">
+                                        <button onclick="sorgula('tapu', 'tcOther')">Tapu Sorgula</button>
+                                        <button onclick="sorgula('isyeri', 'tcOther')">İşyeri Sorgula</button>
+                                        <button onclick="sorgula('adres', 'tcOther')">Adres Sorgula</button>
+                                        <button onclick="sorgula('hane', 'tcOther')">Hane Sorgula</button>
+                                        <button onclick="sorgula('apartman', 'tcOther')">Apartman Sorgula</button>
+                                    </div>
+                                </div>
 
-                        <!-- Discord & IP Sorguları -->
-                        <div class="query-section">
-                            <h4><i class="fab fa-discord"></i> Discord & IP Sorguları</h4>
-                            <div class="form-group">
-                                <label>Discord ID:</label>
-                                <input type="text" id="discordIdOther" placeholder="Discord ID girin">
-                            </div>
-                            <button onclick="sorgulaDiscordOther()" style="background: linear-gradient(45deg, #5865F2, #7289DA); width: 100%; margin-bottom: 10px;">
-                                <i class="fab fa-discord"></i> Discord Sorgula
-                            </button>
-                            
-                            <div class="form-group">
-                                <label>IP Adresi:</label>
-                                <input type="text" id="gelismisIpOther" placeholder="IPv4 adresi girin">
-                            </div>
-                            <button onclick="sorgula('gelismisip', 'gelismisIpOther')" style="width: 100%;">
-                                <i class="fas fa-search-plus"></i> Gelişmiş IP Sorgula
-                            </button>
-                        </div>
+                                <!-- Discord & IP Sorguları -->
+                                <div class="query-section">
+                                    <h4><i class="fab fa-discord"></i> Discord & IP Sorguları</h4>
+                                    <div class="form-group">
+                                        <label>Discord ID:</label>
+                                        <input type="text" id="discordIdOther" placeholder="Discord ID girin">
+                                    </div>
+                                    <button onclick="sorgulaDiscordOther()" style="background: linear-gradient(45deg, #5865F2, #7289DA); width: 100%; margin-bottom: 10px;">
+                                        <i class="fab fa-discord"></i> Discord Sorgula
+                                    </button>
+                                    
+                                    <div class="form-group">
+                                        <label>IP Adresi:</label>
+                                        <input type="text" id="gelismisIpOther" placeholder="IPv4 adresi girin">
+                                    </div>
+                                    <button onclick="sorgula('gelismisip', 'gelismisIpOther')" style="width: 100%;">
+                                        <i class="fas fa-search-plus"></i> Gelişmiş IP Sorgula
+                                    </button>
+                                </div>
 
-                        <!-- Vergi No Sorgusu -->
-                        <div class="query-section">
-                            <h4><i class="fas fa-file-invoice-dollar"></i> Vergi Sorgusu</h4>
-                            <div class="form-group">
-                                <input type="text" id="vergiNo" placeholder="Vergi numarası">
-                            </div>
-                            <button onclick="sorgula('vergino', 'vergiNo')" style="width: 100%;">Vergi No Sorgula</button>
-                        </div>
+                                <!-- Vergi No Sorgusu -->
+                                <div class="query-section">
+                                    <h4><i class="fas fa-file-invoice-dollar"></i> Vergi Sorgusu</h4>
+                                    <div class="form-group">
+                                        <input type="text" id="vergiNo" placeholder="Vergi numarası">
+                                    </div>
+                                    <button onclick="sorgula('vergino', 'vergiNo')" style="width: 100%;">Vergi No Sorgula</button>
+                                </div>
 
-                        <!-- Ada Parsel Sorgusu -->
-                        <div class="query-section">
-                            <h4><i class="fas fa-map-marked-alt"></i> Ada Parsel Sorgusu</h4>
-                            <div class="form-group">
-                                <input type="text" id="ilAda" placeholder="İl">
-                                <input type="text" id="ada" placeholder="Ada" style="margin-top: 8px;">
-                                <input type="text" id="parsel" placeholder="Parsel" style="margin-top: 8px;">
+                                <!-- Ada Parsel Sorgusu -->
+                                <div class="query-section">
+                                    <h4><i class="fas fa-map-marked-alt"></i> Ada Parsel Sorgusu</h4>
+                                    <div class="form-group">
+                                        <input type="text" id="ilAda" placeholder="İl">
+                                        <input type="text" id="ada" placeholder="Ada" style="margin-top: 8px;">
+                                        <input type="text" id="parsel" placeholder="Parsel" style="margin-top: 8px;">
+                                    </div>
+                                    <button onclick="sorgulaAdaparsel()" style="width: 100%;">Ada Parsel Sorgula</button>
+                                </div>
                             </div>
-                            <button onclick="sorgulaAdaparsel()" style="width: 100%;">Ada Parsel Sorgula</button>
                         </div>
                     </div>
                 </div>
@@ -1544,12 +1756,33 @@
         let isPremiumVerified = false;
         let currentResult = null;
 
-        // YENİ: Tab değiştirirken sonuçları temizle
-        function openTab(tabName) {
-            // Önceki sonuçları temizle
-            document.getElementById('result').classList.remove('active');
-            document.getElementById('resultData').innerHTML = '';
+        // YENİ: Sorgu içeriklerini kontrol etme fonksiyonu
+        function updateQueryContents() {
+            const lockedElements = document.querySelectorAll('.locked-content');
+            const queryElements = document.querySelectorAll('.query-content');
             
+            if (isKeyVerified) {
+                // Key doğrulandıysa kilitli içerikleri gizle, sorgu içeriklerini göster
+                lockedElements.forEach(el => el.style.display = 'none');
+                queryElements.forEach(el => {
+                    el.classList.remove('hidden');
+                    el.style.display = 'block';
+                });
+            } else {
+                // Key doğrulanmadıysa sorgu içeriklerini gizle, kilitli içerikleri göster
+                queryElements.forEach(el => {
+                    el.classList.add('hidden');
+                    el.style.display = 'none';
+                });
+                lockedElements.forEach(el => el.style.display = 'block');
+            }
+        }
+
+        function openTab(tabName) {
+            // YENİ: Tab değiştirirken sonuçları temizle
+            document.getElementById('result').classList.remove('active');
+            currentResult = null;
+
             // Premium sekmesine erişim kontrolü
             if (tabName === 'premium-tab' && !isPremiumVerified) {
                 alert('❌ Premium özelliklere erişmek için premium key girmeniz gerekiyor!');
@@ -1576,6 +1809,9 @@
                 activeBtn.classList.add('active');
             }
 
+            // YENİ: Sorgu içeriklerini güncelle
+            updateQueryContents();
+
             // Premium sekmesi içeriğini güncelle
             if (tabName === 'premium-tab') {
                 updatePremiumContent();
@@ -1595,200 +1831,163 @@
             }
         }
 
-        // YENİ: GELİŞMİŞ SONUÇ GÖSTERİM FONKSİYONU
+        // YENİ SONUÇ GÖSTERİM FONKSİYONU
         function displayResult(data, type) {
             const resultData = document.getElementById('resultData');
             resultData.innerHTML = '';
 
-            // API'den gelen verileri kontrol et
+            // YENİ: API'den gelen veriyi kontrol et
             if (!data || Object.keys(data).length === 0) {
-                resultData.innerHTML = '<div class="error">❌ Sorgu sonucu bulunamadı veya boş veri döndü</div>';
+                resultData.innerHTML = '<div class="error">❌ Sorgu sonucu bulunamadı veya API yanıt vermedi!</div>';
                 return;
             }
 
-            // TC Sorguları için özel gösterim
-            if (type === 'tc' || type === 'tcpro') {
-                const sampleData = {
-                    tc: data.tc || data.KimlikNumarasi || '277266918',
-                    ad: data.ad || data.Adi || 'ROKET',
-                    soyad: data.soyad || data.Soyadi || 'ATAR',
-                    dogumTarihi: data.dogumTarihi || data.Dogumtarihi || '28.09.1969',
-                    anneAdi: data.anneAdi || data.Anneadi || 'PUPU',
-                    anneTc: data.anneTc || data.AnnerTc || '27805164362',
-                    babaAdi: data.babaAdi || data.Babaad || 'KAMİL',
-                    babaTc: data.babaTc || data.Babarec || '27856162614',
-                    il: data.il || data.nucE || 'BURSA',
-                    ilce: data.ilce || data.OSMANGAZi || 'OSMANGAZİ',
-                    uyruk: data.uyruk || 'TR'
-                };
+            if (data.error) {
+                resultData.innerHTML = `<div class="error">❌ Hata: ${data.error}</div>`;
+                return;
+            }
 
+            if (type === 'tc' || type === 'tcpro') {
+                // TC sorguları için özel gösterim
                 resultData.innerHTML = `
                     <div class="result-section">
                         <h4>📊 Temel Bilgiler</h4>
                         <div class="result-line">
                             <span class="label">TC Kimlik No:</span>
-                            <span class="value">${sampleData.tc}</span>
+                            <span class="value">${data.tc || data.KimlikNumarasi || data.kimlikNo || 'Bilgi Yok'}</span>
                         </div>
                         <div class="result-line">
                             <span class="label">Ad:</span>
-                            <span class="value">${sampleData.ad}</span>
+                            <span class="value">${data.ad || data.Adi || data.adi || 'Bilgi Yok'}</span>
                         </div>
                         <div class="result-line">
                             <span class="label">Soyad:</span>
-                            <span class="value">${sampleData.soyad}</span>
+                            <span class="value">${data.soyad || data.Soyadi || data.soyadi || 'Bilgi Yok'}</span>
                         </div>
                         <div class="result-line">
                             <span class="label">Doğum Tarihi:</span>
-                            <span class="value">${sampleData.dogumTarihi}</span>
+                            <span class="value">${data.dogumTarihi || data.Dogumtarihi || data.dogumTarihi || 'Bilgi Yok'}</span>
                         </div>
                     </div>
                     <div class="result-section">
                         <h4>👨‍👩‍👧‍👦 Aile Bilgileri</h4>
                         <div class="result-line">
                             <span class="label">Anne Adı:</span>
-                            <span class="value">${sampleData.anneAdi}</span>
+                            <span class="value">${data.anneAdi || data.Anneadi || data.anneAdi || 'Bilgi Yok'}</span>
                         </div>
                         <div class="result-line">
                             <span class="label">Anne TC:</span>
-                            <span class="value">${sampleData.anneTc}</span>
+                            <span class="value">${data.anneTc || data.AnnerTc || data.anneTC || 'Bilgi Yok'}</span>
                         </div>
                         <div class="result-line">
                             <span class="label">Baba Adı:</span>
-                            <span class="value">${sampleData.babaAdi}</span>
+                            <span class="value">${data.babaAdi || data.Babaad || data.babaAdi || 'Bilgi Yok'}</span>
                         </div>
                         <div class="result-line">
                             <span class="label">Baba TC:</span>
-                            <span class="value">${sampleData.babaTc}</span>
+                            <span class="value">${data.babaTc || data.Babarec || data.babaTC || 'Bilgi Yok'}</span>
                         </div>
                     </div>
                     <div class="result-section">
                         <h4>📍 Adres Bilgileri</h4>
                         <div class="result-line">
                             <span class="label">İl:</span>
-                            <span class="value">${sampleData.il}</span>
+                            <span class="value">${data.il || data.nucE || data.il || 'Bilgi Yok'}</span>
                         </div>
                         <div class="result-line">
                             <span class="label">İlçe:</span>
-                            <span class="value">${sampleData.ilce}</span>
+                            <span class="value">${data.ilce || data.OSMANGAZi || data.ilce || 'Bilgi Yok'}</span>
                         </div>
                         <div class="result-line">
                             <span class="label">Uyruk:</span>
-                            <span class="value">${sampleData.uyruk}</span>
+                            <span class="value">${data.uyruk || data.uyruk || 'TR'}</span>
                         </div>
                     </div>
                 `;
-            } 
-            // Ad Soyad sorguları için
-            else if (type === 'adsoyad' || type === 'adsoyadpro') {
-                const sampleData = {
-                    ad: data.ad || 'ROKET',
-                    soyad: data.soyad || 'ATAR',
-                    tc: data.tc || '277266918',
-                    dogumTarihi: data.dogumTarihi || '28.09.1969',
-                    il: data.il || 'BURSA',
-                    ilce: data.ilce || 'OSMANGAZİ'
-                };
-
+            } else if (type === 'adsoyad' || type === 'adsoyadpro') {
+                // Ad Soyad sorguları için özel gösterim
                 resultData.innerHTML = `
                     <div class="result-section">
                         <h4>👤 Kişi Bilgileri</h4>
                         <div class="result-line">
                             <span class="label">Ad:</span>
-                            <span class="value">${sampleData.ad}</span>
+                            <span class="value">${data.ad || 'Bilgi Yok'}</span>
                         </div>
                         <div class="result-line">
                             <span class="label">Soyad:</span>
-                            <span class="value">${sampleData.soyad}</span>
+                            <span class="value">${data.soyad || 'Bilgi Yok'}</span>
                         </div>
                         <div class="result-line">
                             <span class="label">TC Kimlik No:</span>
-                            <span class="value">${sampleData.tc}</span>
+                            <span class="value">${data.tc || data.kimlikNo || 'Bilgi Yok'}</span>
                         </div>
                         <div class="result-line">
                             <span class="label">Doğum Tarihi:</span>
-                            <span class="value">${sampleData.dogumTarihi}</span>
+                            <span class="value">${data.dogumTarihi || 'Bilgi Yok'}</span>
                         </div>
                     </div>
                     <div class="result-section">
                         <h4>📍 Adres Bilgileri</h4>
                         <div class="result-line">
                             <span class="label">İl:</span>
-                            <span class="value">${sampleData.il}</span>
+                            <span class="value">${data.il || 'Bilgi Yok'}</span>
                         </div>
                         <div class="result-line">
                             <span class="label">İlçe:</span>
-                            <span class="value">${sampleData.ilce}</span>
+                            <span class="value">${data.ilce || 'Bilgi Yok'}</span>
                         </div>
                     </div>
                 `;
-            }
-            // GSM sorguları için
-            else if (type === 'gsmtc' || type === 'tcgsm') {
-                const sampleData = {
-                    gsm: data.gsm || data.telefon || '0555 123 4567',
-                    tc: data.tc || '277266918',
-                    adSoyad: data.adSoyad || 'ROKET ATAR',
-                    operator: data.operator || 'TÜRK TELEKOM',
-                    hatDurumu: data.hatDurumu || 'AKTİF'
-                };
-
+            } else if (type === 'gsmtc' || type === 'tcgsm') {
+                // GSM sorguları için özel gösterim
                 resultData.innerHTML = `
                     <div class="result-section">
                         <h4>📱 Telefon Bilgileri</h4>
                         <div class="result-line">
                             <span class="label">GSM Numarası:</span>
-                            <span class="value">${sampleData.gsm}</span>
+                            <span class="value">${data.gsm || data.telefon || data.telefonNo || 'Bilgi Yok'}</span>
                         </div>
                         <div class="result-line">
                             <span class="label">TC Kimlik No:</span>
-                            <span class="value">${sampleData.tc}</span>
+                            <span class="value">${data.tc || data.kimlikNo || 'Bilgi Yok'}</span>
                         </div>
                         <div class="result-line">
                             <span class="label">Ad Soyad:</span>
-                            <span class="value">${sampleData.adSoyad}</span>
+                            <span class="value">${data.adSoyad || data.ad + ' ' + data.soyad || 'Bilgi Yok'}</span>
                         </div>
                     </div>
                     <div class="result-section">
                         <h4>🏢 Operatör Bilgileri</h4>
                         <div class="result-line">
                             <span class="label">Operatör:</span>
-                            <span class="value">${sampleData.operator}</span>
+                            <span class="value">${data.operator || data.operatör || 'Bilgi Yok'}</span>
                         </div>
                         <div class="result-line">
                             <span class="label">Hat Durumu:</span>
-                            <span class="value">${sampleData.hatDurumu}</span>
+                            <span class="value">${data.hatDurumu || data.durum || 'Bilgi Yok'}</span>
                         </div>
                     </div>
                 `;
-            }
-            // Diğer sorgular için genel gösterim
-            else {
+            } else {
+                // Diğer sorgular için genel gösterim
                 let html = '<div class="result-section"><h4>📋 Sorgu Sonuçları</h4>';
+                let hasData = false;
                 
-                // API'den gelen gerçek verileri göster
                 for (const [key, value] of Object.entries(data)) {
                     if (value && typeof value === 'object') continue;
-                    const displayValue = value || 'Veri Yok';
-                    html += `
-                        <div class="result-line">
-                            <span class="label">${key}:</span>
-                            <span class="value">${displayValue}</span>
-                        </div>
-                    `;
+                    if (value && value !== 'null' && value !== 'undefined') {
+                        html += `
+                            <div class="result-line">
+                                <span class="label">${key}:</span>
+                                <span class="value">${value}</span>
+                            </div>
+                        `;
+                        hasData = true;
+                    }
                 }
                 
-                // Eğer API boş döndüyse örnek veri göster
-                if (Object.keys(data).length === 0) {
-                    html += `
-                        <div class="result-line">
-                            <span class="label">Durum:</span>
-                            <span class="value">Sorgu Başarılı</span>
-                        </div>
-                        <div class="result-line">
-                            <span class="label">Mesaj:</span>
-                            <span class="value">Veriler başarıyla getirildi</span>
-                        </div>
-                    `;
+                if (!hasData) {
+                    html += '<div class="error">❌ Sorgu sonucunda veri bulunamadı!</div>';
                 }
                 
                 html += '</div>';
@@ -1850,71 +2049,24 @@
             }
             
             try {
-                // API'yi simüle et - gerçek API entegrasyonu için burayı değiştirin
-                const mockData = generateMockData(type, inputValue);
+                const queryString = new URLSearchParams(params).toString();
+                const response = await fetch(`/api/${type}?${queryString}`);
+                
+                if (!response.ok) {
+                    throw new Error(`API hatası: ${response.status}`);
+                }
+                
+                const data = await response.json();
                 
                 // Yeni sonuç gösterim fonksiyonunu kullan
-                displayResult(mockData, type);
-                currentResult = mockData;
-                
+                displayResult(data, type);
+                currentResult = data;
             } catch (error) {
+                console.error('Sorgu hatası:', error);
                 resultData.innerHTML = '<div class="error">❌ Sorgu sırasında hata oluştu: ' + error.message + '</div>';
             } finally {
                 loading.classList.remove('active');
                 result.classList.add('active');
-            }
-        }
-
-        // MOCK DATA GENERATOR - Gerçek API entegrasyonu için bu fonksiyonu değiştirin
-        function generateMockData(type, inputValue) {
-            const baseData = {
-                success: true,
-                message: "Sorgu başarılı",
-                timestamp: new Date().toISOString()
-            };
-
-            if (type === 'tc' || type === 'tcpro') {
-                return {
-                    ...baseData,
-                    tc: inputValue,
-                    ad: 'ROKET',
-                    soyad: 'ATAR',
-                    dogumTarihi: '28.09.1969',
-                    anneAdi: 'PUPU',
-                    anneTc: '27805164362',
-                    babaAdi: 'KAMİL',
-                    babaTc: '27856162614',
-                    il: 'BURSA',
-                    ilce: 'OSMANGAZİ',
-                    uyruk: 'TR'
-                };
-            } else if (type === 'adsoyad' || type === 'adsoyadpro') {
-                return {
-                    ...baseData,
-                    ad: inputValue.split(' ')[0] || 'ROKET',
-                    soyad: inputValue.split(' ')[1] || 'ATAR',
-                    tc: '277266918',
-                    dogumTarihi: '28.09.1969',
-                    il: 'BURSA',
-                    ilce: 'OSMANGAZİ'
-                };
-            } else if (type === 'gsmtc' || type === 'tcgsm') {
-                return {
-                    ...baseData,
-                    gsm: inputValue,
-                    tc: '277266918',
-                    adSoyad: 'ROKET ATAR',
-                    operator: 'TÜRK TELEKOM',
-                    hatDurumu: 'AKTİF'
-                };
-            } else {
-                return {
-                    ...baseData,
-                    sorguTipi: type,
-                    girilenDeger: inputValue,
-                    sonuc: 'Başarılı',
-                    detay: `${type} sorgusu için mock veri üretildi`
-                };
             }
         }
 
@@ -1933,20 +2085,38 @@
             loading.classList.add('active');
             result.classList.remove('active');
             
-            const ad = document.getElementById(type === 'adsoyad' ? 'adSorgula' : 'adPro').value;
-            const soyad = document.getElementById(type === 'adsoyad' ? 'soyadSorgula' : 'soyadPro').value;
+            let params = { key: systemKey };
             
-            if (!ad || !soyad) {
-                alert('❌ Lütfen ad ve soyad girin!');
-                loading.classList.remove('active');
-                return;
+            if (type === 'adsoyad' || type === 'adsoyadpro') {
+                const ad = document.getElementById(type === 'adsoyad' ? 'adSorgula' : 'adPro').value;
+                const soyad = document.getElementById(type === 'adsoyad' ? 'soyadSorgula' : 'soyadPro').value;
+                
+                if (!ad || !soyad) {
+                    alert('❌ Lütfen ad ve soyad girin!');
+                    loading.classList.remove('active');
+                    return;
+                }
+                
+                params.ad = ad;
+                params.soyad = soyad;
+                params.il = '';
+                params.ilce = '';
             }
             
             try {
-                const mockData = generateMockData(type, `${ad} ${soyad}`);
-                displayResult(mockData, type);
-                currentResult = mockData;
+                const queryString = new URLSearchParams(params).toString();
+                const response = await fetch(`/api/${type}?${queryString}`);
+                
+                if (!response.ok) {
+                    throw new Error(`API hatası: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                displayResult(data, type);
+                currentResult = data;
             } catch (error) {
+                console.error('Sorgu hatası:', error);
                 resultData.innerHTML = '<div class="error">❌ Sorgu sırasında hata oluştu: ' + error.message + '</div>';
             } finally {
                 loading.classList.remove('active');
@@ -1969,6 +2139,8 @@
             loading.classList.add('active');
             result.classList.remove('active');
             
+            let params = { key: systemKey };
+            
             const ad = document.getElementById('adIl').value;
             const il = document.getElementById('ilAd').value;
             const ilce = document.getElementById('ilceAd').value;
@@ -1979,11 +2151,25 @@
                 return;
             }
             
+            params.ad = ad;
+            params.il = il;
+            params.ilce = ilce || '';
+            params.soyad = '';
+            
             try {
-                const mockData = generateMockData(type, `${ad} ${il} ${ilce}`);
-                displayResult(mockData, type);
-                currentResult = mockData;
+                const queryString = new URLSearchParams(params).toString();
+                const response = await fetch(`/api/${type}?${queryString}`);
+                
+                if (!response.ok) {
+                    throw new Error(`API hatası: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                displayResult(data, type);
+                currentResult = data;
             } catch (error) {
+                console.error('Sorgu hatası:', error);
                 resultData.innerHTML = '<div class="error">❌ Sorgu sırasında hata oluştu: ' + error.message + '</div>';
             } finally {
                 loading.classList.remove('active');
@@ -2006,6 +2192,8 @@
             loading.classList.add('active');
             result.classList.remove('active');
             
+            let params = { key: systemKey };
+            
             const il = document.getElementById('ilAda').value;
             const ada = document.getElementById('ada').value;
             const parsel = document.getElementById('parsel').value;
@@ -2016,11 +2204,24 @@
                 return;
             }
             
+            params.il = il;
+            params.ada = ada;
+            params.parsel = parsel;
+            
             try {
-                const mockData = generateMockData('adaparsel', `${il} ${ada} ${parsel}`);
-                displayResult(mockData, 'adaparsel');
-                currentResult = mockData;
+                const queryString = new URLSearchParams(params).toString();
+                const response = await fetch(`/api/adaparsel?${queryString}`);
+                
+                if (!response.ok) {
+                    throw new Error(`API hatası: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                displayResult(data, 'adaparsel');
+                currentResult = data;
             } catch (error) {
+                console.error('Sorgu hatası:', error);
                 resultData.innerHTML = '<div class="error">❌ Sorgu sırasında hata oluştu: ' + error.message + '</div>';
             } finally {
                 loading.classList.remove('active');
@@ -2050,10 +2251,18 @@
             result.classList.remove('active');
             
             try {
-                const mockData = generateMockData('discord', discordId);
-                displayResult(mockData, 'discord');
-                currentResult = mockData;
+                const response = await fetch(`/api/discord?id=${discordId}&key=${systemKey}`);
+                
+                if (!response.ok) {
+                    throw new Error(`API hatası: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                displayResult(data, 'discord');
+                currentResult = data;
             } catch (error) {
+                console.error('Sorgu hatası:', error);
                 resultData.innerHTML = '<div class="error">❌ Sorgu sırasında hata oluştu: ' + error.message + '</div>';
             } finally {
                 loading.classList.remove('active');
@@ -2083,10 +2292,18 @@
             result.classList.remove('active');
             
             try {
-                const mockData = generateMockData('discord', discordId);
-                displayResult(mockData, 'discord');
-                currentResult = mockData;
+                const response = await fetch(`/api/discord?id=${discordId}&key=${systemKey}`);
+                
+                if (!response.ok) {
+                    throw new Error(`API hatası: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                displayResult(data, 'discord');
+                currentResult = data;
             } catch (error) {
+                console.error('Sorgu hatası:', error);
                 resultData.innerHTML = '<div class="error">❌ Sorgu sırasında hata oluştu: ' + error.message + '</div>';
             } finally {
                 loading.classList.remove('active');
@@ -2107,27 +2324,20 @@
             loading.classList.add('active');
 
             try {
-                // Mock Tabii hesap verisi
-                const mockAccount = {
-                    success: true,
-                    account: {
-                        index: "1",
-                        email: "roket.atar@tabii.com",
-                        password: "Tabii2024!",
-                        fullName: "ROKET ATAR",
-                        gender: "Erkek",
-                        birthDate: "28.09.1969",
-                        status: "AKTİF",
-                        subscription: {
-                            package: "PREMIUM PLUS",
-                            status: "AKTİF",
-                            endDate: "31.12.2024"
-                        }
-                    }
-                };
+                const response = await fetch('/api/premium/tabii-account', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ premiumKey })
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`API hatası: ${response.status}`);
+                }
+                
+                const data = await response.json();
 
-                if (mockAccount.success) {
-                    const account = mockAccount.account;
+                if (data.success) {
+                    const account = data.account;
                     accountDetails.innerHTML = `
                         <h3 style="color: #06b6d4; text-align: center; margin-bottom: 20px;">🌟✧ TABİİ ACCOUNT DETAYLARI ✧🌟</h3>
                         <div class="account-line">
@@ -2175,9 +2385,10 @@
                         </div>
                     `;
                 } else {
-                    accountDetails.innerHTML = `<div class="error">❌ Hesap alınamadı!</div>`;
+                    accountDetails.innerHTML = `<div class="error">❌ ${data.message}</div>`;
                 }
             } catch (error) {
+                console.error('Tabii hesap hatası:', error);
                 accountDetails.innerHTML = '<div class="error">❌ Hesap alınırken hata oluştu!</div>';
             } finally {
                 loading.classList.remove('active');
@@ -2189,23 +2400,39 @@
             const key = document.getElementById('systemKey').value;
             const messageDiv = document.getElementById('keyMessage');
 
-            try {
-                // Mock key doğrulama
-                const mockResponse = {
-                    success: key === 'DABBE2024VIP',
-                    message: key === 'DABBE2024VIP' ? 'Key doğrulandı!' : 'Geçersiz key!'
-                };
+            if (!key) {
+                messageDiv.innerHTML = '<div class="error">❌ Lütfen key girin!</div>';
+                return;
+            }
 
-                if (mockResponse.success) {
+            try {
+                const response = await fetch('/api/admin/verify-key', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ key })
+                });
+                
+                const data = await response.json();
+
+                if (data.success) {
                     systemKey = key;
                     isKeyVerified = true;
                     messageDiv.innerHTML = '<div class="success">✅ Key doğrulandı! Tüm sorgular aktif.</div>';
+                    
+                    // YENİ: Sorgu içeriklerini güncelle
+                    updateQueryContents();
+                    
                     setTimeout(() => openTab('tc-sorgula-tab'), 1000);
                 } else {
                     messageDiv.innerHTML = '<div class="error">❌ Geçersiz key!</div>';
+                    isKeyVerified = false;
+                    updateQueryContents();
                 }
             } catch (error) {
+                console.error('Key doğrulama hatası:', error);
                 messageDiv.innerHTML = '<div class="error">❌ Key doğrulama hatası!</div>';
+                isKeyVerified = false;
+                updateQueryContents();
             }
         }
 
@@ -2213,14 +2440,21 @@
             const key = document.getElementById('premiumKey').value;
             const messageDiv = document.getElementById('premiumKeyMessage');
 
-            try {
-                // Mock premium key doğrulama
-                const mockResponse = {
-                    success: key === 'PREMIUM2024',
-                    message: key === 'PREMIUM2024' ? 'Premium key doğrulandı!' : 'Geçersiz premium key!'
-                };
+            if (!key) {
+                messageDiv.innerHTML = '<div class="error">❌ Lütfen premium key girin!</div>';
+                return;
+            }
 
-                if (mockResponse.success) {
+            try {
+                const response = await fetch('/api/admin/verify-premium-key', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ key })
+                });
+                
+                const data = await response.json();
+
+                if (data.success) {
                     premiumKey = key;
                     isPremiumVerified = true;
                     messageDiv.innerHTML = '<div class="success">✅ Premium key doğrulandı! Premium özelliklere erişim sağlandı.</div>';
@@ -2229,17 +2463,36 @@
                     messageDiv.innerHTML = '<div class="error">❌ Geçersiz premium key!</div>';
                 }
             } catch (error) {
+                console.error('Premium key doğrulama hatası:', error);
                 messageDiv.innerHTML = '<div class="error">❌ Premium key doğrulama hatası!</div>';
             }
         }
 
-        // ADMIN FONKSİYONLARI (Kısaltılmış)
+        // ADMIN FONKSİYONLARI
         function openAdminModal() {
             document.getElementById('adminModal').style.display = 'block';
+            checkAdminSession();
         }
 
         function closeAdminModal() {
             document.getElementById('adminModal').style.display = 'none';
+        }
+
+        async function checkAdminSession() {
+            if (!currentAdminSession) return;
+            try {
+                const response = await fetch('/api/admin/check-session', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ sessionId: currentAdminSession })
+                });
+                const data = await response.json();
+                if (data.success) {
+                    document.getElementById('adminLoginSection').style.display = 'none';
+                    document.getElementById('adminPanelSection').style.display = 'block';
+                    loadCurrentKeys();
+                }
+            } catch (error) {}
         }
 
         async function adminLogin() {
@@ -2248,36 +2501,173 @@
             const messageDiv = document.getElementById('adminMessage');
 
             try {
-                // Mock admin girişi
-                const mockResponse = {
-                    success: username === 'admin' && password === 'admin123',
-                    message: username === 'admin' && password === 'admin123' ? 'Giriş başarılı!' : 'Hatalı kullanıcı adı veya şifre!'
-                };
+                const response = await fetch('/api/admin/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+                const data = await response.json();
 
-                if (mockResponse.success) {
+                if (data.success) {
+                    currentAdminSession = data.sessionId;
                     document.getElementById('adminLoginSection').style.display = 'none';
                     document.getElementById('adminPanelSection').style.display = 'block';
                     messageDiv.innerHTML = '<div class="success">✅ Giriş başarılı!</div>';
+                    loadCurrentKeys();
                 } else {
-                    messageDiv.innerHTML = '<div class="error">❌ ' + mockResponse.message + '</div>';
+                    messageDiv.innerHTML = '<div class="error">❌ ' + data.message + '</div>';
                 }
             } catch (error) {
                 messageDiv.innerHTML = '<div class="error">❌ Giriş hatası!</div>';
             }
         }
 
-        function createKey() {
+        async function createKey() {
             const key = document.getElementById('newKey').value;
             const messageDiv = document.getElementById('adminMessage');
-            messageDiv.innerHTML = '<div class="success">✅ Key oluşturuldu: ' + key + '</div>';
-            document.getElementById('newKey').value = '';
+
+            try {
+                const response = await fetch('/api/admin/create-key', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ key, sessionId: currentAdminSession })
+                });
+                const data = await response.json();
+
+                if (data.success) {
+                    messageDiv.innerHTML = '<div class="success">✅ ' + data.message + '</div>';
+                    document.getElementById('newKey').value = '';
+                    updateKeysList(data.keys);
+                } else {
+                    messageDiv.innerHTML = '<div class="error">❌ ' + data.message + '</div>';
+                }
+            } catch (error) {
+                messageDiv.innerHTML = '<div class="error">❌ Key oluşturma hatası!</div>';
+            }
         }
 
-        function createPremiumKey() {
+        async function createPremiumKey() {
             const key = document.getElementById('newPremiumKey').value;
             const messageDiv = document.getElementById('adminMessage');
-            messageDiv.innerHTML = '<div class="success">✅ Premium key oluşturuldu: ' + key + '</div>';
-            document.getElementById('newPremiumKey').value = '';
+
+            try {
+                const response = await fetch('/api/admin/create-premium-key', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ key, sessionId: currentAdminSession })
+                });
+                const data = await response.json();
+
+                if (data.success) {
+                    messageDiv.innerHTML = '<div class="success">✅ ' + data.message + '</div>';
+                    document.getElementById('newPremiumKey').value = '';
+                    updatePremiumKeysList(data.premiumKeys);
+                } else {
+                    messageDiv.innerHTML = '<div class="error">❌ ' + data.message + '</div>';
+                }
+            } catch (error) {
+                messageDiv.innerHTML = '<div class="error">❌ Premium key oluşturma hatası!</div>';
+            }
+        }
+
+        async function deleteKey(keyToDelete) {
+            if (!confirm('Bu keyi silmek istediğinizden emin misiniz?\nBu key ile artık giriş yapılamayacak!')) {
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/admin/delete-key', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ key: keyToDelete, sessionId: currentAdminSession })
+                });
+                const data = await response.json();
+
+                if (data.success) {
+                    updateKeysList(data.keys);
+                    if (systemKey === keyToDelete) {
+                        systemKey = '';
+                        isKeyVerified = false;
+                        updateQueryContents();
+                        alert('❌ Kullandığınız key silindi! Lütfen yeni key girin.');
+                        openTab('key-tab');
+                    }
+                } else {
+                    alert('❌ Key silinemedi: ' + data.message);
+                }
+            } catch (error) {
+                alert('❌ Key silme hatası!');
+            }
+        }
+
+        async function deletePremiumKey(keyToDelete) {
+            if (!confirm('Bu premium keyi silmek istediğinizden emin misiniz?')) {
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/admin/delete-premium-key', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ key: keyToDelete, sessionId: currentAdminSession })
+                });
+                const data = await response.json();
+
+                if (data.success) {
+                    updatePremiumKeysList(data.premiumKeys);
+                    if (premiumKey === keyToDelete) {
+                        premiumKey = '';
+                        isPremiumVerified = false;
+                        alert('❌ Kullandığınız premium key silindi!');
+                        updatePremiumContent();
+                    }
+                } else {
+                    alert('❌ Premium key silinemedi: ' + data.message);
+                }
+            } catch (error) {
+                alert('❌ Premium key silme hatası!');
+            }
+        }
+
+        function updateKeysList(keys) {
+            const keysDiv = document.getElementById('currentKeys');
+            keysDiv.innerHTML = keys.map(key => `
+                <div class="key-item">
+                    <span>🔑 ${key}</span>
+                    <button class="delete-btn" onclick="deleteKey('${key}')" title="Keyi Sil">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        function updatePremiumKeysList(keys) {
+            const keysDiv = document.getElementById('currentPremiumKeys');
+            keysDiv.innerHTML = keys.map(key => `
+                <div class="key-item">
+                    <span>👑 ${key}</span>
+                    <button class="delete-btn" onclick="deletePremiumKey('${key}')" title="Premium Keyi Sil">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        async function loadCurrentKeys() {
+            try {
+                const response = await fetch('/api/admin/keys', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ sessionId: currentAdminSession })
+                });
+                const data = await response.json();
+                if (data.success) {
+                    updateKeysList(data.keys);
+                    updatePremiumKeysList(data.premiumKeys);
+                }
+            } catch (error) {
+                updateKeysList(['DABBE2024VIP']);
+            }
         }
 
         function downloadResult() {
@@ -2296,6 +2686,8 @@
 
         document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('systemKey').value = 'DABBE2024VIP';
+            // YENİ: Sayfa yüklendiğinde sorgu içeriklerini güncelle
+            updateQueryContents();
         });
 
         window.onclick = function(event) {
