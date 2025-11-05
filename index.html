@@ -12,9 +12,9 @@
         }
 
         :root {
-            --primary: #dc2626;
-            --secondary: #991b1b;
-            --accent: #f59e0b;
+            --primary: #3b82f6;
+            --secondary: #1e40af;
+            --accent: #06b6d4;
             --dark: #0f172a;
             --darker: #000000;
             --light: #f8fafc;
@@ -24,9 +24,9 @@
 
         body {
             background: 
-                radial-gradient(circle at 20% 50%, rgba(220, 38, 38, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(245, 158, 11, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 40% 80%, rgba(153, 27, 27, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 20% 50%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(6, 182, 212, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(30, 64, 175, 0.15) 0%, transparent 50%),
                 linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #000000 100%);
             color: var(--light);
             font-family: 'Segoe UI', system-ui, sans-serif;
@@ -45,9 +45,9 @@
             width: 100%;
             height: 100%;
             background: 
-                radial-gradient(circle at 20% 30%, rgba(220, 38, 38, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(245, 158, 11, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 40% 40%, rgba(101, 163, 13, 0.1) 0%, transparent 50%);
+                radial-gradient(circle at 20% 30%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(6, 182, 212, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(96, 165, 250, 0.1) 0%, transparent 50%);
             animation: pulse 8s ease-in-out infinite;
             z-index: -1;
         }
@@ -61,7 +61,7 @@
             position: fixed;
             width: 100px;
             height: 100px;
-            background: radial-gradient(circle, rgba(220, 38, 38, 0.3), transparent);
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.3), transparent);
             border-radius: 50%;
             animation: float 15s infinite linear;
             z-index: -1;
@@ -71,21 +71,21 @@
             top: 20%;
             left: 10%;
             animation-delay: 0s;
-            background: radial-gradient(circle, rgba(220, 38, 38, 0.4), transparent);
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.4), transparent);
         }
 
         .floating-element:nth-child(2) {
             top: 60%;
             left: 80%;
             animation-delay: -5s;
-            background: radial-gradient(circle, rgba(245, 158, 11, 0.4), transparent);
+            background: radial-gradient(circle, rgba(6, 182, 212, 0.4), transparent);
         }
 
         .floating-element:nth-child(3) {
             top: 80%;
             left: 20%;
             animation-delay: -10s;
-            background: radial-gradient(circle, rgba(101, 163, 13, 0.4), transparent);
+            background: radial-gradient(circle, rgba(96, 165, 250, 0.4), transparent);
         }
 
         @keyframes float {
@@ -128,7 +128,7 @@
             text-align: center;
             padding-bottom: 20px;
             margin-bottom: 20px;
-            border-bottom: 2px solid #dc2626;
+            border-bottom: 2px solid #3b82f6;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -140,15 +140,15 @@
             gap: 12px;
             margin-bottom: 10px;
             padding: 10px;
-            background: linear-gradient(45deg, rgba(220, 38, 38, 0.2), rgba(245, 158, 11, 0.2));
+            background: linear-gradient(45deg, rgba(59, 130, 246, 0.2), rgba(6, 182, 212, 0.2));
             border-radius: 12px;
-            border: 1px solid rgba(220, 38, 38, 0.3);
+            border: 1px solid rgba(59, 130, 246, 0.3);
         }
 
         .logo-image {
             width: 35px;
             height: 35px;
-            background: linear-gradient(45deg, #dc2626, #f59e0b);
+            background: linear-gradient(45deg, #3b82f6, #06b6d4);
             border-radius: 8px;
             display: flex;
             align-items: center;
@@ -156,14 +156,14 @@
             font-size: 16px;
             font-weight: bold;
             color: white;
-            box-shadow: 0 0 15px rgba(220, 38, 38, 0.5);
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
         }
 
         .logo {
             font-size: 22px;
             font-weight: bold;
-            color: #f59e0b;
-            text-shadow: 0 0 10px rgba(245, 158, 11, 0.5);
+            color: #06b6d4;
+            text-shadow: 0 0 10px rgba(6, 182, 212, 0.5);
         }
 
         .version {
@@ -206,7 +206,7 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(220, 38, 38, 0.2), transparent);
+            background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.2), transparent);
             transition: left 0.6s;
         }
 
@@ -215,16 +215,16 @@
         }
 
         .tab-btn:hover {
-            background: linear-gradient(45deg, #dc2626, #991b1b);
-            border-color: #dc2626;
+            background: linear-gradient(45deg, #3b82f6, #1e40af);
+            border-color: #3b82f6;
             transform: translateX(8px) scale(1.02);
-            box-shadow: 0 5px 20px rgba(220, 38, 38, 0.4);
+            box-shadow: 0 5px 20px rgba(59, 130, 246, 0.4);
         }
 
         .tab-btn.active {
-            background: linear-gradient(45deg, #dc2626, #f59e0b);
-            border-color: #f59e0b;
-            box-shadow: 0 0 25px rgba(220, 38, 38, 0.6);
+            background: linear-gradient(45deg, #3b82f6, #06b6d4);
+            border-color: #06b6d4;
+            box-shadow: 0 0 25px rgba(59, 130, 246, 0.6);
             transform: translateX(5px);
         }
 
@@ -269,14 +269,14 @@
 
         .sub-tab-btn:hover {
             background: #374151;
-            border-color: #dc2626;
+            border-color: #3b82f6;
             transform: translateX(5px);
         }
 
         .sub-tab-btn.active {
-            background: linear-gradient(45deg, #dc2626, #f59e0b);
-            border-color: #f59e0b;
-            box-shadow: 0 0 15px rgba(220, 38, 38, 0.4);
+            background: linear-gradient(45deg, #3b82f6, #06b6d4);
+            border-color: #06b6d4;
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
         }
 
         .main-content {
@@ -314,41 +314,41 @@
         .header-title {
             font-size: 3em;
             font-weight: 800;
-            color: #dc2626;
+            color: #3b82f6;
             margin-bottom: 15px;
             text-shadow: 
-                0 0 20px rgba(220, 38, 38, 0.8),
-                0 0 40px rgba(220, 38, 38, 0.6),
-                0 0 60px rgba(220, 38, 38, 0.4);
+                0 0 20px rgba(59, 130, 246, 0.8),
+                0 0 40px rgba(59, 130, 246, 0.6),
+                0 0 60px rgba(59, 130, 246, 0.4);
             animation: glow 2s ease-in-out infinite alternate;
         }
 
         @keyframes glow {
             from {
                 text-shadow: 
-                    0 0 20px rgba(220, 38, 38, 0.8),
-                    0 0 40px rgba(220, 38, 38, 0.6),
-                    0 0 60px rgba(220, 38, 38, 0.4);
+                    0 0 20px rgba(59, 130, 246, 0.8),
+                    0 0 40px rgba(59, 130, 246, 0.6),
+                    0 0 60px rgba(59, 130, 246, 0.4);
             }
             to {
                 text-shadow: 
-                    0 0 25px rgba(220, 38, 38, 1),
-                    0 0 50px rgba(220, 38, 38, 0.8),
-                    0 0 75px rgba(220, 38, 38, 0.6);
+                    0 0 25px rgba(59, 130, 246, 1),
+                    0 0 50px rgba(59, 130, 246, 0.8),
+                    0 0 75px rgba(59, 130, 246, 0.6);
             }
         }
 
         .header-subtitle {
-            color: #f59e0b;
+            color: #06b6d4;
             font-size: 18px;
-            text-shadow: 0 0 10px rgba(245, 158, 11, 0.5);
+            text-shadow: 0 0 10px rgba(6, 182, 212, 0.5);
         }
 
         .admin-btn {
             position: absolute;
             top: 0;
             right: 0;
-            background: linear-gradient(45deg, #dc2626, #f59e0b);
+            background: linear-gradient(45deg, #3b82f6, #06b6d4);
             border: none;
             color: white;
             padding: 14px 28px;
@@ -357,12 +357,12 @@
             font-weight: 700;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             z-index: 100;
-            box-shadow: 0 5px 20px rgba(220, 38, 38, 0.4);
+            box-shadow: 0 5px 20px rgba(59, 130, 246, 0.4);
         }
 
         .admin-btn:hover {
             transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 8px 25px rgba(220, 38, 38, 0.6);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.6);
         }
 
         .tab-content {
@@ -371,10 +371,10 @@
             border-radius: 16px;
             padding: 35px;
             margin-bottom: 25px;
-            border: 2px solid #dc2626;
+            border: 2px solid #3b82f6;
             box-shadow: 
-                0 0 30px rgba(220, 38, 38, 0.3),
-                inset 0 0 30px rgba(220, 38, 38, 0.1);
+                0 0 30px rgba(59, 130, 246, 0.3),
+                inset 0 0 30px rgba(59, 130, 246, 0.1);
             backdrop-filter: blur(15px);
             animation: contentAppear 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
@@ -395,15 +395,15 @@
         }
 
         .tab-content h2 {
-            color: #f59e0b;
+            color: #06b6d4;
             margin-bottom: 30px;
             font-size: 26px;
             display: flex;
             align-items: center;
             gap: 12px;
-            border-bottom: 3px solid #dc2626;
+            border-bottom: 3px solid #3b82f6;
             padding-bottom: 15px;
-            text-shadow: 0 0 10px rgba(245, 158, 11, 0.3);
+            text-shadow: 0 0 10px rgba(6, 182, 212, 0.3);
         }
 
         .form-group {
@@ -423,7 +423,7 @@
             width: 100%;
             padding: 14px 18px;
             background: rgba(30, 41, 59, 0.8);
-            border: 2px solid #dc2626;
+            border: 2px solid #3b82f6;
             color: var(--light);
             border-radius: 10px;
             font-size: 15px;
@@ -434,10 +434,10 @@
 
         input:focus, select:focus {
             outline: none;
-            border-color: #f59e0b;
+            border-color: #06b6d4;
             box-shadow: 
-                0 0 15px rgba(245, 158, 11, 0.4),
-                inset 0 0 10px rgba(245, 158, 11, 0.1);
+                0 0 15px rgba(6, 182, 212, 0.4),
+                inset 0 0 10px rgba(6, 182, 212, 0.1);
             transform: scale(1.02);
         }
 
@@ -449,7 +449,7 @@
         }
 
         button {
-            background: linear-gradient(45deg, #dc2626, #f59e0b);
+            background: linear-gradient(45deg, #3b82f6, #06b6d4);
             border: none;
             color: white;
             padding: 14px 22px;
@@ -479,17 +479,17 @@
 
         button:hover {
             transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 8px 25px rgba(220, 38, 38, 0.5);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.5);
         }
 
         .delete-btn {
-            background: #dc2626 !important;
+            background: #3b82f6 !important;
             padding: 10px 14px !important;
             font-size: 13px !important;
         }
 
         .delete-btn:hover {
-            background: #991b1b !important;
+            background: #1e40af !important;
             transform: scale(1.1);
         }
 
@@ -498,7 +498,7 @@
             padding: 25px;
             background: rgba(30, 41, 59, 0.9);
             border-radius: 12px;
-            border: 2px solid #dc2626;
+            border: 2px solid #3b82f6;
             display: none;
             animation: resultSlide 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
@@ -518,19 +518,72 @@
             display: block;
         }
 
-        .result pre {
-            white-space: pre-wrap;
-            word-wrap: break-word;
-            font-family: 'Courier New', monospace;
-            color: #10b981;
+        .result-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
             background: rgba(15, 23, 42, 0.8);
-            padding: 20px;
             border-radius: 8px;
-            border: 1px solid #334155;
-            max-height: 500px;
-            overflow-y: auto;
+            overflow: hidden;
+        }
+
+        .result-table th {
+            background: linear-gradient(45deg, #3b82f6, #06b6d4);
+            color: white;
+            padding: 12px 15px;
+            text-align: left;
+            font-weight: 600;
             font-size: 14px;
-            line-height: 1.5;
+        }
+
+        .result-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #334155;
+            font-size: 14px;
+        }
+
+        .result-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .result-table tr:hover {
+            background: rgba(59, 130, 246, 0.1);
+        }
+
+        .result-section {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: rgba(30, 41, 59, 0.6);
+            border-radius: 8px;
+            border-left: 4px solid #3b82f6;
+        }
+
+        .result-section h4 {
+            color: #06b6d4;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .result-line {
+            display: flex;
+            justify-content: space-between;
+            margin: 8px 0;
+            padding: 8px 0;
+            border-bottom: 1px solid #334155;
+        }
+
+        .result-line:last-child {
+            border-bottom: none;
+        }
+
+        .result-line .label {
+            font-weight: 600;
+            color: #cbd5e1;
+        }
+
+        .result-line .value {
+            color: #f8fafc;
+            font-weight: 500;
         }
 
         .loading {
@@ -545,13 +598,13 @@
 
         .spinner {
             border: 4px solid rgba(51, 65, 85, 0.3);
-            border-top: 4px solid #dc2626;
+            border-top: 4px solid #3b82f6;
             border-radius: 50%;
             width: 50px;
             height: 50px;
             animation: spin 1s linear infinite;
             margin: 0 auto 20px;
-            box-shadow: 0 0 20px rgba(220, 38, 38, 0.5);
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
         }
 
         @keyframes spin {
@@ -564,8 +617,8 @@
             border-radius: 12px;
             padding: 25px;
             margin-bottom: 25px;
-            border: 2px solid #dc2626;
-            box-shadow: 0 0 20px rgba(220, 38, 38, 0.2);
+            border: 2px solid #3b82f6;
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.2);
         }
 
         .modal {
@@ -595,8 +648,8 @@
             padding: 35px;
             width: 90%;
             max-width: 550px;
-            border: 3px solid #dc2626;
-            box-shadow: 0 0 40px rgba(220, 38, 38, 0.6);
+            border: 3px solid #3b82f6;
+            box-shadow: 0 0 40px rgba(59, 130, 246, 0.6);
             animation: modalSlide 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
@@ -612,18 +665,18 @@
         }
 
         .modal h2 {
-            color: #f59e0b;
+            color: #06b6d4;
             text-align: center;
             margin-bottom: 30px;
             font-size: 26px;
-            text-shadow: 0 0 10px rgba(245, 158, 11, 0.3);
+            text-shadow: 0 0 10px rgba(6, 182, 212, 0.3);
         }
 
         .close {
             position: absolute;
             top: 25px;
             right: 30px;
-            color: #dc2626;
+            color: #3b82f6;
             font-size: 28px;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -636,8 +689,8 @@
         }
 
         .close:hover {
-            color: #f59e0b;
-            background: rgba(220, 38, 38, 0.1);
+            color: #06b6d4;
+            background: rgba(59, 130, 246, 0.1);
             transform: scale(1.1);
         }
 
@@ -646,10 +699,10 @@
         }
 
         .admin-section h3 {
-            color: #f59e0b;
+            color: #06b6d4;
             margin-bottom: 20px;
             font-size: 20px;
-            text-shadow: 0 0 5px rgba(245, 158, 11, 0.2);
+            text-shadow: 0 0 5px rgba(6, 182, 212, 0.2);
         }
 
         #adminMessage {
@@ -676,7 +729,7 @@
 
         .key-item:hover {
             background: rgba(15, 23, 42, 0.8);
-            border-color: #dc2626;
+            border-color: #3b82f6;
         }
 
         .coming-soon {
@@ -701,43 +754,43 @@
         }
 
         .query-section:hover {
-            border-color: #dc2626;
-            box-shadow: 0 0 20px rgba(220, 38, 38, 0.2);
+            border-color: #3b82f6;
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.2);
             transform: translateY(-5px);
         }
 
         .query-section h4 {
-            color: #f59e0b;
+            color: #06b6d4;
             margin-bottom: 20px;
             font-size: 18px;
-            text-shadow: 0 0 5px rgba(245, 158, 11, 0.2);
+            text-shadow: 0 0 5px rgba(6, 182, 212, 0.2);
         }
 
         .premium-section {
             background: linear-gradient(135deg, rgba(30, 41, 59, 0.9), rgba(15, 23, 42, 0.9));
-            border: 3px solid #f59e0b;
+            border: 3px solid #06b6d4;
             border-radius: 16px;
             padding: 35px;
             margin-bottom: 25px;
-            box-shadow: 0 0 40px rgba(245, 158, 11, 0.4);
+            box-shadow: 0 0 40px rgba(6, 182, 212, 0.4);
             animation: premiumGlow 3s ease-in-out infinite alternate;
         }
 
         @keyframes premiumGlow {
             from {
-                box-shadow: 0 0 40px rgba(245, 158, 11, 0.4);
+                box-shadow: 0 0 40px rgba(6, 182, 212, 0.4);
             }
             to {
-                box-shadow: 0 0 60px rgba(245, 158, 11, 0.6);
+                box-shadow: 0 0 60px rgba(6, 182, 212, 0.6);
             }
         }
 
         .premium-section h3 {
-            color: #f59e0b;
+            color: #06b6d4;
             text-align: center;
             margin-bottom: 25px;
             font-size: 32px;
-            text-shadow: 0 0 15px rgba(245, 158, 11, 0.5);
+            text-shadow: 0 0 15px rgba(6, 182, 212, 0.5);
         }
 
         .premium-feature {
@@ -746,21 +799,21 @@
             gap: 18px;
             margin: 20px 0;
             padding: 18px;
-            background: rgba(245, 158, 11, 0.1);
+            background: rgba(6, 182, 212, 0.1);
             border-radius: 10px;
-            border: 1px solid #f59e0b;
+            border: 1px solid #06b6d4;
             transition: all 0.3s ease;
         }
 
         .premium-feature:hover {
-            background: rgba(245, 158, 11, 0.2);
+            background: rgba(6, 182, 212, 0.2);
             transform: translateX(10px);
         }
 
         .premium-feature i {
-            color: #f59e0b;
+            color: #06b6d4;
             font-size: 22px;
-            text-shadow: 0 0 10px rgba(245, 158, 11, 0.5);
+            text-shadow: 0 0 10px rgba(6, 182, 212, 0.5);
         }
 
         .account-details {
@@ -881,9 +934,6 @@
                     </button>
                     <button class="sub-tab-btn" onclick="openTab('tc-pro-tab')">
                         <i class="fas fa-star"></i>TC Pro Sorgula
-                    </button>
-                    <button class="sub-tab-btn" onclick="openTab('hayat-hikayesi-tab')">
-                        <i class="fas fa-book"></i>Hayat Hikayesi
                     </button>
                     <button class="sub-tab-btn" onclick="openTab('yas-sorgula-tab')">
                         <i class="fas fa-birthday-cake"></i>Yaş Sorgula
@@ -1022,7 +1072,7 @@
                             <label><i class="fas fa-crown"></i> Premium Key:</label>
                             <input type="text" id="premiumKey" placeholder="Premium keyinizi girin">
                         </div>
-                        <button onclick="verifyPremiumKey()" style="background: linear-gradient(45deg, #f59e0b, #d97706);">
+                        <button onclick="verifyPremiumKey()" style="background: linear-gradient(45deg, #06b6d4, #0891b2);">
                             <i class="fas fa-crown"></i> Premium Key Doğrula
                         </button>
                         <div id="premiumKeyMessage" style="margin-top: 15px;"></div>
@@ -1048,17 +1098,6 @@
                         <input type="text" id="tcPro" maxlength="11" placeholder="TC kimlik numarasını girin">
                     </div>
                     <button onclick="sorgula('tcpro', 'tcPro')">
-                        <i class="fas fa-play"></i> Sorguyu Çalıştır
-                    </button>
-                </div>
-
-                <div id="hayat-hikayesi-tab" class="tab-content">
-                    <h2><i class="fas fa-book"></i> Hayat Hikayesi</h2>
-                    <div class="form-group">
-                        <label>TC Kimlik No:</label>
-                        <input type="text" id="tcHayat" maxlength="11" placeholder="TC kimlik numarasını girin">
-                    </div>
-                    <button onclick="sorgula('hayathikayesi', 'tcHayat')">
                         <i class="fas fa-play"></i> Sorguyu Çalıştır
                     </button>
                 </div>
@@ -1391,16 +1430,16 @@
                                 <!-- Hesap detayları buraya gelecek -->
                             </div>
                             
-                            <button onclick="getTabiiAccount()" style="background: linear-gradient(45deg, #f59e0b, #d97706); width: 100%; padding: 15px; font-size: 16px;">
+                            <button onclick="getTabiiAccount()" style="background: linear-gradient(45deg, #06b6d4, #0891b2); width: 100%; padding: 15px; font-size: 16px;">
                                 <i class="fas fa-download"></i> TABİİ HESAP AL
                             </button>
                         </div>
 
                         <div id="premiumLocked" style="text-align: center; padding: 40px;">
-                            <i class="fas fa-lock" style="font-size: 48px; color: #f59e0b; margin-bottom: 20px;"></i>
+                            <i class="fas fa-lock" style="font-size: 48px; color: #06b6d4; margin-bottom: 20px;"></i>
                             <h3>Premium Erişim Gerekli</h3>
                             <p>Bu özelliklere erişmek için premium key girmeniz gerekiyor.</p>
-                            <button onclick="openTab('premium-key-tab')" style="background: linear-gradient(45deg, #f59e0b, #d97706); margin-top: 20px;">
+                            <button onclick="openTab('premium-key-tab')" style="background: linear-gradient(45deg, #06b6d4, #0891b2); margin-top: 20px;">
                                 <i class="fas fa-crown"></i> Premium Key Gir
                             </button>
                         </div>
@@ -1414,7 +1453,7 @@
 
                 <div class="result" id="result">
                     <h3><i class="fas fa-file-alt"></i> Sorgu Sonucu:</h3>
-                    <pre id="resultData"></pre>
+                    <div id="resultData"></div>
                     <button onclick="downloadResult()" style="margin-top: 15px;">
                         <i class="fas fa-download"></i> Sonucu İndir (TXT)
                     </button>
@@ -1462,7 +1501,7 @@
                     <label>Yeni Premium Key:</label>
                     <input type="text" id="newPremiumKey" placeholder="Yeni premium key girin">
                 </div>
-                <button onclick="createPremiumKey()" style="background: linear-gradient(45deg, #f59e0b, #d97706);">
+                <button onclick="createPremiumKey()" style="background: linear-gradient(45deg, #06b6d4, #0891b2);">
                     <i class="fas fa-crown"></i> Premium Key Oluştur
                 </button>
                 
@@ -1551,6 +1590,149 @@
             }
         }
 
+        // YENİ SONUÇ GÖSTERİM FONKSİYONU
+        function displayResult(data, type) {
+            const resultData = document.getElementById('resultData');
+            resultData.innerHTML = '';
+
+            if (type === 'tc' || type === 'tcpro') {
+                // TC sorguları için özel gösterim
+                resultData.innerHTML = `
+                    <div class="result-section">
+                        <h4>📊 Temel Bilgiler</h4>
+                        <div class="result-line">
+                            <span class="label">TC Kimlik No:</span>
+                            <span class="value">${data.tc || data.KimlikNumarasi || 'Bilgi Yok'}</span>
+                        </div>
+                        <div class="result-line">
+                            <span class="label">Ad:</span>
+                            <span class="value">${data.ad || data.Adi || 'Bilgi Yok'}</span>
+                        </div>
+                        <div class="result-line">
+                            <span class="label">Soyad:</span>
+                            <span class="value">${data.soyad || data.Soyadi || 'Bilgi Yok'}</span>
+                        </div>
+                        <div class="result-line">
+                            <span class="label">Doğum Tarihi:</span>
+                            <span class="value">${data.dogumTarihi || data.Dogumtarihi || 'Bilgi Yok'}</span>
+                        </div>
+                    </div>
+                    <div class="result-section">
+                        <h4>👨‍👩‍👧‍👦 Aile Bilgileri</h4>
+                        <div class="result-line">
+                            <span class="label">Anne Adı:</span>
+                            <span class="value">${data.anneAdi || data.Anneadi || 'Bilgi Yok'}</span>
+                        </div>
+                        <div class="result-line">
+                            <span class="label">Anne TC:</span>
+                            <span class="value">${data.anneTc || data.AnnerTc || 'Bilgi Yok'}</span>
+                        </div>
+                        <div class="result-line">
+                            <span class="label">Baba Adı:</span>
+                            <span class="value">${data.babaAdi || data.Babaad || 'Bilgi Yok'}</span>
+                        </div>
+                        <div class="result-line">
+                            <span class="label">Baba TC:</span>
+                            <span class="value">${data.babaTc || data.Babarec || 'Bilgi Yok'}</span>
+                        </div>
+                    </div>
+                    <div class="result-section">
+                        <h4>📍 Adres Bilgileri</h4>
+                        <div class="result-line">
+                            <span class="label">İl:</span>
+                            <span class="value">${data.il || data.nucE || 'Bilgi Yok'}</span>
+                        </div>
+                        <div class="result-line">
+                            <span class="label">İlçe:</span>
+                            <span class="value">${data.ilce || data.OSMANGAZi || 'Bilgi Yok'}</span>
+                        </div>
+                        <div class="result-line">
+                            <span class="label">Uyruk:</span>
+                            <span class="value">${data.uyruk || data.uyruk || 'TR'}</span>
+                        </div>
+                    </div>
+                `;
+            } else if (type === 'adsoyad' || type === 'adsoyadpro') {
+                // Ad Soyad sorguları için özel gösterim
+                resultData.innerHTML = `
+                    <div class="result-section">
+                        <h4>👤 Kişi Bilgileri</h4>
+                        <div class="result-line">
+                            <span class="label">Ad:</span>
+                            <span class="value">${data.ad || 'Bilgi Yok'}</span>
+                        </div>
+                        <div class="result-line">
+                            <span class="label">Soyad:</span>
+                            <span class="value">${data.soyad || 'Bilgi Yok'}</span>
+                        </div>
+                        <div class="result-line">
+                            <span class="label">TC Kimlik No:</span>
+                            <span class="value">${data.tc || 'Bilgi Yok'}</span>
+                        </div>
+                        <div class="result-line">
+                            <span class="label">Doğum Tarihi:</span>
+                            <span class="value">${data.dogumTarihi || 'Bilgi Yok'}</span>
+                        </div>
+                    </div>
+                    <div class="result-section">
+                        <h4>📍 Adres Bilgileri</h4>
+                        <div class="result-line">
+                            <span class="label">İl:</span>
+                            <span class="value">${data.il || 'Bilgi Yok'}</span>
+                        </div>
+                        <div class="result-line">
+                            <span class="label">İlçe:</span>
+                            <span class="value">${data.ilce || 'Bilgi Yok'}</span>
+                        </div>
+                    </div>
+                `;
+            } else if (type === 'gsmtc' || type === 'tcgsm') {
+                // GSM sorguları için özel gösterim
+                resultData.innerHTML = `
+                    <div class="result-section">
+                        <h4>📱 Telefon Bilgileri</h4>
+                        <div class="result-line">
+                            <span class="label">GSM Numarası:</span>
+                            <span class="value">${data.gsm || data.telefon || 'Bilgi Yok'}</span>
+                        </div>
+                        <div class="result-line">
+                            <span class="label">TC Kimlik No:</span>
+                            <span class="value">${data.tc || 'Bilgi Yok'}</span>
+                        </div>
+                        <div class="result-line">
+                            <span class="label">Ad Soyad:</span>
+                            <span class="value">${data.adSoyad || 'Bilgi Yok'}</span>
+                        </div>
+                    </div>
+                    <div class="result-section">
+                        <h4>🏢 Operatör Bilgileri</h4>
+                        <div class="result-line">
+                            <span class="label">Operatör:</span>
+                            <span class="value">${data.operator || 'Bilgi Yok'}</span>
+                        </div>
+                        <div class="result-line">
+                            <span class="label">Hat Durumu:</span>
+                            <span class="value">${data.hatDurumu || 'Bilgi Yok'}</span>
+                        </div>
+                    </div>
+                `;
+            } else {
+                // Diğer sorgular için genel gösterim
+                let html = '<div class="result-section"><h4>📋 Sorgu Sonuçları</h4>';
+                for (const [key, value] of Object.entries(data)) {
+                    if (value && typeof value === 'object') continue;
+                    html += `
+                        <div class="result-line">
+                            <span class="label">${key}:</span>
+                            <span class="value">${value || 'Bilgi Yok'}</span>
+                        </div>
+                    `;
+                }
+                html += '</div>';
+                resultData.innerHTML = html;
+            }
+        }
+
         // SORGULAMA FONKSİYONLARI
         async function sorgula(type, inputId) {
             if (!systemKey || !isKeyVerified) {
@@ -1576,7 +1758,7 @@
             }
 
             // TC bazlı sorgular
-            if (['tc', 'tcpro', 'hayathikayesi', 'yas', 'tcgsm', 'aile', 'ailepro', 'es', 'sulale', 'tapu', 'isyeri', 'adres', 'hane', 'apartman'].includes(type)) {
+            if (['tc', 'tcpro', 'yas', 'tcgsm', 'aile', 'ailepro', 'es', 'sulale', 'tapu', 'isyeri', 'adres', 'hane', 'apartman'].includes(type)) {
                 params.tc = inputValue;
             }
             // GSM sorgusu
@@ -1609,10 +1791,11 @@
                 const response = await fetch(`/api/${type}?${queryString}`);
                 const data = await response.json();
                 
-                resultData.textContent = JSON.stringify(data, null, 2);
+                // Yeni sonuç gösterim fonksiyonunu kullan
+                displayResult(data, type);
                 currentResult = data;
             } catch (error) {
-                resultData.textContent = 'Hata: ' + error.message;
+                resultData.innerHTML = '<div class="error">❌ Sorgu sırasında hata oluştu: ' + error.message + '</div>';
             } finally {
                 loading.classList.remove('active');
                 result.classList.add('active');
@@ -1657,10 +1840,10 @@
                 const response = await fetch(`/api/${type}?${queryString}`);
                 const data = await response.json();
                 
-                resultData.textContent = JSON.stringify(data, null, 2);
+                displayResult(data, type);
                 currentResult = data;
             } catch (error) {
-                resultData.textContent = 'Hata: ' + error.message;
+                resultData.innerHTML = '<div class="error">❌ Sorgu sırasında hata oluştu: ' + error.message + '</div>';
             } finally {
                 loading.classList.remove('active');
                 result.classList.add('active');
@@ -1704,10 +1887,10 @@
                 const response = await fetch(`/api/${type}?${queryString}`);
                 const data = await response.json();
                 
-                resultData.textContent = JSON.stringify(data, null, 2);
+                displayResult(data, type);
                 currentResult = data;
             } catch (error) {
-                resultData.textContent = 'Hata: ' + error.message;
+                resultData.innerHTML = '<div class="error">❌ Sorgu sırasında hata oluştu: ' + error.message + '</div>';
             } finally {
                 loading.classList.remove('active');
                 result.classList.add('active');
@@ -1750,10 +1933,10 @@
                 const response = await fetch(`/api/adaparsel?${queryString}`);
                 const data = await response.json();
                 
-                resultData.textContent = JSON.stringify(data, null, 2);
+                displayResult(data, 'adaparsel');
                 currentResult = data;
             } catch (error) {
-                resultData.textContent = 'Hata: ' + error.message;
+                resultData.innerHTML = '<div class="error">❌ Sorgu sırasında hata oluştu: ' + error.message + '</div>';
             } finally {
                 loading.classList.remove('active');
                 result.classList.add('active');
@@ -1785,10 +1968,10 @@
                 const response = await fetch(`/api/discord?id=${discordId}&key=${systemKey}`);
                 const data = await response.json();
                 
-                resultData.textContent = JSON.stringify(data, null, 2);
+                displayResult(data, 'discord');
                 currentResult = data;
             } catch (error) {
-                resultData.textContent = 'Hata: ' + error.message;
+                resultData.innerHTML = '<div class="error">❌ Sorgu sırasında hata oluştu: ' + error.message + '</div>';
             } finally {
                 loading.classList.remove('active');
                 result.classList.add('active');
@@ -1820,10 +2003,10 @@
                 const response = await fetch(`/api/discord?id=${discordId}&key=${systemKey}`);
                 const data = await response.json();
                 
-                resultData.textContent = JSON.stringify(data, null, 2);
+                displayResult(data, 'discord');
                 currentResult = data;
             } catch (error) {
-                resultData.textContent = 'Hata: ' + error.message;
+                resultData.innerHTML = '<div class="error">❌ Sorgu sırasında hata oluştu: ' + error.message + '</div>';
             } finally {
                 loading.classList.remove('active');
                 result.classList.add('active');
@@ -1854,7 +2037,7 @@
                 if (data.success) {
                     const account = data.account;
                     accountDetails.innerHTML = `
-                        <h3 style="color: #f59e0b; text-align: center; margin-bottom: 20px;">🌟✧ TABİİ ACCOUNT DETAYLARI ✧🌟</h3>
+                        <h3 style="color: #06b6d4; text-align: center; margin-bottom: 20px;">🌟✧ TABİİ ACCOUNT DETAYLARI ✧🌟</h3>
                         <div class="account-line">
                             <span><strong>İndex:</strong></span>
                             <span>${account.index}</span>
