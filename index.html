@@ -24,9 +24,9 @@
 
         body {
             background: 
-                radial-gradient(circle at 20% 50%, rgba(220, 38, 38, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(245, 158, 11, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 40% 80%, rgba(153, 27, 27, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 20% 50%, rgba(220, 38, 38, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(245, 158, 11, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(153, 27, 27, 0.05) 0%, transparent 50%),
                 linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #000000 100%);
             color: var(--light);
             font-family: 'Segoe UI', system-ui, sans-serif;
@@ -34,27 +34,6 @@
             line-height: 1.6;
             position: relative;
             overflow-x: hidden;
-        }
-
-        /* Büyük balkabağı arkaplan */
-        body::before {
-            content: '🎃';
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 500px;
-            opacity: 0.15;
-            z-index: -1;
-            animation: float 8s ease-in-out infinite;
-            text-shadow: 0 0 50px rgba(220, 38, 38, 0.5);
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translate(-50%, -50%) rotate(0deg) scale(1); }
-            25% { transform: translate(-50%, -52%) rotate(5deg) scale(1.05); }
-            50% { transform: translate(-50%, -50%) rotate(0deg) scale(1); }
-            75% { transform: translate(-50%, -48%) rotate(-5deg) scale(0.95); }
         }
 
         .container {
@@ -69,6 +48,8 @@
             border-right: 1px solid #334155;
             position: relative;
             z-index: 10;
+            display: flex;
+            flex-direction: column;
         }
 
         .sidebar-header {
@@ -76,13 +57,33 @@
             padding-bottom: 20px;
             margin-bottom: 20px;
             border-bottom: 1px solid #dc2626;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .logo-image {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(45deg, #dc2626, #f59e0b);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
         }
 
         .logo {
             font-size: 24px;
             font-weight: bold;
             color: #dc2626;
-            margin-bottom: 5px;
             text-shadow: 0 0 10px rgba(220, 38, 38, 0.5);
         }
 
@@ -95,6 +96,7 @@
             display: flex;
             flex-direction: column;
             gap: 8px;
+            flex: 1;
         }
 
         .tab-btn {
@@ -173,6 +175,22 @@
             background: rgba(15, 23, 42, 0.8);
             position: relative;
             z-index: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .content-wrapper {
+            flex: 1;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: auto;
+            border-top: 1px solid #334155;
+            color: #94a3b8;
+            font-size: 12px;
         }
 
         header {
@@ -552,9 +570,6 @@
             .header-title {
                 font-size: 2em;
             }
-            body::before {
-                font-size: 300px;
-            }
         }
 
         .success { 
@@ -585,7 +600,10 @@
     <div class="container">
         <div class="sidebar">
             <div class="sidebar-header">
-                <div class="logo">DABBE PRO</div>
+                <div class="logo-container">
+                    <div class="logo-image">👹</div>
+                    <div class="logo">DABBE</div>
+                </div>
                 <div class="version">v4.0 - Tüm Sorgular Aktif</div>
             </div>
             
@@ -689,15 +707,6 @@
                     </button>
                 </div>
 
-                <button class="tab-btn" onclick="openTab('discord-tab')">
-                    <i class="fab fa-discord"></i>Discord Sorgu
-                </button>
-                <button class="tab-btn" onclick="openTab('gelismisip-tab')">
-                    <i class="fas fa-search-plus"></i>Gelişmiş IP
-                </button>
-                <button class="tab-btn" onclick="openTab('other-tab')">
-                    <i class="fas fa-cogs"></i>Diğer Sorgular
-                </button>
                 <button class="tab-btn" onclick="openTab('database-tab')">
                     <i class="fas fa-database"></i>Database
                 </button>
@@ -708,411 +717,417 @@
         </div>
 
         <div class="main-content">
-            <button class="admin-btn" onclick="openAdminModal()">
-                <i class="fas fa-crown"></i> Admin
-            </button>
+            <div class="content-wrapper">
+                <button class="admin-btn" onclick="openAdminModal()">
+                    <i class="fas fa-crown"></i> Admin
+                </button>
 
-            <header>
-                <h1 class="header-title">DABBE CHECKER PRO</h1>
-                <p class="header-subtitle">Tüm Sorgular Aktif - Premium Platform</p>
-            </header>
+                <header>
+                    <h1 class="header-title">DABBE CHECKER PRO</h1>
+                    <p class="header-subtitle">Tüm Sorgular Aktif - Premium Platform</p>
+                </header>
 
-            <!-- Key Tab -->
-            <div id="key-tab" class="tab-content active">
-                <h2><i class="fas fa-key"></i> Sistem Key Girişi</h2>
-                <div class="key-section">
+                <!-- Key Tab -->
+                <div id="key-tab" class="tab-content active">
+                    <h2><i class="fas fa-key"></i> Sistem Key Girişi</h2>
+                    <div class="key-section">
+                        <div class="form-group">
+                            <label><i class="fas fa-lock"></i> Sistem Key:</label>
+                            <input type="text" id="systemKey" placeholder="Keyinizi girin" value="DABBE2024VIP">
+                        </div>
+                        <button onclick="verifySystemKey()">
+                            <i class="fas fa-check"></i> Key Doğrula
+                        </button>
+                        <div id="keyMessage" style="margin-top: 15px;"></div>
+                    </div>
+                </div>
+
+                <!-- Premium Key Tab -->
+                <div id="premium-key-tab" class="tab-content">
+                    <h2><i class="fas fa-crown"></i> Premium Key Girişi</h2>
+                    <div class="key-section">
+                        <div class="form-group">
+                            <label><i class="fas fa-crown"></i> Premium Key:</label>
+                            <input type="text" id="premiumKey" placeholder="Premium keyinizi girin">
+                        </div>
+                        <button onclick="verifyPremiumKey()" style="background: linear-gradient(45deg, #f59e0b, #d97706);">
+                            <i class="fas fa-crown"></i> Premium Key Doğrula
+                        </button>
+                        <div id="premiumKeyMessage" style="margin-top: 15px;"></div>
+                    </div>
+                </div>
+
+                <!-- TC Sorgu Tabları -->
+                <div id="tc-sorgula-tab" class="tab-content">
+                    <h2><i class="fas fa-search"></i> TC Sorgula</h2>
                     <div class="form-group">
-                        <label><i class="fas fa-lock"></i> Sistem Key:</label>
-                        <input type="text" id="systemKey" placeholder="Keyinizi girin" value="DABBE2024VIP">
+                        <label>TC Kimlik No:</label>
+                        <input type="text" id="tcSorgula" maxlength="11" placeholder="TC kimlik numarasını girin">
                     </div>
-                    <button onclick="verifySystemKey()">
-                        <i class="fas fa-check"></i> Key Doğrula
+                    <button onclick="sorgula('tc', 'tcSorgula')">
+                        <i class="fas fa-play"></i> Sorguyu Çalıştır
                     </button>
-                    <div id="keyMessage" style="margin-top: 15px;"></div>
                 </div>
-            </div>
 
-            <!-- Premium Key Tab -->
-            <div id="premium-key-tab" class="tab-content">
-                <h2><i class="fas fa-crown"></i> Premium Key Girişi</h2>
-                <div class="key-section">
+                <div id="tc-pro-tab" class="tab-content">
+                    <h2><i class="fas fa-star"></i> TC Pro Sorgula</h2>
                     <div class="form-group">
-                        <label><i class="fas fa-crown"></i> Premium Key:</label>
-                        <input type="text" id="premiumKey" placeholder="Premium keyinizi girin">
+                        <label>TC Kimlik No:</label>
+                        <input type="text" id="tcPro" maxlength="11" placeholder="TC kimlik numarasını girin">
                     </div>
-                    <button onclick="verifyPremiumKey()" style="background: linear-gradient(45deg, #f59e0b, #d97706);">
-                        <i class="fas fa-crown"></i> Premium Key Doğrula
+                    <button onclick="sorgula('tcpro', 'tcPro')">
+                        <i class="fas fa-play"></i> Sorguyu Çalıştır
                     </button>
-                    <div id="premiumKeyMessage" style="margin-top: 15px;"></div>
                 </div>
-            </div>
 
-            <!-- TC Sorgu Tabları -->
-            <div id="tc-sorgula-tab" class="tab-content">
-                <h2><i class="fas fa-search"></i> TC Sorgula</h2>
-                <div class="form-group">
-                    <label>TC Kimlik No:</label>
-                    <input type="text" id="tcSorgula" maxlength="11" placeholder="TC kimlik numarasını girin">
-                </div>
-                <button onclick="sorgula('tc', 'tcSorgula')">
-                    <i class="fas fa-play"></i> Sorguyu Çalıştır
-                </button>
-            </div>
-
-            <div id="tc-pro-tab" class="tab-content">
-                <h2><i class="fas fa-star"></i> TC Pro Sorgula</h2>
-                <div class="form-group">
-                    <label>TC Kimlik No:</label>
-                    <input type="text" id="tcPro" maxlength="11" placeholder="TC kimlik numarasını girin">
-                </div>
-                <button onclick="sorgula('tcpro', 'tcPro')">
-                    <i class="fas fa-play"></i> Sorguyu Çalıştır
-                </button>
-            </div>
-
-            <div id="hayat-hikayesi-tab" class="tab-content">
-                <h2><i class="fas fa-book"></i> Hayat Hikayesi</h2>
-                <div class="form-group">
-                    <label>TC Kimlik No:</label>
-                    <input type="text" id="tcHayat" maxlength="11" placeholder="TC kimlik numarasını girin">
-                </div>
-                <button onclick="sorgula('hayathikayesi', 'tcHayat')">
-                    <i class="fas fa-play"></i> Sorguyu Çalıştır
-                </button>
-            </div>
-
-            <div id="yas-sorgula-tab" class="tab-content">
-                <h2><i class="fas fa-birthday-cake"></i> Yaş Sorgula</h2>
-                <div class="form-group">
-                    <label>TC Kimlik No:</label>
-                    <input type="text" id="tcYas" maxlength="11" placeholder="TC kimlik numarasını girin">
-                </div>
-                <button onclick="sorgula('yas', 'tcYas')">
-                    <i class="fas fa-play"></i> Sorguyu Çalıştır
-                </button>
-            </div>
-
-            <!-- Ad Soyad Tabları -->
-            <div id="adsoyad-sorgula-tab" class="tab-content">
-                <h2><i class="fas fa-user"></i> Ad Soyad Sorgula</h2>
-                <div class="form-group">
-                    <label>Ad:</label>
-                    <input type="text" id="adSorgula" placeholder="Ad">
-                </div>
-                <div class="form-group">
-                    <label>Soyad:</label>
-                    <input type="text" id="soyadSorgula" placeholder="Soyad">
-                </div>
-                <button onclick="sorgulaAdSoyad('adsoyad')">
-                    <i class="fas fa-play"></i> Sorguyu Çalıştır
-                </button>
-            </div>
-
-            <div id="adsoyad-pro-tab" class="tab-content">
-                <h2><i class="fas fa-user-tie"></i> Ad Soyad Pro</h2>
-                <div class="form-group">
-                    <label>Ad:</label>
-                    <input type="text" id="adPro" placeholder="Ad">
-                </div>
-                <div class="form-group">
-                    <label>Soyad:</label>
-                    <input type="text" id="soyadPro" placeholder="Soyad">
-                </div>
-                <button onclick="sorgulaAdSoyad('adsoyadpro')">
-                    <i class="fas fa-play"></i> Sorguyu Çalıştır
-                </button>
-            </div>
-
-            <div id="adililce-tab" class="tab-content">
-                <h2><i class="fas fa-map-marker-alt"></i> Ad İl İlçe Sorgula</h2>
-                <div class="form-group">
-                    <label>Ad:</label>
-                    <input type="text" id="adIl" placeholder="Ad">
-                </div>
-                <div class="form-group">
-                    <label>İl:</label>
-                    <input type="text" id="ilAd" placeholder="İl">
-                </div>
-                <div class="form-group">
-                    <label>İlçe:</label>
-                    <input type="text" id="ilceAd" placeholder="İlçe">
-                </div>
-                <button onclick="sorgulaAdIlIlce('adililce')">
-                    <i class="fas fa-play"></i> Sorguyu Çalıştır
-                </button>
-            </div>
-
-            <!-- GSM Tabları -->
-            <div id="tc-gsm-tab" class="tab-content">
-                <h2><i class="fas fa-mobile-alt"></i> TC'den GSM Sorgula</h2>
-                <div class="form-group">
-                    <label>TC Kimlik No:</label>
-                    <input type="text" id="tcGsm" maxlength="11" placeholder="TC kimlik numarasını girin">
-                </div>
-                <button onclick="sorgula('tcgsm', 'tcGsm')">
-                    <i class="fas fa-play"></i> Sorguyu Çalıştır
-                </button>
-            </div>
-
-            <div id="gsm-tc-tab" class="tab-content">
-                <h2><i class="fas fa-id-card"></i> GSM'den TC Sorgula</h2>
-                <div class="form-group">
-                    <label>GSM Numarası:</label>
-                    <input type="text" id="gsmTc" placeholder="GSM numarasını girin">
-                </div>
-                <button onclick="sorgula('gsmtc', 'gsmTc')">
-                    <i class="fas fa-play"></i> Sorguyu Çalıştır
-                </button>
-            </div>
-
-            <!-- Aile Tabları -->
-            <div id="aile-sorgula-tab" class="tab-content">
-                <h2><i class="fas fa-users"></i> Aile Sorgula</h2>
-                <div class="form-group">
-                    <label>TC Kimlik No:</label>
-                    <input type="text" id="tcAile" maxlength="11" placeholder="TC kimlik numarasını girin">
-                </div>
-                <button onclick="sorgula('aile', 'tcAile')">
-                    <i class="fas fa-play"></i> Sorguyu Çalıştır
-                </button>
-            </div>
-
-            <div id="aile-pro-tab" class="tab-content">
-                <h2><i class="fas fa-user-friends"></i> Aile Pro Sorgula</h2>
-                <div class="form-group">
-                    <label>TC Kimlik No:</label>
-                    <input type="text" id="tcAilePro" maxlength="11" placeholder="TC kimlik numarasını girin">
-                </div>
-                <button onclick="sorgula('ailepro', 'tcAilePro')">
-                    <i class="fas fa-play"></i> Sorguyu Çalıştır
-                </button>
-            </div>
-
-            <div id="es-sorgula-tab" class="tab-content">
-                <h2><i class="fas fa-heart"></i> Eş Sorgula</h2>
-                <div class="form-group">
-                    <label>TC Kimlik No:</label>
-                    <input type="text" id="tcEs" maxlength="11" placeholder="TC kimlik numarasını girin">
-                </div>
-                <button onclick="sorgula('es', 'tcEs')">
-                    <i class="fas fa-play"></i> Sorguyu Çalıştır
-                </button>
-            </div>
-
-            <div id="sulale-tab" class="tab-content">
-                <h2><i class="fas fa-sitemap"></i> Sülale Sorgula</h2>
-                <div class="form-group">
-                    <label>TC Kimlik No:</label>
-                    <input type="text" id="tcSulale" maxlength="11" placeholder="TC kimlik numarasını girin">
-                </div>
-                <button onclick="sorgula('sulale', 'tcSulale')">
-                    <i class="fas fa-play"></i> Sorguyu Çalıştır
-                </button>
-            </div>
-
-            <!-- IP Tabları -->
-            <div id="ip-sorgula-tab" class="tab-content">
-                <h2><i class="fas fa-globe"></i> IP Sorgula</h2>
-                <div class="form-group">
-                    <label>IP/Domain:</label>
-                    <input type="text" id="domainIp" placeholder="IP adresi veya domain girin">
-                </div>
-                <button onclick="sorgula('ip', 'domainIp')">
-                    <i class="fas fa-play"></i> Sorguyu Çalıştır
-                </button>
-            </div>
-
-            <div id="dns-tab" class="tab-content">
-                <h2><i class="fas fa-network-wired"></i> DNS Sorgula</h2>
-                <div class="form-group">
-                    <label>IP/Domain:</label>
-                    <input type="text" id="domainDns" placeholder="IP adresi veya domain girin">
-                </div>
-                <button onclick="sorgula('dns', 'domainDns')">
-                    <i class="fas fa-play"></i> Sorguyu Çalıştır
-                </button>
-            </div>
-
-            <div id="whois-tab" class="tab-content">
-                <h2><i class="fas fa-search"></i> WHOIS Sorgula</h2>
-                <div class="form-group">
-                    <label>IP/Domain:</label>
-                    <input type="text" id="domainWhois" placeholder="IP adresi veya domain girin">
-                </div>
-                <button onclick="sorgula('whois', 'domainWhois')">
-                    <i class="fas fa-play"></i> Sorguyu Çalıştır
-                </button>
-            </div>
-
-            <div id="subdomain-tab" class="tab-content">
-                <h2><i class="fas fa-sitemap"></i> Subdomain Sorgula</h2>
-                <div class="form-group">
-                    <label>IP/Domain:</label>
-                    <input type="text" id="domainSubdomain" placeholder="IP adresi veya domain girin">
-                </div>
-                <button onclick="sorgula('subdomain', 'domainSubdomain')">
-                    <i class="fas fa-play"></i> Sorguyu Çalıştır
-                </button>
-            </div>
-
-            <div id="leak-tab" class="tab-content">
-                <h2><i class="fas fa-envelope"></i> Leak Sorgula</h2>
-                <div class="form-group">
-                    <label>E-posta:</label>
-                    <input type="text" id="leakQuery" placeholder="E-posta adresi girin">
-                </div>
-                <button onclick="sorgula('leak', 'leakQuery')">
-                    <i class="fas fa-play"></i> Sorguyu Çalıştır
-                </button>
-            </div>
-
-            <div id="telegram-tab" class="tab-content">
-                <h2><i class="fab fa-telegram"></i> Telegram Sorgula</h2>
-                <div class="form-group">
-                    <label>Telegram Kullanıcı Adı:</label>
-                    <input type="text" id="telegramUser" placeholder="Telegram kullanıcı adı">
-                </div>
-                <button onclick="sorgula('telegram', 'telegramUser')">
-                    <i class="fas fa-play"></i> Sorguyu Çalıştır
-                </button>
-            </div>
-
-            <!-- Diğer Tablar -->
-            <div id="discord-tab" class="tab-content">
-                <h2><i class="fab fa-discord"></i> Discord ID Sorgulama</h2>
-                <div class="form-group">
-                    <label>Discord ID:</label>
-                    <input type="text" id="discordId" placeholder="Discord ID girin (örn: 724180071354597406)">
-                </div>
-                <button onclick="sorgulaDiscord()" style="background: linear-gradient(45deg, #5865F2, #7289DA);">
-                    <i class="fab fa-discord"></i> Discord Sorgula
-                </button>
-            </div>
-
-            <div id="gelismisip-tab" class="tab-content">
-                <h2><i class="fas fa-search-plus"></i> Gelişmiş IP Sorgulama</h2>
-                <div class="form-group">
-                    <label>IP Adresi:</label>
-                    <input type="text" id="gelismisIp" placeholder="IPv4 adresi girin">
-                </div>
-                <button onclick="sorgula('gelismisip', 'gelismisIp')">Detaylı IP Sorgula</button>
-            </div>
-
-            <div id="other-tab" class="tab-content">
-                <h2><i class="fas fa-cogs"></i> Diğer Sorgular</h2>
-                
-                <div class="section-group">
-                    <!-- TC ile Sorgular -->
-                    <div class="query-section">
-                        <h4><i class="fas fa-id-card"></i> TC ile Sorgular</h4>
-                        <div class="form-group">
-                            <input type="text" id="tcOther" maxlength="11" placeholder="TC kimlik numarası">
-                        </div>
-                        <div class="btn-group">
-                            <button onclick="sorgula('tapu', 'tcOther')">Tapu Sorgula</button>
-                            <button onclick="sorgula('isyeri', 'tcOther')">İşyeri Sorgula</button>
-                            <button onclick="sorgula('adres', 'tcOther')">Adres Sorgula</button>
-                            <button onclick="sorgula('hane', 'tcOther')">Hane Sorgula</button>
-                            <button onclick="sorgula('apartman', 'tcOther')">Apartman Sorgula</button>
-                        </div>
+                <div id="hayat-hikayesi-tab" class="tab-content">
+                    <h2><i class="fas fa-book"></i> Hayat Hikayesi</h2>
+                    <div class="form-group">
+                        <label>TC Kimlik No:</label>
+                        <input type="text" id="tcHayat" maxlength="11" placeholder="TC kimlik numarasını girin">
                     </div>
-
-                    <!-- Vergi No Sorgusu -->
-                    <div class="query-section">
-                        <h4><i class="fas fa-file-invoice-dollar"></i> Vergi Sorgusu</h4>
-                        <div class="form-group">
-                            <input type="text" id="vergiNo" placeholder="Vergi numarası">
-                        </div>
-                        <button onclick="sorgula('vergino', 'vergiNo')" style="width: 100%;">Vergi No Sorgula</button>
-                    </div>
-
-                    <!-- Ada Parsel Sorgusu -->
-                    <div class="query-section">
-                        <h4><i class="fas fa-map-marked-alt"></i> Ada Parsel Sorgusu</h4>
-                        <div class="form-group">
-                            <input type="text" id="ilAda" placeholder="İl">
-                            <input type="text" id="ada" placeholder="Ada" style="margin-top: 8px;">
-                            <input type="text" id="parsel" placeholder="Parsel" style="margin-top: 8px;">
-                        </div>
-                        <button onclick="sorgulaAdaparsel()" style="width: 100%;">Ada Parsel Sorgula</button>
-                    </div>
+                    <button onclick="sorgula('hayathikayesi', 'tcHayat')">
+                        <i class="fas fa-play"></i> Sorguyu Çalıştır
+                    </button>
                 </div>
-            </div>
 
-            <!-- Database Tab -->
-            <div id="database-tab" class="tab-content">
-                <h2><i class="fas fa-database"></i> Database</h2>
-                <div class="coming-soon">
-                    <i class="fas fa-tools"></i>
-                    <h3>Yakında Aktif Olacak</h3>
-                    <p>Database sorgulama özelliği yakında eklenecek...</p>
+                <div id="yas-sorgula-tab" class="tab-content">
+                    <h2><i class="fas fa-birthday-cake"></i> Yaş Sorgula</h2>
+                    <div class="form-group">
+                        <label>TC Kimlik No:</label>
+                        <input type="text" id="tcYas" maxlength="11" placeholder="TC kimlik numarasını girin">
+                    </div>
+                    <button onclick="sorgula('yas', 'tcYas')">
+                        <i class="fas fa-play"></i> Sorguyu Çalıştır
+                    </button>
                 </div>
-            </div>
 
-            <!-- Premium Tab -->
-            <div id="premium-tab" class="tab-content">
-                <h2><i class="fas fa-gem"></i> Premium Özellikler</h2>
-                
-                <div class="premium-section">
-                    <h3>🌟 PREMIUM ÜYELİK 🌟</h3>
+                <!-- Ad Soyad Tabları -->
+                <div id="adsoyad-sorgula-tab" class="tab-content">
+                    <h2><i class="fas fa-user"></i> Ad Soyad Sorgula</h2>
+                    <div class="form-group">
+                        <label>Ad:</label>
+                        <input type="text" id="adSorgula" placeholder="Ad">
+                    </div>
+                    <div class="form-group">
+                        <label>Soyad:</label>
+                        <input type="text" id="soyadSorgula" placeholder="Soyad">
+                    </div>
+                    <button onclick="sorgulaAdSoyad('adsoyad')">
+                        <i class="fas fa-play"></i> Sorguyu Çalıştır
+                    </button>
+                </div>
+
+                <div id="adsoyad-pro-tab" class="tab-content">
+                    <h2><i class="fas fa-user-tie"></i> Ad Soyad Pro</h2>
+                    <div class="form-group">
+                        <label>Ad:</label>
+                        <input type="text" id="adPro" placeholder="Ad">
+                    </div>
+                    <div class="form-group">
+                        <label>Soyad:</label>
+                        <input type="text" id="soyadPro" placeholder="Soyad">
+                    </div>
+                    <button onclick="sorgulaAdSoyad('adsoyadpro')">
+                        <i class="fas fa-play"></i> Sorguyu Çalıştır
+                    </button>
+                </div>
+
+                <div id="adililce-tab" class="tab-content">
+                    <h2><i class="fas fa-map-marker-alt"></i> Ad İl İlçe Sorgula</h2>
+                    <div class="form-group">
+                        <label>Ad:</label>
+                        <input type="text" id="adIl" placeholder="Ad">
+                    </div>
+                    <div class="form-group">
+                        <label>İl:</label>
+                        <input type="text" id="ilAd" placeholder="İl">
+                    </div>
+                    <div class="form-group">
+                        <label>İlçe:</label>
+                        <input type="text" id="ilceAd" placeholder="İlçe">
+                    </div>
+                    <button onclick="sorgulaAdIlIlce('adililce')">
+                        <i class="fas fa-play"></i> Sorguyu Çalıştır
+                    </button>
+                </div>
+
+                <!-- GSM Tabları -->
+                <div id="tc-gsm-tab" class="tab-content">
+                    <h2><i class="fas fa-mobile-alt"></i> TC'den GSM Sorgula</h2>
+                    <div class="form-group">
+                        <label>TC Kimlik No:</label>
+                        <input type="text" id="tcGsm" maxlength="11" placeholder="TC kimlik numarasını girin">
+                    </div>
+                    <button onclick="sorgula('tcgsm', 'tcGsm')">
+                        <i class="fas fa-play"></i> Sorguyu Çalıştır
+                    </button>
+                </div>
+
+                <div id="gsm-tc-tab" class="tab-content">
+                    <h2><i class="fas fa-id-card"></i> GSM'den TC Sorgula</h2>
+                    <div class="form-group">
+                        <label>GSM Numarası:</label>
+                        <input type="text" id="gsmTc" placeholder="GSM numarasını girin">
+                    </div>
+                    <button onclick="sorgula('gsmtc', 'gsmTc')">
+                        <i class="fas fa-play"></i> Sorguyu Çalıştır
+                    </button>
+                </div>
+
+                <!-- Aile Tabları -->
+                <div id="aile-sorgula-tab" class="tab-content">
+                    <h2><i class="fas fa-users"></i> Aile Sorgula</h2>
+                    <div class="form-group">
+                        <label>TC Kimlik No:</label>
+                        <input type="text" id="tcAile" maxlength="11" placeholder="TC kimlik numarasını girin">
+                    </div>
+                    <button onclick="sorgula('aile', 'tcAile')">
+                        <i class="fas fa-play"></i> Sorguyu Çalıştır
+                    </button>
+                </div>
+
+                <div id="aile-pro-tab" class="tab-content">
+                    <h2><i class="fas fa-user-friends"></i> Aile Pro Sorgula</h2>
+                    <div class="form-group">
+                        <label>TC Kimlik No:</label>
+                        <input type="text" id="tcAilePro" maxlength="11" placeholder="TC kimlik numarasını girin">
+                    </div>
+                    <button onclick="sorgula('ailepro', 'tcAilePro')">
+                        <i class="fas fa-play"></i> Sorguyu Çalıştır
+                    </button>
+                </div>
+
+                <div id="es-sorgula-tab" class="tab-content">
+                    <h2><i class="fas fa-heart"></i> Eş Sorgula</h2>
+                    <div class="form-group">
+                        <label>TC Kimlik No:</label>
+                        <input type="text" id="tcEs" maxlength="11" placeholder="TC kimlik numarasını girin">
+                    </div>
+                    <button onclick="sorgula('es', 'tcEs')">
+                        <i class="fas fa-play"></i> Sorguyu Çalıştır
+                    </button>
+                </div>
+
+                <div id="sulale-tab" class="tab-content">
+                    <h2><i class="fas fa-sitemap"></i> Sülale Sorgula</h2>
+                    <div class="form-group">
+                        <label>TC Kimlik No:</label>
+                        <input type="text" id="tcSulale" maxlength="11" placeholder="TC kimlik numarasını girin">
+                    </div>
+                    <button onclick="sorgula('sulale', 'tcSulale')">
+                        <i class="fas fa-play"></i> Sorguyu Çalıştır
+                    </button>
+                </div>
+
+                <!-- IP Tabları -->
+                <div id="ip-sorgula-tab" class="tab-content">
+                    <h2><i class="fas fa-globe"></i> IP Sorgula</h2>
+                    <div class="form-group">
+                        <label>IP/Domain:</label>
+                        <input type="text" id="domainIp" placeholder="IP adresi veya domain girin">
+                    </div>
+                    <button onclick="sorgula('ip', 'domainIp')">
+                        <i class="fas fa-play"></i> Sorguyu Çalıştır
+                    </button>
+                </div>
+
+                <div id="dns-tab" class="tab-content">
+                    <h2><i class="fas fa-network-wired"></i> DNS Sorgula</h2>
+                    <div class="form-group">
+                        <label>IP/Domain:</label>
+                        <input type="text" id="domainDns" placeholder="IP adresi veya domain girin">
+                    </div>
+                    <button onclick="sorgula('dns', 'domainDns')">
+                        <i class="fas fa-play"></i> Sorguyu Çalıştır
+                    </button>
+                </div>
+
+                <div id="whois-tab" class="tab-content">
+                    <h2><i class="fas fa-search"></i> WHOIS Sorgula</h2>
+                    <div class="form-group">
+                        <label>IP/Domain:</label>
+                        <input type="text" id="domainWhois" placeholder="IP adresi veya domain girin">
+                    </div>
+                    <button onclick="sorgula('whois', 'domainWhois')">
+                        <i class="fas fa-play"></i> Sorguyu Çalıştır
+                    </button>
+                </div>
+
+                <div id="subdomain-tab" class="tab-content">
+                    <h2><i class="fas fa-sitemap"></i> Subdomain Sorgula</h2>
+                    <div class="form-group">
+                        <label>IP/Domain:</label>
+                        <input type="text" id="domainSubdomain" placeholder="IP adresi veya domain girin">
+                    </div>
+                    <button onclick="sorgula('subdomain', 'domainSubdomain')">
+                        <i class="fas fa-play"></i> Sorguyu Çalıştır
+                    </button>
+                </div>
+
+                <div id="leak-tab" class="tab-content">
+                    <h2><i class="fas fa-envelope"></i> Leak Sorgula</h2>
+                    <div class="form-group">
+                        <label>E-posta:</label>
+                        <input type="text" id="leakQuery" placeholder="E-posta adresi girin">
+                    </div>
+                    <button onclick="sorgula('leak', 'leakQuery')">
+                        <i class="fas fa-play"></i> Sorguyu Çalıştır
+                    </button>
+                </div>
+
+                <div id="telegram-tab" class="tab-content">
+                    <h2><i class="fab fa-telegram"></i> Telegram Sorgula</h2>
+                    <div class="form-group">
+                        <label>Telegram Kullanıcı Adı:</label>
+                        <input type="text" id="telegramUser" placeholder="Telegram kullanıcı adı">
+                    </div>
+                    <button onclick="sorgula('telegram', 'telegramUser')">
+                        <i class="fas fa-play"></i> Sorguyu Çalıştır
+                    </button>
+                </div>
+
+                <!-- Diğer Tablar -->
+                <div id="other-tab" class="tab-content">
+                    <h2><i class="fas fa-cogs"></i> Diğer Sorgular</h2>
                     
-                    <div class="premium-feature">
-                        <i class="fas fa-star"></i>
-                        <div>
-                            <h4>Özel Tabii Hesaplar</h4>
-                            <p>Premium üyelere özel Tabii hesaplarına erişim</p>
+                    <div class="section-group">
+                        <!-- TC ile Sorgular -->
+                        <div class="query-section">
+                            <h4><i class="fas fa-id-card"></i> TC ile Sorgular</h4>
+                            <div class="form-group">
+                                <input type="text" id="tcOther" maxlength="11" placeholder="TC kimlik numarası">
+                            </div>
+                            <div class="btn-group">
+                                <button onclick="sorgula('tapu', 'tcOther')">Tapu Sorgula</button>
+                                <button onclick="sorgula('isyeri', 'tcOther')">İşyeri Sorgula</button>
+                                <button onclick="sorgula('adres', 'tcOther')">Adres Sorgula</button>
+                                <button onclick="sorgula('hane', 'tcOther')">Hane Sorgula</button>
+                                <button onclick="sorgula('apartman', 'tcOther')">Apartman Sorgula</button>
+                            </div>
                         </div>
-                    </div>
-                    
-                    <div class="premium-feature">
-                        <i class="fas fa-bolt"></i>
-                        <div>
-                            <h4>Hızlı Sorgu</h4>
-                            <p>Premium kullanıcılar için öncelikli sorgu</p>
-                        </div>
-                    </div>
-                    
-                    <div class="premium-feature">
-                        <i class="fas fa-shield-alt"></i>
-                        <div>
-                            <h4>Güvenli Erişim</h4>
-                            <p>Gelişmiş güvenlik önlemleri ile koruma</p>
-                        </div>
-                    </div>
 
-                    <div id="premiumContent" style="display: none;">
-                        <div class="account-details" id="accountDetails">
-                            <!-- Hesap detayları buraya gelecek -->
+                        <!-- Discord & IP Sorguları -->
+                        <div class="query-section">
+                            <h4><i class="fab fa-discord"></i> Discord & IP Sorguları</h4>
+                            <div class="form-group">
+                                <label>Discord ID:</label>
+                                <input type="text" id="discordId" placeholder="Discord ID girin">
+                            </div>
+                            <button onclick="sorgulaDiscord()" style="background: linear-gradient(45deg, #5865F2, #7289DA); width: 100%; margin-bottom: 10px;">
+                                <i class="fab fa-discord"></i> Discord Sorgula
+                            </button>
+                            
+                            <div class="form-group">
+                                <label>IP Adresi:</label>
+                                <input type="text" id="gelismisIp" placeholder="IPv4 adresi girin">
+                            </div>
+                            <button onclick="sorgula('gelismisip', 'gelismisIp')" style="width: 100%;">
+                                <i class="fas fa-search-plus"></i> Gelişmiş IP Sorgula
+                            </button>
+                        </div>
+
+                        <!-- Vergi No Sorgusu -->
+                        <div class="query-section">
+                            <h4><i class="fas fa-file-invoice-dollar"></i> Vergi Sorgusu</h4>
+                            <div class="form-group">
+                                <input type="text" id="vergiNo" placeholder="Vergi numarası">
+                            </div>
+                            <button onclick="sorgula('vergino', 'vergiNo')" style="width: 100%;">Vergi No Sorgula</button>
+                        </div>
+
+                        <!-- Ada Parsel Sorgusu -->
+                        <div class="query-section">
+                            <h4><i class="fas fa-map-marked-alt"></i> Ada Parsel Sorgusu</h4>
+                            <div class="form-group">
+                                <input type="text" id="ilAda" placeholder="İl">
+                                <input type="text" id="ada" placeholder="Ada" style="margin-top: 8px;">
+                                <input type="text" id="parsel" placeholder="Parsel" style="margin-top: 8px;">
+                            </div>
+                            <button onclick="sorgulaAdaparsel()" style="width: 100%;">Ada Parsel Sorgula</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Database Tab -->
+                <div id="database-tab" class="tab-content">
+                    <h2><i class="fas fa-database"></i> Database</h2>
+                    <div class="coming-soon">
+                        <i class="fas fa-tools"></i>
+                        <h3>Yakında Aktif Olacak</h3>
+                        <p>Database sorgulama özelliği yakında eklenecek...</p>
+                    </div>
+                </div>
+
+                <!-- Premium Tab -->
+                <div id="premium-tab" class="tab-content">
+                    <h2><i class="fas fa-gem"></i> Premium Özellikler</h2>
+                    
+                    <div class="premium-section">
+                        <h3>🌟 PREMIUM ÜYELİK 🌟</h3>
+                        
+                        <div class="premium-feature">
+                            <i class="fas fa-star"></i>
+                            <div>
+                                <h4>Özel Tabii Hesaplar</h4>
+                                <p>Premium üyelere özel Tabii hesaplarına erişim</p>
+                            </div>
                         </div>
                         
-                        <button onclick="getTabiiAccount()" style="background: linear-gradient(45deg, #f59e0b, #d97706); width: 100%; padding: 15px; font-size: 16px;">
-                            <i class="fas fa-download"></i> TABİİ HESAP AL
-                        </button>
-                    </div>
+                        <div class="premium-feature">
+                            <i class="fas fa-bolt"></i>
+                            <div>
+                                <h4>Hızlı Sorgu</h4>
+                                <p>Premium kullanıcılar için öncelikli sorgu</p>
+                            </div>
+                        </div>
+                        
+                        <div class="premium-feature">
+                            <i class="fas fa-shield-alt"></i>
+                            <div>
+                                <h4>Güvenli Erişim</h4>
+                                <p>Gelişmiş güvenlik önlemleri ile koruma</p>
+                            </div>
+                        </div>
 
-                    <div id="premiumLocked" style="text-align: center; padding: 40px;">
-                        <i class="fas fa-lock" style="font-size: 48px; color: #f59e0b; margin-bottom: 20px;"></i>
-                        <h3>Premium Erişim Gerekli</h3>
-                        <p>Bu özelliklere erişmek için premium key girmeniz gerekiyor.</p>
-                        <button onclick="openTab('premium-key-tab')" style="background: linear-gradient(45deg, #f59e0b, #d97706); margin-top: 20px;">
-                            <i class="fas fa-crown"></i> Premium Key Gir
-                        </button>
+                        <div id="premiumContent" style="display: none;">
+                            <div class="account-details" id="accountDetails">
+                                <!-- Hesap detayları buraya gelecek -->
+                            </div>
+                            
+                            <button onclick="getTabiiAccount()" style="background: linear-gradient(45deg, #f59e0b, #d97706); width: 100%; padding: 15px; font-size: 16px;">
+                                <i class="fas fa-download"></i> TABİİ HESAP AL
+                            </button>
+                        </div>
+
+                        <div id="premiumLocked" style="text-align: center; padding: 40px;">
+                            <i class="fas fa-lock" style="font-size: 48px; color: #f59e0b; margin-bottom: 20px;"></i>
+                            <h3>Premium Erişim Gerekli</h3>
+                            <p>Bu özelliklere erişmek için premium key girmeniz gerekiyor.</p>
+                            <button onclick="openTab('premium-key-tab')" style="background: linear-gradient(45deg, #f59e0b, #d97706); margin-top: 20px;">
+                                <i class="fas fa-crown"></i> Premium Key Gir
+                            </button>
+                        </div>
                     </div>
+                </div>
+
+                <div class="loading" id="loading">
+                    <div class="spinner"></div>
+                    <p>Sorgu yapılıyor...</p>
+                </div>
+
+                <div class="result" id="result">
+                    <h3><i class="fas fa-file-alt"></i> Sorgu Sonucu:</h3>
+                    <pre id="resultData"></pre>
+                    <button onclick="downloadResult()" style="margin-top: 15px;">
+                        <i class="fas fa-download"></i> Sonucu İndir (TXT)
+                    </button>
                 </div>
             </div>
 
-            <div class="loading" id="loading">
-                <div class="spinner"></div>
-                <p>Sorgu yapılıyor...</p>
-            </div>
-
-            <div class="result" id="result">
-                <h3><i class="fas fa-file-alt"></i> Sorgu Sonucu:</h3>
-                <pre id="resultData"></pre>
-                <button onclick="downloadResult()" style="margin-top: 15px;">
-                    <i class="fas fa-download"></i> Sonucu İndir (TXT)
-                </button>
-            </div>
+            <footer>
+                <p><strong>DABBE2025</strong> - Tüm Hakları Saklıdır © 2025</p>
+            </footer>
         </div>
     </div>
 
