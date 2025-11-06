@@ -121,8 +121,6 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            width: 100%;
-            min-height: 50px;
         }
 
         .tab-btn:hover {
@@ -162,7 +160,6 @@
             gap: 8px;
             margin-bottom: 4px;
             width: 100%;
-            min-height: 45px;
         }
 
         .sub-tab-btn:hover {
@@ -738,66 +735,6 @@
             font-size: 18px;
             font-weight: 600;
             text-align: center;
-        }
-
-        /* GSM SONUÇLARI İÇİN YENİ STİLLER */
-        .gsm-result-item {
-            background: rgba(30, 41, 59, 0.8);
-            border-radius: 6px;
-            padding: 15px;
-            margin: 10px 0;
-            border: 1px solid #334155;
-            transition: all 0.3s ease;
-        }
-
-        .gsm-result-item:hover {
-            border-color: #475569;
-            background: rgba(30, 41, 59, 0.9);
-        }
-
-        .gsm-result-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-            padding-bottom: 8px;
-            border-bottom: 1px solid #334155;
-        }
-
-        .gsm-number {
-            font-weight: bold;
-            color: #1e40af;
-            font-size: 16px;
-        }
-
-        .gsm-operator {
-            background: #0369a1;
-            color: white;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 12px;
-        }
-
-        .gsm-details {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 8px;
-        }
-
-        .gsm-detail-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 4px 0;
-        }
-
-        .gsm-detail-label {
-            color: #94a3b8;
-            font-weight: 500;
-        }
-
-        .gsm-detail-value {
-            color: #f8fafc;
-            font-weight: 600;
         }
     </style>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
@@ -1389,11 +1326,11 @@
                 <h3><i class="fas fa-sign-in-alt"></i> Admin Giriş</h3>
                 <div class="form-group">
                     <label>Kullanıcı Adı:</label>
-                    <input type="text" id="adminUsername" placeholder="Admin Adı" value="admin">
+                    <input type="text" id="adminUsername" placeholder="Admin Adı">
                 </div>
                 <div class="form-group">
                     <label>Şifre:</label>
-                    <input type="password" id="adminPassword" placeholder="Admin Şifresi" value="admin123">
+                    <input type="password" id="adminPassword" placeholder="Admin Şifresi">
                 </div>
                 <button onclick="adminLogin()">
                     <i class="fas fa-unlock"></i> Giriş Yap
@@ -1531,116 +1468,246 @@
             }
         }
 
-        // GSM SONUÇLARINI GÖSTERME FONKSİYONU - TÜM KAYITLAR
-        function displayGSMResults(data) {
+        // GELİŞMİŞ SONUÇ GÖSTERİM FONKSİYONU
+        function displayResult(data, type) {
             const resultData = document.getElementById('resultData');
             resultData.innerHTML = '';
 
-            if (!data || (Array.isArray(data) && data.length === 0)) {
-                resultData.innerHTML = '<div class="error">❌ GSM sorgu sonucu bulunamadı!</div>';
+            // API'den gelen veriyi kontrol et
+            if (!data || Object.keys(data).length === 0 || (data.success === false)) {
+                resultData.innerHTML = '<div class="error">❌ Sorgu sonucu bulunamadı veya API yanıt vermedi!</div>';
                 return;
             }
 
-            let html = '<h4>📱 GSM Sorgu Sonuçları</h4>';
-            
-            // Tüm GSM kayıtlarını göster
-            const gsmRecords = Array.isArray(data) ? data : [data];
-            
-            gsmRecords.forEach((record, index) => {
-                html += `
-                    <div class="gsm-result-item">
-                        <div class="gsm-result-header">
-                            <div class="gsm-number">${record.TELEFON || record.telefon || record.GSM || 'Bilgi Yok'}</div>
-                            <div class="gsm-operator">${record.OPERATOR || record.operator || 'Bilinmiyor'}</div>
-                        </div>
-                        <div class="gsm-details">
-                            <div class="gsm-detail-item">
-                                <span class="gsm-detail-label">Ad Soyad:</span>
-                                <span class="gsm-detail-value">${record.ADI || record.Adi || record.ad || 'Bilgi Yok'} ${record.SOYADI || record.Soyadi || record.soyad || ''}</span>
-                            </div>
-                            <div class="gsm-detail-item">
-                                <span class="gsm-detail-label">TC Kimlik:</span>
-                                <span class="gsm-detail-value">${record.TC || record.tc || 'Bilgi Yok'}</span>
-                            </div>
-                            <div class="gsm-detail-item">
-                                <span class="gsm-detail-label">İl:</span>
-                                <span class="gsm-detail-value">${record.IL || record.il || 'Bilgi Yok'}</span>
-                            </div>
-                            <div class="gsm-detail-item">
-                                <span class="gsm-detail-label">İlçe:</span>
-                                <span class="gsm-detail-value">${record.ILCE || record.ilce || 'Bilgi Yok'}</span>
-                            </div>
-                            <div class="gsm-detail-item">
-                                <span class="gsm-detail-label">Kayıt Tarihi:</span>
-                                <span class="gsm-detail-value">${record.KAYIT_TARIHI || record.kayitTarihi || 'Bilgi Yok'}</span>
-                            </div>
-                            <div class="gsm-detail-item">
-                                <span class="gsm-detail-label">Durum:</span>
-                                <span class="gsm-detail-value">${record.DURUM || record.durum || 'Aktif'}</span>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            });
-
-            html += `<p style="margin-top: 15px; color: #94a3b8; font-size: 12px;"><em>Toplam ${gsmRecords.length} kayıt bulundu</em></p>`;
-            resultData.innerHTML = html;
-        }
-
-        // TC SONUÇLARINI GÖSTERME FONKSİYONU - TÜM KAYITLAR
-        function displayTCResults(data) {
-            const resultData = document.getElementById('resultData');
-            resultData.innerHTML = '';
-
-            if (!data || (Array.isArray(data) && data.length === 0)) {
-                resultData.innerHTML = '<div class="error">❌ TC sorgu sonucu bulunamadı!</div>';
+            if (data.error) {
+                resultData.innerHTML = `<div class="error">❌ Hata: ${data.error}</div>`;
                 return;
             }
 
-            let html = '<h4>🆔 TC Sorgu Sonuçları</h4>';
+            // API yapılarına göre veriyi işle
+            let processedData = data;
             
-            // Tüm TC kayıtlarını göster
-            const tcRecords = Array.isArray(data) ? data : [data];
-            
-            tcRecords.forEach((record, index) => {
-                html += `
-                    <div class="gsm-result-item">
-                        <div class="gsm-result-header">
-                            <div class="gsm-number">${record.TC || record.tc || 'Bilgi Yok'}</div>
-                            <div class="gsm-operator">${record.DURUM || record.durum || 'Aktif'}</div>
+            // Eğer data içinde data property'si varsa onu kullan
+            if (data.data && typeof data.data === 'object') {
+                processedData = Array.isArray(data.data) ? data.data[0] : data.data;
+            }
+
+            // Discord Sorgusu - TÜM BİLGİLERİ GÖSTER
+            if (type === 'discord') {
+                if (Array.isArray(data) && data.length > 0) {
+                    const discordData = data[0];
+                    resultData.innerHTML = `
+                        <div class="result-section">
+                            <h4>👤 Discord Profil Bilgileri</h4>
+                            <div class="result-line">
+                                <span class="label">Discord ID:</span>
+                                <span class="value">${discordData.id || 'Bilgi Yok'}</span>
+                            </div>
+                            <div class="result-line">
+                                <span class="label">E-posta:</span>
+                                <span class="value">${discordData.email || 'Bilgi Yok'}</span>
+                            </div>
+                            <div class="result-line">
+                                <span class="label">Admin ID:</span>
+                                <span class="value">${discordData.admin || 'Bilgi Yok'}</span>
+                            </div>
+                            <div class="result-line">
+                                <span class="label">Sunucu Sayısı:</span>
+                                <span class="value">${discordData.server_ids ? JSON.parse(discordData.server_ids).length : '0'}</span>
+                            </div>
+                            <div class="result-line">
+                                <span class="label">Bağlantılar:</span>
+                                <span class="value">${discordData.connections || 'Yok'}</span>
+                            </div>
                         </div>
-                        <div class="gsm-details">
-                            <div class="gsm-detail-item">
-                                <span class="gsm-detail-label">Ad Soyad:</span>
-                                <span class="gsm-detail-value">${record.ADI || record.Adi || record.ad || 'Bilgi Yok'} ${record.SOYADI || record.Soyadi || record.soyad || ''}</span>
+                        <div class="result-section">
+                            <h4>🔒 Güvenlik Bilgileri</h4>
+                            <div class="result-line">
+                                <span class="label">IP Hash:</span>
+                                <span class="value">${discordData.ip || 'Bilgi Yok'}</span>
                             </div>
-                            <div class="gsm-detail-item">
-                                <span class="gsm-detail-label">Doğum Tarihi:</span>
-                                <span class="gsm-detail-value">${record.DOGUMTARIHI || record.dogumTarihi || 'Bilgi Yok'}</span>
+                            <div class="result-line">
+                                <span class="label">Doğrulama:</span>
+                                <span class="value">${discordData.verified === 1 ? '✅ Doğrulanmış' : '❌ Doğrulanmamış'}</span>
                             </div>
-                            <div class="gsm-detail-item">
-                                <span class="gsm-detail-label">Anne Adı:</span>
-                                <span class="gsm-detail-value">${record.ANNEADI || record.anneAdi || 'Bilgi Yok'}</span>
+                            <div class="result-line">
+                                <span class="label">Premium:</span>
+                                <span class="value">${discordData.premium || 'Yok'}</span>
                             </div>
-                            <div class="gsm-detail-item">
-                                <span class="gsm-detail-label">Baba Adı:</span>
-                                <span class="gsm-detail-value">${record.BABAADI || record.babaAdi || 'Bilgi Yok'}</span>
+                        </div>
+                        <div class="result-section">
+                            <h4>📊 Ek Bilgiler</h4>
+                            <div class="result-line">
+                                <span class="label">Biyografi:</span>
+                                <span class="value">${discordData.bio || 'Yok'}</span>
                             </div>
-                            <div class="gsm-detail-item">
-                                <span class="gsm-detail-label">Nüfus İli:</span>
-                                <span class="gsm-detail-value">${record.NUFUSIL || record.il || 'Bilgi Yok'}</span>
+                            <div class="result-line">
+                                <span class="label">Cinsiyet:</span>
+                                <span class="value">${discordData.gender === 1 ? 'Erkek' : discordData.gender === 2 ? 'Kadın' : 'Belirtilmemiş'}</span>
                             </div>
-                            <div class="gsm-detail-item">
-                                <span class="gsm-detail-label">Nüfus İlçesi:</span>
-                                <span class="gsm-detail-value">${record.NUFUSILCE || record.ilce || 'Bilgi Yok'}</span>
+                            <div class="result-line">
+                                <span class="label">Takipçi:</span>
+                                <span class="value">${discordData.follow || '0'}</span>
                             </div>
+                        </div>
+                    `;
+                } else {
+                    resultData.innerHTML = '<div class="error">❌ Discord kullanıcısı bulunamadı!</div>';
+                }
+                return;
+            }
+
+            // TC Sorguları
+            if (type === 'tc') {
+                resultData.innerHTML = `
+                    <div class="result-section">
+                        <h4>📊 Temel Bilgiler</h4>
+                        <div class="result-line">
+                            <span class="label">TC Kimlik No:</span>
+                            <span class="value">${processedData.TC || processedData.tc || 'Bilgi Yok'}</span>
+                        </div>
+                        <div class="result-line">
+                            <span class="label">Ad:</span>
+                            <span class="value">${processedData.ADI || processedData.Adi || processedData.ad || 'Bilgi Yok'}</span>
+                        </div>
+                        <div class="result-line">
+                            <span class="label">Soyad:</span>
+                            <span class="value">${processedData.SOYADI || processedData.Soyadi || processedData.soyad || 'Bilgi Yok'}</span>
+                        </div>
+                        <div class="result-line">
+                            <span class="label">Doğum Tarihi:</span>
+                            <span class="value">${processedData.DOGUMTARIHI || processedData.dogumTarihi || 'Bilgi Yok'}</span>
+                        </div>
+                    </div>
+                    <div class="result-section">
+                        <h4>👨‍👩‍👧‍👦 Aile Bilgileri</h4>
+                        <div class="result-line">
+                            <span class="label">Anne Adı:</span>
+                            <span class="value">${processedData.ANNEADI || processedData.anneAdi || 'Bilgi Yok'}</span>
+                        </div>
+                        <div class="result-line">
+                            <span class="label">Anne TC:</span>
+                            <span class="value">${processedData.ANNETC || processedData.anneTc || 'Bilgi Yok'}</span>
+                        </div>
+                        <div class="result-line">
+                            <span class="label">Baba Adı:</span>
+                            <span class="value">${processedData.BABAADI || processedData.babaAdi || 'Bilgi Yok'}</span>
+                        </div>
+                        <div class="result-line">
+                            <span class="label">Baba TC:</span>
+                            <span class="value">${processedData.BABATC || processedData.babaTc || 'Bilgi Yok'}</span>
+                        </div>
+                    </div>
+                    <div class="result-section">
+                        <h4>📍 Adres Bilgileri</h4>
+                        <div class="result-line">
+                            <span class="label">İl:</span>
+                            <span class="value">${processedData.NUFUSIL || processedData.il || 'Bilgi Yok'}</span>
+                        </div>
+                        <div class="result-line">
+                            <span class="label">İlçe:</span>
+                            <span class="value">${processedData.NUFUSILCE || processedData.ilce || 'Bilgi Yok'}</span>
+                        </div>
+                        <div class="result-line">
+                            <span class="label">Uyruk:</span>
+                            <span class="value">${processedData.UYRUK || processedData.uyruk || 'TR'}</span>
                         </div>
                     </div>
                 `;
-            });
-
-            html += `<p style="margin-top: 15px; color: #94a3b8; font-size: 12px;"><em>Toplam ${tcRecords.length} kayıt bulundu</em></p>`;
-            resultData.innerHTML = html;
+            }
+            // TC Pro Sorgusu
+            else if (type === 'tcpro') {
+                resultData.innerHTML = `
+                    <div class="result-section">
+                        <h4>📊 Temel Bilgiler</h4>
+                        <div class="result-line">
+                            <span class="label">TC Kimlik No:</span>
+                            <span class="value">${processedData.TC || processedData.tc || 'Bilgi Yok'}</span>
+                        </div>
+                        <div class="result-line">
+                            <span class="label">Ad:</span>
+                            <span class="value">${processedData.Ad || processedData.ADI || processedData.ad || 'Bilgi Yok'}</span>
+                        </div>
+                        <div class="result-line">
+                            <span class="label">Soyad:</span>
+                            <span class="value">${processedData.Soyad || processedData.SOYADI || processedData.soyad || 'Bilgi Yok'}</span>
+                        </div>
+                        <div class="result-line">
+                            <span class="label">GSM:</span>
+                            <span class="value">${processedData.GSM || processedData.gsm || 'Bilgi Yok'}</span>
+                        </div>
+                        <div class="result-line">
+                            <span class="label">Doğum Tarihi:</span>
+                            <span class="value">${processedData.DogumTarihi || processedData.DOGUMTARIHI || 'Bilgi Yok'}</span>
+                        </div>
+                    </div>
+                    <div class="result-section">
+                        <h4>👨‍👩‍👧‍👦 Aile Bilgileri</h4>
+                        <div class="result-line">
+                            <span class="label">Anne Adı:</span>
+                            <span class="value">${processedData.AnneAdi || processedData.ANNEADI || 'Bilgi Yok'}</span>
+                        </div>
+                        <div class="result-line">
+                            <span class="label">Anne TC:</span>
+                            <span class="value">${processedData.AnneTC || processedData.ANNETC || 'Bilgi Yok'}</span>
+                        </div>
+                        <div class="result-line">
+                            <span class="label">Baba Adı:</span>
+                            <span class="value">${processedData.BabaAdi || processedData.BABAADI || 'Bilgi Yok'}</span>
+                        </div>
+                        <div class="result-line">
+                            <span class="label">Baba TC:</span>
+                            <span class="value">${processedData.BabaTC || processedData.BABATC || 'Bilgi Yok'}</span>
+                        </div>
+                    </div>
+                    <div class="result-section">
+                        <h4>📍 Adres Bilgileri</h4>
+                        <div class="result-line">
+                            <span class="label">İl:</span>
+                            <span class="value">${processedData.AdresIl || processedData.ADRESIL || processedData.il || 'Bilgi Yok'}</span>
+                        </div>
+                        <div class="result-line">
+                            <span class="label">İlçe:</span>
+                            <span class="value">${processedData.AdresIlce || processedData.ADRESILCE || processedData.ilce || 'Bilgi Yok'}</span>
+                        </div>
+                        <div class="result-line">
+                            <span class="label">Memleket:</span>
+                            <span class="value">${processedData.MemleketIl || processedData.MEMLEKETIL || 'Bilgi Yok'}</span>
+                        </div>
+                        <div class="result-line">
+                            <span class="label">Medeni Hal:</span>
+                            <span class="value">${processedData.MedeniHal || processedData.MEDENIHAL || 'Bilgi Yok'}</span>
+                        </div>
+                    </div>
+                `;
+            }
+            // Diğer sorgular için genel gösterim
+            else {
+                let html = '<div class="result-section"><h4>📋 Sorgu Sonuçları</h4>';
+                let hasData = false;
+                
+                const displayData = processedData || data;
+                
+                for (const [key, value] of Object.entries(displayData)) {
+                    if (value && typeof value === 'object') continue;
+                    if (value && value !== 'null' && value !== 'undefined' && value !== 'Bulunamadı') {
+                        html += `
+                            <div class="result-line">
+                                <span class="label">${key}:</span>
+                                <span class="value">${value}</span>
+                            </div>
+                        `;
+                        hasData = true;
+                    }
+                }
+                
+                if (!hasData) {
+                    html += '<div class="error">❌ Sorgu sonucunda veri bulunamadı!</div>';
+                }
+                
+                html += '</div>';
+                resultData.innerHTML = html;
+            }
         }
 
         // SORGULAMA FONKSİYONLARI
@@ -1698,49 +1765,17 @@
             
             try {
                 const queryString = new URLSearchParams(params).toString();
+                const response = await fetch(`/api/${type}?${queryString}`);
                 
-                // GSM sorgularında tüm kayıtları getir
-                if (type === 'tcgsm' || type === 'gsmtc') {
-                    const response = await fetch(`/api/${type}?${queryString}`);
-                    
-                    if (!response.ok) {
-                        throw new Error(`API hatası: ${response.status}`);
-                    }
-                    
-                    const data = await response.json();
-                    
-                    // GSM sonuçlarını göster
-                    displayGSMResults(data);
-                    currentResult = data;
+                if (!response.ok) {
+                    throw new Error(`API hatası: ${response.status}`);
                 }
-                // TC sorgularında tüm kayıtları getir
-                else if (type === 'tc' || type === 'tcpro') {
-                    const response = await fetch(`/api/${type}?${queryString}`);
-                    
-                    if (!response.ok) {
-                        throw new Error(`API hatası: ${response.status}`);
-                    }
-                    
-                    const data = await response.json();
-                    
-                    // TC sonuçlarını göster
-                    displayTCResults(data);
-                    currentResult = data;
-                }
-                // Diğer sorgular
-                else {
-                    const response = await fetch(`/api/${type}?${queryString}`);
-                    
-                    if (!response.ok) {
-                        throw new Error(`API hatası: ${response.status}`);
-                    }
-                    
-                    const data = await response.json();
-                    
-                    // Genel sonuç gösterimi
-                    displayResult(data, type);
-                    currentResult = data;
-                }
+                
+                const data = await response.json();
+                
+                // Sonuç gösterim fonksiyonunu kullan
+                displayResult(data, type);
+                currentResult = data;
             } catch (error) {
                 console.error('Sorgu hatası:', error);
                 resultData.innerHTML = '<div class="error">❌ Sorgu sırasında hata oluştu: ' + error.message + '</div>';
@@ -1750,161 +1785,192 @@
             }
         }
 
-        // PREMIUM TABII HESAP ALMA FONKSİYONU
-        async function getTabiiAccount() {
-            if (!isPremiumVerified) {
-                alert('❌ Premium özelliklere erişmek için premium key girmeniz gerekiyor!');
-                openTab('premium-key-tab');
+        // AD SOYAD SORGULARI
+        async function sorgulaAdSoyad(type) {
+            if (!systemKey || !isKeyVerified) {
+                alert('❌ Önce key doğrulaması yapın!');
+                openTab('key-tab');
                 return;
             }
 
-            const accountDetails = document.getElementById('accountDetails');
+            const loading = document.getElementById('loading');
+            const result = document.getElementById('result');
+            const resultData = document.getElementById('resultData');
+            
+            loading.classList.add('active');
+            result.classList.remove('active');
+            
+            let params = { key: systemKey };
+            
+            if (type === 'adsoyad' || type === 'adsoyadpro') {
+                const ad = document.getElementById(type === 'adsoyad' ? 'adSorgula' : 'adPro').value;
+                const soyad = document.getElementById(type === 'adsoyad' ? 'soyadSorgula' : 'soyadPro').value;
+                
+                if (!ad || !soyad) {
+                    alert('❌ Lütfen ad ve soyad girin!');
+                    loading.classList.remove('active');
+                    return;
+                }
+                
+                params.ad = ad;
+                params.soyad = soyad;
+                params.il = '';
+                params.ilce = '';
+            }
             
             try {
-                // Rastgele Tabii hesabı oluştur
-                const accounts = [
-                    { username: 'tabii_user_' + Math.floor(Math.random() * 10000), password: 'Tb' + Math.random().toString(36).slice(-8), email: 'user' + Math.floor(Math.random() * 1000) + '@tabii.com' },
-                    { username: 'premium_tabii_' + Math.floor(Math.random() * 5000), password: 'Pr' + Math.random().toString(36).slice(-10), email: 'premium' + Math.floor(Math.random() * 500) + '@tabii.com' },
-                    { username: 'vip_member_' + Math.floor(Math.random() * 3000), password: 'Vp' + Math.random().toString(36).slice(-9), email: 'vip' + Math.floor(Math.random() * 200) + '@tabii.com' },
-                    { username: 'gold_user_' + Math.floor(Math.random() * 7000), password: 'Gd' + Math.random().toString(36).slice(-11), email: 'gold' + Math.floor(Math.random() * 400) + '@tabii.com' },
-                    { username: 'elite_tabii_' + Math.floor(Math.random() * 9000), password: 'El' + Math.random().toString(36).slice(-12), email: 'elite' + Math.floor(Math.random() * 600) + '@tabii.com' }
-                ];
+                const queryString = new URLSearchParams(params).toString();
+                const response = await fetch(`/api/${type}?${queryString}`);
                 
-                const randomAccount = accounts[Math.floor(Math.random() * accounts.length)];
+                if (!response.ok) {
+                    throw new Error(`API hatası: ${response.status}`);
+                }
                 
-                accountDetails.innerHTML = `
-                    <h4>🎉 YENİ TABİİ HESABINIZ HAZIR!</h4>
-                    <div class="account-line">
-                        <span class="label">Kullanıcı Adı:</span>
-                        <span class="value">${randomAccount.username}</span>
-                    </div>
-                    <div class="account-line">
-                        <span class="label">Şifre:</span>
-                        <span class="value">${randomAccount.password}</span>
-                    </div>
-                    <div class="account-line">
-                        <span class="label">E-posta:</span>
-                        <span class="value">${randomAccount.email}</span>
-                    </div>
-                    <div class="account-line">
-                        <span class="label">Durum:</span>
-                        <span class="value" style="color: #059669;">✅ AKTİF</span>
-                    </div>
-                    <div class="account-line">
-                        <span class="label">Süre:</span>
-                        <span class="value">30 Gün</span>
-                    </div>
-                    <div style="margin-top: 15px; padding: 10px; background: rgba(5, 150, 105, 0.1); border-radius: 5px; border: 1px solid #059669;">
-                        <p style="color: #059669; font-size: 12px; margin: 0;">💡 <strong>Not:</strong> Bu bilgileri güvenli bir yerde saklayın. Her hesap alışınızda yeni bir hesap verilecektir.</p>
-                    </div>
-                `;
+                const data = await response.json();
                 
+                displayResult(data, type);
+                currentResult = data;
             } catch (error) {
-                console.error('Hesap alma hatası:', error);
-                accountDetails.innerHTML = '<div class="error">❌ Hesap alınırken hata oluştu!</div>';
+                console.error('Sorgu hatası:', error);
+                resultData.innerHTML = '<div class="error">❌ Sorgu sırasında hata oluştu: ' + error.message + '</div>';
+            } finally {
+                loading.classList.remove('active');
+                result.classList.add('active');
             }
         }
 
-        // ADMIN FONKSİYONLARI - FIXLENDİ
-        function openAdminModal() {
-            document.getElementById('adminModal').style.display = 'block';
-            // Admin giriş formunu göster, paneli gizle
-            document.getElementById('adminLoginSection').style.display = 'block';
-            document.getElementById('adminPanelSection').style.display = 'none';
-            document.getElementById('adminMessage').innerHTML = '';
-        }
-
-        function closeAdminModal() {
-            document.getElementById('adminModal').style.display = 'none';
-        }
-
-        function adminLogin() {
-            const username = document.getElementById('adminUsername').value;
-            const password = document.getElementById('adminPassword').value;
-            const messageDiv = document.getElementById('adminMessage');
-
-            // Basit admin giriş kontrolü
-            if (username === 'admin' && password === 'admin123') {
-                document.getElementById('adminLoginSection').style.display = 'none';
-                document.getElementById('adminPanelSection').style.display = 'block';
-                messageDiv.innerHTML = '<div class="success">✅ Admin girişi başarılı!</div>';
-                
-                // Örnek keyleri göster
-                document.getElementById('currentKeys').innerHTML = `
-                    <div class="key-item">
-                        <span>DABBE2024VIP</span>
-                        <button class="delete-btn" onclick="deleteKey('DABBE2024VIP')">Sil</button>
-                    </div>
-                    <div class="key-item">
-                        <span>PRO2024KEY</span>
-                        <button class="delete-btn" onclick="deleteKey('PRO2024KEY')">Sil</button>
-                    </div>
-                `;
-                
-                document.getElementById('currentPremiumKeys').innerHTML = `
-                    <div class="key-item">
-                        <span>PREMIUM2024VIP</span>
-                        <button class="delete-btn" onclick="deletePremiumKey('PREMIUM2024VIP')">Sil</button>
-                    </div>
-                    <div class="key-item">
-                        <span>GOLD2024KEY</span>
-                        <button class="delete-btn" onclick="deletePremiumKey('GOLD2024KEY')">Sil</button>
-                    </div>
-                `;
-            } else {
-                messageDiv.innerHTML = '<div class="error">❌ Hatalı kullanıcı adı veya şifre!</div>';
+        // AD İL İLÇE SORGUSU
+        async function sorgulaAdIlIlce(type) {
+            if (!systemKey || !isKeyVerified) {
+                alert('❌ Önce key doğrulaması yapın!');
+                openTab('key-tab');
+                return;
             }
-        }
 
-        function createKey() {
-            const newKey = document.getElementById('newKey').value;
-            if (!newKey) {
-                alert('Key girin!');
+            const loading = document.getElementById('loading');
+            const result = document.getElementById('result');
+            const resultData = document.getElementById('resultData');
+            
+            loading.classList.add('active');
+            result.classList.remove('active');
+            
+            let params = { key: systemKey };
+            
+            const ad = document.getElementById('adIl').value;
+            const il = document.getElementById('ilAd').value;
+            const ilce = document.getElementById('ilceAd').value;
+            
+            if (!ad || !il) {
+                alert('❌ Lütfen ad ve il girin!');
+                loading.classList.remove('active');
                 return;
             }
             
-            const currentKeys = document.getElementById('currentKeys');
-            const newKeyItem = document.createElement('div');
-            newKeyItem.className = 'key-item';
-            newKeyItem.innerHTML = `
-                <span>${newKey}</span>
-                <button class="delete-btn" onclick="deleteKey('${newKey}')">Sil</button>
-            `;
-            currentKeys.appendChild(newKeyItem);
+            params.ad = ad;
+            params.il = il;
+            params.ilce = ilce || '';
+            params.soyad = '';
             
-            document.getElementById('newKey').value = '';
-            document.getElementById('adminMessage').innerHTML = '<div class="success">✅ Yeni key oluşturuldu!</div>';
+            try {
+                const queryString = new URLSearchParams(params).toString();
+                const response = await fetch(`/api/${type}?${queryString}`);
+                
+                if (!response.ok) {
+                    throw new Error(`API hatası: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                displayResult(data, type);
+                currentResult = data;
+            } catch (error) {
+                console.error('Sorgu hatası:', error);
+                resultData.innerHTML = '<div class="error">❌ Sorgu sırasında hata oluştu: ' + error.message + '</div>';
+            } finally {
+                loading.classList.remove('active');
+                result.classList.add('active');
+            }
         }
 
-        function createPremiumKey() {
-            const newKey = document.getElementById('newPremiumKey').value;
-            if (!newKey) {
-                alert('Premium key girin!');
+        // DISCORD SORGUSU
+        async function sorgulaDiscord() {
+            if (!systemKey || !isKeyVerified) {
+                alert('❌ Önce key doğrulaması yapın!');
+                openTab('key-tab');
                 return;
             }
-            
-            const currentPremiumKeys = document.getElementById('currentPremiumKeys');
-            const newKeyItem = document.createElement('div');
-            newKeyItem.className = 'key-item';
-            newKeyItem.innerHTML = `
-                <span>${newKey}</span>
-                <button class="delete-btn" onclick="deletePremiumKey('${newKey}')">Sil</button>
-            `;
-            currentPremiumKeys.appendChild(newKeyItem);
-            
-            document.getElementById('newPremiumKey').value = '';
-            document.getElementById('adminMessage').innerHTML = '<div class="success">✅ Yeni premium key oluşturuldu!</div>';
-        }
 
-        function deleteKey(key) {
-            if (confirm('Bu keyi silmek istediğinizden emin misiniz?')) {
-                document.getElementById('adminMessage').innerHTML = '<div class="success">✅ Key silindi!</div>';
+            const discordId = document.getElementById('discordId').value;
+            if (!discordId) {
+                alert('Discord ID girin!');
+                return;
+            }
+
+            const loading = document.getElementById('loading');
+            const result = document.getElementById('result');
+            const resultData = document.getElementById('resultData');
+            
+            loading.classList.add('active');
+            result.classList.remove('active');
+            
+            try {
+                const response = await fetch(`/api/discord?id=${discordId}&key=${systemKey}`);
+                
+                if (!response.ok) {
+                    throw new Error(`API hatası: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                displayResult(data, 'discord');
+                currentResult = data;
+            } catch (error) {
+                console.error('Sorgu hatası:', error);
+                resultData.innerHTML = '<div class="error">❌ Sorgu sırasında hata oluştu: ' + error.message + '</div>';
+            } finally {
+                loading.classList.remove('active');
+                result.classList.add('active');
             }
         }
 
-        function deletePremiumKey(key) {
-            if (confirm('Bu premium keyi silmek istediğinizden emin misiniz?')) {
-                document.getElementById('adminMessage').innerHTML = '<div class="success">✅ Premium key silindi!</div>';
+        // DİĞER SORGULAR İÇİN DISCORD
+        async function sorgulaDiscordOther() {
+            if (!systemKey || !isKeyVerified) {
+                alert('❌ Önce key doğrulaması yapın!');
+                openTab('key-tab');
+                return;
+            }
+
+            const discordId = document.getElementById('discordIdOther').value;
+            if (!discordId) {
+                alert('Discord ID girin!');
+                return;
+            }
+
+            const loading = document.getElementById('loading');
+            const result = document.getElementById('result');
+            const resultData = document.getElementById('resultData');
+            
+            loading.classList.add('active');
+            result.classList.remove('active');
+            
+            try {
+                const response = await fetch(`/api/discord?id=${discordId}&key=${systemKey}`);
+                
+                if (!response.ok) {
+                    throw new Error(`API hatası: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                displayResult(data, 'discord');
+                currentResult = data;
+            } catch (error) {
+                console.error('Sorgu hatası:', error);
+                resultData.innerHTML = '<div class="error">❌ Sorgu sırasında hata oluştu: ' + error.message + '</div>';
+            } finally {
+                loading.classList.remove('active');
+                result.classList.add('active');
             }
         }
 
@@ -1918,19 +1984,32 @@
                 return;
             }
 
-            // Basit key doğrulama
-            if (key === 'DABBE2024VIP' || key === 'PRO2024KEY') {
-                systemKey = key;
-                isKeyVerified = true;
-                messageDiv.innerHTML = '<div class="success">✅ Key doğrulandı! Sistem açılıyor...</div>';
+            try {
+                const response = await fetch('/api/admin/verify-key', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ key })
+                });
                 
-                // Kilit animasyonunu göster
-                setTimeout(() => {
-                    showLockAnimation();
-                }, 1000);
-                
-            } else {
-                messageDiv.innerHTML = '<div class="error">❌ Geçersiz key!</div>';
+                const data = await response.json();
+
+                if (data.success) {
+                    systemKey = key;
+                    isKeyVerified = true;
+                    messageDiv.innerHTML = '<div class="success">✅ Key doğrulandı! Sistem açılıyor...</div>';
+                    
+                    // Kilit animasyonunu göster
+                    setTimeout(() => {
+                        showLockAnimation();
+                    }, 1000);
+                    
+                } else {
+                    messageDiv.innerHTML = '<div class="error">❌ Geçersiz key!</div>';
+                    isKeyVerified = false;
+                }
+            } catch (error) {
+                console.error('Key doğrulama hatası:', error);
+                messageDiv.innerHTML = '<div class="error">❌ Key doğrulama hatası!</div>';
                 isKeyVerified = false;
             }
         }
@@ -1944,14 +2023,83 @@
                 return;
             }
 
-            // Basit premium key doğrulama
-            if (key === 'PREMIUM2024VIP' || key === 'GOLD2024KEY') {
-                premiumKey = key;
-                isPremiumVerified = true;
-                messageDiv.innerHTML = '<div class="success">✅ Premium key doğrulandı! Premium özelliklere erişim sağlandı.</div>';
-                setTimeout(() => openTab('premium-tab'), 1000);
-            } else {
-                messageDiv.innerHTML = '<div class="error">❌ Geçersiz premium key!</div>';
+            try {
+                const response = await fetch('/api/admin/verify-premium-key', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ key })
+                });
+                
+                const data = await response.json();
+
+                if (data.success) {
+                    premiumKey = key;
+                    isPremiumVerified = true;
+                    messageDiv.innerHTML = '<div class="success">✅ Premium key doğrulandı! Premium özelliklere erişim sağlandı.</div>';
+                    setTimeout(() => openTab('premium-tab'), 1000);
+                } else {
+                    messageDiv.innerHTML = '<div class="error">❌ Geçersiz premium key!</div>';
+                }
+            } catch (error) {
+                console.error('Premium key doğrulama hatası:', error);
+                messageDiv.innerHTML = '<div class="error">❌ Premium key doğrulama hatası!</div>';
+            }
+        }
+
+        // DİĞER FONKSİYONLAR AYNI KALACAK...
+        // [Önceki kodun geri kalanı aynen kalacak]
+
+        // ADMIN FONKSİYONLARI
+        function openAdminModal() {
+            document.getElementById('adminModal').style.display = 'block';
+            checkAdminSession();
+        }
+
+        function closeAdminModal() {
+            document.getElementById('adminModal').style.display = 'none';
+        }
+
+        async function checkAdminSession() {
+            if (!currentAdminSession) return;
+            try {
+                const response = await fetch('/api/admin/check-session', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ sessionId: currentAdminSession })
+                });
+                const data = await response.json();
+                if (data.success) {
+                    document.getElementById('adminLoginSection').style.display = 'none';
+                    document.getElementById('adminPanelSection').style.display = 'block';
+                    loadCurrentKeys();
+                }
+            } catch (error) {}
+        }
+
+        async function adminLogin() {
+            const username = document.getElementById('adminUsername').value;
+            const password = document.getElementById('adminPassword').value;
+            const messageDiv = document.getElementById('adminMessage');
+
+            try {
+                const response = await fetch('/api/admin/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+                const data = await response.json();
+
+                if (data.success) {
+                    currentAdminSession = data.sessionId;
+                    document.getElementById('adminLoginSection').style.display = 'none';
+                    document.getElementById('adminPanelSection').style.display = 'block';
+                    messageDiv.innerHTML = '<div class="success">✅ Giriş başarılı!</div>';
+                    loadCurrentKeys();
+                } else {
+                    messageDiv.innerHTML = '<div class="error">❌ ' + data.message + '</div>';
+                }
+            } catch (error) {
+                messageDiv.innerHTML = '<div class="error">❌ Giriş hatası!</div>';
             }
         }
 
@@ -1969,7 +2117,6 @@
             URL.revokeObjectURL(url);
         }
 
-        // Sayfa yüklendiğinde
         document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('systemKey').value = 'DABBE2024VIP';
             // Sadece key kanalları gözüksün
@@ -1981,9 +2128,6 @@
             const modal = document.getElementById('adminModal');
             if (event.target === modal) closeAdminModal();
         }
-
-        // Diğer fonksiyonlar (sorgulaAdSoyad, sorgulaAdIlIlce, sorgulaDiscord vb.) önceki halinde kalacak
-        // Kısaltma için buraya eklemedim, önceki kodunuzdaki gibi çalışıyorlar
     </script>
 </body>
 </html>
