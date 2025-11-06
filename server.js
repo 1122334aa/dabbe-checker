@@ -9,6 +9,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const htmlContent = fs.readFileSync(join(__dirname, 'index.html'), 'utf8');
+const babaproHtmlContent = fs.readFileSync(join(__dirname, 'babapro.html'), 'utf8');
 
 // Key'leri dosyadan kaydet/oku
 const KEYS_FILE = join(__dirname, 'keys.json');
@@ -534,6 +535,13 @@ const server = http.createServer(async (req, res) => {
         return;
     }
 
+    if (req.url === '/babapro') {
+        res.writeHead(200, { 
+            'Content-Type': 'text/html; charset=utf-8'
+        });
+        res.end(babaproHtmlContent); // Yeni okuduğunuz içeriği kullanın
+        return;
+    }
     // Ana sayfa
     if (req.url === '/' || req.url === '/index.html') {
         res.writeHead(200, { 
@@ -593,5 +601,6 @@ server.listen(PORT, () => {
     console.log('💾 Key kayıt sistemi aktif');
     console.log('💎 Premium özellikler aktif');
 });
+
 
 
