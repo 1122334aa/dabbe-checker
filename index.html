@@ -121,6 +121,9 @@
             display: flex;
             align-items: center;
             gap: 10px;
+            min-height: 48px;
+            height: auto;
+            flex-shrink: 0;
         }
 
         .tab-btn:hover {
@@ -160,6 +163,9 @@
             gap: 8px;
             margin-bottom: 4px;
             width: 100%;
+            min-height: 44px;
+            height: auto;
+            flex-shrink: 0;
         }
 
         .sub-tab-btn:hover {
@@ -736,6 +742,71 @@
             font-weight: 600;
             text-align: center;
         }
+
+        /* BUTON BOYUTLARI İÇİN YENİ STİLLER */
+        .tab-btn i:first-child,
+        .sub-tab-btn i:first-child {
+            width: 20px;
+            text-align: center;
+            margin-right: 10px;
+            flex-shrink: 0;
+        }
+
+        .accordion-arrow {
+            margin-left: auto;
+            font-size: 10px;
+            transition: transform 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .tab-btn.active .accordion-arrow {
+            transform: rotate(180deg);
+        }
+
+        .btn-text {
+            flex: 1;
+            text-align: left;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* Buton hover ve active durumları için düzeltmeler */
+        .tab-btn:hover,
+        .tab-btn.active,
+        .sub-tab-btn:hover,
+        .sub-tab-btn.active {
+            transform: none;
+            border-width: 1px;
+        }
+
+        /* Buton grupları için eşit genişlik */
+        .btn-group button {
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+        }
+
+        /* Mobil cihazlar için buton boyutları */
+        @media (max-width: 768px) {
+            .nav-tabs .tab-btn {
+                min-height: 52px;
+                font-size: 14px;
+            }
+            
+            .submenu .sub-tab-btn {
+                min-height: 46px;
+                font-size: 13px;
+            }
+            
+            .tab-btn i:first-child,
+            .sub-tab-btn i:first-child {
+                width: 18px;
+                margin-right: 8px;
+            }
+        }
     </style>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
@@ -763,124 +834,161 @@
             <div class="nav-tabs">
                 <!-- SADECE KEY KANALLARI GÖZÜKECEK -->
                 <button class="tab-btn active" onclick="openTab('key-tab')">
-                    <i class="fas fa-key"></i>Key Giriş
+                    <i class="fas fa-key"></i>
+                    <span class="btn-text">Key Giriş</span>
                 </button>
                 <button class="tab-btn" onclick="openTab('premium-key-tab')">
-                    <i class="fas fa-crown"></i>Premium Key
+                    <i class="fas fa-crown"></i>
+                    <span class="btn-text">Premium Key</span>
                 </button>
 
                 <!-- DİĞER KANALLAR KEY GİRİNCE GÖZÜKECEK -->
                 <div id="mainTabs" style="display: none;">
                     <!-- TC Sorgu Accordion -->
                     <button class="tab-btn" onclick="toggleSubmenu('tc-submenu')">
-                        <i class="fas fa-id-card"></i>TC Sorgu <i class="fas fa-chevron-down" style="margin-left: auto; font-size: 10px;"></i>
+                        <i class="fas fa-id-card"></i>
+                        <span class="btn-text">TC Sorgu</span>
+                        <i class="fas fa-chevron-down accordion-arrow"></i>
                     </button>
                     <div id="tc-submenu" class="submenu">
                         <button class="sub-tab-btn" onclick="openTab('tc-sorgula-tab')">
-                            <i class="fas fa-search"></i>TC Sorgula
+                            <i class="fas fa-search"></i>
+                            <span class="btn-text">TC Sorgula</span>
                         </button>
                         <button class="sub-tab-btn" onclick="openTab('tc-pro-tab')">
-                            <i class="fas fa-star"></i>TC Pro Sorgula
+                            <i class="fas fa-star"></i>
+                            <span class="btn-text">TC Pro Sorgula</span>
                         </button>
                         <button class="sub-tab-btn" onclick="openTab('yas-sorgula-tab')">
-                            <i class="fas fa-birthday-cake"></i>Yaş Sorgula
+                            <i class="fas fa-birthday-cake"></i>
+                            <span class="btn-text">Yaş Sorgula</span>
                         </button>
                     </div>
 
                     <!-- Ad Soyad Accordion -->
                     <button class="tab-btn" onclick="toggleSubmenu('adsoyad-submenu')">
-                        <i class="fas fa-user"></i>Ad Soyad <i class="fas fa-chevron-down" style="margin-left: auto; font-size: 10px;"></i>
+                        <i class="fas fa-user"></i>
+                        <span class="btn-text">Ad Soyad</span>
+                        <i class="fas fa-chevron-down accordion-arrow"></i>
                     </button>
                     <div id="adsoyad-submenu" class="submenu">
                         <button class="sub-tab-btn" onclick="openTab('adsoyad-sorgula-tab')">
-                            <i class="fas fa-user"></i>Ad Soyad Sorgula
+                            <i class="fas fa-user"></i>
+                            <span class="btn-text">Ad Soyad Sorgula</span>
                         </button>
                         <button class="sub-tab-btn" onclick="openTab('adsoyad-pro-tab')">
-                            <i class="fas fa-user-tie"></i>Ad Soyad Pro
+                            <i class="fas fa-user-tie"></i>
+                            <span class="btn-text">Ad Soyad Pro</span>
                         </button>
                         <button class="sub-tab-btn" onclick="openTab('adililce-tab')">
-                            <i class="fas fa-map-marker-alt"></i>Ad İl İlçe Sorgula
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span class="btn-text">Ad İl İlçe Sorgula</span>
                         </button>
                     </div>
 
                     <!-- GSM Sorgu Accordion -->
                     <button class="tab-btn" onclick="toggleSubmenu('gsm-submenu')">
-                        <i class="fas fa-mobile-alt"></i>GSM Sorgu <i class="fas fa-chevron-down" style="margin-left: auto; font-size: 10px;"></i>
+                        <i class="fas fa-mobile-alt"></i>
+                        <span class="btn-text">GSM Sorgu</span>
+                        <i class="fas fa-chevron-down accordion-arrow"></i>
                     </button>
                     <div id="gsm-submenu" class="submenu">
                         <button class="sub-tab-btn" onclick="openTab('tc-gsm-tab')">
-                            <i class="fas fa-mobile-alt"></i>TC'den GSM Sorgula
+                            <i class="fas fa-mobile-alt"></i>
+                            <span class="btn-text">TC'den GSM Sorgula</span>
                         </button>
                         <button class="sub-tab-btn" onclick="openTab('gsm-tc-tab')">
-                            <i class="fas fa-id-card"></i>GSM'den TC Sorgula
+                            <i class="fas fa-id-card"></i>
+                            <span class="btn-text">GSM'den TC Sorgula</span>
                         </button>
                     </div>
 
                     <!-- Aile Sorgu Accordion -->
                     <button class="tab-btn" onclick="toggleSubmenu('aile-submenu')">
-                        <i class="fas fa-users"></i>Aile Sorgu <i class="fas fa-chevron-down" style="margin-left: auto; font-size: 10px;"></i>
+                        <i class="fas fa-users"></i>
+                        <span class="btn-text">Aile Sorgu</span>
+                        <i class="fas fa-chevron-down accordion-arrow"></i>
                     </button>
                     <div id="aile-submenu" class="submenu">
                         <button class="sub-tab-btn" onclick="openTab('aile-sorgula-tab')">
-                            <i class="fas fa-users"></i>Aile Sorgula
+                            <i class="fas fa-users"></i>
+                            <span class="btn-text">Aile Sorgula</span>
                         </button>
                         <button class="sub-tab-btn" onclick="openTab('aile-pro-tab')">
-                            <i class="fas fa-user-friends"></i>Aile Pro Sorgula
+                            <i class="fas fa-user-friends"></i>
+                            <span class="btn-text">Aile Pro Sorgula</span>
                         </button>
                         <button class="sub-tab-btn" onclick="openTab('es-sorgula-tab')">
-                            <i class="fas fa-heart"></i>Eş Sorgula
+                            <i class="fas fa-heart"></i>
+                            <span class="btn-text">Eş Sorgula</span>
                         </button>
                         <button class="sub-tab-btn" onclick="openTab('sulale-tab')">
-                            <i class="fas fa-sitemap"></i>Sülale Sorgula
+                            <i class="fas fa-sitemap"></i>
+                            <span class="btn-text">Sülale Sorgula</span>
                         </button>
                     </div>
 
                     <!-- IP & Domain Accordion -->
                     <button class="tab-btn" onclick="toggleSubmenu('ip-submenu')">
-                        <i class="fas fa-globe"></i>IP & Domain <i class="fas fa-chevron-down" style="margin-left: auto; font-size: 10px;"></i>
+                        <i class="fas fa-globe"></i>
+                        <span class="btn-text">IP & Domain</span>
+                        <i class="fas fa-chevron-down accordion-arrow"></i>
                     </button>
                     <div id="ip-submenu" class="submenu">
                         <button class="sub-tab-btn" onclick="openTab('ip-sorgula-tab')">
-                            <i class="fas fa-globe"></i>IP Sorgula
+                            <i class="fas fa-globe"></i>
+                            <span class="btn-text">IP Sorgula</span>
                         </button>
                         <button class="sub-tab-btn" onclick="openTab('dns-tab')">
-                            <i class="fas fa-network-wired"></i>DNS Sorgula
+                            <i class="fas fa-network-wired"></i>
+                            <span class="btn-text">DNS Sorgula</span>
                         </button>
                         <button class="sub-tab-btn" onclick="openTab('whois-tab')">
-                            <i class="fas fa-search"></i>WHOIS Sorgula
+                            <i class="fas fa-search"></i>
+                            <span class="btn-text">WHOIS Sorgula</span>
                         </button>
                         <button class="sub-tab-btn" onclick="openTab('subdomain-tab')">
-                            <i class="fas fa-sitemap"></i>Subdomain Sorgula
+                            <i class="fas fa-sitemap"></i>
+                            <span class="btn-text">Subdomain Sorgula</span>
                         </button>
                         <button class="sub-tab-btn" onclick="openTab('leak-tab')">
-                            <i class="fas fa-envelope"></i>Leak Sorgula
+                            <i class="fas fa-envelope"></i>
+                            <span class="btn-text">Leak Sorgula</span>
                         </button>
                         <button class="sub-tab-btn" onclick="openTab('telegram-tab')">
-                            <i class="fab fa-telegram"></i>Telegram Sorgula
+                            <i class="fab fa-telegram"></i>
+                            <span class="btn-text">Telegram Sorgula</span>
                         </button>
                     </div>
 
                     <!-- Diğer Sorgular Accordion -->
                     <button class="tab-btn" onclick="toggleSubmenu('other-submenu')">
-                        <i class="fas fa-cogs"></i>Diğer Sorgular <i class="fas fa-chevron-down" style="margin-left: auto; font-size: 10px;"></i>
+                        <i class="fas fa-cogs"></i>
+                        <span class="btn-text">Diğer Sorgular</span>
+                        <i class="fas fa-chevron-down accordion-arrow"></i>
                     </button>
                     <div id="other-submenu" class="submenu">
                         <button class="sub-tab-btn" onclick="openTab('other-tab')">
-                            <i class="fas fa-tools"></i>Tüm Diğer Sorgular
+                            <i class="fas fa-tools"></i>
+                            <span class="btn-text">Tüm Diğer Sorgular</span>
                         </button>
                         <button class="sub-tab-btn" onclick="openTab('discord-tab')">
-                            <i class="fab fa-discord"></i>Discord Sorgu
+                            <i class="fab fa-discord"></i>
+                            <span class="btn-text">Discord Sorgu</span>
                         </button>
                         <button class="sub-tab-btn" onclick="openTab('gelismisip-tab')">
-                            <i class="fas fa-search-plus"></i>Gelişmiş IP
+                            <i class="fas fa-search-plus"></i>
+                            <span class="btn-text">Gelişmiş IP</span>
                         </button>
                     </div>
 
                     <button class="tab-btn" onclick="openTab('database-tab')">
-                        <i class="fas fa-database"></i>Database
+                        <i class="fas fa-database"></i>
+                        <span class="btn-text">Database</span>
                     </button>
                     <button class="tab-btn" onclick="openTab('premium-tab')">
-                        <i class="fas fa-gem"></i>Premium
+                        <i class="fas fa-gem"></i>
+                        <span class="btn-text">Premium</span>
                     </button>
                 </div>
             </div>
@@ -1371,10 +1479,11 @@
     </div>
 
     <script>
-        // Accordion fonksiyonu
+        // Accordion fonksiyonu - OK DÖNME ÖZELLİĞİ EKLENDİ
         function toggleSubmenu(submenuId) {
             const submenu = document.getElementById(submenuId);
             const allSubmenus = document.querySelectorAll('.submenu');
+            const allArrows = document.querySelectorAll('.accordion-arrow');
             
             // Diğer tüm submenüleri kapat
             allSubmenus.forEach(menu => {
@@ -1383,8 +1492,19 @@
                 }
             });
             
+            // Tüm okları sıfırla (sadece aktif olan dönsün)
+            allArrows.forEach(arrow => {
+                arrow.style.transform = 'rotate(0deg)';
+            });
+            
             // Tıklanan submenu'yu aç/kapat
             submenu.classList.toggle('active');
+            
+            // Aktif submenu'nun okunu döndür
+            const activeArrow = document.querySelector(`[onclick="toggleSubmenu('${submenuId}')"] .accordion-arrow`);
+            if (activeArrow) {
+                activeArrow.style.transform = submenu.classList.contains('active') ? 'rotate(180deg)' : 'rotate(0deg)';
+            }
         }
 
         let systemKey = '';
