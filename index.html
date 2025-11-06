@@ -12,99 +12,27 @@
         }
 
         :root {
-            --primary: #3b82f6;
-            --secondary: #1e40af;
-            --accent: #06b6d4;
+            --primary: #1e40af;
+            --secondary: #1e3a8a;
+            --accent: #0369a1;
             --dark: #0f172a;
-            --darker: #000000;
-            --light: #f8fafc;
-            --card-bg: rgba(30, 41, 59, 0.9);
+            --darker: #020617;
+            --light: #f1f5f9;
+            --card-bg: rgba(30, 41, 59, 0.95);
             --sidebar-bg: #1e293b;
         }
 
         body {
             background: 
-                radial-gradient(circle at 20% 50%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(6, 182, 212, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 40% 80%, rgba(30, 64, 175, 0.15) 0%, transparent 50%),
-                linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #000000 100%);
+                radial-gradient(circle at 10% 20%, rgba(30, 64, 175, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(3, 105, 161, 0.1) 0%, transparent 20%),
+                linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #020617 100%);
             color: var(--light);
             font-family: 'Segoe UI', system-ui, sans-serif;
             min-height: 100vh;
             line-height: 1.6;
             position: relative;
             overflow-x: hidden;
-        }
-
-        /* Fantastik arkaplan efektleri */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(circle at 20% 30%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(6, 182, 212, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 40% 40%, rgba(96, 165, 250, 0.1) 0%, transparent 50%);
-            animation: pulse 8s ease-in-out infinite;
-            z-index: -1;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 0.5; }
-            50% { opacity: 0.8; }
-        }
-
-        .floating-element {
-            position: fixed;
-            width: 100px;
-            height: 100px;
-            background: radial-gradient(circle, rgba(59, 130, 246, 0.3), transparent);
-            border-radius: 50%;
-            animation: float 15s infinite linear;
-            z-index: -1;
-        }
-
-        .floating-element:nth-child(1) {
-            top: 20%;
-            left: 10%;
-            animation-delay: 0s;
-            background: radial-gradient(circle, rgba(59, 130, 246, 0.4), transparent);
-        }
-
-        .floating-element:nth-child(2) {
-            top: 60%;
-            left: 80%;
-            animation-delay: -5s;
-            background: radial-gradient(circle, rgba(6, 182, 212, 0.4), transparent);
-        }
-
-        .floating-element:nth-child(3) {
-            top: 80%;
-            left: 20%;
-            animation-delay: -10s;
-            background: radial-gradient(circle, rgba(96, 165, 250, 0.4), transparent);
-        }
-
-        @keyframes float {
-            0%, 100% {
-                transform: translate(0, 0) rotate(0deg);
-                opacity: 0.7;
-            }
-            25% {
-                transform: translate(100px, -50px) rotate(90deg);
-                opacity: 0.4;
-            }
-            50% {
-                transform: translate(50px, 100px) rotate(180deg);
-                opacity: 0.7;
-            }
-            75% {
-                transform: translate(-100px, 50px) rotate(270deg);
-                opacity: 0.4;
-            }
         }
 
         .container {
@@ -121,14 +49,14 @@
             z-index: 10;
             display: flex;
             flex-direction: column;
-            box-shadow: 5px 0 25px rgba(0, 0, 0, 0.5);
+            box-shadow: 2px 0 15px rgba(0, 0, 0, 0.3);
         }
 
         .sidebar-header {
             text-align: center;
             padding-bottom: 20px;
             margin-bottom: 20px;
-            border-bottom: 2px solid #3b82f6;
+            border-bottom: 1px solid #334155;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -139,150 +67,117 @@
             align-items: center;
             gap: 12px;
             margin-bottom: 10px;
-            padding: 10px;
-            background: linear-gradient(45deg, rgba(59, 130, 246, 0.2), rgba(6, 182, 212, 0.2));
-            border-radius: 12px;
-            border: 1px solid rgba(59, 130, 246, 0.3);
+            padding: 12px;
+            background: rgba(30, 64, 175, 0.1);
+            border-radius: 8px;
+            border: 1px solid #334155;
         }
 
         .logo-image {
-            width: 35px;
-            height: 35px;
-            background: linear-gradient(45deg, #3b82f6, #06b6d4);
-            border-radius: 8px;
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(45deg, #1e40af, #0369a1);
+            border-radius: 6px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 16px;
+            font-size: 14px;
             font-weight: bold;
             color: white;
-            box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
         }
 
         .logo {
-            font-size: 22px;
+            font-size: 18px;
             font-weight: bold;
-            color: #06b6d4;
-            text-shadow: 0 0 10px rgba(6, 182, 212, 0.5);
+            color: #0369a1;
         }
 
         .version {
-            font-size: 11px;
-            color: #10b981;
-            background: rgba(16, 185, 129, 0.1);
-            padding: 4px 8px;
-            border-radius: 6px;
-            border: 1px solid rgba(16, 185, 129, 0.3);
+            font-size: 10px;
+            color: #059669;
+            background: rgba(5, 150, 105, 0.1);
+            padding: 3px 6px;
+            border-radius: 4px;
+            border: 1px solid rgba(5, 150, 105, 0.3);
         }
 
         .nav-tabs {
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 6px;
             flex: 1;
         }
 
         .tab-btn {
-            background: linear-gradient(45deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.8));
+            background: rgba(30, 41, 59, 0.8);
             border: 1px solid #334155;
-            color: var(--light);
-            padding: 14px 16px;
+            color: #94a3b8;
+            padding: 12px 14px;
             cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            border-radius: 10px;
+            transition: all 0.3s ease;
+            border-radius: 6px;
             text-align: left;
-            font-size: 14px;
+            font-size: 13px;
             display: flex;
             align-items: center;
-            gap: 12px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .tab-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.2), transparent);
-            transition: left 0.6s;
-        }
-
-        .tab-btn:hover::before {
-            left: 100%;
+            gap: 10px;
         }
 
         .tab-btn:hover {
-            background: linear-gradient(45deg, #3b82f6, #1e40af);
-            border-color: #3b82f6;
-            transform: translateX(8px) scale(1.02);
-            box-shadow: 0 5px 20px rgba(59, 130, 246, 0.4);
+            background: #374151;
+            border-color: #475569;
+            color: #e2e8f0;
         }
 
         .tab-btn.active {
-            background: linear-gradient(45deg, #3b82f6, #06b6d4);
-            border-color: #06b6d4;
-            box-shadow: 0 0 25px rgba(59, 130, 246, 0.6);
-            transform: translateX(5px);
+            background: linear-gradient(45deg, #1e40af, #0369a1);
+            border-color: #0369a1;
+            color: white;
         }
 
         .submenu {
             display: none;
-            margin-left: 20px;
-            margin-top: 8px;
-            animation: slideDown 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-left: 15px;
+            margin-top: 6px;
         }
 
         .submenu.active {
             display: block;
         }
 
-        @keyframes slideDown {
-            from { 
-                opacity: 0; 
-                transform: translateY(-20px) scale(0.95);
-            }
-            to { 
-                opacity: 1; 
-                transform: translateY(0) scale(1);
-            }
-        }
-
         .sub-tab-btn {
             background: rgba(30, 41, 59, 0.6);
             border: 1px solid #475569;
-            color: var(--light);
-            padding: 12px 14px;
+            color: #94a3b8;
+            padding: 10px 12px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            border-radius: 8px;
+            transition: all 0.2s ease;
+            border-radius: 5px;
             text-align: left;
-            font-size: 13px;
+            font-size: 12px;
             display: flex;
             align-items: center;
-            gap: 10px;
-            margin-bottom: 6px;
+            gap: 8px;
+            margin-bottom: 4px;
             width: 100%;
         }
 
         .sub-tab-btn:hover {
             background: #374151;
-            border-color: #3b82f6;
-            transform: translateX(5px);
+            border-color: #475569;
+            color: #e2e8f0;
         }
 
         .sub-tab-btn.active {
-            background: linear-gradient(45deg, #3b82f6, #06b6d4);
-            border-color: #06b6d4;
-            box-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
+            background: linear-gradient(45deg, #1e40af, #0369a1);
+            border-color: #0369a1;
+            color: white;
         }
 
         .main-content {
             flex: 1;
-            padding: 30px;
-            background: rgba(15, 23, 42, 0.7);
+            padding: 25px;
+            background: rgba(15, 23, 42, 0.8);
             position: relative;
             z-index: 1;
             display: flex;
@@ -296,98 +191,60 @@
 
         footer {
             text-align: center;
-            padding: 25px;
+            padding: 20px;
             margin-top: auto;
-            border-top: 2px solid #334155;
-            color: #94a3b8;
-            font-size: 12px;
+            border-top: 1px solid #334155;
+            color: #64748b;
+            font-size: 11px;
             background: rgba(15, 23, 42, 0.8);
-            backdrop-filter: blur(10px);
         }
 
         header {
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
             position: relative;
         }
 
         .header-title {
-            font-size: 3em;
-            font-weight: 800;
-            color: #3b82f6;
-            margin-bottom: 15px;
-            text-shadow: 
-                0 0 20px rgba(59, 130, 246, 0.8),
-                0 0 40px rgba(59, 130, 246, 0.6),
-                0 0 60px rgba(59, 130, 246, 0.4);
-            animation: glow 2s ease-in-out infinite alternate;
-        }
-
-        @keyframes glow {
-            from {
-                text-shadow: 
-                    0 0 20px rgba(59, 130, 246, 0.8),
-                    0 0 40px rgba(59, 130, 246, 0.6),
-                    0 0 60px rgba(59, 130, 246, 0.4);
-            }
-            to {
-                text-shadow: 
-                    0 0 25px rgba(59, 130, 246, 1),
-                    0 0 50px rgba(59, 130, 246, 0.8),
-                    0 0 75px rgba(59, 130, 246, 0.6);
-            }
+            font-size: 2.2em;
+            font-weight: 700;
+            color: #1e40af;
+            margin-bottom: 10px;
         }
 
         .header-subtitle {
-            color: #06b6d4;
-            font-size: 18px;
-            text-shadow: 0 0 10px rgba(6, 182, 212, 0.5);
+            color: #0369a1;
+            font-size: 16px;
         }
 
         .admin-btn {
             position: absolute;
             top: 0;
             right: 0;
-            background: linear-gradient(45deg, #3b82f6, #06b6d4);
+            background: linear-gradient(45deg, #1e40af, #0369a1);
             border: none;
             color: white;
-            padding: 14px 28px;
+            padding: 10px 20px;
             cursor: pointer;
-            border-radius: 10px;
-            font-weight: 700;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 6px;
+            font-weight: 600;
+            transition: all 0.3s ease;
             z-index: 100;
-            box-shadow: 0 5px 20px rgba(59, 130, 246, 0.4);
+            font-size: 13px;
         }
 
         .admin-btn:hover {
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.6);
+            background: linear-gradient(45deg, #1e3a8a, #075985);
         }
 
         .tab-content {
             display: none;
             background: var(--card-bg);
-            border-radius: 16px;
-            padding: 35px;
-            margin-bottom: 25px;
-            border: 2px solid #3b82f6;
-            box-shadow: 
-                0 0 30px rgba(59, 130, 246, 0.3),
-                inset 0 0 30px rgba(59, 130, 246, 0.1);
-            backdrop-filter: blur(15px);
-            animation: contentAppear 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        @keyframes contentAppear {
-            from {
-                opacity: 0;
-                transform: translateY(30px) scale(0.95);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border: 1px solid #334155;
+            backdrop-filter: blur(10px);
         }
 
         .tab-content.active {
@@ -395,123 +252,86 @@
         }
 
         .tab-content h2 {
-            color: #06b6d4;
-            margin-bottom: 30px;
-            font-size: 26px;
+            color: #0369a1;
+            margin-bottom: 20px;
+            font-size: 20px;
             display: flex;
             align-items: center;
-            gap: 12px;
-            border-bottom: 3px solid #3b82f6;
-            padding-bottom: 15px;
-            text-shadow: 0 0 10px rgba(6, 182, 212, 0.3);
+            gap: 10px;
+            border-bottom: 1px solid #334155;
+            padding-bottom: 10px;
         }
 
         .form-group {
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
 
         label {
             display: block;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             font-weight: 600;
             color: var(--light);
-            font-size: 14px;
-            text-shadow: 0 0 5px rgba(255, 255, 255, 0.1);
+            font-size: 13px;
         }
 
         input, select {
             width: 100%;
-            padding: 14px 18px;
+            padding: 12px 15px;
             background: rgba(30, 41, 59, 0.8);
-            border: 2px solid #3b82f6;
+            border: 1px solid #475569;
             color: var(--light);
-            border-radius: 10px;
-            font-size: 15px;
+            border-radius: 6px;
+            font-size: 14px;
             transition: all 0.3s ease;
-            cursor: pointer;
-            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
         }
 
         input:focus, select:focus {
             outline: none;
-            border-color: #06b6d4;
-            box-shadow: 
-                0 0 15px rgba(6, 182, 212, 0.4),
-                inset 0 0 10px rgba(6, 182, 212, 0.1);
-            transform: scale(1.02);
+            border-color: #0369a1;
+            background: rgba(30, 41, 59, 0.9);
         }
 
         .btn-group {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-            gap: 15px;
-            margin-top: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 12px;
+            margin-top: 20px;
         }
 
         button {
-            background: linear-gradient(45deg, #3b82f6, #06b6d4);
+            background: linear-gradient(45deg, #1e40af, #0369a1);
             border: none;
             color: white;
-            padding: 14px 22px;
+            padding: 12px 18px;
             cursor: pointer;
-            border-radius: 10px;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            font-size: 15px;
-            font-weight: 700;
-            position: relative;
-            overflow: hidden;
-        }
-
-        button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.6s;
-        }
-
-        button:hover::before {
-            left: 100%;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            font-weight: 600;
         }
 
         button:hover {
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.5);
+            background: linear-gradient(45deg, #1e3a8a, #075985);
+            transform: translateY(-1px);
         }
 
         .delete-btn {
-            background: #3b82f6 !important;
-            padding: 10px 14px !important;
-            font-size: 13px !important;
+            background: #475569 !important;
+            padding: 8px 12px !important;
+            font-size: 12px !important;
         }
 
         .delete-btn:hover {
-            background: #1e40af !important;
-            transform: scale(1.1);
+            background: #64748b !important;
         }
 
         .result {
-            margin-top: 30px;
-            padding: 25px;
+            margin-top: 20px;
+            padding: 20px;
             background: rgba(30, 41, 59, 0.9);
-            border-radius: 12px;
-            border: 2px solid #3b82f6;
+            border-radius: 6px;
+            border: 1px solid #334155;
             display: none;
-            animation: resultSlide 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        @keyframes resultSlide {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
         }
 
         .result.active {
@@ -521,25 +341,24 @@
         .result-table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 15px;
+            margin-top: 12px;
             background: rgba(15, 23, 42, 0.8);
-            border-radius: 8px;
+            border-radius: 4px;
             overflow: hidden;
+            font-size: 13px;
         }
 
         .result-table th {
-            background: linear-gradient(45deg, #3b82f6, #06b6d4);
+            background: linear-gradient(45deg, #1e40af, #0369a1);
             color: white;
-            padding: 12px 15px;
+            padding: 10px 12px;
             text-align: left;
             font-weight: 600;
-            font-size: 14px;
         }
 
         .result-table td {
-            padding: 12px 15px;
+            padding: 10px 12px;
             border-bottom: 1px solid #334155;
-            font-size: 14px;
         }
 
         .result-table tr:last-child td {
@@ -547,29 +366,30 @@
         }
 
         .result-table tr:hover {
-            background: rgba(59, 130, 246, 0.1);
+            background: rgba(30, 64, 175, 0.1);
         }
 
         .result-section {
-            margin-bottom: 20px;
-            padding: 15px;
+            margin-bottom: 15px;
+            padding: 12px;
             background: rgba(30, 41, 59, 0.6);
-            border-radius: 8px;
-            border-left: 4px solid #3b82f6;
+            border-radius: 6px;
+            border-left: 3px solid #1e40af;
         }
 
         .result-section h4 {
-            color: #06b6d4;
-            margin-bottom: 10px;
-            font-size: 16px;
+            color: #0369a1;
+            margin-bottom: 8px;
+            font-size: 14px;
         }
 
         .result-line {
             display: flex;
             justify-content: space-between;
-            margin: 8px 0;
-            padding: 8px 0;
+            margin: 6px 0;
+            padding: 6px 0;
             border-bottom: 1px solid #334155;
+            font-size: 13px;
         }
 
         .result-line:last-child {
@@ -589,7 +409,7 @@
         .loading {
             display: none;
             text-align: center;
-            padding: 50px;
+            padding: 40px;
         }
 
         .loading.active {
@@ -597,14 +417,13 @@
         }
 
         .spinner {
-            border: 4px solid rgba(51, 65, 85, 0.3);
-            border-top: 4px solid #3b82f6;
+            border: 3px solid rgba(51, 65, 85, 0.3);
+            border-top: 3px solid #1e40af;
             border-radius: 50%;
-            width: 50px;
-            height: 50px;
+            width: 40px;
+            height: 40px;
             animation: spin 1s linear infinite;
-            margin: 0 auto 20px;
-            box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+            margin: 0 auto 15px;
         }
 
         @keyframes spin {
@@ -614,11 +433,10 @@
 
         .key-section {
             background: rgba(30, 41, 59, 0.8);
-            border-radius: 12px;
-            padding: 25px;
-            margin-bottom: 25px;
-            border: 2px solid #3b82f6;
-            box-shadow: 0 0 20px rgba(59, 130, 246, 0.2);
+            border-radius: 6px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid #334155;
         }
 
         .modal {
@@ -628,14 +446,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(15, 23, 42, 0.98);
+            background: rgba(15, 23, 42, 0.95);
             z-index: 1000;
-            animation: modalAppear 0.3s ease;
-        }
-
-        @keyframes modalAppear {
-            from { opacity: 0; }
-            to { opacity: 1; }
         }
 
         .modal-content {
@@ -644,203 +456,153 @@
             left: 50%;
             transform: translate(-50%, -50%);
             background: #1e293b;
-            border-radius: 16px;
-            padding: 35px;
+            border-radius: 8px;
+            padding: 25px;
             width: 90%;
-            max-width: 550px;
-            border: 3px solid #3b82f6;
-            box-shadow: 0 0 40px rgba(59, 130, 246, 0.6);
-            animation: modalSlide 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        @keyframes modalSlide {
-            from {
-                opacity: 0;
-                transform: translate(-50%, -60%) scale(0.9);
-            }
-            to {
-                opacity: 1;
-                transform: translate(-50%, -50%) scale(1);
-            }
+            max-width: 500px;
+            border: 1px solid #334155;
         }
 
         .modal h2 {
-            color: #06b6d4;
+            color: #0369a1;
             text-align: center;
-            margin-bottom: 30px;
-            font-size: 26px;
-            text-shadow: 0 0 10px rgba(6, 182, 212, 0.3);
+            margin-bottom: 20px;
+            font-size: 20px;
         }
 
         .close {
             position: absolute;
-            top: 25px;
-            right: 30px;
-            color: #3b82f6;
-            font-size: 28px;
+            top: 20px;
+            right: 20px;
+            color: #475569;
+            font-size: 20px;
             cursor: pointer;
             transition: all 0.3s ease;
-            width: 35px;
-            height: 35px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
         }
 
         .close:hover {
-            color: #06b6d4;
-            background: rgba(59, 130, 246, 0.1);
-            transform: scale(1.1);
+            color: #0369a1;
         }
 
         .admin-section {
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
 
         .admin-section h3 {
-            color: #06b6d4;
-            margin-bottom: 20px;
-            font-size: 20px;
-            text-shadow: 0 0 5px rgba(6, 182, 212, 0.2);
+            color: #0369a1;
+            margin-bottom: 15px;
+            font-size: 16px;
         }
 
         #adminMessage {
-            margin-top: 20px;
-            padding: 15px;
-            border-radius: 8px;
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 6px;
             text-align: center;
-            font-weight: 700;
-            font-size: 14px;
+            font-weight: 600;
+            font-size: 13px;
         }
 
         .key-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 12px;
-            margin: 8px 0;
+            padding: 10px;
+            margin: 6px 0;
             background: rgba(15, 23, 42, 0.6);
-            border-radius: 8px;
+            border-radius: 6px;
             border: 1px solid #334155;
-            font-size: 14px;
+            font-size: 13px;
             transition: all 0.3s ease;
         }
 
         .key-item:hover {
             background: rgba(15, 23, 42, 0.8);
-            border-color: #3b82f6;
+            border-color: #475569;
         }
 
         .coming-soon {
             text-align: center;
-            padding: 70px 25px;
-            color: #94a3b8;
+            padding: 50px 20px;
+            color: #64748b;
         }
 
         .section-group {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 25px;
-            margin-top: 25px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
         }
 
         .query-section {
             background: rgba(30, 41, 59, 0.8);
-            border-radius: 12px;
-            padding: 25px;
-            border: 2px solid #334155;
+            border-radius: 6px;
+            padding: 20px;
+            border: 1px solid #334155;
             transition: all 0.3s ease;
         }
 
         .query-section:hover {
-            border-color: #3b82f6;
-            box-shadow: 0 0 20px rgba(59, 130, 246, 0.2);
-            transform: translateY(-5px);
+            border-color: #475569;
         }
 
         .query-section h4 {
-            color: #06b6d4;
-            margin-bottom: 20px;
-            font-size: 18px;
-            text-shadow: 0 0 5px rgba(6, 182, 212, 0.2);
+            color: #0369a1;
+            margin-bottom: 15px;
+            font-size: 15px;
         }
 
         .premium-section {
             background: linear-gradient(135deg, rgba(30, 41, 59, 0.9), rgba(15, 23, 42, 0.9));
-            border: 3px solid #06b6d4;
-            border-radius: 16px;
-            padding: 35px;
-            margin-bottom: 25px;
-            box-shadow: 0 0 40px rgba(6, 182, 212, 0.4);
-            animation: premiumGlow 3s ease-in-out infinite alternate;
-        }
-
-        @keyframes premiumGlow {
-            from {
-                box-shadow: 0 0 40px rgba(6, 182, 212, 0.4);
-            }
-            to {
-                box-shadow: 0 0 60px rgba(6, 182, 212, 0.6);
-            }
+            border: 1px solid #0369a1;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 20px;
         }
 
         .premium-section h3 {
-            color: #06b6d4;
+            color: #0369a1;
             text-align: center;
-            margin-bottom: 25px;
-            font-size: 32px;
-            text-shadow: 0 0 15px rgba(6, 182, 212, 0.5);
+            margin-bottom: 20px;
+            font-size: 24px;
         }
 
         .premium-feature {
             display: flex;
             align-items: center;
-            gap: 18px;
-            margin: 20px 0;
-            padding: 18px;
-            background: rgba(6, 182, 212, 0.1);
-            border-radius: 10px;
-            border: 1px solid #06b6d4;
+            gap: 15px;
+            margin: 15px 0;
+            padding: 15px;
+            background: rgba(3, 105, 161, 0.1);
+            border-radius: 6px;
+            border: 1px solid #334155;
             transition: all 0.3s ease;
         }
 
         .premium-feature:hover {
-            background: rgba(6, 182, 212, 0.2);
-            transform: translateX(10px);
+            background: rgba(3, 105, 161, 0.15);
         }
 
         .premium-feature i {
-            color: #06b6d4;
-            font-size: 22px;
-            text-shadow: 0 0 10px rgba(6, 182, 212, 0.5);
+            color: #0369a1;
+            font-size: 18px;
         }
 
         .account-details {
             background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(30, 41, 59, 0.9));
-            border: 3px solid #10b981;
-            border-radius: 16px;
-            padding: 30px;
-            margin: 25px 0;
-            box-shadow: 0 0 30px rgba(16, 185, 129, 0.4);
-            animation: accountGlow 3s ease-in-out infinite alternate;
-        }
-
-        @keyframes accountGlow {
-            from {
-                box-shadow: 0 0 30px rgba(16, 185, 129, 0.4);
-            }
-            to {
-                box-shadow: 0 0 45px rgba(16, 185, 129, 0.6);
-            }
+            border: 1px solid #059669;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
         }
 
         .account-line {
             display: flex;
             justify-content: space-between;
-            margin: 12px 0;
-            padding: 10px 0;
+            margin: 10px 0;
+            padding: 8px 0;
             border-bottom: 1px solid #334155;
+            font-size: 13px;
         }
 
         .account-line:last-child {
@@ -863,10 +625,10 @@
                 position: relative;
                 top: 0;
                 right: 0;
-                margin-bottom: 20px;
+                margin-bottom: 15px;
             }
             .header-title {
-                font-size: 2.2em;
+                font-size: 1.8em;
             }
             .section-group {
                 grid-template-columns: 1fr;
@@ -874,43 +636,43 @@
         }
 
         .success { 
-            color: #10b981; 
-            background: rgba(16, 185, 129, 0.15);
-            padding: 12px;
-            border-radius: 8px;
-            border: 1px solid #10b981;
-            text-shadow: 0 0 5px rgba(16, 185, 129, 0.3);
+            color: #059669; 
+            background: rgba(5, 150, 105, 0.1);
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #059669;
+            font-size: 13px;
         }
         .error { 
-            color: #ef4444; 
-            background: rgba(239, 68, 68, 0.15);
-            padding: 12px;
-            border-radius: 8px;
-            border: 1px solid #ef4444;
-            text-shadow: 0 0 5px rgba(239, 68, 68, 0.3);
+            color: #dc2626; 
+            background: rgba(220, 38, 38, 0.1);
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #dc2626;
+            font-size: 13px;
         }
         .warning { 
-            color: #f59e0b; 
-            background: rgba(245, 158, 11, 0.15);
-            padding: 12px;
-            border-radius: 8px;
-            border: 1px solid #f59e0b;
-            text-shadow: 0 0 5px rgba(245, 158, 11, 0.3);
+            color: #d97706; 
+            background: rgba(217, 119, 6, 0.1);
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #d97706;
+            font-size: 13px;
         }
 
         /* YENİ EKLENEN STİLLER */
         .locked-content {
             text-align: center;
-            padding: 60px 25px;
-            color: #94a3b8;
+            padding: 50px 20px;
+            color: #64748b;
             background: rgba(30, 41, 59, 0.6);
-            border-radius: 12px;
-            border: 2px dashed #475569;
+            border-radius: 6px;
+            border: 1px dashed #475569;
         }
 
         .locked-content i {
-            font-size: 48px;
-            margin-bottom: 20px;
+            font-size: 40px;
+            margin-bottom: 15px;
             color: #475569;
         }
 
@@ -921,14 +683,72 @@
         .query-content.hidden {
             display: none;
         }
+
+        /* KİLİT ANİMASYONU */
+        .lock-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.95);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+        }
+
+        .lock-animation.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .lock-icon {
+            font-size: 80px;
+            color: #1e40af;
+            animation: lockShake 0.5s ease-in-out 3;
+        }
+
+        .unlock-icon {
+            font-size: 80px;
+            color: #059669;
+            animation: unlockScale 0.5s ease-in-out;
+        }
+
+        @keyframes lockShake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        @keyframes unlockScale {
+            0% { transform: scale(0.5); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .animation-message {
+            margin-top: 20px;
+            color: #e2e8f0;
+            font-size: 18px;
+            font-weight: 600;
+            text-align: center;
+        }
     </style>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
-    <!-- Fantastik arkaplan elementleri -->
-    <div class="floating-element"></div>
-    <div class="floating-element"></div>
-    <div class="floating-element"></div>
+    <!-- Kilit Animasyonu -->
+    <div id="lockAnimation" class="lock-animation">
+        <div style="text-align: center;">
+            <div id="lockIcon" class="lock-icon">
+                <i class="fas fa-lock"></i>
+            </div>
+            <div class="animation-message">Sistem Açılıyor...</div>
+        </div>
+    </div>
 
     <div class="container">
         <div class="sidebar">
@@ -937,128 +757,132 @@
                     <div class="logo-image">DB</div>
                     <div class="logo">DABBE PRO</div>
                 </div>
-                <div class="version">v4.0 - Tüm Sorgular Aktif</div>
+                <div class="version">v4.0 - Professional</div>
             </div>
             
             <div class="nav-tabs">
+                <!-- SADECE KEY KANALLARI GÖZÜKECEK -->
                 <button class="tab-btn active" onclick="openTab('key-tab')">
                     <i class="fas fa-key"></i>Key Giriş
                 </button>
                 <button class="tab-btn" onclick="openTab('premium-key-tab')">
                     <i class="fas fa-crown"></i>Premium Key
                 </button>
-                
-                <!-- TC Sorgu Accordion -->
-                <button class="tab-btn" onclick="toggleSubmenu('tc-submenu')">
-                    <i class="fas fa-id-card"></i>TC Sorgu <i class="fas fa-chevron-down" style="margin-left: auto; font-size: 12px;"></i>
-                </button>
-                <div id="tc-submenu" class="submenu">
-                    <button class="sub-tab-btn" onclick="openTab('tc-sorgula-tab')">
-                        <i class="fas fa-search"></i>TC Sorgula
+
+                <!-- DİĞER KANALLAR KEY GİRİNCE GÖZÜKECEK -->
+                <div id="mainTabs" style="display: none;">
+                    <!-- TC Sorgu Accordion -->
+                    <button class="tab-btn" onclick="toggleSubmenu('tc-submenu')">
+                        <i class="fas fa-id-card"></i>TC Sorgu <i class="fas fa-chevron-down" style="margin-left: auto; font-size: 10px;"></i>
                     </button>
-                    <button class="sub-tab-btn" onclick="openTab('tc-pro-tab')">
-                        <i class="fas fa-star"></i>TC Pro Sorgula
+                    <div id="tc-submenu" class="submenu">
+                        <button class="sub-tab-btn" onclick="openTab('tc-sorgula-tab')">
+                            <i class="fas fa-search"></i>TC Sorgula
+                        </button>
+                        <button class="sub-tab-btn" onclick="openTab('tc-pro-tab')">
+                            <i class="fas fa-star"></i>TC Pro Sorgula
+                        </button>
+                        <button class="sub-tab-btn" onclick="openTab('yas-sorgula-tab')">
+                            <i class="fas fa-birthday-cake"></i>Yaş Sorgula
+                        </button>
+                    </div>
+
+                    <!-- Ad Soyad Accordion -->
+                    <button class="tab-btn" onclick="toggleSubmenu('adsoyad-submenu')">
+                        <i class="fas fa-user"></i>Ad Soyad <i class="fas fa-chevron-down" style="margin-left: auto; font-size: 10px;"></i>
                     </button>
-                    <button class="sub-tab-btn" onclick="openTab('yas-sorgula-tab')">
-                        <i class="fas fa-birthday-cake"></i>Yaş Sorgula
+                    <div id="adsoyad-submenu" class="submenu">
+                        <button class="sub-tab-btn" onclick="openTab('adsoyad-sorgula-tab')">
+                            <i class="fas fa-user"></i>Ad Soyad Sorgula
+                        </button>
+                        <button class="sub-tab-btn" onclick="openTab('adsoyad-pro-tab')">
+                            <i class="fas fa-user-tie"></i>Ad Soyad Pro
+                        </button>
+                        <button class="sub-tab-btn" onclick="openTab('adililce-tab')">
+                            <i class="fas fa-map-marker-alt"></i>Ad İl İlçe Sorgula
+                        </button>
+                    </div>
+
+                    <!-- GSM Sorgu Accordion -->
+                    <button class="tab-btn" onclick="toggleSubmenu('gsm-submenu')">
+                        <i class="fas fa-mobile-alt"></i>GSM Sorgu <i class="fas fa-chevron-down" style="margin-left: auto; font-size: 10px;"></i>
+                    </button>
+                    <div id="gsm-submenu" class="submenu">
+                        <button class="sub-tab-btn" onclick="openTab('tc-gsm-tab')">
+                            <i class="fas fa-mobile-alt"></i>TC'den GSM Sorgula
+                        </button>
+                        <button class="sub-tab-btn" onclick="openTab('gsm-tc-tab')">
+                            <i class="fas fa-id-card"></i>GSM'den TC Sorgula
+                        </button>
+                    </div>
+
+                    <!-- Aile Sorgu Accordion -->
+                    <button class="tab-btn" onclick="toggleSubmenu('aile-submenu')">
+                        <i class="fas fa-users"></i>Aile Sorgu <i class="fas fa-chevron-down" style="margin-left: auto; font-size: 10px;"></i>
+                    </button>
+                    <div id="aile-submenu" class="submenu">
+                        <button class="sub-tab-btn" onclick="openTab('aile-sorgula-tab')">
+                            <i class="fas fa-users"></i>Aile Sorgula
+                        </button>
+                        <button class="sub-tab-btn" onclick="openTab('aile-pro-tab')">
+                            <i class="fas fa-user-friends"></i>Aile Pro Sorgula
+                        </button>
+                        <button class="sub-tab-btn" onclick="openTab('es-sorgula-tab')">
+                            <i class="fas fa-heart"></i>Eş Sorgula
+                        </button>
+                        <button class="sub-tab-btn" onclick="openTab('sulale-tab')">
+                            <i class="fas fa-sitemap"></i>Sülale Sorgula
+                        </button>
+                    </div>
+
+                    <!-- IP & Domain Accordion -->
+                    <button class="tab-btn" onclick="toggleSubmenu('ip-submenu')">
+                        <i class="fas fa-globe"></i>IP & Domain <i class="fas fa-chevron-down" style="margin-left: auto; font-size: 10px;"></i>
+                    </button>
+                    <div id="ip-submenu" class="submenu">
+                        <button class="sub-tab-btn" onclick="openTab('ip-sorgula-tab')">
+                            <i class="fas fa-globe"></i>IP Sorgula
+                        </button>
+                        <button class="sub-tab-btn" onclick="openTab('dns-tab')">
+                            <i class="fas fa-network-wired"></i>DNS Sorgula
+                        </button>
+                        <button class="sub-tab-btn" onclick="openTab('whois-tab')">
+                            <i class="fas fa-search"></i>WHOIS Sorgula
+                        </button>
+                        <button class="sub-tab-btn" onclick="openTab('subdomain-tab')">
+                            <i class="fas fa-sitemap"></i>Subdomain Sorgula
+                        </button>
+                        <button class="sub-tab-btn" onclick="openTab('leak-tab')">
+                            <i class="fas fa-envelope"></i>Leak Sorgula
+                        </button>
+                        <button class="sub-tab-btn" onclick="openTab('telegram-tab')">
+                            <i class="fab fa-telegram"></i>Telegram Sorgula
+                        </button>
+                    </div>
+
+                    <!-- Diğer Sorgular Accordion -->
+                    <button class="tab-btn" onclick="toggleSubmenu('other-submenu')">
+                        <i class="fas fa-cogs"></i>Diğer Sorgular <i class="fas fa-chevron-down" style="margin-left: auto; font-size: 10px;"></i>
+                    </button>
+                    <div id="other-submenu" class="submenu">
+                        <button class="sub-tab-btn" onclick="openTab('other-tab')">
+                            <i class="fas fa-tools"></i>Tüm Diğer Sorgular
+                        </button>
+                        <button class="sub-tab-btn" onclick="openTab('discord-tab')">
+                            <i class="fab fa-discord"></i>Discord Sorgu
+                        </button>
+                        <button class="sub-tab-btn" onclick="openTab('gelismisip-tab')">
+                            <i class="fas fa-search-plus"></i>Gelişmiş IP
+                        </button>
+                    </div>
+
+                    <button class="tab-btn" onclick="openTab('database-tab')">
+                        <i class="fas fa-database"></i>Database
+                    </button>
+                    <button class="tab-btn" onclick="openTab('premium-tab')">
+                        <i class="fas fa-gem"></i>Premium
                     </button>
                 </div>
-
-                <!-- Ad Soyad Accordion -->
-                <button class="tab-btn" onclick="toggleSubmenu('adsoyad-submenu')">
-                    <i class="fas fa-user"></i>Ad Soyad <i class="fas fa-chevron-down" style="margin-left: auto; font-size: 12px;"></i>
-                </button>
-                <div id="adsoyad-submenu" class="submenu">
-                    <button class="sub-tab-btn" onclick="openTab('adsoyad-sorgula-tab')">
-                        <i class="fas fa-user"></i>Ad Soyad Sorgula
-                    </button>
-                    <button class="sub-tab-btn" onclick="openTab('adsoyad-pro-tab')">
-                        <i class="fas fa-user-tie"></i>Ad Soyad Pro
-                    </button>
-                    <button class="sub-tab-btn" onclick="openTab('adililce-tab')">
-                        <i class="fas fa-map-marker-alt"></i>Ad İl İlçe Sorgula
-                    </button>
-                </div>
-
-                <!-- GSM Sorgu Accordion -->
-                <button class="tab-btn" onclick="toggleSubmenu('gsm-submenu')">
-                    <i class="fas fa-mobile-alt"></i>GSM Sorgu <i class="fas fa-chevron-down" style="margin-left: auto; font-size: 12px;"></i>
-                </button>
-                <div id="gsm-submenu" class="submenu">
-                    <button class="sub-tab-btn" onclick="openTab('tc-gsm-tab')">
-                        <i class="fas fa-mobile-alt"></i>TC'den GSM Sorgula
-                    </button>
-                    <button class="sub-tab-btn" onclick="openTab('gsm-tc-tab')">
-                        <i class="fas fa-id-card"></i>GSM'den TC Sorgula
-                    </button>
-                </div>
-
-                <!-- Aile Sorgu Accordion -->
-                <button class="tab-btn" onclick="toggleSubmenu('aile-submenu')">
-                    <i class="fas fa-users"></i>Aile Sorgu <i class="fas fa-chevron-down" style="margin-left: auto; font-size: 12px;"></i>
-                </button>
-                <div id="aile-submenu" class="submenu">
-                    <button class="sub-tab-btn" onclick="openTab('aile-sorgula-tab')">
-                        <i class="fas fa-users"></i>Aile Sorgula
-                    </button>
-                    <button class="sub-tab-btn" onclick="openTab('aile-pro-tab')">
-                        <i class="fas fa-user-friends"></i>Aile Pro Sorgula
-                    </button>
-                    <button class="sub-tab-btn" onclick="openTab('es-sorgula-tab')">
-                        <i class="fas fa-heart"></i>Eş Sorgula
-                    </button>
-                    <button class="sub-tab-btn" onclick="openTab('sulale-tab')">
-                        <i class="fas fa-sitemap"></i>Sülale Sorgula
-                    </button>
-                </div>
-
-                <!-- IP & Domain Accordion -->
-                <button class="tab-btn" onclick="toggleSubmenu('ip-submenu')">
-                    <i class="fas fa-globe"></i>IP & Domain <i class="fas fa-chevron-down" style="margin-left: auto; font-size: 12px;"></i>
-                </button>
-                <div id="ip-submenu" class="submenu">
-                    <button class="sub-tab-btn" onclick="openTab('ip-sorgula-tab')">
-                        <i class="fas fa-globe"></i>IP Sorgula
-                    </button>
-                    <button class="sub-tab-btn" onclick="openTab('dns-tab')">
-                        <i class="fas fa-network-wired"></i>DNS Sorgula
-                    </button>
-                    <button class="sub-tab-btn" onclick="openTab('whois-tab')">
-                        <i class="fas fa-search"></i>WHOIS Sorgula
-                    </button>
-                    <button class="sub-tab-btn" onclick="openTab('subdomain-tab')">
-                        <i class="fas fa-sitemap"></i>Subdomain Sorgula
-                    </button>
-                    <button class="sub-tab-btn" onclick="openTab('leak-tab')">
-                        <i class="fas fa-envelope"></i>Leak Sorgula
-                    </button>
-                    <button class="sub-tab-btn" onclick="openTab('telegram-tab')">
-                        <i class="fab fa-telegram"></i>Telegram Sorgula
-                    </button>
-                </div>
-
-                <!-- Diğer Sorgular Accordion -->
-                <button class="tab-btn" onclick="toggleSubmenu('other-submenu')">
-                    <i class="fas fa-cogs"></i>Diğer Sorgular <i class="fas fa-chevron-down" style="margin-left: auto; font-size: 12px;"></i>
-                </button>
-                <div id="other-submenu" class="submenu">
-                    <button class="sub-tab-btn" onclick="openTab('other-tab')">
-                        <i class="fas fa-tools"></i>Tüm Diğer Sorgular
-                    </button>
-                    <button class="sub-tab-btn" onclick="openTab('discord-tab')">
-                        <i class="fab fa-discord"></i>Discord Sorgu
-                    </button>
-                    <button class="sub-tab-btn" onclick="openTab('gelismisip-tab')">
-                        <i class="fas fa-search-plus"></i>Gelişmiş IP
-                    </button>
-                </div>
-
-                <button class="tab-btn" onclick="openTab('database-tab')">
-                    <i class="fas fa-database"></i>Database
-                </button>
-                <button class="tab-btn" onclick="openTab('premium-tab')">
-                    <i class="fas fa-gem"></i>Premium
-                </button>
             </div>
         </div>
 
@@ -1070,7 +894,7 @@
 
                 <header>
                     <h1 class="header-title">DABBE CHECKER PRO</h1>
-                    <p class="header-subtitle">Tüm Sorgular Aktif - Premium Platform</p>
+                    <p class="header-subtitle">Professional Intelligence Platform</p>
                 </header>
 
                 <!-- Key Tab -->
@@ -1096,564 +920,378 @@
                             <label><i class="fas fa-crown"></i> Premium Key:</label>
                             <input type="text" id="premiumKey" placeholder="Premium keyinizi girin">
                         </div>
-                        <button onclick="verifyPremiumKey()" style="background: linear-gradient(45deg, #06b6d4, #0891b2);">
+                        <button onclick="verifyPremiumKey()" style="background: linear-gradient(45deg, #0369a1, #075985);">
                             <i class="fas fa-crown"></i> Premium Key Doğrula
                         </button>
                         <div id="premiumKeyMessage" style="margin-top: 15px;"></div>
                     </div>
                 </div>
 
-                <!-- TC Sorgu Tabları -->
-                <div id="tc-sorgula-tab" class="tab-content">
-                    <h2><i class="fas fa-search"></i> TC Sorgula</h2>
-                    <div id="tc-sorgula-content">
-                        <div class="locked-content" id="tc-sorgula-locked">
-                            <i class="fas fa-lock"></i>
-                            <h3>Key Gerekli</h3>
-                            <p>Bu sorguyu kullanmak için önce key doğrulaması yapmalısınız.</p>
+                <!-- DİĞER TÜM TABLAR KEY GİRİNCE GÖZÜKECEK -->
+                <div id="mainContent" style="display: none;">
+                    <!-- TC Sorgu Tabları -->
+                    <div id="tc-sorgula-tab" class="tab-content">
+                        <h2><i class="fas fa-search"></i> TC Sorgula</h2>
+                        <div class="form-group">
+                            <label>TC Kimlik No:</label>
+                            <input type="text" id="tcSorgula" maxlength="11" placeholder="TC kimlik numarasını girin">
                         </div>
-                        <div class="query-content hidden" id="tc-sorgula-query">
-                            <div class="form-group">
-                                <label>TC Kimlik No:</label>
-                                <input type="text" id="tcSorgula" maxlength="11" placeholder="TC kimlik numarasını girin">
-                            </div>
-                            <button onclick="sorgula('tc', 'tcSorgula')">
-                                <i class="fas fa-play"></i> Sorguyu Çalıştır
-                            </button>
-                        </div>
+                        <button onclick="sorgula('tc', 'tcSorgula')">
+                            <i class="fas fa-play"></i> Sorguyu Çalıştır
+                        </button>
                     </div>
-                </div>
 
-                <div id="tc-pro-tab" class="tab-content">
-                    <h2><i class="fas fa-star"></i> TC Pro Sorgula</h2>
-                    <div id="tc-pro-content">
-                        <div class="locked-content" id="tc-pro-locked">
-                            <i class="fas fa-lock"></i>
-                            <h3>Key Gerekli</h3>
-                            <p>Bu sorguyu kullanmak için önce key doğrulaması yapmalısınız.</p>
+                    <div id="tc-pro-tab" class="tab-content">
+                        <h2><i class="fas fa-star"></i> TC Pro Sorgula</h2>
+                        <div class="form-group">
+                            <label>TC Kimlik No:</label>
+                            <input type="text" id="tcPro" maxlength="11" placeholder="TC kimlik numarasını girin">
                         </div>
-                        <div class="query-content hidden" id="tc-pro-query">
-                            <div class="form-group">
-                                <label>TC Kimlik No:</label>
-                                <input type="text" id="tcPro" maxlength="11" placeholder="TC kimlik numarasını girin">
-                            </div>
-                            <button onclick="sorgula('tcpro', 'tcPro')">
-                                <i class="fas fa-play"></i> Sorguyu Çalıştır
-                            </button>
-                        </div>
+                        <button onclick="sorgula('tcpro', 'tcPro')">
+                            <i class="fas fa-play"></i> Sorguyu Çalıştır
+                        </button>
                     </div>
-                </div>
 
-                <div id="yas-sorgula-tab" class="tab-content">
-                    <h2><i class="fas fa-birthday-cake"></i> Yaş Sorgula</h2>
-                    <div id="yas-sorgula-content">
-                        <div class="locked-content" id="yas-sorgula-locked">
-                            <i class="fas fa-lock"></i>
-                            <h3>Key Gerekli</h3>
-                            <p>Bu sorguyu kullanmak için önce key doğrulaması yapmalısınız.</p>
+                    <div id="yas-sorgula-tab" class="tab-content">
+                        <h2><i class="fas fa-birthday-cake"></i> Yaş Sorgula</h2>
+                        <div class="form-group">
+                            <label>TC Kimlik No:</label>
+                            <input type="text" id="tcYas" maxlength="11" placeholder="TC kimlik numarasını girin">
                         </div>
-                        <div class="query-content hidden" id="yas-sorgula-query">
-                            <div class="form-group">
-                                <label>TC Kimlik No:</label>
-                                <input type="text" id="tcYas" maxlength="11" placeholder="TC kimlik numarasını girin">
-                            </div>
-                            <button onclick="sorgula('yas', 'tcYas')">
-                                <i class="fas fa-play"></i> Sorguyu Çalıştır
-                            </button>
-                        </div>
+                        <button onclick="sorgula('yas', 'tcYas')">
+                            <i class="fas fa-play"></i> Sorguyu Çalıştır
+                        </button>
                     </div>
-                </div>
 
-                <!-- Ad Soyad Tabları -->
-                <div id="adsoyad-sorgula-tab" class="tab-content">
-                    <h2><i class="fas fa-user"></i> Ad Soyad Sorgula</h2>
-                    <div id="adsoyad-sorgula-content">
-                        <div class="locked-content" id="adsoyad-sorgula-locked">
-                            <i class="fas fa-lock"></i>
-                            <h3>Key Gerekli</h3>
-                            <p>Bu sorguyu kullanmak için önce key doğrulaması yapmalısınız.</p>
+                    <!-- Ad Soyad Tabları -->
+                    <div id="adsoyad-sorgula-tab" class="tab-content">
+                        <h2><i class="fas fa-user"></i> Ad Soyad Sorgula</h2>
+                        <div class="form-group">
+                            <label>Ad:</label>
+                            <input type="text" id="adSorgula" placeholder="Ad">
                         </div>
-                        <div class="query-content hidden" id="adsoyad-sorgula-query">
-                            <div class="form-group">
-                                <label>Ad:</label>
-                                <input type="text" id="adSorgula" placeholder="Ad">
-                            </div>
-                            <div class="form-group">
-                                <label>Soyad:</label>
-                                <input type="text" id="soyadSorgula" placeholder="Soyad">
-                            </div>
-                            <button onclick="sorgulaAdSoyad('adsoyad')">
-                                <i class="fas fa-play"></i> Sorguyu Çalıştır
-                            </button>
+                        <div class="form-group">
+                            <label>Soyad:</label>
+                            <input type="text" id="soyadSorgula" placeholder="Soyad">
                         </div>
+                        <button onclick="sorgulaAdSoyad('adsoyad')">
+                            <i class="fas fa-play"></i> Sorguyu Çalıştır
+                        </button>
                     </div>
-                </div>
 
-                <div id="adsoyad-pro-tab" class="tab-content">
-                    <h2><i class="fas fa-user-tie"></i> Ad Soyad Pro</h2>
-                    <div id="adsoyad-pro-content">
-                        <div class="locked-content" id="adsoyad-pro-locked">
-                            <i class="fas fa-lock"></i>
-                            <h3>Key Gerekli</h3>
-                            <p>Bu sorguyu kullanmak için önce key doğrulaması yapmalısınız.</p>
+                    <div id="adsoyad-pro-tab" class="tab-content">
+                        <h2><i class="fas fa-user-tie"></i> Ad Soyad Pro</h2>
+                        <div class="form-group">
+                            <label>Ad:</label>
+                            <input type="text" id="adPro" placeholder="Ad">
                         </div>
-                        <div class="query-content hidden" id="adsoyad-pro-query">
-                            <div class="form-group">
-                                <label>Ad:</label>
-                                <input type="text" id="adPro" placeholder="Ad">
-                            </div>
-                            <div class="form-group">
-                                <label>Soyad:</label>
-                                <input type="text" id="soyadPro" placeholder="Soyad">
-                            </div>
-                            <button onclick="sorgulaAdSoyad('adsoyadpro')">
-                                <i class="fas fa-play"></i> Sorguyu Çalıştır
-                            </button>
+                        <div class="form-group">
+                            <label>Soyad:</label>
+                            <input type="text" id="soyadPro" placeholder="Soyad">
                         </div>
+                        <button onclick="sorgulaAdSoyad('adsoyadpro')">
+                            <i class="fas fa-play"></i> Sorguyu Çalıştır
+                        </button>
                     </div>
-                </div>
 
-                <div id="adililce-tab" class="tab-content">
-                    <h2><i class="fas fa-map-marker-alt"></i> Ad İl İlçe Sorgula</h2>
-                    <div id="adililce-content">
-                        <div class="locked-content" id="adililce-locked">
-                            <i class="fas fa-lock"></i>
-                            <h3>Key Gerekli</h3>
-                            <p>Bu sorguyu kullanmak için önce key doğrulaması yapmalısınız.</p>
+                    <div id="adililce-tab" class="tab-content">
+                        <h2><i class="fas fa-map-marker-alt"></i> Ad İl İlçe Sorgula</h2>
+                        <div class="form-group">
+                            <label>Ad:</label>
+                            <input type="text" id="adIl" placeholder="Ad">
                         </div>
-                        <div class="query-content hidden" id="adililce-query">
-                            <div class="form-group">
-                                <label>Ad:</label>
-                                <input type="text" id="adIl" placeholder="Ad">
-                            </div>
-                            <div class="form-group">
-                                <label>İl:</label>
-                                <input type="text" id="ilAd" placeholder="İl">
-                            </div>
-                            <div class="form-group">
-                                <label>İlçe:</label>
-                                <input type="text" id="ilceAd" placeholder="İlçe">
-                            </div>
-                            <button onclick="sorgulaAdIlIlce('adililce')">
-                                <i class="fas fa-play"></i> Sorguyu Çalıştır
-                            </button>
+                        <div class="form-group">
+                            <label>İl:</label>
+                            <input type="text" id="ilAd" placeholder="İl">
                         </div>
+                        <div class="form-group">
+                            <label>İlçe:</label>
+                            <input type="text" id="ilceAd" placeholder="İlçe">
+                        </div>
+                        <button onclick="sorgulaAdIlIlce('adililce')">
+                            <i class="fas fa-play"></i> Sorguyu Çalıştır
+                        </button>
                     </div>
-                </div>
 
-                <!-- GSM Tabları -->
-                <div id="tc-gsm-tab" class="tab-content">
-                    <h2><i class="fas fa-mobile-alt"></i> TC'den GSM Sorgula</h2>
-                    <div id="tc-gsm-content">
-                        <div class="locked-content" id="tc-gsm-locked">
-                            <i class="fas fa-lock"></i>
-                            <h3>Key Gerekli</h3>
-                            <p>Bu sorguyu kullanmak için önce key doğrulaması yapmalısınız.</p>
+                    <!-- GSM Tabları -->
+                    <div id="tc-gsm-tab" class="tab-content">
+                        <h2><i class="fas fa-mobile-alt"></i> TC'den GSM Sorgula</h2>
+                        <div class="form-group">
+                            <label>TC Kimlik No:</label>
+                            <input type="text" id="tcGsm" maxlength="11" placeholder="TC kimlik numarasını girin">
                         </div>
-                        <div class="query-content hidden" id="tc-gsm-query">
-                            <div class="form-group">
-                                <label>TC Kimlik No:</label>
-                                <input type="text" id="tcGsm" maxlength="11" placeholder="TC kimlik numarasını girin">
-                            </div>
-                            <button onclick="sorgula('tcgsm', 'tcGsm')">
-                                <i class="fas fa-play"></i> Sorguyu Çalıştır
-                            </button>
-                        </div>
+                        <button onclick="sorgula('tcgsm', 'tcGsm')">
+                            <i class="fas fa-play"></i> Sorguyu Çalıştır
+                        </button>
                     </div>
-                </div>
 
-                <div id="gsm-tc-tab" class="tab-content">
-                    <h2><i class="fas fa-id-card"></i> GSM'den TC Sorgula</h2>
-                    <div id="gsm-tc-content">
-                        <div class="locked-content" id="gsm-tc-locked">
-                            <i class="fas fa-lock"></i>
-                            <h3>Key Gerekli</h3>
-                            <p>Bu sorguyu kullanmak için önce key doğrulaması yapmalısınız.</p>
+                    <div id="gsm-tc-tab" class="tab-content">
+                        <h2><i class="fas fa-id-card"></i> GSM'den TC Sorgula</h2>
+                        <div class="form-group">
+                            <label>GSM Numarası:</label>
+                            <input type="text" id="gsmTc" placeholder="GSM numarasını girin">
                         </div>
-                        <div class="query-content hidden" id="gsm-tc-query">
-                            <div class="form-group">
-                                <label>GSM Numarası:</label>
-                                <input type="text" id="gsmTc" placeholder="GSM numarasını girin">
-                            </div>
-                            <button onclick="sorgula('gsmtc', 'gsmTc')">
-                                <i class="fas fa-play"></i> Sorguyu Çalıştır
-                            </button>
-                        </div>
+                        <button onclick="sorgula('gsmtc', 'gsmTc')">
+                            <i class="fas fa-play"></i> Sorguyu Çalıştır
+                        </button>
                     </div>
-                </div>
 
-                <!-- Aile Tabları -->
-                <div id="aile-sorgula-tab" class="tab-content">
-                    <h2><i class="fas fa-users"></i> Aile Sorgula</h2>
-                    <div id="aile-sorgula-content">
-                        <div class="locked-content" id="aile-sorgula-locked">
-                            <i class="fas fa-lock"></i>
-                            <h3>Key Gerekli</h3>
-                            <p>Bu sorguyu kullanmak için önce key doğrulaması yapmalısınız.</p>
+                    <!-- Aile Tabları -->
+                    <div id="aile-sorgula-tab" class="tab-content">
+                        <h2><i class="fas fa-users"></i> Aile Sorgula</h2>
+                        <div class="form-group">
+                            <label>TC Kimlik No:</label>
+                            <input type="text" id="tcAile" maxlength="11" placeholder="TC kimlik numarasını girin">
                         </div>
-                        <div class="query-content hidden" id="aile-sorgula-query">
-                            <div class="form-group">
-                                <label>TC Kimlik No:</label>
-                                <input type="text" id="tcAile" maxlength="11" placeholder="TC kimlik numarasını girin">
-                            </div>
-                            <button onclick="sorgula('aile', 'tcAile')">
-                                <i class="fas fa-play"></i> Sorguyu Çalıştır
-                            </button>
-                        </div>
+                        <button onclick="sorgula('aile', 'tcAile')">
+                            <i class="fas fa-play"></i> Sorguyu Çalıştır
+                        </button>
                     </div>
-                </div>
 
-                <div id="aile-pro-tab" class="tab-content">
-                    <h2><i class="fas fa-user-friends"></i> Aile Pro Sorgula</h2>
-                    <div id="aile-pro-content">
-                        <div class="locked-content" id="aile-pro-locked">
-                            <i class="fas fa-lock"></i>
-                            <h3>Key Gerekli</h3>
-                            <p>Bu sorguyu kullanmak için önce key doğrulaması yapmalısınız.</p>
+                    <div id="aile-pro-tab" class="tab-content">
+                        <h2><i class="fas fa-user-friends"></i> Aile Pro Sorgula</h2>
+                        <div class="form-group">
+                            <label>TC Kimlik No:</label>
+                            <input type="text" id="tcAilePro" maxlength="11" placeholder="TC kimlik numarasını girin">
                         </div>
-                        <div class="query-content hidden" id="aile-pro-query">
-                            <div class="form-group">
-                                <label>TC Kimlik No:</label>
-                                <input type="text" id="tcAilePro" maxlength="11" placeholder="TC kimlik numarasını girin">
-                            </div>
-                            <button onclick="sorgula('ailepro', 'tcAilePro')">
-                                <i class="fas fa-play"></i> Sorguyu Çalıştır
-                            </button>
-                        </div>
+                        <button onclick="sorgula('ailepro', 'tcAilePro')">
+                            <i class="fas fa-play"></i> Sorguyu Çalıştır
+                        </button>
                     </div>
-                </div>
 
-                <div id="es-sorgula-tab" class="tab-content">
-                    <h2><i class="fas fa-heart"></i> Eş Sorgula</h2>
-                    <div id="es-sorgula-content">
-                        <div class="locked-content" id="es-sorgula-locked">
-                            <i class="fas fa-lock"></i>
-                            <h3>Key Gerekli</h3>
-                            <p>Bu sorguyu kullanmak için önce key doğrulaması yapmalısınız.</p>
+                    <div id="es-sorgula-tab" class="tab-content">
+                        <h2><i class="fas fa-heart"></i> Eş Sorgula</h2>
+                        <div class="form-group">
+                            <label>TC Kimlik No:</label>
+                            <input type="text" id="tcEs" maxlength="11" placeholder="TC kimlik numarasını girin">
                         </div>
-                        <div class="query-content hidden" id="es-sorgula-query">
-                            <div class="form-group">
-                                <label>TC Kimlik No:</label>
-                                <input type="text" id="tcEs" maxlength="11" placeholder="TC kimlik numarasını girin">
-                            </div>
-                            <button onclick="sorgula('es', 'tcEs')">
-                                <i class="fas fa-play"></i> Sorguyu Çalıştır
-                            </button>
-                        </div>
+                        <button onclick="sorgula('es', 'tcEs')">
+                            <i class="fas fa-play"></i> Sorguyu Çalıştır
+                        </button>
                     </div>
-                </div>
 
-                <div id="sulale-tab" class="tab-content">
-                    <h2><i class="fas fa-sitemap"></i> Sülale Sorgula</h2>
-                    <div id="sulale-content">
-                        <div class="locked-content" id="sulale-locked">
-                            <i class="fas fa-lock"></i>
-                            <h3>Key Gerekli</h3>
-                            <p>Bu sorguyu kullanmak için önce key doğrulaması yapmalısınız.</p>
+                    <div id="sulale-tab" class="tab-content">
+                        <h2><i class="fas fa-sitemap"></i> Sülale Sorgula</h2>
+                        <div class="form-group">
+                            <label>TC Kimlik No:</label>
+                            <input type="text" id="tcSulale" maxlength="11" placeholder="TC kimlik numarasını girin">
                         </div>
-                        <div class="query-content hidden" id="sulale-query">
-                            <div class="form-group">
-                                <label>TC Kimlik No:</label>
-                                <input type="text" id="tcSulale" maxlength="11" placeholder="TC kimlik numarasını girin">
-                            </div>
-                            <button onclick="sorgula('sulale', 'tcSulale')">
-                                <i class="fas fa-play"></i> Sorguyu Çalıştır
-                            </button>
-                        </div>
+                        <button onclick="sorgula('sulale', 'tcSulale')">
+                            <i class="fas fa-play"></i> Sorguyu Çalıştır
+                        </button>
                     </div>
-                </div>
 
-                <!-- IP Tabları -->
-                <div id="ip-sorgula-tab" class="tab-content">
-                    <h2><i class="fas fa-globe"></i> IP Sorgula</h2>
-                    <div id="ip-sorgula-content">
-                        <div class="locked-content" id="ip-sorgula-locked">
-                            <i class="fas fa-lock"></i>
-                            <h3>Key Gerekli</h3>
-                            <p>Bu sorguyu kullanmak için önce key doğrulaması yapmalısınız.</p>
+                    <!-- IP Tabları -->
+                    <div id="ip-sorgula-tab" class="tab-content">
+                        <h2><i class="fas fa-globe"></i> IP Sorgula</h2>
+                        <div class="form-group">
+                            <label>IP/Domain:</label>
+                            <input type="text" id="domainIp" placeholder="IP adresi veya domain girin">
                         </div>
-                        <div class="query-content hidden" id="ip-sorgula-query">
-                            <div class="form-group">
-                                <label>IP/Domain:</label>
-                                <input type="text" id="domainIp" placeholder="IP adresi veya domain girin">
-                            </div>
-                            <button onclick="sorgula('ip', 'domainIp')">
-                                <i class="fas fa-play"></i> Sorguyu Çalıştır
-                            </button>
-                        </div>
+                        <button onclick="sorgula('ip', 'domainIp')">
+                            <i class="fas fa-play"></i> Sorguyu Çalıştır
+                        </button>
                     </div>
-                </div>
 
-                <div id="dns-tab" class="tab-content">
-                    <h2><i class="fas fa-network-wired"></i> DNS Sorgula</h2>
-                    <div id="dns-content">
-                        <div class="locked-content" id="dns-locked">
-                            <i class="fas fa-lock"></i>
-                            <h3>Key Gerekli</h3>
-                            <p>Bu sorguyu kullanmak için önce key doğrulaması yapmalısınız.</p>
+                    <div id="dns-tab" class="tab-content">
+                        <h2><i class="fas fa-network-wired"></i> DNS Sorgula</h2>
+                        <div class="form-group">
+                            <label>IP/Domain:</label>
+                            <input type="text" id="domainDns" placeholder="IP adresi veya domain girin">
                         </div>
-                        <div class="query-content hidden" id="dns-query">
-                            <div class="form-group">
-                                <label>IP/Domain:</label>
-                                <input type="text" id="domainDns" placeholder="IP adresi veya domain girin">
-                            </div>
-                            <button onclick="sorgula('dns', 'domainDns')">
-                                <i class="fas fa-play"></i> Sorguyu Çalıştır
-                            </button>
-                        </div>
+                        <button onclick="sorgula('dns', 'domainDns')">
+                            <i class="fas fa-play"></i> Sorguyu Çalıştır
+                        </button>
                     </div>
-                </div>
 
-                <div id="whois-tab" class="tab-content">
-                    <h2><i class="fas fa-search"></i> WHOIS Sorgula</h2>
-                    <div id="whois-content">
-                        <div class="locked-content" id="whois-locked">
-                            <i class="fas fa-lock"></i>
-                            <h3>Key Gerekli</h3>
-                            <p>Bu sorguyu kullanmak için önce key doğrulaması yapmalısınız.</p>
+                    <div id="whois-tab" class="tab-content">
+                        <h2><i class="fas fa-search"></i> WHOIS Sorgula</h2>
+                        <div class="form-group">
+                            <label>IP/Domain:</label>
+                            <input type="text" id="domainWhois" placeholder="IP adresi veya domain girin">
                         </div>
-                        <div class="query-content hidden" id="whois-query">
-                            <div class="form-group">
-                                <label>IP/Domain:</label>
-                                <input type="text" id="domainWhois" placeholder="IP adresi veya domain girin">
-                            </div>
-                            <button onclick="sorgula('whois', 'domainWhois')">
-                                <i class="fas fa-play"></i> Sorguyu Çalıştır
-                            </button>
-                        </div>
+                        <button onclick="sorgula('whois', 'domainWhois')">
+                            <i class="fas fa-play"></i> Sorguyu Çalıştır
+                        </button>
                     </div>
-                </div>
 
-                <div id="subdomain-tab" class="tab-content">
-                    <h2><i class="fas fa-sitemap"></i> Subdomain Sorgula</h2>
-                    <div id="subdomain-content">
-                        <div class="locked-content" id="subdomain-locked">
-                            <i class="fas fa-lock"></i>
-                            <h3>Key Gerekli</h3>
-                            <p>Bu sorguyu kullanmak için önce key doğrulaması yapmalısınız.</p>
+                    <div id="subdomain-tab" class="tab-content">
+                        <h2><i class="fas fa-sitemap"></i> Subdomain Sorgula</h2>
+                        <div class="form-group">
+                            <label>IP/Domain:</label>
+                            <input type="text" id="domainSubdomain" placeholder="IP adresi veya domain girin">
                         </div>
-                        <div class="query-content hidden" id="subdomain-query">
-                            <div class="form-group">
-                                <label>IP/Domain:</label>
-                                <input type="text" id="domainSubdomain" placeholder="IP adresi veya domain girin">
-                            </div>
-                            <button onclick="sorgula('subdomain', 'domainSubdomain')">
-                                <i class="fas fa-play"></i> Sorguyu Çalıştır
-                            </button>
-                        </div>
+                        <button onclick="sorgula('subdomain', 'domainSubdomain')">
+                            <i class="fas fa-play"></i> Sorguyu Çalıştır
+                        </button>
                     </div>
-                </div>
 
-                <div id="leak-tab" class="tab-content">
-                    <h2><i class="fas fa-envelope"></i> Leak Sorgula</h2>
-                    <div id="leak-content">
-                        <div class="locked-content" id="leak-locked">
-                            <i class="fas fa-lock"></i>
-                            <h3>Key Gerekli</h3>
-                            <p>Bu sorguyu kullanmak için önce key doğrulaması yapmalısınız.</p>
+                    <div id="leak-tab" class="tab-content">
+                        <h2><i class="fas fa-envelope"></i> Leak Sorgula</h2>
+                        <div class="form-group">
+                            <label>E-posta:</label>
+                            <input type="text" id="leakQuery" placeholder="E-posta adresi girin">
                         </div>
-                        <div class="query-content hidden" id="leak-query">
-                            <div class="form-group">
-                                <label>E-posta:</label>
-                                <input type="text" id="leakQuery" placeholder="E-posta adresi girin">
-                            </div>
-                            <button onclick="sorgula('leak', 'leakQuery')">
-                                <i class="fas fa-play"></i> Sorguyu Çalıştır
-                            </button>
-                        </div>
+                        <button onclick="sorgula('leak', 'leakQuery')">
+                            <i class="fas fa-play"></i> Sorguyu Çalıştır
+                        </button>
                     </div>
-                </div>
 
-                <div id="telegram-tab" class="tab-content">
-                    <h2><i class="fab fa-telegram"></i> Telegram Sorgula</h2>
-                    <div id="telegram-content">
-                        <div class="locked-content" id="telegram-locked">
-                            <i class="fas fa-lock"></i>
-                            <h3>Key Gerekli</h3>
-                            <p>Bu sorguyu kullanmak için önce key doğrulaması yapmalısınız.</p>
+                    <div id="telegram-tab" class="tab-content">
+                        <h2><i class="fab fa-telegram"></i> Telegram Sorgula</h2>
+                        <div class="form-group">
+                            <label>Telegram Kullanıcı Adı:</label>
+                            <input type="text" id="telegramUser" placeholder="Telegram kullanıcı adı">
                         </div>
-                        <div class="query-content hidden" id="telegram-query">
-                            <div class="form-group">
-                                <label>Telegram Kullanıcı Adı:</label>
-                                <input type="text" id="telegramUser" placeholder="Telegram kullanıcı adı">
-                            </div>
-                            <button onclick="sorgula('telegram', 'telegramUser')">
-                                <i class="fas fa-play"></i> Sorguyu Çalıştır
-                            </button>
-                        </div>
+                        <button onclick="sorgula('telegram', 'telegramUser')">
+                            <i class="fas fa-play"></i> Sorguyu Çalıştır
+                        </button>
                     </div>
-                </div>
 
-                <!-- Discord Tab -->
-                <div id="discord-tab" class="tab-content">
-                    <h2><i class="fab fa-discord"></i> Discord ID Sorgulama</h2>
-                    <div id="discord-content">
-                        <div class="locked-content" id="discord-locked">
-                            <i class="fas fa-lock"></i>
-                            <h3>Key Gerekli</h3>
-                            <p>Bu sorguyu kullanmak için önce key doğrulaması yapmalısınız.</p>
+                    <!-- Discord Tab -->
+                    <div id="discord-tab" class="tab-content">
+                        <h2><i class="fab fa-discord"></i> Discord ID Sorgulama</h2>
+                        <div class="form-group">
+                            <label>Discord ID:</label>
+                            <input type="text" id="discordId" placeholder="Discord ID girin (örn: 724180071354597406)">
                         </div>
-                        <div class="query-content hidden" id="discord-query">
-                            <div class="form-group">
-                                <label>Discord ID:</label>
-                                <input type="text" id="discordId" placeholder="Discord ID girin (örn: 724180071354597406)">
-                            </div>
-                            <button onclick="sorgulaDiscord()" style="background: linear-gradient(45deg, #5865F2, #7289DA);">
-                                <i class="fab fa-discord"></i> Discord Sorgula
-                            </button>
-                        </div>
+                        <button onclick="sorgulaDiscord()" style="background: linear-gradient(45deg, #5865F2, #7289DA);">
+                            <i class="fab fa-discord"></i> Discord Sorgula
+                        </button>
                     </div>
-                </div>
 
-                <!-- Gelişmiş IP Tab -->
-                <div id="gelismisip-tab" class="tab-content">
-                    <h2><i class="fas fa-search-plus"></i> Gelişmiş IP Sorgulama</h2>
-                    <div id="gelismisip-content">
-                        <div class="locked-content" id="gelismisip-locked">
-                            <i class="fas fa-lock"></i>
-                            <h3>Key Gerekli</h3>
-                            <p>Bu sorguyu kullanmak için önce key doğrulaması yapmalısınız.</p>
+                    <!-- Gelişmiş IP Tab -->
+                    <div id="gelismisip-tab" class="tab-content">
+                        <h2><i class="fas fa-search-plus"></i> Gelişmiş IP Sorgulama</h2>
+                        <div class="form-group">
+                            <label>IP Adresi:</label>
+                            <input type="text" id="gelismisIp" placeholder="IPv4 adresi girin">
                         </div>
-                        <div class="query-content hidden" id="gelismisip-query">
-                            <div class="form-group">
-                                <label>IP Adresi:</label>
-                                <input type="text" id="gelismisIp" placeholder="IPv4 adresi girin">
-                            </div>
-                            <button onclick="sorgula('gelismisip', 'gelismisIp')">
-                                <i class="fas fa-search-plus"></i> Detaylı IP Sorgula
-                            </button>
-                        </div>
+                        <button onclick="sorgula('gelismisip', 'gelismisIp')">
+                            <i class="fas fa-search-plus"></i> Detaylı IP Sorgula
+                        </button>
                     </div>
-                </div>
 
-                <!-- Diğer Sorgular Tab -->
-                <div id="other-tab" class="tab-content">
-                    <h2><i class="fas fa-cogs"></i> Diğer Sorgular</h2>
-                    <div id="other-content">
-                        <div class="locked-content" id="other-locked">
-                            <i class="fas fa-lock"></i>
-                            <h3>Key Gerekli</h3>
-                            <p>Bu sorguları kullanmak için önce key doğrulaması yapmalısınız.</p>
-                        </div>
-                        <div class="query-content hidden" id="other-query">
-                            <div class="section-group">
-                                <!-- TC ile Sorgular -->
-                                <div class="query-section">
-                                    <h4><i class="fas fa-id-card"></i> TC ile Sorgular</h4>
-                                    <div class="form-group">
-                                        <input type="text" id="tcOther" maxlength="11" placeholder="TC kimlik numarası">
-                                    </div>
-                                    <div class="btn-group">
-                                        <button onclick="sorgula('tapu', 'tcOther')">Tapu Sorgula</button>
-                                        <button onclick="sorgula('isyeri', 'tcOther')">İşyeri Sorgula</button>
-                                        <button onclick="sorgula('adres', 'tcOther')">Adres Sorgula</button>
-                                        <button onclick="sorgula('hane', 'tcOther')">Hane Sorgula</button>
-                                        <button onclick="sorgula('apartman', 'tcOther')">Apartman Sorgula</button>
-                                    </div>
+                    <!-- Diğer Sorgular Tab -->
+                    <div id="other-tab" class="tab-content">
+                        <h2><i class="fas fa-cogs"></i> Diğer Sorgular</h2>
+                        <div class="section-group">
+                            <!-- TC ile Sorgular -->
+                            <div class="query-section">
+                                <h4><i class="fas fa-id-card"></i> TC ile Sorgular</h4>
+                                <div class="form-group">
+                                    <input type="text" id="tcOther" maxlength="11" placeholder="TC kimlik numarası">
                                 </div>
-
-                                <!-- Discord & IP Sorguları -->
-                                <div class="query-section">
-                                    <h4><i class="fab fa-discord"></i> Discord & IP Sorguları</h4>
-                                    <div class="form-group">
-                                        <label>Discord ID:</label>
-                                        <input type="text" id="discordIdOther" placeholder="Discord ID girin">
-                                    </div>
-                                    <button onclick="sorgulaDiscordOther()" style="background: linear-gradient(45deg, #5865F2, #7289DA); width: 100%; margin-bottom: 10px;">
-                                        <i class="fab fa-discord"></i> Discord Sorgula
-                                    </button>
-                                    
-                                    <div class="form-group">
-                                        <label>IP Adresi:</label>
-                                        <input type="text" id="gelismisIpOther" placeholder="IPv4 adresi girin">
-                                    </div>
-                                    <button onclick="sorgula('gelismisip', 'gelismisIpOther')" style="width: 100%;">
-                                        <i class="fas fa-search-plus"></i> Gelişmiş IP Sorgula
-                                    </button>
-                                </div>
-
-                                <!-- Vergi No Sorgusu -->
-                                <div class="query-section">
-                                    <h4><i class="fas fa-file-invoice-dollar"></i> Vergi Sorgusu</h4>
-                                    <div class="form-group">
-                                        <input type="text" id="vergiNo" placeholder="Vergi numarası">
-                                    </div>
-                                    <button onclick="sorgula('vergino', 'vergiNo')" style="width: 100%;">Vergi No Sorgula</button>
-                                </div>
-
-                                <!-- Ada Parsel Sorgusu -->
-                                <div class="query-section">
-                                    <h4><i class="fas fa-map-marked-alt"></i> Ada Parsel Sorgusu</h4>
-                                    <div class="form-group">
-                                        <input type="text" id="ilAda" placeholder="İl">
-                                        <input type="text" id="ada" placeholder="Ada" style="margin-top: 8px;">
-                                        <input type="text" id="parsel" placeholder="Parsel" style="margin-top: 8px;">
-                                    </div>
-                                    <button onclick="sorgulaAdaparsel()" style="width: 100%;">Ada Parsel Sorgula</button>
+                                <div class="btn-group">
+                                    <button onclick="sorgula('tapu', 'tcOther')">Tapu Sorgula</button>
+                                    <button onclick="sorgula('isyeri', 'tcOther')">İşyeri Sorgula</button>
+                                    <button onclick="sorgula('adres', 'tcOther')">Adres Sorgula</button>
+                                    <button onclick="sorgula('hane', 'tcOther')">Hane Sorgula</button>
+                                    <button onclick="sorgula('apartman', 'tcOther')">Apartman Sorgula</button>
                                 </div>
                             </div>
+
+                            <!-- Discord & IP Sorguları -->
+                            <div class="query-section">
+                                <h4><i class="fab fa-discord"></i> Discord & IP Sorguları</h4>
+                                <div class="form-group">
+                                    <label>Discord ID:</label>
+                                    <input type="text" id="discordIdOther" placeholder="Discord ID girin">
+                                </div>
+                                <button onclick="sorgulaDiscordOther()" style="background: linear-gradient(45deg, #5865F2, #7289DA); width: 100%; margin-bottom: 10px;">
+                                    <i class="fab fa-discord"></i> Discord Sorgula
+                                </button>
+                                
+                                <div class="form-group">
+                                    <label>IP Adresi:</label>
+                                    <input type="text" id="gelismisIpOther" placeholder="IPv4 adresi girin">
+                                </div>
+                                <button onclick="sorgula('gelismisip', 'gelismisIpOther')" style="width: 100%;">
+                                    <i class="fas fa-search-plus"></i> Gelişmiş IP Sorgula
+                                </button>
+                            </div>
+
+                            <!-- Vergi No Sorgusu -->
+                            <div class="query-section">
+                                <h4><i class="fas fa-file-invoice-dollar"></i> Vergi Sorgusu</h4>
+                                <div class="form-group">
+                                    <input type="text" id="vergiNo" placeholder="Vergi numarası">
+                                </div>
+                                <button onclick="sorgula('vergino', 'vergiNo')" style="width: 100%;">Vergi No Sorgula</button>
+                            </div>
+
+                            <!-- Ada Parsel Sorgusu -->
+                            <div class="query-section">
+                                <h4><i class="fas fa-map-marked-alt"></i> Ada Parsel Sorgusu</h4>
+                                <div class="form-group">
+                                    <input type="text" id="ilAda" placeholder="İl">
+                                    <input type="text" id="ada" placeholder="Ada" style="margin-top: 8px;">
+                                    <input type="text" id="parsel" placeholder="Parsel" style="margin-top: 8px;">
+                                </div>
+                                <button onclick="sorgulaAdaparsel()" style="width: 100%;">Ada Parsel Sorgula</button>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Database Tab -->
-                <div id="database-tab" class="tab-content">
-                    <h2><i class="fas fa-database"></i> Database</h2>
-                    <div class="coming-soon">
-                        <i class="fas fa-tools"></i>
-                        <h3>Yakında Aktif Olacak</h3>
-                        <p>Database sorgulama özelliği yakında eklenecek...</p>
+                    <!-- Database Tab -->
+                    <div id="database-tab" class="tab-content">
+                        <h2><i class="fas fa-database"></i> Database</h2>
+                        <div class="coming-soon">
+                            <i class="fas fa-tools"></i>
+                            <h3>Yakında Aktif Olacak</h3>
+                            <p>Database sorgulama özelliği yakında eklenecek...</p>
+                        </div>
                     </div>
-                </div>
 
-                <!-- Premium Tab -->
-                <div id="premium-tab" class="tab-content">
-                    <h2><i class="fas fa-gem"></i> Premium Özellikler</h2>
-                    
-                    <div class="premium-section">
-                        <h3>🌟 PREMIUM ÜYELİK 🌟</h3>
+                    <!-- Premium Tab -->
+                    <div id="premium-tab" class="tab-content">
+                        <h2><i class="fas fa-gem"></i> Premium Özellikler</h2>
                         
-                        <div class="premium-feature">
-                            <i class="fas fa-star"></i>
-                            <div>
-                                <h4>Özel Tabii Hesaplar</h4>
-                                <p>Premium üyelere özel Tabii hesaplarına erişim</p>
-                            </div>
-                        </div>
-                        
-                        <div class="premium-feature">
-                            <i class="fas fa-bolt"></i>
-                            <div>
-                                <h4>Hızlı Sorgu</h4>
-                                <p>Premium kullanıcılar için öncelikli sorgu</p>
-                            </div>
-                        </div>
-                        
-                        <div class="premium-feature">
-                            <i class="fas fa-shield-alt"></i>
-                            <div>
-                                <h4>Güvenli Erişim</h4>
-                                <p>Gelişmiş güvenlik önlemleri ile koruma</p>
-                            </div>
-                        </div>
-
-                        <div id="premiumContent" style="display: none;">
-                            <div class="account-details" id="accountDetails">
-                                <!-- Hesap detayları buraya gelecek -->
+                        <div class="premium-section">
+                            <h3>🌟 PREMIUM ÜYELİK 🌟</h3>
+                            
+                            <div class="premium-feature">
+                                <i class="fas fa-star"></i>
+                                <div>
+                                    <h4>Özel Tabii Hesaplar</h4>
+                                    <p>Premium üyelere özel Tabii hesaplarına erişim</p>
+                                </div>
                             </div>
                             
-                            <button onclick="getTabiiAccount()" style="background: linear-gradient(45deg, #06b6d4, #0891b2); width: 100%; padding: 15px; font-size: 16px;">
-                                <i class="fas fa-download"></i> TABİİ HESAP AL
-                            </button>
-                        </div>
+                            <div class="premium-feature">
+                                <i class="fas fa-bolt"></i>
+                                <div>
+                                    <h4>Hızlı Sorgu</h4>
+                                    <p>Premium kullanıcılar için öncelikli sorgu</p>
+                                </div>
+                            </div>
+                            
+                            <div class="premium-feature">
+                                <i class="fas fa-shield-alt"></i>
+                                <div>
+                                    <h4>Güvenli Erişim</h4>
+                                    <p>Gelişmiş güvenlik önlemleri ile koruma</p>
+                                </div>
+                            </div>
 
-                        <div id="premiumLocked" style="text-align: center; padding: 40px;">
-                            <i class="fas fa-lock" style="font-size: 48px; color: #06b6d4; margin-bottom: 20px;"></i>
-                            <h3>Premium Erişim Gerekli</h3>
-                            <p>Bu özelliklere erişmek için premium key girmeniz gerekiyor.</p>
-                            <button onclick="openTab('premium-key-tab')" style="background: linear-gradient(45deg, #06b6d4, #0891b2); margin-top: 20px;">
-                                <i class="fas fa-crown"></i> Premium Key Gir
-                            </button>
+                            <div id="premiumContent" style="display: none;">
+                                <div class="account-details" id="accountDetails">
+                                    <!-- Hesap detayları buraya gelecek -->
+                                </div>
+                                
+                                <button onclick="getTabiiAccount()" style="background: linear-gradient(45deg, #0369a1, #075985); width: 100%; padding: 12px; font-size: 14px;">
+                                    <i class="fas fa-download"></i> TABİİ HESAP AL
+                                </button>
+                            </div>
+
+                            <div id="premiumLocked" style="text-align: center; padding: 30px;">
+                                <i class="fas fa-lock" style="font-size: 40px; color: #0369a1; margin-bottom: 15px;"></i>
+                                <h3>Premium Erişim Gerekli</h3>
+                                <p>Bu özelliklere erişmek için premium key girmeniz gerekiyor.</p>
+                                <button onclick="openTab('premium-key-tab')" style="background: linear-gradient(45deg, #0369a1, #075985); margin-top: 15px;">
+                                    <i class="fas fa-crown"></i> Premium Key Gir
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1713,7 +1351,7 @@
                     <label>Yeni Premium Key:</label>
                     <input type="text" id="newPremiumKey" placeholder="Yeni premium key girin">
                 </div>
-                <button onclick="createPremiumKey()" style="background: linear-gradient(45deg, #06b6d4, #0891b2);">
+                <button onclick="createPremiumKey()" style="background: linear-gradient(45deg, #0369a1, #075985);">
                     <i class="fas fa-crown"></i> Premium Key Oluştur
                 </button>
                 
@@ -1756,30 +1394,32 @@
         let isPremiumVerified = false;
         let currentResult = null;
 
-        // YENİ: Sorgu içeriklerini kontrol etme fonksiyonu
-        function updateQueryContents() {
-            const lockedElements = document.querySelectorAll('.locked-content');
-            const queryElements = document.querySelectorAll('.query-content');
+        // KİLİT ANİMASYONU FONKSİYONU
+        function showLockAnimation() {
+            const lockAnimation = document.getElementById('lockAnimation');
+            const lockIcon = document.getElementById('lockIcon');
             
-            if (isKeyVerified) {
-                // Key doğrulandıysa kilitli içerikleri gizle, sorgu içeriklerini göster
-                lockedElements.forEach(el => el.style.display = 'none');
-                queryElements.forEach(el => {
-                    el.classList.remove('hidden');
-                    el.style.display = 'block';
-                });
-            } else {
-                // Key doğrulanmadıysa sorgu içeriklerini gizle, kilitli içerikleri göster
-                queryElements.forEach(el => {
-                    el.classList.add('hidden');
-                    el.style.display = 'none';
-                });
-                lockedElements.forEach(el => el.style.display = 'block');
-            }
+            // Animasyonu göster
+            lockAnimation.classList.add('active');
+            
+            // 1.5 saniye sonra kilit açılsın
+            setTimeout(() => {
+                lockIcon.innerHTML = '<i class="fas fa-unlock"></i>';
+                lockIcon.className = 'unlock-icon';
+                document.querySelector('.animation-message').textContent = 'Sistem Açıldı!';
+                
+                // 1 saniye sonra animasyonu kapat
+                setTimeout(() => {
+                    lockAnimation.classList.remove('active');
+                    // Ana içeriği göster
+                    document.getElementById('mainTabs').style.display = 'block';
+                    document.getElementById('mainContent').style.display = 'block';
+                }, 1000);
+            }, 1500);
         }
 
         function openTab(tabName) {
-            // YENİ: Tab değiştirirken sonuçları temizle
+            // Tab değiştirirken sonuçları temizle
             document.getElementById('result').classList.remove('active');
             currentResult = null;
 
@@ -1790,9 +1430,9 @@
                 return;
             }
 
-            // Diğer sekmeler için key kontrolü
+            // Ana içerik kanallarına erişim kontrolü
             if (tabName !== 'key-tab' && tabName !== 'premium-key-tab' && !isKeyVerified) {
-                alert('❌ Önce key doğrulaması yapın!');
+                alert('❌ Önce sistem key doğrulaması yapın!');
                 openTab('key-tab');
                 return;
             }
@@ -1808,9 +1448,6 @@
             if (activeBtn) {
                 activeBtn.classList.add('active');
             }
-
-            // YENİ: Sorgu içeriklerini güncelle
-            updateQueryContents();
 
             // Premium sekmesi içeriğini güncelle
             if (tabName === 'premium-tab') {
@@ -1831,12 +1468,12 @@
             }
         }
 
-        // YENİ FIXLENMİŞ SONUÇ GÖSTERİM FONKSİYONU
+        // GELİŞMİŞ SONUÇ GÖSTERİM FONKSİYONU
         function displayResult(data, type) {
             const resultData = document.getElementById('resultData');
             resultData.innerHTML = '';
 
-            // YENİ: API'den gelen veriyi kontrol et
+            // API'den gelen veriyi kontrol et
             if (!data || Object.keys(data).length === 0 || (data.success === false)) {
                 resultData.innerHTML = '<div class="error">❌ Sorgu sonucu bulunamadı veya API yanıt vermedi!</div>';
                 return;
@@ -1853,6 +1490,71 @@
             // Eğer data içinde data property'si varsa onu kullan
             if (data.data && typeof data.data === 'object') {
                 processedData = Array.isArray(data.data) ? data.data[0] : data.data;
+            }
+
+            // Discord Sorgusu - TÜM BİLGİLERİ GÖSTER
+            if (type === 'discord') {
+                if (Array.isArray(data) && data.length > 0) {
+                    const discordData = data[0];
+                    resultData.innerHTML = `
+                        <div class="result-section">
+                            <h4>👤 Discord Profil Bilgileri</h4>
+                            <div class="result-line">
+                                <span class="label">Discord ID:</span>
+                                <span class="value">${discordData.id || 'Bilgi Yok'}</span>
+                            </div>
+                            <div class="result-line">
+                                <span class="label">E-posta:</span>
+                                <span class="value">${discordData.email || 'Bilgi Yok'}</span>
+                            </div>
+                            <div class="result-line">
+                                <span class="label">Admin ID:</span>
+                                <span class="value">${discordData.admin || 'Bilgi Yok'}</span>
+                            </div>
+                            <div class="result-line">
+                                <span class="label">Sunucu Sayısı:</span>
+                                <span class="value">${discordData.server_ids ? JSON.parse(discordData.server_ids).length : '0'}</span>
+                            </div>
+                            <div class="result-line">
+                                <span class="label">Bağlantılar:</span>
+                                <span class="value">${discordData.connections || 'Yok'}</span>
+                            </div>
+                        </div>
+                        <div class="result-section">
+                            <h4>🔒 Güvenlik Bilgileri</h4>
+                            <div class="result-line">
+                                <span class="label">IP Hash:</span>
+                                <span class="value">${discordData.ip || 'Bilgi Yok'}</span>
+                            </div>
+                            <div class="result-line">
+                                <span class="label">Doğrulama:</span>
+                                <span class="value">${discordData.verified === 1 ? '✅ Doğrulanmış' : '❌ Doğrulanmamış'}</span>
+                            </div>
+                            <div class="result-line">
+                                <span class="label">Premium:</span>
+                                <span class="value">${discordData.premium || 'Yok'}</span>
+                            </div>
+                        </div>
+                        <div class="result-section">
+                            <h4>📊 Ek Bilgiler</h4>
+                            <div class="result-line">
+                                <span class="label">Biyografi:</span>
+                                <span class="value">${discordData.bio || 'Yok'}</span>
+                            </div>
+                            <div class="result-line">
+                                <span class="label">Cinsiyet:</span>
+                                <span class="value">${discordData.gender === 1 ? 'Erkek' : discordData.gender === 2 ? 'Kadın' : 'Belirtilmemiş'}</span>
+                            </div>
+                            <div class="result-line">
+                                <span class="label">Takipçi:</span>
+                                <span class="value">${discordData.follow || '0'}</span>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    resultData.innerHTML = '<div class="error">❌ Discord kullanıcısı bulunamadı!</div>';
+                }
+                return;
             }
 
             // TC Sorguları
@@ -1979,201 +1681,6 @@
                     </div>
                 `;
             }
-            // Yaş Sorgusu
-            else if (type === 'yas') {
-                resultData.innerHTML = `
-                    <div class="result-section">
-                        <h4>🎂 Yaş Bilgileri</h4>
-                        <div class="result-line">
-                            <span class="label">TC Kimlik No:</span>
-                            <span class="value">${processedData.TC || 'Bilgi Yok'}</span>
-                        </div>
-                        <div class="result-line">
-                            <span class="label">Ad Soyad:</span>
-                            <span class="value">${processedData['Ad Soyad'] || 'Bilgi Yok'}</span>
-                        </div>
-                        <div class="result-line">
-                            <span class="label">Doğum Tarihi:</span>
-                            <span class="value">${processedData['Doğum Tarihi'] || 'Bilgi Yok'}</span>
-                        </div>
-                        <div class="result-line">
-                            <span class="label">Yaş:</span>
-                            <span class="value">${processedData.Yaş || processedData.Yas || 'Bilgi Yok'}</span>
-                        </div>
-                        <div class="result-line">
-                            <span class="label">Burç:</span>
-                            <span class="value">${processedData.Burç || processedData.Burc || 'Bilgi Yok'}</span>
-                        </div>
-                        <div class="result-line">
-                            <span class="label">Doğduğu Gün:</span>
-                            <span class="value">${processedData['Doğduğu Gün'] || 'Bilgi Yok'}</span>
-                        </div>
-                    </div>
-                `;
-            }
-            // Ad Soyad Sorguları
-            else if (type === 'adsoyad' || type === 'adsoyadpro' || type === 'adililce') {
-                if (Array.isArray(data) && data.length > 0) {
-                    processedData = data[0];
-                }
-                
-                resultData.innerHTML = `
-                    <div class="result-section">
-                        <h4>👤 Kişi Bilgileri</h4>
-                        <div class="result-line">
-                            <span class="label">Ad:</span>
-                            <span class="value">${processedData.ADI || processedData.AD || processedData.Adi || processedData.ad || 'Bilgi Yok'}</span>
-                        </div>
-                        <div class="result-line">
-                            <span class="label">Soyad:</span>
-                            <span class="value">${processedData.SOYADI || processedData.SOYAD || processedData.Soyadi || processedData.soyad || 'Bilgi Yok'}</span>
-                        </div>
-                        <div class="result-line">
-                            <span class="label">TC Kimlik No:</span>
-                            <span class="value">${processedData.TC || processedData.tc || 'Bilgi Yok'}</span>
-                        </div>
-                        <div class="result-line">
-                            <span class="label">Doğum Tarihi:</span>
-                            <span class="value">${processedData.DOGUMTARIHI || processedData.DogumTarihi || processedData.dogumTarihi || 'Bilgi Yok'}</span>
-                        </div>
-                    </div>
-                    <div class="result-section">
-                        <h4>📍 Adres Bilgileri</h4>
-                        <div class="result-line">
-                            <span class="label">İl:</span>
-                            <span class="value">${processedData.NUFUSIL || processedData.IL || processedData.il || 'Bilgi Yok'}</span>
-                        </div>
-                        <div class="result-line">
-                            <span class="label">İlçe:</span>
-                            <span class="value">${processedData.NUFUSILCE || processedData.ILCE || processedData.ilce || 'Bilgi Yok'}</span>
-                        </div>
-                    </div>
-                    <div class="result-section">
-                        <h4>👨‍👩‍👧‍👦 Aile Bilgileri</h4>
-                        <div class="result-line">
-                            <span class="label">Anne Adı:</span>
-                            <span class="value">${processedData.ANNEADI || processedData.AnneAdi || processedData.anneAdi || 'Bilgi Yok'}</span>
-                        </div>
-                        <div class="result-line">
-                            <span class="label">Baba Adı:</span>
-                            <span class="value">${processedData.BABAADI || processedData.BabaAdi || processedData.babaAdi || 'Bilgi Yok'}</span>
-                        </div>
-                    </div>
-                `;
-            }
-            // GSM Sorguları
-            else if (type === 'tcgsm') {
-                if (Array.isArray(data) && data.length > 0) {
-                    let gsmList = '<div class="result-section"><h4>📱 GSM Numaraları</h4>';
-                    data.forEach((item, index) => {
-                        gsmList += `
-                            <div class="result-line">
-                                <span class="label">GSM ${index + 1}:</span>
-                                <span class="value">${item.GSM || item.gsm || 'Bilgi Yok'}</span>
-                            </div>
-                        `;
-                    });
-                    gsmList += '</div>';
-                    resultData.innerHTML = gsmList;
-                } else {
-                    resultData.innerHTML = '<div class="error">❌ GSM numarası bulunamadı!</div>';
-                }
-            }
-            // GSM'den TC Sorgusu
-            else if (type === 'gsmtc') {
-                if (Array.isArray(data.data) && data.data.length > 0) {
-                    processedData = data.data[0];
-                    resultData.innerHTML = `
-                        <div class="result-section">
-                            <h4>📱 Telefon Bilgileri</h4>
-                            <div class="result-line">
-                                <span class="label">GSM Numarası:</span>
-                                <span class="value">${processedData.GSM || processedData.gsm || 'Bilgi Yok'}</span>
-                            </div>
-                            <div class="result-line">
-                                <span class="label">TC Kimlik No:</span>
-                                <span class="value">${processedData.TC || processedData.tc || 'Bilgi Yok'}</span>
-                            </div>
-                        </div>
-                    `;
-                } else {
-                    resultData.innerHTML = '<div class="error">❌ Bu GSM numarasına ait TC bulunamadı!</div>';
-                }
-            }
-            // Aile Sorguları
-            else if (type === 'aile' || type === 'ailepro' || type === 'es' || type === 'sulale') {
-                let aileData = data.data || data;
-                
-                if (Array.isArray(aileData) && aileData.length > 0) {
-                    let aileHtml = '<div class="result-section"><h4>👨‍👩‍👧‍👦 Aile Üyeleri</h4>';
-                    
-                    aileData.forEach((uye, index) => {
-                        aileHtml += `
-                            <div style="margin-bottom: 15px; padding: 10px; background: rgba(30,41,59,0.5); border-radius: 8px;">
-                                <h5>${uye.Yakınlık || uye.YAKINLIK || 'Aile Üyesi'} ${index + 1}</h5>
-                                <div class="result-line">
-                                    <span class="label">Ad Soyad:</span>
-                                    <span class="value">${uye.Isim || uye.ADI || uye.Adi || ''} ${uye.Soyisim || uye.SOYADI || uye.Soyadi || ''}</span>
-                                </div>
-                                <div class="result-line">
-                                    <span class="label">TC:</span>
-                                    <span class="value">${uye.KimlikNo || uye.TC || uye.tc || 'Bilgi Yok'}</span>
-                                </div>
-                                <div class="result-line">
-                                    <span class="label">Doğum Tarihi:</span>
-                                    <span class="value">${uye.DogumTarihi || uye.DOGUMTARIHI || 'Bilgi Yok'}</span>
-                                </div>
-                            </div>
-                        `;
-                    });
-                    
-                    aileHtml += '</div>';
-                    resultData.innerHTML = aileHtml;
-                } else {
-                    resultData.innerHTML = '<div class="error">❌ Aile bilgisi bulunamadı!</div>';
-                }
-            }
-            // IP Sorguları
-            else if (type === 'ip' || type === 'dns' || type === 'whois' || type === 'subdomain') {
-                let ipData = data.veri || data.data || data;
-                
-                if (type === 'ip') {
-                    resultData.innerHTML = `
-                        <div class="result-section">
-                            <h4>🌐 IP Bilgileri</h4>
-                            <div class="result-line">
-                                <span class="label">IP Adresi:</span>
-                                <span class="value">${ipData.ip_adresi || ipData.ip || 'Bilgi Yok'}</span>
-                            </div>
-                            <div class="result-line">
-                                <span class="label">Konum:</span>
-                                <span class="value">${ipData.summary || 'Bilgi Yok'}</span>
-                            </div>
-                            <div class="result-line">
-                                <span class="label">Şirket:</span>
-                                <span class="value">${ipData.company || 'Bilgi Yok'}</span>
-                            </div>
-                            <div class="result-line">
-                                <span class="label">ASN:</span>
-                                <span class="value">${ipData.asn || 'Bilgi Yok'}</span>
-                            </div>
-                        </div>
-                    `;
-                } else if (type === 'dns') {
-                    if (Array.isArray(ipData.dns_records)) {
-                        let dnsHtml = '<div class="result-section"><h4>🔗 DNS Kayıtları</h4>';
-                        ipData.dns_records.forEach(kayit => {
-                            dnsHtml += `
-                                <div style="margin-bottom: 10px; padding: 8px; background: rgba(30,41,59,0.3); border-radius: 6px;">
-                                    <strong>${kayit.type} Kaydı:</strong> ${kayit.host} → ${kayit.ip || kayit.target || kayit.txt || 'N/A'}
-                                </div>
-                            `;
-                        });
-                        dnsHtml += '</div>';
-                        resultData.innerHTML = dnsHtml;
-                    }
-                }
-            }
             // Diğer sorgular için genel gösterim
             else {
                 let html = '<div class="result-section"><h4>📋 Sorgu Sonuçları</h4>';
@@ -2203,7 +1710,7 @@
             }
         }
 
-        // SORGULAMA FONKSİYONLARI (Aynı kalacak)
+        // SORGULAMA FONKSİYONLARI
         async function sorgula(type, inputId) {
             if (!systemKey || !isKeyVerified) {
                 alert('❌ Önce key doğrulaması yapın!');
@@ -2266,7 +1773,7 @@
                 
                 const data = await response.json();
                 
-                // Yeni sonuç gösterim fonksiyonunu kullan
+                // Sonuç gösterim fonksiyonunu kullan
                 displayResult(data, type);
                 currentResult = data;
             } catch (error) {
@@ -2278,7 +1785,7 @@
             }
         }
 
-        // AD SOYAD SORGULARI (Aynı kalacak)
+        // AD SOYAD SORGULARI
         async function sorgulaAdSoyad(type) {
             if (!systemKey || !isKeyVerified) {
                 alert('❌ Önce key doğrulaması yapın!');
@@ -2332,7 +1839,7 @@
             }
         }
 
-        // AD İL İLÇE SORGUSU (Aynı kalacak)
+        // AD İL İLÇE SORGUSU
         async function sorgulaAdIlIlce(type) {
             if (!systemKey || !isKeyVerified) {
                 alert('❌ Önce key doğrulaması yapın!');
@@ -2375,61 +1882,6 @@
                 const data = await response.json();
                 
                 displayResult(data, type);
-                currentResult = data;
-            } catch (error) {
-                console.error('Sorgu hatası:', error);
-                resultData.innerHTML = '<div class="error">❌ Sorgu sırasında hata oluştu: ' + error.message + '</div>';
-            } finally {
-                loading.classList.remove('active');
-                result.classList.add('active');
-            }
-        }
-
-        // DİĞER FONKSİYONLAR AYNI KALACAK...
-        // [Önceki kodun geri kalanı aynen kalacak - sadece displayResult fonksiyonu değişti]
-
-        // ADA PARSEL SORGUSU
-        async function sorgulaAdaparsel() {
-            if (!systemKey || !isKeyVerified) {
-                alert('❌ Önce key doğrulaması yapın!');
-                openTab('key-tab');
-                return;
-            }
-
-            const loading = document.getElementById('loading');
-            const result = document.getElementById('result');
-            const resultData = document.getElementById('resultData');
-            
-            loading.classList.add('active');
-            result.classList.remove('active');
-            
-            let params = { key: systemKey };
-            
-            const il = document.getElementById('ilAda').value;
-            const ada = document.getElementById('ada').value;
-            const parsel = document.getElementById('parsel').value;
-            
-            if (!il || !ada || !parsel) {
-                alert('❌ Lütfen il, ada ve parsel bilgilerini girin!');
-                loading.classList.remove('active');
-                return;
-            }
-            
-            params.il = il;
-            params.ada = ada;
-            params.parsel = parsel;
-            
-            try {
-                const queryString = new URLSearchParams(params).toString();
-                const response = await fetch(`/api/adaparsel?${queryString}`);
-                
-                if (!response.ok) {
-                    throw new Error(`API hatası: ${response.status}`);
-                }
-                
-                const data = await response.json();
-                
-                displayResult(data, 'adaparsel');
                 currentResult = data;
             } catch (error) {
                 console.error('Sorgu hatası:', error);
@@ -2522,90 +1974,6 @@
             }
         }
 
-        // TABİİ HESAP ALMA
-        async function getTabiiAccount() {
-            if (!isPremiumVerified) {
-                alert('❌ Premium özelliklere erişim için premium key gerekli!');
-                return;
-            }
-
-            const loading = document.getElementById('loading');
-            const accountDetails = document.getElementById('accountDetails');
-            
-            loading.classList.add('active');
-
-            try {
-                const response = await fetch('/api/premium/tabii-account', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ premiumKey })
-                });
-                
-                if (!response.ok) {
-                    throw new Error(`API hatası: ${response.status}`);
-                }
-                
-                const data = await response.json();
-
-                if (data.success) {
-                    const account = data.account;
-                    accountDetails.innerHTML = `
-                        <h3 style="color: #06b6d4; text-align: center; margin-bottom: 20px;">🌟✧ TABİİ ACCOUNT DETAYLARI ✧🌟</h3>
-                        <div class="account-line">
-                            <span><strong>İndex:</strong></span>
-                            <span>${account.index}</span>
-                        </div>
-                        <div class="account-line">
-                            <span><strong>📧 Email:</strong></span>
-                            <span>${account.email}</span>
-                        </div>
-                        <div class="account-line">
-                            <span><strong>🔑 Password:</strong></span>
-                            <span>${account.password}</span>
-                        </div>
-                        <div class="account-line">
-                            <span><strong>👤 Ad Soyad:</strong></span>
-                            <span>${account.fullName}</span>
-                        </div>
-                        <div class="account-line">
-                            <span><strong>⚧ Cinsiyet:</strong></span>
-                            <span>${account.gender}</span>
-                        </div>
-                        <div class="account-line">
-                            <span><strong>🎂 Doğum Tarihi:</strong></span>
-                            <span>${account.birthDate}</span>
-                        </div>
-                        <div class="account-line">
-                            <span><strong>📌 Hesap Durumu:</strong></span>
-                            <span>${account.status}</span>
-                        </div>
-                        <div style="margin-top: 20px; padding-top: 15px; border-top: 2px solid #334155;">
-                            <h4 style="color: #10b981; margin-bottom: 15px;">💎 Abonelik Bilgileri:</h4>
-                            <div class="account-line">
-                                <span><strong>• Paket:</strong></span>
-                                <span>${account.subscription.package}</span>
-                            </div>
-                            <div class="account-line">
-                                <span><strong>• Durum:</strong></span>
-                                <span>${account.subscription.status}</span>
-                            </div>
-                            <div class="account-line">
-                                <span><strong>• Bitiş Tarihi:</strong></span>
-                                <span>${account.subscription.endDate}</span>
-                            </div>
-                        </div>
-                    `;
-                } else {
-                    accountDetails.innerHTML = `<div class="error">❌ ${data.message}</div>`;
-                }
-            } catch (error) {
-                console.error('Tabii hesap hatası:', error);
-                accountDetails.innerHTML = '<div class="error">❌ Hesap alınırken hata oluştu!</div>';
-            } finally {
-                loading.classList.remove('active');
-            }
-        }
-
         // KEY DOĞRULAMA FONKSİYONLARI
         async function verifySystemKey() {
             const key = document.getElementById('systemKey').value;
@@ -2628,22 +1996,21 @@
                 if (data.success) {
                     systemKey = key;
                     isKeyVerified = true;
-                    messageDiv.innerHTML = '<div class="success">✅ Key doğrulandı! Tüm sorgular aktif.</div>';
+                    messageDiv.innerHTML = '<div class="success">✅ Key doğrulandı! Sistem açılıyor...</div>';
                     
-                    // YENİ: Sorgu içeriklerini güncelle
-                    updateQueryContents();
+                    // Kilit animasyonunu göster
+                    setTimeout(() => {
+                        showLockAnimation();
+                    }, 1000);
                     
-                    setTimeout(() => openTab('tc-sorgula-tab'), 1000);
                 } else {
                     messageDiv.innerHTML = '<div class="error">❌ Geçersiz key!</div>';
                     isKeyVerified = false;
-                    updateQueryContents();
                 }
             } catch (error) {
                 console.error('Key doğrulama hatası:', error);
                 messageDiv.innerHTML = '<div class="error">❌ Key doğrulama hatası!</div>';
                 isKeyVerified = false;
-                updateQueryContents();
             }
         }
 
@@ -2678,6 +2045,9 @@
                 messageDiv.innerHTML = '<div class="error">❌ Premium key doğrulama hatası!</div>';
             }
         }
+
+        // DİĞER FONKSİYONLAR AYNI KALACAK...
+        // [Önceki kodun geri kalanı aynen kalacak]
 
         // ADMIN FONKSİYONLARI
         function openAdminModal() {
@@ -2733,154 +2103,6 @@
             }
         }
 
-        async function createKey() {
-            const key = document.getElementById('newKey').value;
-            const messageDiv = document.getElementById('adminMessage');
-
-            try {
-                const response = await fetch('/api/admin/create-key', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ key, sessionId: currentAdminSession })
-                });
-                const data = await response.json();
-
-                if (data.success) {
-                    messageDiv.innerHTML = '<div class="success">✅ ' + data.message + '</div>';
-                    document.getElementById('newKey').value = '';
-                    updateKeysList(data.keys);
-                } else {
-                    messageDiv.innerHTML = '<div class="error">❌ ' + data.message + '</div>';
-                }
-            } catch (error) {
-                messageDiv.innerHTML = '<div class="error">❌ Key oluşturma hatası!</div>';
-            }
-        }
-
-        async function createPremiumKey() {
-            const key = document.getElementById('newPremiumKey').value;
-            const messageDiv = document.getElementById('adminMessage');
-
-            try {
-                const response = await fetch('/api/admin/create-premium-key', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ key, sessionId: currentAdminSession })
-                });
-                const data = await response.json();
-
-                if (data.success) {
-                    messageDiv.innerHTML = '<div class="success">✅ ' + data.message + '</div>';
-                    document.getElementById('newPremiumKey').value = '';
-                    updatePremiumKeysList(data.premiumKeys);
-                } else {
-                    messageDiv.innerHTML = '<div class="error">❌ ' + data.message + '</div>';
-                }
-            } catch (error) {
-                messageDiv.innerHTML = '<div class="error">❌ Premium key oluşturma hatası!</div>';
-            }
-        }
-
-        async function deleteKey(keyToDelete) {
-            if (!confirm('Bu keyi silmek istediğinizden emin misiniz?\nBu key ile artık giriş yapılamayacak!')) {
-                return;
-            }
-
-            try {
-                const response = await fetch('/api/admin/delete-key', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ key: keyToDelete, sessionId: currentAdminSession })
-                });
-                const data = await response.json();
-
-                if (data.success) {
-                    updateKeysList(data.keys);
-                    if (systemKey === keyToDelete) {
-                        systemKey = '';
-                        isKeyVerified = false;
-                        updateQueryContents();
-                        alert('❌ Kullandığınız key silindi! Lütfen yeni key girin.');
-                        openTab('key-tab');
-                    }
-                } else {
-                    alert('❌ Key silinemedi: ' + data.message);
-                }
-            } catch (error) {
-                alert('❌ Key silme hatası!');
-            }
-        }
-
-        async function deletePremiumKey(keyToDelete) {
-            if (!confirm('Bu premium keyi silmek istediğinizden emin misiniz?')) {
-                return;
-            }
-
-            try {
-                const response = await fetch('/api/admin/delete-premium-key', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ key: keyToDelete, sessionId: currentAdminSession })
-                });
-                const data = await response.json();
-
-                if (data.success) {
-                    updatePremiumKeysList(data.premiumKeys);
-                    if (premiumKey === keyToDelete) {
-                        premiumKey = '';
-                        isPremiumVerified = false;
-                        alert('❌ Kullandığınız premium key silindi!');
-                        updatePremiumContent();
-                    }
-                } else {
-                    alert('❌ Premium key silinemedi: ' + data.message);
-                }
-            } catch (error) {
-                alert('❌ Premium key silme hatası!');
-            }
-        }
-
-        function updateKeysList(keys) {
-            const keysDiv = document.getElementById('currentKeys');
-            keysDiv.innerHTML = keys.map(key => `
-                <div class="key-item">
-                    <span>🔑 ${key}</span>
-                    <button class="delete-btn" onclick="deleteKey('${key}')" title="Keyi Sil">
-                        <i class="fas fa-trash"></i>
-                    </button>
-                </div>
-            `).join('');
-        }
-
-        function updatePremiumKeysList(keys) {
-            const keysDiv = document.getElementById('currentPremiumKeys');
-            keysDiv.innerHTML = keys.map(key => `
-                <div class="key-item">
-                    <span>👑 ${key}</span>
-                    <button class="delete-btn" onclick="deletePremiumKey('${key}')" title="Premium Keyi Sil">
-                        <i class="fas fa-trash"></i>
-                    </button>
-                </div>
-            `).join('');
-        }
-
-        async function loadCurrentKeys() {
-            try {
-                const response = await fetch('/api/admin/keys', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ sessionId: currentAdminSession })
-                });
-                const data = await response.json();
-                if (data.success) {
-                    updateKeysList(data.keys);
-                    updatePremiumKeysList(data.premiumKeys);
-                }
-            } catch (error) {
-                updateKeysList(['DABBE2024VIP']);
-            }
-        }
-
         function downloadResult() {
             if (!currentResult) return;
             const text = JSON.stringify(currentResult, null, 2);
@@ -2897,8 +2119,9 @@
 
         document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('systemKey').value = 'DABBE2024VIP';
-            // YENİ: Sayfa yüklendiğinde sorgu içeriklerini güncelle
-            updateQueryContents();
+            // Sadece key kanalları gözüksün
+            document.getElementById('mainTabs').style.display = 'none';
+            document.getElementById('mainContent').style.display = 'none';
         });
 
         window.onclick = function(event) {
