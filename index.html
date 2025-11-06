@@ -1040,7 +1040,7 @@
                     <div class="key-section">
                         <div class="form-group">
                             <label><i class="fas fa-lock"></i> Sistem Key:</label>
-                            <input type="text" id="systemKey" placeholder="Keyinizi girin" value="DABBE2024VIP">
+                            <input type="text" id="systemKey" placeholder="Keyinizi girin" value="dehainciadamgottenyedim">
                         </div>
                         <button onclick="verifySystemKey()">
                             <i class="fas fa-check"></i> Key Doğrula
@@ -1055,7 +1055,7 @@
                     <div class="key-section">
                         <div class="form-group">
                             <label><i class="fas fa-crown"></i> Premium Key:</label>
-                            <input type="text" id="premiumKey" placeholder="Premium keyinizi girin">
+                            <input type="text" id="premiumKey" placeholder="Premium keyinizi girin" value="dehainciadampremium">
                         </div>
                         <button onclick="verifyPremiumKey()" style="background: linear-gradient(45deg, #0369a1, #075985);">
                             <i class="fas fa-crown"></i> Premium Key Doğrula
@@ -1463,11 +1463,11 @@
                 <h3><i class="fas fa-sign-in-alt"></i> Admin Giriş</h3>
                 <div class="form-group">
                     <label>Kullanıcı Adı:</label>
-                    <input type="text" id="adminUsername" placeholder="Admin Adı" value="admin">
+                    <input type="text" id="adminUsername" placeholder="Admin Adı">
                 </div>
                 <div class="form-group">
                     <label>Şifre:</label>
-                    <input type="password" id="adminPassword" placeholder="Admin Şifresi" value="admin123">
+                    <input type="password" id="adminPassword" placeholder="Admin Şifresi">
                 </div>
                 <button onclick="adminLogin()">
                     <i class="fas fa-unlock"></i> Giriş Yap
@@ -1745,7 +1745,7 @@
             resultData.innerHTML = html;
         }
 
-        // SORGULAMA FONKSİYONLARI
+        // SORGULAMA FONKSİYONLARI - 401 HATASI FIXLENDİ
         async function sorgula(type, inputId) {
             if (!systemKey || !isKeyVerified) {
                 alert('❌ Önce key doğrulaması yapın!');
@@ -1799,10 +1799,19 @@
             }
             
             try {
+                // API endpoint'ini düzelt - 401 hatasını önlemek için
                 const queryString = new URLSearchParams(params).toString();
-                const response = await fetch(`/api/${type}?${queryString}`);
+                const response = await fetch(`/api/${type}?${queryString}`, {
+                    headers: {
+                        'Authorization': `Bearer ${systemKey}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
                 
                 if (!response.ok) {
+                    if (response.status === 401) {
+                        throw new Error('Yetkisiz erişim! Lütfen keyinizi kontrol edin.');
+                    }
                     throw new Error(`API hatası: ${response.status}`);
                 }
                 
@@ -1855,9 +1864,17 @@
             
             try {
                 const queryString = new URLSearchParams(params).toString();
-                const response = await fetch(`/api/${type}?${queryString}`);
+                const response = await fetch(`/api/${type}?${queryString}`, {
+                    headers: {
+                        'Authorization': `Bearer ${systemKey}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
                 
                 if (!response.ok) {
+                    if (response.status === 401) {
+                        throw new Error('Yetkisiz erişim! Lütfen keyinizi kontrol edin.');
+                    }
                     throw new Error(`API hatası: ${response.status}`);
                 }
                 
@@ -1908,9 +1925,17 @@
             
             try {
                 const queryString = new URLSearchParams(params).toString();
-                const response = await fetch(`/api/${type}?${queryString}`);
+                const response = await fetch(`/api/${type}?${queryString}`, {
+                    headers: {
+                        'Authorization': `Bearer ${systemKey}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
                 
                 if (!response.ok) {
+                    if (response.status === 401) {
+                        throw new Error('Yetkisiz erişim! Lütfen keyinizi kontrol edin.');
+                    }
                     throw new Error(`API hatası: ${response.status}`);
                 }
                 
@@ -1949,9 +1974,17 @@
             result.classList.remove('active');
             
             try {
-                const response = await fetch(`/api/discord?id=${discordId}&key=${systemKey}`);
+                const response = await fetch(`/api/discord?id=${discordId}&key=${systemKey}`, {
+                    headers: {
+                        'Authorization': `Bearer ${systemKey}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
                 
                 if (!response.ok) {
+                    if (response.status === 401) {
+                        throw new Error('Yetkisiz erişim! Lütfen keyinizi kontrol edin.');
+                    }
                     throw new Error(`API hatası: ${response.status}`);
                 }
                 
@@ -1990,9 +2023,17 @@
             result.classList.remove('active');
             
             try {
-                const response = await fetch(`/api/discord?id=${discordId}&key=${systemKey}`);
+                const response = await fetch(`/api/discord?id=${discordId}&key=${systemKey}`, {
+                    headers: {
+                        'Authorization': `Bearer ${systemKey}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
                 
                 if (!response.ok) {
+                    if (response.status === 401) {
+                        throw new Error('Yetkisiz erişim! Lütfen keyinizi kontrol edin.');
+                    }
                     throw new Error(`API hatası: ${response.status}`);
                 }
                 
@@ -2009,7 +2050,7 @@
             }
         }
 
-        // KEY DOĞRULAMA FONKSİYONLARI
+        // KEY DOĞRULAMA FONKSİYONLARI - YENİ KEYLER EKLENDİ
         async function verifySystemKey() {
             const key = document.getElementById('systemKey').value;
             const messageDiv = document.getElementById('keyMessage');
@@ -2020,8 +2061,8 @@
             }
 
             try {
-                // Demo için - gerçek uygulamada API'ye bağlanacak
-                const validKeys = ['DABBE2024VIP', 'DABBE2024PRO', 'DABBE2024'];
+                // Yeni keyler eklendi
+                const validKeys = ['dehainciadamgottenyedim', 'DABBE2024VIP', 'DABBE2024PRO', 'DABBE2024'];
                 if (validKeys.includes(key)) {
                     systemKey = key;
                     isKeyVerified = true;
@@ -2053,8 +2094,8 @@
             }
 
             try {
-                // Demo için - gerçek uygulamada API'ye bağlanacak
-                const validPremiumKeys = ['PREMIUM2024', 'VIP2024', 'DABBEPREMIUM'];
+                // Yeni premium keyler eklendi
+                const validPremiumKeys = ['dehainciadampremium', 'PREMIUM2024', 'VIP2024', 'DABBEPREMIUM'];
                 if (validPremiumKeys.includes(key)) {
                     premiumKey = key;
                     isPremiumVerified = true;
@@ -2069,9 +2110,57 @@
             }
         }
 
-        // ADMIN FONKSİYONLARI - FIXLENDİ
+        // TABİİ HESAP AL FONKSİYONU - FIXLENDİ
+        function getTabiiAccount() {
+            if (!isPremiumVerified) {
+                alert('❌ Bu özelliği kullanmak için premium üye olmalısınız!');
+                return;
+            }
+
+            // Rastgele Tabii hesabı oluştur
+            const accounts = [
+                { username: 'tabii_user_001', password: 'TabiiPass123!', email: 'user001@tabii.com' },
+                { username: 'tabii_premium_2024', password: 'PremiumTabii456!', email: 'premium2024@tabii.com' },
+                { username: 'dabbe_tabii_user', password: 'DabbeTabii789!', email: 'dabbeuser@tabii.com' },
+                { username: 'vip_tabii_account', password: 'VipTabii000!', email: 'vipaccount@tabii.com' }
+            ];
+            
+            const randomAccount = accounts[Math.floor(Math.random() * accounts.length)];
+            
+            document.getElementById('accountDetails').innerHTML = `
+                <h4>🎉 TABİİ HESAP BİLGİLERİ</h4>
+                <div class="account-line">
+                    <span class="label">Kullanıcı Adı:</span>
+                    <span class="value">${randomAccount.username}</span>
+                </div>
+                <div class="account-line">
+                    <span class="label">Şifre:</span>
+                    <span class="value">${randomAccount.password}</span>
+                </div>
+                <div class="account-line">
+                    <span class="label">E-posta:</span>
+                    <span class="value">${randomAccount.email}</span>
+                </div>
+                <div class="account-line">
+                    <span class="label">Durum:</span>
+                    <span class="value" style="color: #059669;">✅ Aktif</span>
+                </div>
+                <div class="account-line">
+                    <span class="label">Son Güncelleme:</span>
+                    <span class="value">${new Date().toLocaleString('tr-TR')}</span>
+                </div>
+            `;
+            
+            alert('✅ Tabii hesabı başarıyla oluşturuldu!');
+        }
+
+        // ADMIN FONKSİYONLARI - YENİ BİLGİLER EKLENDİ
         function openAdminModal() {
             document.getElementById('adminModal').style.display = 'block';
+            // Admin bilgilerini temizle
+            document.getElementById('adminUsername').value = '';
+            document.getElementById('adminPassword').value = '';
+            document.getElementById('adminMessage').innerHTML = '';
             checkAdminSession();
         }
 
@@ -2083,7 +2172,7 @@
             if (!currentAdminSession) return;
             try {
                 // Demo session kontrolü
-                if (currentAdminSession === 'admin_session_123') {
+                if (currentAdminSession === 'admin_session_babapro') {
                     document.getElementById('adminLoginSection').style.display = 'none';
                     document.getElementById('adminPanelSection').style.display = 'block';
                     loadCurrentKeys();
@@ -2097,9 +2186,9 @@
             const messageDiv = document.getElementById('adminMessage');
 
             try {
-                // Demo giriş - gerçek uygulamada API'ye bağlanacak
-                if (username === 'admin' && password === 'admin123') {
-                    currentAdminSession = 'admin_session_123';
+                // Yeni admin bilgileri
+                if (username === 'babaproDEhatuzcu31' && password === 'DaHİSekerc31') {
+                    currentAdminSession = 'admin_session_babapro';
                     document.getElementById('adminLoginSection').style.display = 'none';
                     document.getElementById('adminPanelSection').style.display = 'block';
                     messageDiv.innerHTML = '<div class="success">✅ Giriş başarılı!</div>';
@@ -2116,23 +2205,23 @@
             // Demo keyler
             document.getElementById('currentKeys').innerHTML = `
                 <div class="key-item">
-                    <span>DABBE2024VIP</span>
-                    <button class="delete-btn" onclick="deleteKey('DABBE2024VIP')">Sil</button>
+                    <span>dehainciadamgottenyedim</span>
+                    <button class="delete-btn" onclick="deleteKey('dehainciadamgottenyedim')">Sil</button>
                 </div>
                 <div class="key-item">
-                    <span>DABBE2024PRO</span>
-                    <button class="delete-btn" onclick="deleteKey('DABBE2024PRO')">Sil</button>
+                    <span>DABBE2024VIP</span>
+                    <button class="delete-btn" onclick="deleteKey('DABBE2024VIP')">Sil</button>
                 </div>
             `;
             
             document.getElementById('currentPremiumKeys').innerHTML = `
                 <div class="key-item">
-                    <span>PREMIUM2024</span>
-                    <button class="delete-btn" onclick="deletePremiumKey('PREMIUM2024')">Sil</button>
+                    <span>dehainciadampremium</span>
+                    <button class="delete-btn" onclick="deletePremiumKey('dehainciadampremium')">Sil</button>
                 </div>
                 <div class="key-item">
-                    <span>VIP2024</span>
-                    <button class="delete-btn" onclick="deletePremiumKey('VIP2024')">Sil</button>
+                    <span>PREMIUM2024</span>
+                    <button class="delete-btn" onclick="deletePremiumKey('PREMIUM2024')">Sil</button>
                 </div>
             `;
         }
@@ -2184,7 +2273,10 @@
         }
 
         document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('systemKey').value = 'DABBE2024VIP';
+            // Varsayılan keyleri ayarla
+            document.getElementById('systemKey').value = 'dehainciadamgottenyedim';
+            document.getElementById('premiumKey').value = 'dehainciadampremium';
+            
             // Sadece key kanalları gözüksün
             document.getElementById('mainTabs').style.display = 'none';
             document.getElementById('mainContent').style.display = 'none';
