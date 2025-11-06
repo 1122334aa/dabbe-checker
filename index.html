@@ -1624,7 +1624,7 @@
 
             // API'den gelen veriyi kontrol et
             if (!data || Object.keys(data).length === 0 || (data.success === false)) {
-                resultData.innerHTML = '<div class="error">❌ Sorgu sonucu bulunamadı veya API yanıt vermedi!</div>';
+                resultData.innerHTML = '<div class="error">❌ Sorgu sonucu bulunamadı!</div>';
                 return;
             }
 
@@ -2274,8 +2274,8 @@
 
         document.addEventListener('DOMContentLoaded', function() {
             // Varsayılan keyleri ayarla
-            document.getElementById('systemKey').value = 'dehainciadamgottenyedim';
-            document.getElementById('premiumKey').value = 'dehainciadampremium';
+            document.getElementById('systemKey').value = 'Key İçin Discord!';
+            document.getElementById('premiumKey').value = 'Key İçin Discord!';
             
             // Sadece key kanalları gözüksün
             document.getElementById('mainTabs').style.display = 'none';
@@ -2289,3 +2289,4 @@
     </script>
 </body>
 </html>
+
