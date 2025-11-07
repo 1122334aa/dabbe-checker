@@ -535,7 +535,7 @@ const server = http.createServer(async (req, res) => {
         return;
     }
 
-    if (req.url === '/babapro') {
+    if (req.url === '/duyuru') {
         res.writeHead(200, { 
             'Content-Type': 'text/html; charset=utf-8'
         });
@@ -601,6 +601,7 @@ server.listen(PORT, () => {
     console.log('💾 Key kayıt sistemi aktif');
     console.log('💎 Premium özellikler aktif');
 });
+
 
 
 
