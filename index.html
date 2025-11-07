@@ -24,8 +24,9 @@
 
         body {
             background: 
-                radial-gradient(circle at 10% 20%, rgba(30, 64, 175, 0.1) 0%, transparent 20%),
-                radial-gradient(circle at 90% 80%, rgba(3, 105, 161, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 10% 20%, rgba(30, 64, 175, 0.15) 0%, transparent 25%),
+                radial-gradient(circle at 90% 80%, rgba(3, 105, 161, 0.15) 0%, transparent 25%),
+                radial-gradient(circle at 50% 50%, rgba(15, 23, 42, 0.8) 0%, transparent 50%),
                 linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #020617 100%);
             color: var(--light);
             font-family: 'Segoe UI', system-ui, sans-serif;
@@ -924,8 +925,9 @@
             text-align: center;
             padding: 50px 20px;
             background: 
-                radial-gradient(circle at 20% 80%, rgba(30, 64, 175, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(3, 105, 161, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 20% 80%, rgba(30, 64, 175, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(3, 105, 161, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(15, 23, 42, 0.8) 0%, transparent 50%),
                 linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #020617 100%);
         }
 
@@ -961,6 +963,52 @@
         @keyframes float {
             0%, 100% { transform: translateY(0px) rotate(0deg); }
             50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        /* YARDIMCI ARAÇLAR BÖLÜMÜ */
+        .tools-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .tool-card {
+            background: rgba(30, 41, 59, 0.8);
+            border-radius: 8px;
+            padding: 20px;
+            border: 1px solid #334155;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .tool-card:hover {
+            border-color: #475569;
+            transform: translateY(-5px);
+        }
+
+        .tool-card i {
+            font-size: 2em;
+            color: #0369a1;
+            margin-bottom: 15px;
+        }
+
+        .tool-card h4 {
+            color: #0369a1;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .tool-card p {
+            color: #94a3b8;
+            font-size: 13px;
+            margin-bottom: 15px;
+        }
+
+        .tool-card button {
+            width: 100%;
+            padding: 10px;
+            font-size: 13px;
         }
     </style>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
@@ -1210,6 +1258,12 @@
                         <button class="tab-btn" onclick="openTab('premium-tab')">
                             <i class="fas fa-gem"></i>
                             <span class="btn-text">Premium</span>
+                        </button>
+                        
+                        <!-- YARDIMCI ARAÇLAR BÖLÜMÜ -->
+                        <button class="tab-btn" onclick="openTab('tools-tab')">
+                            <i class="fas fa-tools"></i>
+                            <span class="btn-text">Yardımcı Araçlar</span>
                         </button>
                     </div>
                 </div>
@@ -1658,13 +1712,70 @@
                             </div>
                         </div>
 
-                        <!-- Yardımcı Araçlar -->
-                        <div class="tab-content">
+                        <!-- YARDIMCI ARAÇLAR BÖLÜMÜ -->
+                        <div id="tools-tab" class="tab-content">
                             <h2><i class="fas fa-tools"></i> YARDIMCI ARAÇLAR</h2>
-                            <div class="coming-soon">
+                            
+                            <div class="tools-section">
+                                <div class="tool-card">
+                                    <i class="fas fa-calculator"></i>
+                                    <h4>TC Doğrulama</h4>
+                                    <p>TC kimlik numarası doğrulama aracı</p>
+                                    <button onclick="openTab('tc-sorgula-tab')">
+                                        <i class="fas fa-play"></i> Kullan
+                                    </button>
+                                </div>
+                                
+                                <div class="tool-card">
+                                    <i class="fas fa-map-marked-alt"></i>
+                                    <h4>Adres Doğrulama</h4>
+                                    <p>Adres bilgilerini doğrulama aracı</p>
+                                    <button onclick="openTab('adres-tab')">
+                                        <i class="fas fa-play"></i> Kullan
+                                    </button>
+                                </div>
+                                
+                                <div class="tool-card">
+                                    <i class="fas fa-phone-alt"></i>
+                                    <h4>GSM Doğrulama</h4>
+                                    <p>Telefon numarası doğrulama aracı</p>
+                                    <button onclick="openTab('tc-gsm-tab')">
+                                        <i class="fas fa-play"></i> Kullan
+                                    </button>
+                                </div>
+                                
+                                <div class="tool-card">
+                                    <i class="fas fa-globe"></i>
+                                    <h4>IP Kontrol</h4>
+                                    <p>IP adresi kontrol ve analiz aracı</p>
+                                    <button onclick="openTab('ip-sorgula-tab')">
+                                        <i class="fas fa-play"></i> Kullan
+                                    </button>
+                                </div>
+                                
+                                <div class="tool-card">
+                                    <i class="fas fa-user-check"></i>
+                                    <h4>Kimlik Doğrulama</h4>
+                                    <p>Kimlik bilgilerini doğrulama aracı</p>
+                                    <button onclick="openTab('adsoyad-sorgula-tab')">
+                                        <i class="fas fa-play"></i> Kullan
+                                    </button>
+                                </div>
+                                
+                                <div class="tool-card">
+                                    <i class="fas fa-search"></i>
+                                    <h4>Gelişmiş Arama</h4>
+                                    <p>Detaylı arama ve sorgulama aracı</p>
+                                    <button onclick="openTab('gelismisip-tab')">
+                                        <i class="fas fa-play"></i> Kullan
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="coming-soon" style="margin-top: 30px;">
                                 <i class="fas fa-tools"></i>
-                                <h3>Yakında Aktif Olacak</h3>
-                                <p>Yardımcı araçlar özelliği yakında eklenecek...</p>
+                                <h3>Daha Fazla Araç Yakında!</h3>
+                                <p>Yardımcı araçlar bölümüne yeni özellikler ekleniyor...</p>
                             </div>
                         </div>
                     </div>
@@ -2152,6 +2263,11 @@
                 });
                 
                 if (!response.ok) {
+                    if (response.status === 500) {
+                        // 500 hatası durumunda alternatif işlem
+                        resultData.innerHTML = '<div class="warning">⚠️ API geçici olarak hizmet veremiyor. Lütfen daha sonra tekrar deneyin.</div>';
+                        return;
+                    }
                     if (response.status === 401) {
                         throw new Error('Yetkisiz erişim! Lütfen keyinizi kontrol edin.');
                     }
@@ -2215,6 +2331,10 @@
                 });
                 
                 if (!response.ok) {
+                    if (response.status === 500) {
+                        resultData.innerHTML = '<div class="warning">⚠️ API geçici olarak hizmet veremiyor. Lütfen daha sonra tekrar deneyin.</div>';
+                        return;
+                    }
                     if (response.status === 401) {
                         throw new Error('Yetkisiz erişim! Lütfen keyinizi kontrol edin.');
                     }
@@ -2276,6 +2396,10 @@
                 });
                 
                 if (!response.ok) {
+                    if (response.status === 500) {
+                        resultData.innerHTML = '<div class="warning">⚠️ API geçici olarak hizmet veremiyor. Lütfen daha sonra tekrar deneyin.</div>';
+                        return;
+                    }
                     if (response.status === 401) {
                         throw new Error('Yetkisiz erişim! Lütfen keyinizi kontrol edin.');
                     }
@@ -2325,6 +2449,10 @@
                 });
                 
                 if (!response.ok) {
+                    if (response.status === 500) {
+                        resultData.innerHTML = '<div class="warning">⚠️ API geçici olarak hizmet veremiyor. Lütfen daha sonra tekrar deneyin.</div>';
+                        return;
+                    }
                     if (response.status === 401) {
                         throw new Error('Yetkisiz erişim! Lütfen keyinizi kontrol edin.');
                     }
@@ -2385,6 +2513,10 @@
                 });
                 
                 if (!response.ok) {
+                    if (response.status === 500) {
+                        resultData.innerHTML = '<div class="warning">⚠️ API geçici olarak hizmet veremiyor. Lütfen daha sonra tekrar deneyin.</div>';
+                        return;
+                    }
                     if (response.status === 401) {
                         throw new Error('Yetkisiz erişim! Lütfen keyinizi kontrol edin.');
                     }
