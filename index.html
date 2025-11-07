@@ -288,6 +288,26 @@
             background: linear-gradient(45deg, #4752c4, #5b73d4);
         }
 
+        .duyuru-btn {
+            position: absolute;
+            top: 0;
+            right: 240px;
+            background: linear-gradient(45deg, #059669, #10b981);
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            z-index: 100;
+            font-size: 13px;
+        }
+
+        .duyuru-btn:hover {
+            background: linear-gradient(45deg, #047857, #0d9669);
+        }
+
         .tab-content {
             display: none;
             background: var(--card-bg);
@@ -683,6 +703,12 @@
                 margin-bottom: 15px;
             }
             .discord-btn {
+                position: relative;
+                top: 0;
+                right: 0;
+                margin-bottom: 15px;
+            }
+            .duyuru-btn {
                 position: relative;
                 top: 0;
                 right: 0;
@@ -1158,6 +1184,9 @@
 
             <div class="main-content">
                 <div class="content-wrapper">
+                    <button class="duyuru-btn" onclick="openDuyuru()">
+                        <i class="fas fa-bullhorn"></i> Duyuru
+                    </button>
                     <button class="discord-btn" onclick="openDiscord()">
                         <i class="fab fa-discord"></i> Discord
                     </button>
@@ -1665,6 +1694,11 @@
             }
         });
 
+        // Duyuru butonu fonksiyonu
+        function openDuyuru() {
+            window.open('https://dabbe-checker.vercel.app/babapro', '_blank');
+        }
+
         // Discord butonu fonksiyonu
         function openDiscord() {
             window.open('https://discord.gg/dabbe', '_blank');
@@ -1719,6 +1753,30 @@
                 package: "VIP",
                 subscriptionStatus: "Active",
                 endDate: "2025-12-31T23:59:59Z"
+            },
+            {
+                index: 5,
+                email: "fatma.celik@gmail.com",
+                password: "Fatma123!",
+                name: "Fatma Çelik",
+                gender: "Kız",
+                birthDate: "1999-09-12",
+                status: "Subscribed",
+                package: "Premium",
+                subscriptionStatus: "Active",
+                endDate: "2025-12-20T14:20:00Z"
+            },
+            {
+                index: 6,
+                email: "mustafa.arslan@yahoo.com",
+                password: "Mustafa456!",
+                name: "Mustafa Arslan",
+                gender: "Erkek",
+                birthDate: "1992-04-25",
+                status: "Subscribed",
+                package: "Ücretsiz",
+                subscriptionStatus: "Active",
+                endDate: "2025-12-05T09:15:00Z"
             }
         ];
 
