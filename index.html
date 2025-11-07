@@ -1116,6 +1116,31 @@
                             </button>
                         </div>
 
+                        <!-- İkametgah Sorgu Accordion -->
+                        <button class="tab-btn" onclick="toggleSubmenu('ikametgah-submenu')">
+                            <i class="fas fa-home"></i>
+                            <span class="btn-text">İkametgah</span>
+                            <i class="fas fa-chevron-down accordion-arrow"></i>
+                        </button>
+                        <div id="ikametgah-submenu" class="submenu">
+                            <button class="sub-tab-btn" onclick="openTab('adres-tab')">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span class="btn-text">Adres Sorgula</span>
+                            </button>
+                            <button class="sub-tab-btn" onclick="openTab('tapu-tab')">
+                                <i class="fas fa-file-contract"></i>
+                                <span class="btn-text">Tapu Sorgula</span>
+                            </button>
+                            <button class="sub-tab-btn" onclick="openTab('hane-tab')">
+                                <i class="fas fa-house-user"></i>
+                                <span class="btn-text">Hane Sorgula</span>
+                            </button>
+                            <button class="sub-tab-btn" onclick="openTab('apartman-tab')">
+                                <i class="fas fa-building"></i>
+                                <span class="btn-text">Apartman Sorgula</span>
+                            </button>
+                        </div>
+
                         <!-- IP & Domain Accordion -->
                         <button class="tab-btn" onclick="toggleSubmenu('ip-submenu')">
                             <i class="fas fa-globe"></i>
@@ -1156,10 +1181,6 @@
                             <i class="fas fa-chevron-down accordion-arrow"></i>
                         </button>
                         <div id="other-submenu" class="submenu">
-                            <button class="sub-tab-btn" onclick="openTab('other-tab')">
-                                <i class="fas fa-tools"></i>
-                                <span class="btn-text">Tüm Diğer Sorgular</span>
-                            </button>
                             <button class="sub-tab-btn" onclick="openTab('discord-tab')">
                                 <i class="fab fa-discord"></i>
                                 <span class="btn-text">Discord Sorgu</span>
@@ -1167,6 +1188,18 @@
                             <button class="sub-tab-btn" onclick="openTab('gelismisip-tab')">
                                 <i class="fas fa-search-plus"></i>
                                 <span class="btn-text">Gelişmiş IP</span>
+                            </button>
+                            <button class="sub-tab-btn" onclick="openTab('vergi-tab')">
+                                <i class="fas fa-file-invoice-dollar"></i>
+                                <span class="btn-text">Vergi Sorgu</span>
+                            </button>
+                            <button class="sub-tab-btn" onclick="openTab('adaparsel-tab')">
+                                <i class="fas fa-map-marked-alt"></i>
+                                <span class="btn-text">Ada Parsel</span>
+                            </button>
+                            <button class="sub-tab-btn" onclick="openTab('isyeri-tab')">
+                                <i class="fas fa-briefcase"></i>
+                                <span class="btn-text">İşyeri Sorgu</span>
                             </button>
                         </div>
 
@@ -1383,6 +1416,51 @@
                             </button>
                         </div>
 
+                        <!-- İkametgah Tabları -->
+                        <div id="adres-tab" class="tab-content">
+                            <h2><i class="fas fa-map-marker-alt"></i> Adres Sorgula</h2>
+                            <div class="form-group">
+                                <label>TC Kimlik No:</label>
+                                <input type="text" id="tcAdres" maxlength="11" placeholder="TC kimlik numarasını girin">
+                            </div>
+                            <button onclick="sorgula('adres', 'tcAdres')">
+                                <i class="fas fa-play"></i> Sorguyu Çalıştır
+                            </button>
+                        </div>
+
+                        <div id="tapu-tab" class="tab-content">
+                            <h2><i class="fas fa-file-contract"></i> Tapu Sorgula</h2>
+                            <div class="form-group">
+                                <label>TC Kimlik No:</label>
+                                <input type="text" id="tcTapu" maxlength="11" placeholder="TC kimlik numarasını girin">
+                            </div>
+                            <button onclick="sorgula('tapu', 'tcTapu')">
+                                <i class="fas fa-play"></i> Sorguyu Çalıştır
+                            </button>
+                        </div>
+
+                        <div id="hane-tab" class="tab-content">
+                            <h2><i class="fas fa-house-user"></i> Hane Sorgula</h2>
+                            <div class="form-group">
+                                <label>TC Kimlik No:</label>
+                                <input type="text" id="tcHane" maxlength="11" placeholder="TC kimlik numarasını girin">
+                            </div>
+                            <button onclick="sorgula('hane', 'tcHane')">
+                                <i class="fas fa-play"></i> Sorguyu Çalıştır
+                            </button>
+                        </div>
+
+                        <div id="apartman-tab" class="tab-content">
+                            <h2><i class="fas fa-building"></i> Apartman Sorgula</h2>
+                            <div class="form-group">
+                                <label>TC Kimlik No:</label>
+                                <input type="text" id="tcApartman" maxlength="11" placeholder="TC kimlik numarasını girin">
+                            </div>
+                            <button onclick="sorgula('apartman', 'tcApartman')">
+                                <i class="fas fa-play"></i> Sorguyu Çalıştır
+                            </button>
+                        </div>
+
                         <!-- IP Tabları -->
                         <div id="ip-sorgula-tab" class="tab-content">
                             <h2><i class="fas fa-globe"></i> IP Sorgula</h2>
@@ -1474,65 +1552,48 @@
                             </button>
                         </div>
 
-                        <!-- Diğer Sorgular Tab -->
-                        <div id="other-tab" class="tab-content">
-                            <h2><i class="fas fa-cogs"></i> Diğer Sorgular</h2>
-                            <div class="section-group">
-                                <!-- TC ile Sorgular -->
-                                <div class="query-section">
-                                    <h4><i class="fas fa-id-card"></i> TC ile Sorgular</h4>
-                                    <div class="form-group">
-                                        <input type="text" id="tcOther" maxlength="11" placeholder="TC kimlik numarası">
-                                    </div>
-                                    <div class="btn-group">
-                                        <button onclick="sorgula('tapu', 'tcOther')">Tapu Sorgula</button>
-                                        <button onclick="sorgula('isyeri', 'tcOther')">İşyeri Sorgula</button>
-                                        <button onclick="sorgula('adres', 'tcOther')">Adres Sorgula</button>
-                                        <button onclick="sorgula('hane', 'tcOther')">Hane Sorgula</button>
-                                        <button onclick="sorgula('apartman', 'tcOther')">Apartman Sorgula</button>
-                                    </div>
-                                </div>
-
-                                <!-- Discord & IP Sorguları -->
-                                <div class="query-section">
-                                    <h4><i class="fab fa-discord"></i> Discord & IP Sorguları</h4>
-                                    <div class="form-group">
-                                        <label>Discord ID:</label>
-                                        <input type="text" id="discordIdOther" placeholder="Discord ID girin">
-                                    </div>
-                                    <button onclick="sorgulaDiscordOther()" style="background: linear-gradient(45deg, #5865F2, #7289DA); width: 100%; margin-bottom: 10px;">
-                                        <i class="fab fa-discord"></i> Discord Sorgula
-                                    </button>
-                                    
-                                    <div class="form-group">
-                                        <label>IP Adresi:</label>
-                                        <input type="text" id="gelismisIpOther" placeholder="IPv4 adresi girin">
-                                    </div>
-                                    <button onclick="sorgula('gelismisip', 'gelismisIpOther')" style="width: 100%;">
-                                        <i class="fas fa-search-plus"></i> Gelişmiş IP Sorgula
-                                    </button>
-                                </div>
-
-                                <!-- Vergi No Sorgusu -->
-                                <div class="query-section">
-                                    <h4><i class="fas fa-file-invoice-dollar"></i> Vergi Sorgusu</h4>
-                                    <div class="form-group">
-                                        <input type="text" id="vergiNo" placeholder="Vergi numarası">
-                                    </div>
-                                    <button onclick="sorgula('vergino', 'vergiNo')" style="width: 100%;">Vergi No Sorgula</button>
-                                </div>
-
-                                <!-- Ada Parsel Sorgusu -->
-                                <div class="query-section">
-                                    <h4><i class="fas fa-map-marked-alt"></i> Ada Parsel Sorgusu</h4>
-                                    <div class="form-group">
-                                        <input type="text" id="ilAda" placeholder="İl">
-                                        <input type="text" id="ada" placeholder="Ada" style="margin-top: 8px;">
-                                        <input type="text" id="parsel" placeholder="Parsel" style="margin-top: 8px;">
-                                    </div>
-                                    <button onclick="sorgulaAdaparsel()" style="width: 100%;">Ada Parsel Sorgula</button>
-                                </div>
+                        <!-- Vergi Tab -->
+                        <div id="vergi-tab" class="tab-content">
+                            <h2><i class="fas fa-file-invoice-dollar"></i> Vergi Sorgusu</h2>
+                            <div class="form-group">
+                                <label>Vergi Numarası:</label>
+                                <input type="text" id="vergiNo" placeholder="Vergi numarası">
                             </div>
+                            <button onclick="sorgula('vergino', 'vergiNo')" style="width: 100%;">
+                                <i class="fas fa-file-invoice-dollar"></i> Vergi No Sorgula
+                            </button>
+                        </div>
+
+                        <!-- Ada Parsel Tab -->
+                        <div id="adaparsel-tab" class="tab-content">
+                            <h2><i class="fas fa-map-marked-alt"></i> Ada Parsel Sorgusu</h2>
+                            <div class="form-group">
+                                <label>İl:</label>
+                                <input type="text" id="ilAda" placeholder="İl">
+                            </div>
+                            <div class="form-group">
+                                <label>Ada:</label>
+                                <input type="text" id="ada" placeholder="Ada">
+                            </div>
+                            <div class="form-group">
+                                <label>Parsel:</label>
+                                <input type="text" id="parsel" placeholder="Parsel">
+                            </div>
+                            <button onclick="sorgulaAdaparsel()" style="width: 100%;">
+                                <i class="fas fa-map-marked-alt"></i> Ada Parsel Sorgula
+                            </button>
+                        </div>
+
+                        <!-- İşyeri Tab -->
+                        <div id="isyeri-tab" class="tab-content">
+                            <h2><i class="fas fa-briefcase"></i> İşyeri Sorgusu</h2>
+                            <div class="form-group">
+                                <label>TC Kimlik No:</label>
+                                <input type="text" id="tcIsyeri" maxlength="11" placeholder="TC kimlik numarasını girin">
+                            </div>
+                            <button onclick="sorgula('isyeri', 'tcIsyeri')">
+                                <i class="fas fa-play"></i> Sorguyu Çalıştır
+                            </button>
                         </div>
 
                         <!-- Database Tab -->
@@ -1594,6 +1655,16 @@
                                         <i class="fas fa-crown"></i> Premium Key Gir
                                     </button>
                                 </div>
+                            </div>
+                        </div>
+
+                        <!-- Yardımcı Araçlar -->
+                        <div class="tab-content">
+                            <h2><i class="fas fa-tools"></i> YARDIMCI ARAÇLAR</h2>
+                            <div class="coming-soon">
+                                <i class="fas fa-tools"></i>
+                                <h3>Yakında Aktif Olacak</h3>
+                                <p>Yardımcı araçlar özelliği yakında eklenecek...</p>
                             </div>
                         </div>
                     </div>
@@ -2273,17 +2344,20 @@
             }
         }
 
-        // DİĞER SORGULAR İÇİN DISCORD
-        async function sorgulaDiscordOther() {
+        // ADA PARSEL SORGUSU
+        async function sorgulaAdaparsel() {
             if (!systemKey || !isKeyVerified) {
                 alert('❌ Önce key doğrulaması yapın!');
                 openTab('key-tab');
                 return;
             }
 
-            const discordId = document.getElementById('discordIdOther').value;
-            if (!discordId) {
-                alert('Discord ID girin!');
+            const il = document.getElementById('ilAda').value;
+            const ada = document.getElementById('ada').value;
+            const parsel = document.getElementById('parsel').value;
+            
+            if (!il || !ada || !parsel) {
+                alert('❌ Lütfen il, ada ve parsel bilgilerini girin!');
                 return;
             }
 
@@ -2295,7 +2369,15 @@
             result.classList.remove('active');
             
             try {
-                const response = await fetch(`/api/discord?id=${discordId}&key=${systemKey}`, {
+                const params = { 
+                    key: systemKey,
+                    il: il,
+                    ada: ada,
+                    parsel: parsel
+                };
+                
+                const queryString = new URLSearchParams(params).toString();
+                const response = await fetch(`/api/adaparsel?${queryString}`, {
                     headers: {
                         'Authorization': `Bearer ${systemKey}`,
                         'Content-Type': 'application/json'
@@ -2311,7 +2393,7 @@
                 
                 const data = await response.json();
                 
-                displayResult(data, 'discord');
+                displayResult(data, 'adaparsel');
                 currentResult = data;
             } catch (error) {
                 console.error('Sorgu hatası:', error);
@@ -2570,4 +2652,3 @@
     </script>
 </body>
 </html>
-
