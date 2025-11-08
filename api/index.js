@@ -12,14 +12,31 @@ export default async function handler(req, res) {
   const isim = searchParams.get('isim');
   const email = searchParams.get('email');
   const ara = searchParams.get('ara');
+  const key = searchParams.get('key'); // KEY PARAMETRESİ EKLEDİK
   const limit = parseInt(searchParams.get('limit')) || 50;
 
+  // KEY KONTROLÜ
+  const validKeys = [
+    'dehainciadamgottenyedim', 
+    'DABBE2024VIP', 
+    'DABBE2024PRO', 
+    'DABBE2024',
+    'babapro31',
+    'dabbe2025'
+  ];
+
+  if (!key || !validKeys.includes(key)) {
+    return res.status(401).json({
+      error: 'Geçersiz key!',
+      message: 'Lütfen geçerli bir key girin.',
+      valid_keys: validKeys
+    });
+  }
+
   try {
-    console.log('📥 Google Drive\'dan SQL çekiliyor...');
+    console.log('📥 Google Drive\'dan SQL çekiliyor... Key:', key);
     
-    // SENİN DRIVE LINK'İN
     const driveUrl = 'https://drive.google.com/uc?export=download&id=1XbuVEQDUqOe16owtKfZR59jN0uAf8iBe';
-    
     const response = await fetch(driveUrl);
     
     if (!response.ok) {
@@ -38,37 +55,29 @@ export default async function handler(req, res) {
     for (let i = 0; i < lines.length; i++) {
       const line = lines[i];
       
-      // Sadece INSERT satırlarını işle
       if (line.includes('INSERT INTO') && line.includes('VALUES')) {
         try {
-          // VALUES kısmını bul
           const valuesStart = line.indexOf('VALUES') + 6;
           let valuesPart = line.slice(valuesStart).trim();
           
-          // Sonundaki noktalı virgülü temizle
           if (valuesPart.endsWith(';')) {
             valuesPart = valuesPart.slice(0, -1);
           }
           
-          // Parantez gruplarını ayır
           const valueGroups = valuesPart.split('),(');
           
           for (let j = 0; j < valueGroups.length; j++) {
             let group = valueGroups[j];
             
-            // İlk grupta ( varsa temizle
             if (j === 0 && group.startsWith('(')) {
               group = group.slice(1);
             }
-            // Son grupta ) varsa temizle  
             if (j === valueGroups.length - 1 && group.endsWith(')')) {
               group = group.slice(0, -1);
             }
             
-            // Değerleri ayır
             const values = group.split(',').map(v => {
               let val = v.trim();
-              // Tırnakları temizle
               if (val.startsWith("'") && val.endsWith("'")) {
                 val = val.slice(1, -1);
               }
@@ -83,24 +92,17 @@ export default async function handler(req, res) {
               });
             }
             
-            // Performans için 200K kayıt limit
             if (users.length >= 200000) break;
           }
         } catch (groupError) {
-          console.log('Gruplama hatası:', groupError);
           continue;
         }
-      }
-      
-      // İlerleme göstergesi
-      if (i % 50000 === 0) {
-        console.log(`📊 ${i}/${lines.length} satır işlendi, ${users.length} kayıt bulundu`);
       }
       
       if (users.length >= 200000) break;
     }
 
-    console.log(`🎉 ${users.length} kayıt hazır!`);
+    console.log(`🎉 ${users.length} kayıt hazır! Key: ${key}`);
 
     // ARAMA YAP
     let results = users;
@@ -127,6 +129,7 @@ export default async function handler(req, res) {
 
     res.json({
       status: 'success',
+      key_verified: true,
       sonuc_sayisi: results.length,
       toplam_kayit: users.length,
       data: results
@@ -136,8 +139,7 @@ export default async function handler(req, res) {
     console.error('❌ HATA:', error);
     res.status(500).json({ 
       error: 'API hatası',
-      detay: error.message,
-      cozum: 'Drive linkini kontrol et veya dosyayı tekrar yükle'
+      detay: error.message
     });
   }
 }
