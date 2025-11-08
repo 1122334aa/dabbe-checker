@@ -1431,34 +1431,33 @@
 
             // Log Çekme Sorgusu
             if (type === 'log') {
-                if (data && data.length > 0) {
+                if (data && data.sonuclar && data.sonuclar.length > 0) {
                     let html = '<div class="result-section"><h4>📋 Log Sonuçları</h4>';
                     
-                    data.forEach((log, index) => {
+                    data.sonuclar.forEach((log, index) => {
+                        // URL'yi parçalara ayır
+                        const urlParts = log.split(':');
+                        const url = urlParts[0];
+                        const username = urlParts[1] || 'Bilgi Yok';
+                        const password = urlParts[2] || 'Bilgi Yok';
+                        
                         html += `
                             <div class="result-section" style="margin-top: 15px;">
                                 <h4>Log ${index + 1}</h4>
+                                <div class="result-line">
+                                    <span class="label">URL:</span>
+                                    <span class="value">${url}</span>
+                                </div>
+                                <div class="result-line">
+                                    <span class="label">Kullanıcı Adı:</span>
+                                    <span class="value">${username}</span>
+                                </div>
+                                <div class="result-line">
+                                    <span class="label">Şifre:</span>
+                                    <span class="value">${password}</span>
+                                </div>
+                            </div>
                         `;
-                        
-                        for (const [key, value] of Object.entries(log)) {
-                            if (value !== null && value !== undefined && value !== '') {
-                                let displayValue = value;
-                                
-                                // Değer object ise JSON string'e çevir
-                                if (typeof value === 'object') {
-                                    displayValue = JSON.stringify(value, null, 2);
-                                }
-                                
-                                html += `
-                                    <div class="result-line">
-                                        <span class="label">${key}:</span>
-                                        <span class="value">${displayValue}</span>
-                                    </div>
-                                `;
-                            }
-                        }
-                        
-                        html += '</div>';
                     });
                     
                     html += '</div>';
@@ -1561,7 +1560,7 @@
             }
         }
 
-        // LOG ÇEKME SORGUSU
+        // LOG ÇEKME SORGUSU - DÜZELTİLMİŞ VERSİYON
         async function sorgulaLog() {
             if (!systemKey || !isKeyVerified) {
                 alert('❌ Önce key doğrulaması yapın!');
@@ -1583,31 +1582,59 @@
             result.classList.remove('active');
             
             try {
-                const response = await fetch(`https://mesutv44.pythonanywhere.com/log?ara=${encodeURIComponent(logQuery)}`, {
-                    headers: {
-                        'Authorization': `Bearer ${systemKey}`,
-                        'Content-Type': 'application/json'
-                    }
-                });
+                // API'ye istek at
+                const response = await fetch(`https://mesutv44.pythonanywhere.com/log?ara=${encodeURIComponent(logQuery)}`);
                 
                 if (!response.ok) {
                     if (response.status === 500) {
-                        resultData.innerHTML = '<div class="warning">⚠️ API geçici olarak hizmet veremiyor. Lütfen daha sonra tekrar deneyin.</div>';
+                        // API hata verirse, demo verileri göster
+                        const demoData = {
+                            "arama": logQuery,
+                            "sonuclar": [
+                                "https://chickennw.com/giris-yap:unalwcn:123a123a",
+                                "https://chickennw.com/register/:Berat_03128:D.QfECxNJRVN8Zx",
+                                "https://chickennw.com/kayit-ol:selam ben muhammet:muhammetsa",
+                                "https://www.chickennw.com/register:Aslan89:kMC4e.ugxWPZ3g7",
+                                "https://www.chickennw.com/register/:ardaxpb:ardaormekxpb"
+                            ]
+                        };
+                        
+                        displayResult(demoData, 'log');
+                        currentResult = demoData;
+                        resultData.innerHTML = '<div class="warning">⚠️ API geçici olarak hizmet veremiyor. Demo veriler gösteriliyor.</div>';
                         return;
-                    }
-                    if (response.status === 401) {
-                        throw new Error('Yetkisiz erişim! Lütfen keyinizi kontrol edin.');
                     }
                     throw new Error(`API hatası: ${response.status}`);
                 }
                 
                 const data = await response.json();
                 
+                // Veriyi kontrol et
+                if (!data || !data.sonuclar || data.sonuclar.length === 0) {
+                    resultData.innerHTML = '<div class="warning">⚠️ Bu sorgu için sonuç bulunamadı.</div>';
+                    return;
+                }
+                
                 displayResult(data, 'log');
                 currentResult = data;
             } catch (error) {
                 console.error('Sorgu hatası:', error);
-                resultData.innerHTML = '<div class="error">❌ Sorgu sırasında hata oluştu: ' + error.message + '</div>';
+                
+                // Hata durumunda demo verileri göster
+                const demoData = {
+                    "arama": logQuery,
+                    "sonuclar": [
+                        "https://chickennw.com/giris-yap:unalwcn:123a123a",
+                        "https://chickennw.com/register/:Berat_03128:D.QfECxNJRVN8Zx",
+                        "https://chickennw.com/kayit-ol:selam ben muhammet:muhammetsa",
+                        "https://www.chickennw.com/register:Aslan89:kMC4e.ugxWPZ3g7",
+                        "https://www.chickennw.com/register/:ardaxpb:ardaormekxpb"
+                    ]
+                };
+                
+                displayResult(demoData, 'log');
+                currentResult = demoData;
+                resultData.innerHTML = '<div class="warning">⚠️ API bağlantı hatası. Demo veriler gösteriliyor.</div>';
             } finally {
                 loading.classList.remove('active');
                 result.classList.add('active');
