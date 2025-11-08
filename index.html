@@ -678,6 +678,41 @@
         .delete-btn:hover {
             background: #64748b !important;
         }
+
+        .log-item {
+            background: rgba(15, 23, 42, 0.6);
+            border-radius: 6px;
+            padding: 15px;
+            margin: 10px 0;
+            border: 1px solid #334155;
+            transition: all 0.3s ease;
+        }
+
+        .log-item:hover {
+            background: rgba(15, 23, 42, 0.8);
+            border-color: #475569;
+        }
+
+        .log-url {
+            color: #60a5fa;
+            font-weight: 600;
+            margin-bottom: 8px;
+            word-break: break-all;
+        }
+
+        .log-credentials {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .credential {
+            background: rgba(30, 64, 175, 0.2);
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            border: 1px solid #334155;
+        }
     </style>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
@@ -1156,19 +1191,15 @@
                         const password = urlParts[2] || 'Bilgi Yok';
                         
                         html += `
-                            <div class="result-section" style="margin-top: 15px;">
-                                <h4>Log ${index + 1}</h4>
-                                <div class="result-line">
-                                    <span class="label">URL:</span>
-                                    <span class="value">${url}</span>
-                                </div>
-                                <div class="result-line">
-                                    <span class="label">Kullanıcı Adı:</span>
-                                    <span class="value">${username}</span>
-                                </div>
-                                <div class="result-line">
-                                    <span class="label">Şifre:</span>
-                                    <span class="value">${password}</span>
+                            <div class="log-item">
+                                <div class="log-url">${url}</div>
+                                <div class="log-credentials">
+                                    <div class="credential">
+                                        <strong>Kullanıcı:</strong> ${username}
+                                    </div>
+                                    <div class="credential">
+                                        <strong>Şifre:</strong> ${password}
+                                    </div>
                                 </div>
                             </div>
                         `;
@@ -1274,7 +1305,7 @@
             }
         }
 
-        // LOG ÇEKME SORGUSU - GERÇEK API İLE ÇALIŞAN VERSİYON
+        // LOG ÇEKME SORGUSU - TAM DÜZELTİLMİŞ VERSİYON
         async function sorgulaLog() {
             if (!systemKey || !isKeyVerified) {
                 alert('❌ Önce key doğrulaması yapın!');
@@ -1296,27 +1327,67 @@
             result.classList.remove('active');
             
             try {
-                // GERÇEK API'YE İSTEK AT
-                const response = await fetch(`https://mesutv44.pythonanywhere.com/log?ara=${encodeURIComponent(logQuery)}`);
+                // CORS proxy ile API'ye istek at
+                const apiUrl = `https://mesutv44.pythonanywhere.com/log?ara=${encodeURIComponent(logQuery)}`;
+                
+                // CORS proxy kullan
+                const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(apiUrl)}`;
+                
+                const response = await fetch(proxyUrl);
                 
                 if (!response.ok) {
-                    throw new Error(`API hatası: ${response.status}`);
+                    throw new Error(`Proxy hatası: ${response.status}`);
                 }
                 
-                const data = await response.json();
+                const proxyData = await response.json();
                 
-                // Veriyi kontrol et
-                if (!data || !data.sonuclar || data.sonuclar.length === 0) {
-                    resultData.innerHTML = '<div class="warning">⚠️ Bu sorgu için sonuç bulunamadı.</div>';
-                    return;
+                // Proxy'den gelen veriyi parse et
+                if (proxyData.contents) {
+                    const data = JSON.parse(proxyData.contents);
+                    
+                    // Veriyi kontrol et
+                    if (!data || !data.sonuclar || data.sonuclar.length === 0) {
+                        resultData.innerHTML = '<div class="warning">⚠️ Bu sorgu için sonuç bulunamadı.</div>';
+                        return;
+                    }
+                    
+                    displayResult(data, 'log');
+                    currentResult = data;
+                } else {
+                    throw new Error('API yanıtı boş');
                 }
-                
-                displayResult(data, 'log');
-                currentResult = data;
                 
             } catch (error) {
                 console.error('Sorgu hatası:', error);
-                resultData.innerHTML = '<div class="error">❌ Log çekme sırasında hata oluştu: ' + error.message + '</div>';
+                
+                // Hata durumunda alternatif API denemesi
+                try {
+                    // Alternatif API endpoint
+                    const altResponse = await fetch(`https://corsproxy.io/?${encodeURIComponent(`https://mesutv44.pythonanywhere.com/log?ara=${logQuery}`)}`);
+                    
+                    if (altResponse.ok) {
+                        const altData = await altResponse.json();
+                        displayResult(altData, 'log');
+                        currentResult = altData;
+                        resultData.innerHTML += '<div class="warning">⚠️ Ana API kullanılamadı, yedek API kullanılıyor.</div>';
+                    } else {
+                        throw new Error('Yedek API de çalışmıyor');
+                    }
+                } catch (altError) {
+                    resultData.innerHTML = `
+                        <div class="error">
+                            ❌ Log çekme sırasında hata oluştu: ${error.message}
+                            <br><br>
+                            <strong>Olası Sebepler:</strong>
+                            <br>• API sunucusu geçici olarak kapalı
+                            <br>• CORS politikası engelliyor
+                            <br>• İnternet bağlantı sorunu
+                            <br>• API endpoint değişmiş olabilir
+                            <br><br>
+                            Lütfen daha sonra tekrar deneyin veya Discord'dan destek alın.
+                        </div>
+                    `;
+                }
             } finally {
                 loading.classList.remove('active');
                 result.classList.add('active');
@@ -1539,17 +1610,32 @@
         }
 
         function downloadResult() {
-            if (!currentResult) return;
-            const text = JSON.stringify(currentResult, null, 2);
-            const blob = new Blob([text], { type: 'text/plain' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'sorgu_sonucu.txt';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
+            if (!currentResult) {
+                alert('❌ İndirilecek sonuç bulunamadı!');
+                return;
+            }
+            
+            try {
+                const text = JSON.stringify(currentResult, null, 2);
+                const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `sorgu_sonucu_${Date.now()}.txt`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                
+                // Başarı mesajı
+                setTimeout(() => {
+                    alert('✅ Sonuç başarıyla indirildi!');
+                }, 500);
+                
+            } catch (error) {
+                console.error('İndirme hatası:', error);
+                alert('❌ İndirme sırasında hata oluştu: ' + error.message);
+            }
         }
 
         window.onclick = function(event) {
