@@ -964,87 +964,10 @@
             0%, 100% { transform: translateY(0px) rotate(0deg); }
             50% { transform: translateY(-20px) rotate(180deg); }
         }
-
-        /* YARDIMCI ARAÇLAR BÖLÜMÜ */
-        .tools-section {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
-        }
-
-        .tool-card {
-            background: rgba(30, 41, 59, 0.8);
-            border-radius: 8px;
-            padding: 20px;
-            border: 1px solid #334155;
-            transition: all 0.3s ease;
-            text-align: center;
-        }
-
-        .tool-card:hover {
-            border-color: #475569;
-            transform: translateY(-5px);
-        }
-
-        .tool-card i {
-            font-size: 2em;
-            color: #0369a1;
-            margin-bottom: 15px;
-        }
-
-        .tool-card h4 {
-            color: #0369a1;
-            margin-bottom: 10px;
-            font-size: 16px;
-        }
-
-        .tool-card p {
-            color: #94a3b8;
-            font-size: 13px;
-            margin-bottom: 15px;
-        }
-
-        .tool-card button {
-            width: 100%;
-            padding: 10px;
-            font-size: 13px;
-        }
     </style>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
-    <!-- Babapro Sayfası -->
-    <div id="babaproPage" style="display: none;">
-        <div class="coming-soon-page">
-            <div class="floating-elements">
-                <div class="floating-element" style="top: 10%; left: 10%;">🔮</div>
-                <div class="floating-element" style="top: 20%; right: 15%;">⚡</div>
-                <div class="floating-element" style="bottom: 30%; left: 20%;">🌟</div>
-                <div class="floating-element" style="bottom: 20%; right: 10%;">💎</div>
-                <div class="floating-element" style="top: 40%; left: 5%;">🔥</div>
-                <div class="floating-element" style="top: 60%; right: 5%;">🎯</div>
-            </div>
-            
-            <div class="dabbe-animation">
-                DABBE
-            </div>
-            
-            <div class="coming-soon-text">
-                🚀 YAKINDA 🚀
-            </div>
-            
-            <p style="color: #64748b; font-size: 1.2em; max-width: 600px; margin: 0 auto;">
-                Dabbe Checker'ın yeni özellikleri çok yakında sizlerle! 
-                Gelişmiş sorgulama sistemleri ve premium özellikler için hazır olun.
-            </p>
-            
-            <button onclick="window.location.href='/'" style="margin-top: 40px; padding: 15px 30px; font-size: 1.1em;">
-                <i class="fas fa-arrow-left"></i> Ana Sayfaya Dön
-            </button>
-        </div>
-    </div>
-
     <!-- Ana Uygulama -->
     <div id="mainApp">
         <!-- Kilit Animasyonu -->
@@ -1080,190 +1003,21 @@
 
                     <!-- DİĞER KANALLAR KEY GİRİNCE GÖZÜKECEK -->
                     <div id="mainTabs" style="display: none;">
-                        <!-- TC Sorgu Accordion -->
-                        <button class="tab-btn" onclick="toggleSubmenu('tc-submenu')">
-                            <i class="fas fa-id-card"></i>
-                            <span class="btn-text">TC Sorgu</span>
-                            <i class="fas fa-chevron-down accordion-arrow"></i>
+                        <!-- Discord Sorgu -->
+                        <button class="tab-btn" onclick="openTab('discord-tab')">
+                            <i class="fab fa-discord"></i>
+                            <span class="btn-text">Discord ID Sorgu</span>
                         </button>
-                        <div id="tc-submenu" class="submenu">
-                            <button class="sub-tab-btn" onclick="openTab('tc-sorgula-tab')">
-                                <i class="fas fa-search"></i>
-                                <span class="btn-text">TC Sorgula</span>
-                            </button>
-                            <button class="sub-tab-btn" onclick="openTab('tc-pro-tab')">
-                                <i class="fas fa-star"></i>
-                                <span class="btn-text">TC Pro Sorgula</span>
-                            </button>
-                            <button class="sub-tab-btn" onclick="openTab('yas-sorgula-tab')">
-                                <i class="fas fa-birthday-cake"></i>
-                                <span class="btn-text">Yaş Sorgula</span>
-                            </button>
-                        </div>
 
-                        <!-- Ad Soyad Accordion -->
-                        <button class="tab-btn" onclick="toggleSubmenu('adsoyad-submenu')">
-                            <i class="fas fa-user"></i>
-                            <span class="btn-text">Ad Soyad</span>
-                            <i class="fas fa-chevron-down accordion-arrow"></i>
+                        <!-- Log Çekme Sorgu -->
+                        <button class="tab-btn" onclick="openTab('log-tab')">
+                            <i class="fas fa-search"></i>
+                            <span class="btn-text">Log Çekme</span>
                         </button>
-                        <div id="adsoyad-submenu" class="submenu">
-                            <button class="sub-tab-btn" onclick="openTab('adsoyad-sorgula-tab')">
-                                <i class="fas fa-user"></i>
-                                <span class="btn-text">Ad Soyad Sorgula</span>
-                            </button>
-                            <button class="sub-tab-btn" onclick="openTab('adsoyad-pro-tab')">
-                                <i class="fas fa-user-tie"></i>
-                                <span class="btn-text">Ad Soyad Pro</span>
-                            </button>
-                            <button class="sub-tab-btn" onclick="openTab('adililce-tab')">
-                                <i class="fas fa-map-marker-alt"></i>
-                                <span class="btn-text">Ad İl İlçe Sorgula</span>
-                            </button>
-                        </div>
 
-                        <!-- GSM Sorgu Accordion -->
-                        <button class="tab-btn" onclick="toggleSubmenu('gsm-submenu')">
-                            <i class="fas fa-mobile-alt"></i>
-                            <span class="btn-text">GSM Sorgu</span>
-                            <i class="fas fa-chevron-down accordion-arrow"></i>
-                        </button>
-                        <div id="gsm-submenu" class="submenu">
-                            <button class="sub-tab-btn" onclick="openTab('tc-gsm-tab')">
-                                <i class="fas fa-mobile-alt"></i>
-                                <span class="btn-text">TC'den GSM Sorgula</span>
-                            </button>
-                            <button class="sub-tab-btn" onclick="openTab('gsm-tc-tab')">
-                                <i class="fas fa-id-card"></i>
-                                <span class="btn-text">GSM'den TC Sorgula</span>
-                            </button>
-                        </div>
-
-                        <!-- Aile Sorgu Accordion -->
-                        <button class="tab-btn" onclick="toggleSubmenu('aile-submenu')">
-                            <i class="fas fa-users"></i>
-                            <span class="btn-text">Aile Sorgu</span>
-                            <i class="fas fa-chevron-down accordion-arrow"></i>
-                        </button>
-                        <div id="aile-submenu" class="submenu">
-                            <button class="sub-tab-btn" onclick="openTab('aile-sorgula-tab')">
-                                <i class="fas fa-users"></i>
-                                <span class="btn-text">Aile Sorgula</span>
-                            </button>
-                            <button class="sub-tab-btn" onclick="openTab('aile-pro-tab')">
-                                <i class="fas fa-user-friends"></i>
-                                <span class="btn-text">Aile Pro Sorgula</span>
-                            </button>
-                            <button class="sub-tab-btn" onclick="openTab('es-sorgula-tab')">
-                                <i class="fas fa-heart"></i>
-                                <span class="btn-text">Eş Sorgula</span>
-                            </button>
-                            <button class="sub-tab-btn" onclick="openTab('sulale-tab')">
-                                <i class="fas fa-sitemap"></i>
-                                <span class="btn-text">Sülale Sorgula</span>
-                            </button>
-                        </div>
-
-                        <!-- İkametgah Sorgu Accordion -->
-                        <button class="tab-btn" onclick="toggleSubmenu('ikametgah-submenu')">
-                            <i class="fas fa-home"></i>
-                            <span class="btn-text">İkametgah</span>
-                            <i class="fas fa-chevron-down accordion-arrow"></i>
-                        </button>
-                        <div id="ikametgah-submenu" class="submenu">
-                            <button class="sub-tab-btn" onclick="openTab('adres-tab')">
-                                <i class="fas fa-map-marker-alt"></i>
-                                <span class="btn-text">Adres Sorgula</span>
-                            </button>
-                            <button class="sub-tab-btn" onclick="openTab('tapu-tab')">
-                                <i class="fas fa-file-contract"></i>
-                                <span class="btn-text">Tapu Sorgula</span>
-                            </button>
-                            <button class="sub-tab-btn" onclick="openTab('hane-tab')">
-                                <i class="fas fa-house-user"></i>
-                                <span class="btn-text">Hane Sorgula</span>
-                            </button>
-                            <button class="sub-tab-btn" onclick="openTab('apartman-tab')">
-                                <i class="fas fa-building"></i>
-                                <span class="btn-text">Apartman Sorgula</span>
-                            </button>
-                        </div>
-
-                        <!-- IP & Domain Accordion -->
-                        <button class="tab-btn" onclick="toggleSubmenu('ip-submenu')">
-                            <i class="fas fa-globe"></i>
-                            <span class="btn-text">IP & Domain</span>
-                            <i class="fas fa-chevron-down accordion-arrow"></i>
-                        </button>
-                        <div id="ip-submenu" class="submenu">
-                            <button class="sub-tab-btn" onclick="openTab('ip-sorgula-tab')">
-                                <i class="fas fa-globe"></i>
-                                <span class="btn-text">IP Sorgula</span>
-                            </button>
-                            <button class="sub-tab-btn" onclick="openTab('dns-tab')">
-                                <i class="fas fa-network-wired"></i>
-                                <span class="btn-text">DNS Sorgula</span>
-                            </button>
-                            <button class="sub-tab-btn" onclick="openTab('whois-tab')">
-                                <i class="fas fa-search"></i>
-                                <span class="btn-text">WHOIS Sorgula</span>
-                            </button>
-                            <button class="sub-tab-btn" onclick="openTab('subdomain-tab')">
-                                <i class="fas fa-sitemap"></i>
-                                <span class="btn-text">Subdomain Sorgula</span>
-                            </button>
-                            <button class="sub-tab-btn" onclick="openTab('leak-tab')">
-                                <i class="fas fa-envelope"></i>
-                                <span class="btn-text">Leak Sorgula</span>
-                            </button>
-                            <button class="sub-tab-btn" onclick="openTab('telegram-tab')">
-                                <i class="fab fa-telegram"></i>
-                                <span class="btn-text">Telegram Sorgula</span>
-                            </button>
-                        </div>
-
-                        <!-- Diğer Sorgular Accordion -->
-                        <button class="tab-btn" onclick="toggleSubmenu('other-submenu')">
-                            <i class="fas fa-cogs"></i>
-                            <span class="btn-text">Diğer Sorgular</span>
-                            <i class="fas fa-chevron-down accordion-arrow"></i>
-                        </button>
-                        <div id="other-submenu" class="submenu">
-                            <button class="sub-tab-btn" onclick="openTab('discord-tab')">
-                                <i class="fab fa-discord"></i>
-                                <span class="btn-text">Discord Sorgu</span>
-                            </button>
-                            <button class="sub-tab-btn" onclick="openTab('gelismisip-tab')">
-                                <i class="fas fa-search-plus"></i>
-                                <span class="btn-text">Gelişmiş IP</span>
-                            </button>
-                            <button class="sub-tab-btn" onclick="openTab('vergi-tab')">
-                                <i class="fas fa-file-invoice-dollar"></i>
-                                <span class="btn-text">Vergi Sorgu</span>
-                            </button>
-                            <button class="sub-tab-btn" onclick="openTab('adaparsel-tab')">
-                                <i class="fas fa-map-marked-alt"></i>
-                                <span class="btn-text">Ada Parsel</span>
-                            </button>
-                            <button class="sub-tab-btn" onclick="openTab('isyeri-tab')">
-                                <i class="fas fa-briefcase"></i>
-                                <span class="btn-text">İşyeri Sorgu</span>
-                            </button>
-                        </div>
-
-                        <button class="tab-btn" onclick="openTab('database-tab')">
-                            <i class="fas fa-database"></i>
-                            <span class="btn-text">Database</span>
-                        </button>
                         <button class="tab-btn" onclick="openTab('premium-tab')">
                             <i class="fas fa-gem"></i>
                             <span class="btn-text">Premium</span>
-                        </button>
-                        
-                        <!-- YARDIMCI ARAÇLAR BÖLÜMÜ -->
-                        <button class="tab-btn" onclick="openTab('tools-tab')">
-                            <i class="fas fa-tools"></i>
-                            <span class="btn-text">Yardımcı Araçlar</span>
                         </button>
                     </div>
                 </div>
@@ -1283,7 +1037,7 @@
 
                     <header>
                         <h1 class="header-title">DABBE CHECKER</h1>
-                        <p class="header-subtitle">Eger Sorgu Çıkmazsa Sonuçları İndirin!</p>
+                        <p class="header-subtitle">Discord ID & Log Çekme Sorgu Sistemi</p>
                     </header>
 
                     <!-- Key Tab -->
@@ -1318,270 +1072,6 @@
 
                     <!-- DİĞER TÜM TABLAR KEY GİRİNCE GÖZÜKECEK -->
                     <div id="mainContent" style="display: none;">
-                        <!-- TC Sorgu Tabları -->
-                        <div id="tc-sorgula-tab" class="tab-content">
-                            <h2><i class="fas fa-search"></i> TC Sorgula</h2>
-                            <div class="form-group">
-                                <label>TC Kimlik No:</label>
-                                <input type="text" id="tcSorgula" maxlength="11" placeholder="TC kimlik numarasını girin">
-                            </div>
-                            <button onclick="sorgula('tc', 'tcSorgula')">
-                                <i class="fas fa-play"></i> Sorguyu Çalıştır
-                            </button>
-                        </div>
-
-                        <div id="tc-pro-tab" class="tab-content">
-                            <h2><i class="fas fa-star"></i> TC Pro Sorgula</h2>
-                            <div class="form-group">
-                                <label>TC Kimlik No:</label>
-                                <input type="text" id="tcPro" maxlength="11" placeholder="TC kimlik numarasını girin">
-                            </div>
-                            <button onclick="sorgula('tcpro', 'tcPro')">
-                                <i class="fas fa-play"></i> Sorguyu Çalıştır
-                            </button>
-                        </div>
-
-                        <div id="yas-sorgula-tab" class="tab-content">
-                            <h2><i class="fas fa-birthday-cake"></i> Yaş Sorgula</h2>
-                            <div class="form-group">
-                                <label>TC Kimlik No:</label>
-                                <input type="text" id="tcYas" maxlength="11" placeholder="TC kimlik numarasını girin">
-                            </div>
-                            <button onclick="sorgula('yas', 'tcYas')">
-                                <i class="fas fa-play"></i> Sorguyu Çalıştır
-                            </button>
-                        </div>
-
-                        <!-- Ad Soyad Tabları -->
-                        <div id="adsoyad-sorgula-tab" class="tab-content">
-                            <h2><i class="fas fa-user"></i> Ad Soyad Sorgula</h2>
-                            <div class="form-group">
-                                <label>Ad:</label>
-                                <input type="text" id="adSorgula" placeholder="Ad">
-                            </div>
-                            <div class="form-group">
-                                <label>Soyad:</label>
-                                <input type="text" id="soyadSorgula" placeholder="Soyad">
-                            </div>
-                            <button onclick="sorgulaAdSoyad('adsoyad')">
-                                <i class="fas fa-play"></i> Sorguyu Çalıştır
-                            </button>
-                        </div>
-
-                        <div id="adsoyad-pro-tab" class="tab-content">
-                            <h2><i class="fas fa-user-tie"></i> Ad Soyad Pro</h2>
-                            <div class="form-group">
-                                <label>Ad:</label>
-                                <input type="text" id="adPro" placeholder="Ad">
-                            </div>
-                            <div class="form-group">
-                                <label>Soyad:</label>
-                                <input type="text" id="soyadPro" placeholder="Soyad">
-                            </div>
-                            <button onclick="sorgulaAdSoyad('adsoyadpro')">
-                                <i class="fas fa-play"></i> Sorguyu Çalıştır
-                            </button>
-                        </div>
-
-                        <div id="adililce-tab" class="tab-content">
-                            <h2><i class="fas fa-map-marker-alt"></i> Ad İl İlçe Sorgula</h2>
-                            <div class="form-group">
-                                <label>Ad:</label>
-                                <input type="text" id="adIl" placeholder="Ad">
-                            </div>
-                            <div class="form-group">
-                                <label>İl:</label>
-                                <input type="text" id="ilAd" placeholder="İl">
-                            </div>
-                            <div class="form-group">
-                                <label>İlçe:</label>
-                                <input type="text" id="ilceAd" placeholder="İlçe">
-                            </div>
-                            <button onclick="sorgulaAdIlIlce('adililce')">
-                                <i class="fas fa-play"></i> Sorguyu Çalıştır
-                            </button>
-                        </div>
-
-                        <!-- GSM Tabları -->
-                        <div id="tc-gsm-tab" class="tab-content">
-                            <h2><i class="fas fa-mobile-alt"></i> TC'den GSM Sorgula</h2>
-                            <div class="form-group">
-                                <label>TC Kimlik No:</label>
-                                <input type="text" id="tcGsm" maxlength="11" placeholder="TC kimlik numarasını girin">
-                            </div>
-                            <button onclick="sorgula('tcgsm', 'tcGsm')">
-                                <i class="fas fa-play"></i> Sorguyu Çalıştır
-                            </button>
-                        </div>
-
-                        <div id="gsm-tc-tab" class="tab-content">
-                            <h2><i class="fas fa-id-card"></i> GSM'den TC Sorgula</h2>
-                            <div class="form-group">
-                                <label>GSM Numarası:</label>
-                                <input type="text" id="gsmTc" placeholder="GSM numarasını girin">
-                            </div>
-                            <button onclick="sorgula('gsmtc', 'gsmTc')">
-                                <i class="fas fa-play"></i> Sorguyu Çalıştır
-                            </button>
-                        </div>
-
-                        <!-- Aile Tabları -->
-                        <div id="aile-sorgula-tab" class="tab-content">
-                            <h2><i class="fas fa-users"></i> Aile Sorgula</h2>
-                            <div class="form-group">
-                                <label>TC Kimlik No:</label>
-                                <input type="text" id="tcAile" maxlength="11" placeholder="TC kimlik numarasını girin">
-                            </div>
-                            <button onclick="sorgula('aile', 'tcAile')">
-                                <i class="fas fa-play"></i> Sorguyu Çalıştır
-                            </button>
-                        </div>
-
-                        <div id="aile-pro-tab" class="tab-content">
-                            <h2><i class="fas fa-user-friends"></i> Aile Pro Sorgula</h2>
-                            <div class="form-group">
-                                <label>TC Kimlik No:</label>
-                                <input type="text" id="tcAilePro" maxlength="11" placeholder="TC kimlik numarasını girin">
-                            </div>
-                            <button onclick="sorgula('ailepro', 'tcAilePro')">
-                                <i class="fas fa-play"></i> Sorguyu Çalıştır
-                            </button>
-                        </div>
-
-                        <div id="es-sorgula-tab" class="tab-content">
-                            <h2><i class="fas fa-heart"></i> Eş Sorgula</h2>
-                            <div class="form-group">
-                                <label>TC Kimlik No:</label>
-                                <input type="text" id="tcEs" maxlength="11" placeholder="TC kimlik numarasını girin">
-                            </div>
-                            <button onclick="sorgula('es', 'tcEs')">
-                                <i class="fas fa-play"></i> Sorguyu Çalıştır
-                            </button>
-                        </div>
-
-                        <div id="sulale-tab" class="tab-content">
-                            <h2><i class="fas fa-sitemap"></i> Sülale Sorgula</h2>
-                            <div class="form-group">
-                                <label>TC Kimlik No:</label>
-                                <input type="text" id="tcSulale" maxlength="11" placeholder="TC kimlik numarasını girin">
-                            </div>
-                            <button onclick="sorgula('sulale', 'tcSulale')">
-                                <i class="fas fa-play"></i> Sorguyu Çalıştır
-                            </button>
-                        </div>
-
-                        <!-- İkametgah Tabları -->
-                        <div id="adres-tab" class="tab-content">
-                            <h2><i class="fas fa-map-marker-alt"></i> Adres Sorgula</h2>
-                            <div class="form-group">
-                                <label>TC Kimlik No:</label>
-                                <input type="text" id="tcAdres" maxlength="11" placeholder="TC kimlik numarasını girin">
-                            </div>
-                            <button onclick="sorgula('adres', 'tcAdres')">
-                                <i class="fas fa-play"></i> Sorguyu Çalıştır
-                            </button>
-                        </div>
-
-                        <div id="tapu-tab" class="tab-content">
-                            <h2><i class="fas fa-file-contract"></i> Tapu Sorgula</h2>
-                            <div class="form-group">
-                                <label>TC Kimlik No:</label>
-                                <input type="text" id="tcTapu" maxlength="11" placeholder="TC kimlik numarasını girin">
-                            </div>
-                            <button onclick="sorgula('tapu', 'tcTapu')">
-                                <i class="fas fa-play"></i> Sorguyu Çalıştır
-                            </button>
-                        </div>
-
-                        <div id="hane-tab" class="tab-content">
-                            <h2><i class="fas fa-house-user"></i> Hane Sorgula</h2>
-                            <div class="form-group">
-                                <label>TC Kimlik No:</label>
-                                <input type="text" id="tcHane" maxlength="11" placeholder="TC kimlik numarasını girin">
-                            </div>
-                            <button onclick="sorgula('hane', 'tcHane')">
-                                <i class="fas fa-play"></i> Sorguyu Çalıştır
-                            </button>
-                        </div>
-
-                        <div id="apartman-tab" class="tab-content">
-                            <h2><i class="fas fa-building"></i> Apartman Sorgula</h2>
-                            <div class="form-group">
-                                <label>TC Kimlik No:</label>
-                                <input type="text" id="tcApartman" maxlength="11" placeholder="TC kimlik numarasını girin">
-                            </div>
-                            <button onclick="sorgula('apartman', 'tcApartman')">
-                                <i class="fas fa-play"></i> Sorguyu Çalıştır
-                            </button>
-                        </div>
-
-                        <!-- IP Tabları -->
-                        <div id="ip-sorgula-tab" class="tab-content">
-                            <h2><i class="fas fa-globe"></i> IP Sorgula</h2>
-                            <div class="form-group">
-                                <label>IP/Domain:</label>
-                                <input type="text" id="domainIp" placeholder="IP adresi veya domain girin">
-                            </div>
-                            <button onclick="sorgula('ip', 'domainIp')">
-                                <i class="fas fa-play"></i> Sorguyu Çalıştır
-                            </button>
-                        </div>
-
-                        <div id="dns-tab" class="tab-content">
-                            <h2><i class="fas fa-network-wired"></i> DNS Sorgula</h2>
-                            <div class="form-group">
-                                <label>IP/Domain:</label>
-                                <input type="text" id="domainDns" placeholder="IP adresi veya domain girin">
-                            </div>
-                            <button onclick="sorgula('dns', 'domainDns')">
-                                <i class="fas fa-play"></i> Sorguyu Çalıştır
-                            </button>
-                        </div>
-
-                        <div id="whois-tab" class="tab-content">
-                            <h2><i class="fas fa-search"></i> WHOIS Sorgula</h2>
-                            <div class="form-group">
-                                <label>IP/Domain:</label>
-                                <input type="text" id="domainWhois" placeholder="IP adresi veya domain girin">
-                            </div>
-                            <button onclick="sorgula('whois', 'domainWhois')">
-                                <i class="fas fa-play"></i> Sorguyu Çalıştır
-                            </button>
-                        </div>
-
-                        <div id="subdomain-tab" class="tab-content">
-                            <h2><i class="fas fa-sitemap"></i> Subdomain Sorgula</h2>
-                            <div class="form-group">
-                                <label>IP/Domain:</label>
-                                <input type="text" id="domainSubdomain" placeholder="IP adresi veya domain girin">
-                            </div>
-                            <button onclick="sorgula('subdomain', 'domainSubdomain')">
-                                <i class="fas fa-play"></i> Sorguyu Çalıştır
-                            </button>
-                        </div>
-
-                        <div id="leak-tab" class="tab-content">
-                            <h2><i class="fas fa-envelope"></i> Leak Sorgula</h2>
-                            <div class="form-group">
-                                <label>E-posta:</label>
-                                <input type="text" id="leakQuery" placeholder="E-posta adresi girin">
-                            </div>
-                            <button onclick="sorgula('leak', 'leakQuery')">
-                                <i class="fas fa-play"></i> Sorguyu Çalıştır
-                            </button>
-                        </div>
-
-                        <div id="telegram-tab" class="tab-content">
-                            <h2><i class="fab fa-telegram"></i> Telegram Sorgula</h2>
-                            <div class="form-group">
-                                <label>Telegram Kullanıcı Adı:</label>
-                                <input type="text" id="telegramUser" placeholder="Telegram kullanıcı adı">
-                            </div>
-                            <button onclick="sorgula('telegram', 'telegramUser')">
-                                <i class="fas fa-play"></i> Sorguyu Çalıştır
-                            </button>
-                        </div>
-
                         <!-- Discord Tab -->
                         <div id="discord-tab" class="tab-content">
                             <h2><i class="fab fa-discord"></i> Discord ID Sorgulama</h2>
@@ -1594,70 +1084,16 @@
                             </button>
                         </div>
 
-                        <!-- Gelişmiş IP Tab -->
-                        <div id="gelismisip-tab" class="tab-content">
-                            <h2><i class="fas fa-search-plus"></i> Gelişmiş IP Sorgulama</h2>
+                        <!-- Log Çekme Tab -->
+                        <div id="log-tab" class="tab-content">
+                            <h2><i class="fas fa-search"></i> Log Çekme Sorgusu</h2>
                             <div class="form-group">
-                                <label>IP Adresi:</label>
-                                <input type="text" id="gelismisIp" placeholder="IPv4 adresi girin">
+                                <label>Aranacak Kelime:</label>
+                                <input type="text" id="logQuery" placeholder="Aranacak kelimeyi girin" value="chickennw">
                             </div>
-                            <button onclick="sorgula('gelismisip', 'gelismisIp')">
-                                <i class="fas fa-search-plus"></i> Detaylı IP Sorgula
+                            <button onclick="sorgulaLog()" style="background: linear-gradient(45deg, #059669, #10b981);">
+                                <i class="fas fa-search"></i> Log Çek
                             </button>
-                        </div>
-
-                        <!-- Vergi Tab -->
-                        <div id="vergi-tab" class="tab-content">
-                            <h2><i class="fas fa-file-invoice-dollar"></i> Vergi Sorgusu</h2>
-                            <div class="form-group">
-                                <label>Vergi Numarası:</label>
-                                <input type="text" id="vergiNo" placeholder="Vergi numarası">
-                            </div>
-                            <button onclick="sorgula('vergino', 'vergiNo')" style="width: 100%;">
-                                <i class="fas fa-file-invoice-dollar"></i> Vergi No Sorgula
-                            </button>
-                        </div>
-
-                        <!-- Ada Parsel Tab -->
-                        <div id="adaparsel-tab" class="tab-content">
-                            <h2><i class="fas fa-map-marked-alt"></i> Ada Parsel Sorgusu</h2>
-                            <div class="form-group">
-                                <label>İl:</label>
-                                <input type="text" id="ilAda" placeholder="İl">
-                            </div>
-                            <div class="form-group">
-                                <label>Ada:</label>
-                                <input type="text" id="ada" placeholder="Ada">
-                            </div>
-                            <div class="form-group">
-                                <label>Parsel:</label>
-                                <input type="text" id="parsel" placeholder="Parsel">
-                            </div>
-                            <button onclick="sorgulaAdaparsel()" style="width: 100%;">
-                                <i class="fas fa-map-marked-alt"></i> Ada Parsel Sorgula
-                            </button>
-                        </div>
-
-                        <!-- İşyeri Tab -->
-                        <div id="isyeri-tab" class="tab-content">
-                            <h2><i class="fas fa-briefcase"></i> İşyeri Sorgusu</h2>
-                            <div class="form-group">
-                                <label>TC Kimlik No:</label>
-                                <input type="text" id="tcIsyeri" maxlength="11" placeholder="TC kimlik numarasını girin">
-                            </div>
-                            <button onclick="sorgula('isyeri', 'tcIsyeri')">
-                                <i class="fas fa-play"></i> Sorguyu Çalıştır
-                            </button>
-                        </div>
-
-                        <!-- Database Tab -->
-                        <div id="database-tab" class="tab-content">
-                            <h2><i class="fas fa-database"></i> Database</h2>
-                            <div class="coming-soon">
-                                <i class="fas fa-tools"></i>
-                                <h3>Yakında Aktif Olacak</h3>
-                                <p>Database sorgulama özelliği yakında eklenecek...</p>
-                            </div>
                         </div>
 
                         <!-- Premium Tab -->
@@ -1670,8 +1106,8 @@
                                 <div class="premium-feature">
                                     <i class="fas fa-star"></i>
                                     <div>
-                                        <h4>Özel Tabii Hesaplar</h4>
-                                        <p>Premium üyelere özel Tabii hesaplarına erişim</p>
+                                        <h4>Özel Hesaplar</h4>
+                                        <p>Premium üyelere özel hesaplara erişim</p>
                                     </div>
                                 </div>
                                 
@@ -1696,8 +1132,8 @@
                                         <!-- Hesap detayları buraya gelecek -->
                                     </div>
                                     
-                                    <button onclick="getTabiiAccount()" style="background: linear-gradient(45deg, #0369a1, #075985); width: 100%; padding: 12px; font-size: 14px;">
-                                        <i class="fas fa-download"></i> TABİİ HESAP AL
+                                    <button onclick="getPremiumAccount()" style="background: linear-gradient(45deg, #0369a1, #075985); width: 100%; padding: 12px; font-size: 14px;">
+                                        <i class="fas fa-download"></i> PREMIUM HESAP AL
                                     </button>
                                 </div>
 
@@ -1709,73 +1145,6 @@
                                         <i class="fas fa-crown"></i> Premium Key Gir
                                     </button>
                                 </div>
-                            </div>
-                        </div>
-
-                        <!-- YARDIMCI ARAÇLAR BÖLÜMÜ -->
-                        <div id="tools-tab" class="tab-content">
-                            <h2><i class="fas fa-tools"></i> YARDIMCI ARAÇLAR</h2>
-                            
-                            <div class="tools-section">
-                                <div class="tool-card">
-                                    <i class="fas fa-calculator"></i>
-                                    <h4>TC Doğrulama</h4>
-                                    <p>TC kimlik numarası doğrulama aracı</p>
-                                    <button onclick="openTab('tc-sorgula-tab')">
-                                        <i class="fas fa-play"></i> Kullan
-                                    </button>
-                                </div>
-                                
-                                <div class="tool-card">
-                                    <i class="fas fa-map-marked-alt"></i>
-                                    <h4>Adres Doğrulama</h4>
-                                    <p>Adres bilgilerini doğrulama aracı</p>
-                                    <button onclick="openTab('adres-tab')">
-                                        <i class="fas fa-play"></i> Kullan
-                                    </button>
-                                </div>
-                                
-                                <div class="tool-card">
-                                    <i class="fas fa-phone-alt"></i>
-                                    <h4>GSM Doğrulama</h4>
-                                    <p>Telefon numarası doğrulama aracı</p>
-                                    <button onclick="openTab('tc-gsm-tab')">
-                                        <i class="fas fa-play"></i> Kullan
-                                    </button>
-                                </div>
-                                
-                                <div class="tool-card">
-                                    <i class="fas fa-globe"></i>
-                                    <h4>IP Kontrol</h4>
-                                    <p>IP adresi kontrol ve analiz aracı</p>
-                                    <button onclick="openTab('ip-sorgula-tab')">
-                                        <i class="fas fa-play"></i> Kullan
-                                    </button>
-                                </div>
-                                
-                                <div class="tool-card">
-                                    <i class="fas fa-user-check"></i>
-                                    <h4>Kimlik Doğrulama</h4>
-                                    <p>Kimlik bilgilerini doğrulama aracı</p>
-                                    <button onclick="openTab('adsoyad-sorgula-tab')">
-                                        <i class="fas fa-play"></i> Kullan
-                                    </button>
-                                </div>
-                                
-                                <div class="tool-card">
-                                    <i class="fas fa-search"></i>
-                                    <h4>Gelişmiş Arama</h4>
-                                    <p>Detaylı arama ve sorgulama aracı</p>
-                                    <button onclick="openTab('gelismisip-tab')">
-                                        <i class="fas fa-play"></i> Kullan
-                                    </button>
-                                </div>
-                            </div>
-                            
-                            <div class="coming-soon" style="margin-top: 30px;">
-                                <i class="fas fa-tools"></i>
-                                <h3>Daha Fazla Araç Yakında!</h3>
-                                <p>Yardımcı araçlar bölümüne yeni özellikler ekleniyor...</p>
                             </div>
                         </div>
                     </div>
@@ -1858,22 +1227,13 @@
     <script>
         // Sayfa yüklendiğinde URL kontrolü
         document.addEventListener('DOMContentLoaded', function() {
-            // URL'de /babapro var mı kontrol et
-            if (window.location.pathname === '/babapro') {
-                document.getElementById('babaproPage').style.display = 'block';
-                document.getElementById('mainApp').style.display = 'none';
-            } else {
-                document.getElementById('babaproPage').style.display = 'none';
-                document.getElementById('mainApp').style.display = 'block';
-                
-                // Varsayılan keyleri ayarla
-                document.getElementById('systemKey').value = 'Key İçin Discord!';
-                document.getElementById('premiumKey').value = 'Key İçin Discord!';
-                
-                // Sadece key kanalları gözüksün
-                document.getElementById('mainTabs').style.display = 'none';
-                document.getElementById('mainContent').style.display = 'none';
-            }
+            // Varsayılan keyleri ayarla
+            document.getElementById('systemKey').value = 'Key İçin Discord!';
+            document.getElementById('premiumKey').value = 'Key İçin Discord!';
+            
+            // Sadece key kanalları gözüksün
+            document.getElementById('mainTabs').style.display = 'none';
+            document.getElementById('mainContent').style.display = 'none';
         });
 
         // Duyuru butonu fonksiyonu
@@ -1886,109 +1246,27 @@
             window.open('https://discord.gg/dabbe', '_blank');
         }
 
-        // Tabii hesapları (tabii_cleaned.txt formatında)
-        const tabiiAccounts = [
+        // Premium hesapları
+        const premiumAccounts = [
             {
                 index: 1,
-                email: "gulveragvc@gmail.com",
-                password: "Gmail123.",
-                name: "gülvera Güvenç",
-                gender: "Kız",
-                birthDate: "2004-05-05",
-                status: "Subscribed",
-                package: "Ücretsiz",
-                subscriptionStatus: "Active",
-                endDate: "2025-11-29T01:20:36Z"
-            },
-            {
-                index: 2,
-                email: "ahmet.yilmaz@hotmail.com",
-                password: "Ahmet123!",
-                name: "Ahmet Yılmaz",
-                gender: "Erkek",
-                birthDate: "1998-03-15",
-                status: "Subscribed",
-                package: "Premium",
-                subscriptionStatus: "Active",
-                endDate: "2025-12-15T10:30:00Z"
-            },
-            {
-                index: 3,
-                email: "ayse.demir@gmail.com",
-                password: "Ayse456!",
-                name: "Ayşe Demir",
-                gender: "Kız",
-                birthDate: "2001-07-22",
-                status: "Subscribed",
-                package: "Ücretsiz",
-                subscriptionStatus: "Active",
-                endDate: "2025-11-30T18:45:00Z"
-            },
-            {
-                index: 4,
-                email: "mehmet.kaya@outlook.com",
-                password: "Mehmet789!",
-                name: "Mehmet Kaya",
-                gender: "Erkek",
-                birthDate: "1995-11-08",
-                status: "Subscribed",
-                package: "VIP",
-                subscriptionStatus: "Active",
+                email: "premium.user1@gmail.com",
+                password: "Premium123!",
+                name: "Premium User 1",
+                features: "Discord ID + Log Çekme",
+                status: "Active",
                 endDate: "2025-12-31T23:59:59Z"
             },
             {
-                index: 5,
-                email: "fatma.celik@gmail.com",
-                password: "Fatma123!",
-                name: "Fatma Çelik",
-                gender: "Kız",
-                birthDate: "1999-09-12",
-                status: "Subscribed",
-                package: "Premium",
-                subscriptionStatus: "Active",
-                endDate: "2025-12-20T14:20:00Z"
-            },
-            {
-                index: 6,
-                email: "mustafa.arslan@yahoo.com",
-                password: "Mustafa456!",
-                name: "Mustafa Arslan",
-                gender: "Erkek",
-                birthDate: "1992-04-25",
-                status: "Subscribed",
-                package: "Ücretsiz",
-                subscriptionStatus: "Active",
-                endDate: "2025-12-05T09:15:00Z"
+                index: 2,
+                email: "premium.user2@hotmail.com",
+                password: "Premium456!",
+                name: "Premium User 2",
+                features: "Discord ID + Log Çekme",
+                status: "Active",
+                endDate: "2025-12-31T23:59:59Z"
             }
         ];
-
-        // Accordion fonksiyonu
-        function toggleSubmenu(submenuId) {
-            const submenu = document.getElementById(submenuId);
-            const allSubmenus = document.querySelectorAll('.submenu');
-            const allArrows = document.querySelectorAll('.accordion-arrow');
-            
-            // Diğer tüm submenüleri kapat
-            allSubmenus.forEach(menu => {
-                if (menu.id !== submenuId) {
-                    menu.classList.remove('active');
-                }
-            });
-            
-            // Tüm okları sıfırla (sadece aktif olan dönsün)
-            allArrows.forEach(arrow => {
-                arrow.style.transform = 'rotate(0deg)';
-            });
-            
-            // Tıklanan submenu'yu aç/kapat
-            submenu.classList.toggle('active');
-            
-            // Aktif submenu'nun okunu döndür
-            const activeArrow = document.querySelector(`[onclick="toggleSubmenu('${submenuId}')"] .accordion-arrow`);
-            if (activeArrow) {
-                activeArrow.style.transform = submenu.classList.contains('active') ? 'rotate(180deg)' : 'rotate(0deg)';
-            }
-        }
 
         let systemKey = '';
         let premiumKey = '';
@@ -2042,7 +1320,6 @@
             
             document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            document.querySelectorAll('.sub-tab-btn').forEach(btn => btn.classList.remove('active'));
             
             document.getElementById(tabName).classList.add('active');
             
@@ -2085,14 +1362,6 @@
             if (data.error) {
                 resultData.innerHTML = `<div class="error">❌ Hata: ${data.error}</div>`;
                 return;
-            }
-
-            // API yapılarına göre veriyi işle
-            let processedData = data;
-            
-            // Eğer data içinde data property'si varsa onu kullan
-            if (data.data && typeof data.data === 'object') {
-                processedData = Array.isArray(data.data) ? data.data[0] : data.data;
             }
 
             // Discord Sorgusu - TÜM BİLGİLERİ GÖSTER
@@ -2160,11 +1429,51 @@
                 return;
             }
 
+            // Log Çekme Sorgusu
+            if (type === 'log') {
+                if (data && data.length > 0) {
+                    let html = '<div class="result-section"><h4>📋 Log Sonuçları</h4>';
+                    
+                    data.forEach((log, index) => {
+                        html += `
+                            <div class="result-section" style="margin-top: 15px;">
+                                <h4>Log ${index + 1}</h4>
+                        `;
+                        
+                        for (const [key, value] of Object.entries(log)) {
+                            if (value !== null && value !== undefined && value !== '') {
+                                let displayValue = value;
+                                
+                                // Değer object ise JSON string'e çevir
+                                if (typeof value === 'object') {
+                                    displayValue = JSON.stringify(value, null, 2);
+                                }
+                                
+                                html += `
+                                    <div class="result-line">
+                                        <span class="label">${key}:</span>
+                                        <span class="value">${displayValue}</span>
+                                    </div>
+                                `;
+                            }
+                        }
+                        
+                        html += '</div>';
+                    });
+                    
+                    html += '</div>';
+                    resultData.innerHTML = html;
+                } else {
+                    resultData.innerHTML = '<div class="error">❌ Log sonucu bulunamadı!</div>';
+                }
+                return;
+            }
+
             // Tüm sorgular için genel gösterim
             let html = '<div class="result-section"><h4>📋 Sorgu Sonuçları</h4>';
             let hasData = false;
             
-            const displayData = processedData || data;
+            const displayData = data;
             
             // Tüm verileri göster
             for (const [key, value] of Object.entries(displayData)) {
@@ -2197,226 +1506,6 @@
             
             html += '</div>';
             resultData.innerHTML = html;
-        }
-
-        // SORGULAMA FONKSİYONLARI
-        async function sorgula(type, inputId) {
-            if (!systemKey || !isKeyVerified) {
-                alert('❌ Önce key doğrulaması yapın!');
-                openTab('key-tab');
-                return;
-            }
-
-            const loading = document.getElementById('loading');
-            const result = document.getElementById('result');
-            const resultData = document.getElementById('resultData');
-            
-            loading.classList.add('active');
-            result.classList.remove('active');
-            
-            let params = { key: systemKey };
-            const inputValue = document.getElementById(inputId).value;
-            
-            if (!inputValue) {
-                alert('❌ Lütfen gerekli bilgileri girin!');
-                loading.classList.remove('active');
-                return;
-            }
-
-            // TC bazlı sorgular
-            if (['tc', 'tcpro', 'yas', 'tcgsm', 'aile', 'ailepro', 'es', 'sulale', 'tapu', 'isyeri', 'adres', 'hane', 'apartman'].includes(type)) {
-                params.tc = inputValue;
-            }
-            // GSM sorgusu
-            else if (type === 'gsmtc') {
-                params.gsm = inputValue;
-            }
-            // IP/Domain sorguları
-            else if (['ip', 'dns', 'whois', 'subdomain'].includes(type)) {
-                params.domain = inputValue;
-            }
-            // Leak sorgusu
-            else if (type === 'leak') {
-                params.query = inputValue;
-            }
-            // Telegram sorgusu
-            else if (type === 'telegram') {
-                params.kullanici = inputValue;
-            }
-            // Gelişmiş IP sorgusu
-            else if (type === 'gelismisip') {
-                params.ip = inputValue;
-            }
-            // Vergi no sorgusu
-            else if (type === 'vergino') {
-                params.vergi = inputValue;
-            }
-            
-            try {
-                // API endpoint'ini düzelt
-                const queryString = new URLSearchParams(params).toString();
-                const response = await fetch(`/api/${type}?${queryString}`, {
-                    headers: {
-                        'Authorization': `Bearer ${systemKey}`,
-                        'Content-Type': 'application/json'
-                    }
-                });
-                
-                if (!response.ok) {
-                    if (response.status === 500) {
-                        // 500 hatası durumunda alternatif işlem
-                        resultData.innerHTML = '<div class="warning">⚠️ API geçici olarak hizmet veremiyor. Lütfen daha sonra tekrar deneyin.</div>';
-                        return;
-                    }
-                    if (response.status === 401) {
-                        throw new Error('Yetkisiz erişim! Lütfen keyinizi kontrol edin.');
-                    }
-                    throw new Error(`API hatası: ${response.status}`);
-                }
-                
-                const data = await response.json();
-                
-                // Sonuç gösterim fonksiyonunu kullan
-                displayResult(data, type);
-                currentResult = data;
-            } catch (error) {
-                console.error('Sorgu hatası:', error);
-                resultData.innerHTML = '<div class="error">❌ Sorgu sırasında hata oluştu: ' + error.message + '</div>';
-            } finally {
-                loading.classList.remove('active');
-                result.classList.add('active');
-            }
-        }
-
-        // AD SOYAD SORGULARI
-        async function sorgulaAdSoyad(type) {
-            if (!systemKey || !isKeyVerified) {
-                alert('❌ Önce key doğrulaması yapın!');
-                openTab('key-tab');
-                return;
-            }
-
-            const loading = document.getElementById('loading');
-            const result = document.getElementById('result');
-            const resultData = document.getElementById('resultData');
-            
-            loading.classList.add('active');
-            result.classList.remove('active');
-            
-            let params = { key: systemKey };
-            
-            if (type === 'adsoyad' || type === 'adsoyadpro') {
-                const ad = document.getElementById(type === 'adsoyad' ? 'adSorgula' : 'adPro').value;
-                const soyad = document.getElementById(type === 'adsoyad' ? 'soyadSorgula' : 'soyadPro').value;
-                
-                if (!ad || !soyad) {
-                    alert('❌ Lütfen ad ve soyad girin!');
-                    loading.classList.remove('active');
-                    return;
-                }
-                
-                params.ad = ad;
-                params.soyad = soyad;
-                params.il = '';
-                params.ilce = '';
-            }
-            
-            try {
-                const queryString = new URLSearchParams(params).toString();
-                const response = await fetch(`/api/${type}?${queryString}`, {
-                    headers: {
-                        'Authorization': `Bearer ${systemKey}`,
-                        'Content-Type': 'application/json'
-                    }
-                });
-                
-                if (!response.ok) {
-                    if (response.status === 500) {
-                        resultData.innerHTML = '<div class="warning">⚠️ API geçici olarak hizmet veremiyor. Lütfen daha sonra tekrar deneyin.</div>';
-                        return;
-                    }
-                    if (response.status === 401) {
-                        throw new Error('Yetkisiz erişim! Lütfen keyinizi kontrol edin.');
-                    }
-                    throw new Error(`API hatası: ${response.status}`);
-                }
-                
-                const data = await response.json();
-                
-                displayResult(data, type);
-                currentResult = data;
-            } catch (error) {
-                console.error('Sorgu hatası:', error);
-                resultData.innerHTML = '<div class="error">❌ Sorgu sırasında hata oluştu: ' + error.message + '</div>';
-            } finally {
-                loading.classList.remove('active');
-                result.classList.add('active');
-            }
-        }
-
-        // AD İL İLÇE SORGUSU
-        async function sorgulaAdIlIlce(type) {
-            if (!systemKey || !isKeyVerified) {
-                alert('❌ Önce key doğrulaması yapın!');
-                openTab('key-tab');
-                return;
-            }
-
-            const loading = document.getElementById('loading');
-            const result = document.getElementById('result');
-            const resultData = document.getElementById('resultData');
-            
-            loading.classList.add('active');
-            result.classList.remove('active');
-            
-            let params = { key: systemKey };
-            
-            const ad = document.getElementById('adIl').value;
-            const il = document.getElementById('ilAd').value;
-            const ilce = document.getElementById('ilceAd').value;
-            
-            if (!ad || !il) {
-                alert('❌ Lütfen ad ve il girin!');
-                loading.classList.remove('active');
-                return;
-            }
-            
-            params.ad = ad;
-            params.il = il;
-            params.ilce = ilce || '';
-            params.soyad = '';
-            
-            try {
-                const queryString = new URLSearchParams(params).toString();
-                const response = await fetch(`/api/${type}?${queryString}`, {
-                    headers: {
-                        'Authorization': `Bearer ${systemKey}`,
-                        'Content-Type': 'application/json'
-                    }
-                });
-                
-                if (!response.ok) {
-                    if (response.status === 500) {
-                        resultData.innerHTML = '<div class="warning">⚠️ API geçici olarak hizmet veremiyor. Lütfen daha sonra tekrar deneyin.</div>';
-                        return;
-                    }
-                    if (response.status === 401) {
-                        throw new Error('Yetkisiz erişim! Lütfen keyinizi kontrol edin.');
-                    }
-                    throw new Error(`API hatası: ${response.status}`);
-                }
-                
-                const data = await response.json();
-                
-                displayResult(data, type);
-                currentResult = data;
-            } catch (error) {
-                console.error('Sorgu hatası:', error);
-                resultData.innerHTML = '<div class="error">❌ Sorgu sırasında hata oluştu: ' + error.message + '</div>';
-            } finally {
-                loading.classList.remove('active');
-                result.classList.add('active');
-            }
         }
 
         // DISCORD SORGUSU
@@ -2472,20 +1561,17 @@
             }
         }
 
-        // ADA PARSEL SORGUSU
-        async function sorgulaAdaparsel() {
+        // LOG ÇEKME SORGUSU
+        async function sorgulaLog() {
             if (!systemKey || !isKeyVerified) {
                 alert('❌ Önce key doğrulaması yapın!');
                 openTab('key-tab');
                 return;
             }
 
-            const il = document.getElementById('ilAda').value;
-            const ada = document.getElementById('ada').value;
-            const parsel = document.getElementById('parsel').value;
-            
-            if (!il || !ada || !parsel) {
-                alert('❌ Lütfen il, ada ve parsel bilgilerini girin!');
+            const logQuery = document.getElementById('logQuery').value;
+            if (!logQuery) {
+                alert('Aranacak kelime girin!');
                 return;
             }
 
@@ -2497,15 +1583,7 @@
             result.classList.remove('active');
             
             try {
-                const params = { 
-                    key: systemKey,
-                    il: il,
-                    ada: ada,
-                    parsel: parsel
-                };
-                
-                const queryString = new URLSearchParams(params).toString();
-                const response = await fetch(`/api/adaparsel?${queryString}`, {
+                const response = await fetch(`https://mesutv44.pythonanywhere.com/log?ara=${encodeURIComponent(logQuery)}`, {
                     headers: {
                         'Authorization': `Bearer ${systemKey}`,
                         'Content-Type': 'application/json'
@@ -2525,7 +1603,7 @@
                 
                 const data = await response.json();
                 
-                displayResult(data, 'adaparsel');
+                displayResult(data, 'log');
                 currentResult = data;
             } catch (error) {
                 console.error('Sorgu hatası:', error);
@@ -2596,19 +1674,19 @@
             }
         }
 
-        // TABİİ HESAP AL FONKSİYONU - TXT FORMATINDA
-        function getTabiiAccount() {
+        // PREMIUM HESAP AL FONKSİYONU
+        function getPremiumAccount() {
             if (!isPremiumVerified) {
                 alert('❌ Bu özelliği kullanmak için premium üye olmalısınız!');
                 return;
             }
 
-            // Rastgele bir Tabii hesabı seç
-            const randomAccount = tabiiAccounts[Math.floor(Math.random() * tabiiAccounts.length)];
+            // Rastgele bir premium hesap seç
+            const randomAccount = premiumAccounts[Math.floor(Math.random() * premiumAccounts.length)];
             
-            // Hesap detaylarını göster (tabii_cleaned.txt formatında)
+            // Hesap detaylarını göster
             document.getElementById('accountDetails').innerHTML = `
-                <h4>🌟✧ TABİİ ACCOUNT DETAYLARI ✧🌟</h4>
+                <h4>🌟✧ PREMIUM ACCOUNT DETAYLARI ✧🌟</h4>
                 <div class="account-line">
                     <span class="label">İndex:</span>
                     <span class="value">${randomAccount.index}</span>
@@ -2627,12 +1705,8 @@
                         <span class="value">${randomAccount.name}</span>
                     </div>
                     <div class="account-line">
-                        <span class="label">⚧ Cinsiyet:</span>
-                        <span class="value">${randomAccount.gender}</span>
-                    </div>
-                    <div class="account-line">
-                        <span class="label">🎂 Doğum Tarihi:</span>
-                        <span class="value">${randomAccount.birthDate}</span>
+                        <span class="label">⚡ Özellikler:</span>
+                        <span class="value">${randomAccount.features}</span>
                     </div>
                     <div class="account-line">
                         <span class="label">📌 Hesap Durumu:</span>
@@ -2642,21 +1716,13 @@
                 <div style="border-top: 2px solid #059669; margin: 15px 0; padding-top: 15px;">
                     <h5>💎 Abonelik Bilgileri:</h5>
                     <div class="account-line">
-                        <span class="label">• Paket:</span>
-                        <span class="value">${randomAccount.package}</span>
-                    </div>
-                    <div class="account-line">
-                        <span class="label">• Durum:</span>
-                        <span class="value">${randomAccount.subscriptionStatus}</span>
-                    </div>
-                    <div class="account-line">
                         <span class="label">• Bitiş Tarihi:</span>
                         <span class="value">${randomAccount.endDate}</span>
                     </div>
                 </div>
             `;
             
-            alert('✅ Tabii hesabı başarıyla oluşturuldu!');
+            alert('✅ Premium hesabı başarıyla oluşturuldu!');
         }
 
         // ADMIN FONKSİYONLARI
