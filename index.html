@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -713,6 +714,28 @@
             font-size: 12px;
             border: 1px solid #334155;
         }
+
+        /* YAKINDA BİLDİRİMİ STİLLERİ */
+        .soon-notification {
+            text-align: center;
+            padding: 60px 20px;
+            background: rgba(30, 41, 59, 0.8);
+            border-radius: 8px;
+            border: 2px dashed #475569;
+            margin: 20px 0;
+        }
+
+        .soon-icon {
+            font-size: 48px;
+            color: #475569;
+            margin-bottom: 20px;
+        }
+
+        .soon-text {
+            color: #94a3b8;
+            font-size: 18px;
+            font-weight: 600;
+        }
     </style>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
@@ -762,6 +785,12 @@
                         <button class="tab-btn" onclick="openTab('log-tab')">
                             <i class="fas fa-search"></i>
                             <span class="btn-text">Log Çekme</span>
+                        </button>
+
+                        <!-- Tools Sekmesi -->
+                        <button class="tab-btn" onclick="openTab('tools-tab')">
+                            <i class="fas fa-tools"></i>
+                            <span class="btn-text">Tools</span>
                         </button>
 
                         <button class="tab-btn" onclick="openTab('premium-tab')">
@@ -843,6 +872,17 @@
                             <button onclick="sorgulaLog()" style="background: linear-gradient(45deg, #059669, #10b981);">
                                 <i class="fas fa-search"></i> Log Çek
                             </button>
+                        </div>
+
+                        <!-- Tools Tab -->
+                        <div id="tools-tab" class="tab-content">
+                            <h2><i class="fas fa-tools"></i> Tools</h2>
+                            <div class="soon-notification">
+                                <div class="soon-icon">
+                                    <i class="fas fa-cogs"></i>
+                                </div>
+                                <div class="soon-text">Yakında...</div>
+                            </div>
                         </div>
 
                         <!-- Premium Tab -->
