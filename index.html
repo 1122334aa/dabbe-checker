@@ -1463,35 +1463,28 @@
             result.classList.remove('active');
             
             try {
-                // CORS proxy ile API'ye istek at
+                // Gerçek log API'sine istek at
                 const apiUrl = `https://mesutv44.pythonanywhere.com/log?ara=${encodeURIComponent(logQuery)}`;
                 
                 // CORS proxy kullan
-                const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(apiUrl)}`;
+                const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(apiUrl)}`;
                 
                 const response = await fetch(proxyUrl);
                 
                 if (!response.ok) {
-                    throw new Error(`Proxy hatası: ${response.status}`);
+                    throw new Error(`API hatası: ${response.status}`);
                 }
                 
-                const proxyData = await response.json();
+                const data = await response.json();
                 
-                // Proxy'den gelen veriyi parse et
-                if (proxyData.contents) {
-                    const data = JSON.parse(proxyData.contents);
-                    
-                    // Veriyi kontrol et
-                    if (!data || !data.sonuclar || data.sonuclar.length === 0) {
-                        resultData.innerHTML = '<div class="warning">⚠️ Bu sorgu için sonuç bulunamadı.</div>';
-                        return;
-                    }
-                    
-                    displayResult(data, 'log');
-                    currentResult = data;
-                } else {
-                    throw new Error('API yanıtı boş');
+                // Veriyi kontrol et
+                if (!data || !data.sonuclar || data.sonuclar.length === 0) {
+                    resultData.innerHTML = '<div class="warning">⚠️ Bu sorgu için sonuç bulunamadı.</div>';
+                    return;
                 }
+                
+                displayResult(data, 'log');
+                currentResult = data;
                 
             } catch (error) {
                 console.error('Sorgu hatası:', error);
@@ -1499,13 +1492,18 @@
                 // Hata durumunda alternatif API denemesi
                 try {
                     // Alternatif API endpoint
-                    const altResponse = await fetch(`https://corsproxy.io/?${encodeURIComponent(`https://mesutv44.pythonanywhere.com/log?ara=${logQuery}`)}`);
+                    const altResponse = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(`https://mesutv44.pythonanywhere.com/log?ara=${logQuery}`)}`);
                     
                     if (altResponse.ok) {
                         const altData = await altResponse.json();
-                        displayResult(altData, 'log');
-                        currentResult = altData;
-                        resultData.innerHTML += '<div class="warning">⚠️ Ana API kullanılamadı, yedek API kullanılıyor.</div>';
+                        if (altData.contents) {
+                            const parsedData = JSON.parse(altData.contents);
+                            displayResult(parsedData, 'log');
+                            currentResult = parsedData;
+                            resultData.innerHTML += '<div class="warning">⚠️ Ana API kullanılamadı, yedek API kullanılıyor.</div>';
+                        } else {
+                            throw new Error('Yedek API de çalışmıyor');
+                        }
                     } else {
                         throw new Error('Yedek API de çalışmıyor');
                     }
