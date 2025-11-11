@@ -421,8 +421,10 @@
             border-radius: 8px;
             padding: 25px;
             width: 90%;
-            max-width: 500px;
+            max-width: 600px;
             border: 1px solid #334155;
+            max-height: 80vh;
+            overflow-y: auto;
         }
 
         .modal h2 {
@@ -735,6 +737,41 @@
             font-size: 18px;
             font-weight: 600;
         }
+
+        /* DUYURU MODAL STİLLERİ */
+        .duyuru-item {
+            background: rgba(30, 41, 59, 0.6);
+            border-radius: 6px;
+            padding: 15px;
+            margin: 10px 0;
+            border: 1px solid #334155;
+            transition: all 0.3s ease;
+        }
+
+        .duyuru-item:hover {
+            background: rgba(30, 41, 59, 0.8);
+            border-color: #475569;
+        }
+
+        .duyuru-date {
+            color: #059669;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .duyuru-title {
+            color: #60a5fa;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .duyuru-content {
+            color: #cbd5e1;
+            font-size: 13px;
+            line-height: 1.5;
+        }
     </style>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
@@ -802,7 +839,7 @@
 
             <div class="main-content">
                 <div class="content-wrapper">
-                    <button class="duyuru-btn" onclick="openDuyuru()">
+                    <button class="duyuru-btn" onclick="openDuyuruModal()">
                         <i class="fas fa-bullhorn"></i> Duyuru
                     </button>
                     <button class="discord-btn" onclick="openDiscord()">
@@ -957,6 +994,62 @@
             </div>
         </div>
 
+        <!-- Duyuru Modal -->
+        <div id="duyuruModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeDuyuruModal()">&times;</span>
+                <h2><i class="fas fa-bullhorn"></i> Duyurular</h2>
+                
+                <div class="duyuru-item">
+                    <div class="duyuru-date">📅 15 Ocak 2025</div>
+                    <div class="duyuru-title">🚀 Yeni Güncelleme!</div>
+                    <div class="duyuru-content">
+                        • Discord ID sorgulama özelliği aktif<br>
+                        • Log çekme sistemi geliştirildi<br>
+                        • Premium üyelik sistemi eklendi
+                    </div>
+                </div>
+
+                <div class="duyuru-item">
+                    <div class="duyuru-date">📅 10 Ocak 2025</div>
+                    <div class="duyuru-title">🔑 Key Sistemi</div>
+                    <div class="duyuru-content">
+                        • Yeni keyler dağıtıldı<br>
+                        • Premium keyler aktif<br>
+                        • Sistem güvenliği güncellendi
+                    </div>
+                </div>
+
+                <div class="duyuru-item">
+                    <div class="duyuru-date">📅 05 Ocak 2025</div>
+                    <div class="duyuru-title">💎 Premium Avantajları</div>
+                    <div class="duyuru-content">
+                        • Sınırsız sorgu hakkı<br>
+                        • Özel hesaplara erişim<br>
+                        • Premium destek hattı<br>
+                        • Gelişmiş özellikler
+                    </div>
+                </div>
+
+                <div class="duyuru-item">
+                    <div class="duyuru-date">📅 01 Ocak 2025</div>
+                    <div class="duyuru-title">🎉 Yılbaşı Güncellemesi</div>
+                    <div class="duyuru-content">
+                        • Yeni arayüz tasarımı<br>
+                        • Performans iyileştirmeleri<br>
+                        • Hata düzeltmeleri<br>
+                        • Mobil uyumluluk
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 20px;">
+                    <button onclick="closeDuyuruModal()" style="background: linear-gradient(45deg, #0369a1, #075985);">
+                        <i class="fas fa-times"></i> Kapat
+                    </button>
+                </div>
+            </div>
+        </div>
+
         <!-- Admin Modal -->
         <div id="adminModal" class="modal">
             <div class="modal-content">
@@ -1024,9 +1117,13 @@
             document.getElementById('mainContent').style.display = 'none';
         });
 
-        // Duyuru butonu fonksiyonu
-        function openDuyuru() {
-            window.open('https://dabbe-checker.vercel.app/babapro', '_blank');
+        // Duyuru butonu fonksiyonu - MODAL AÇSIN
+        function openDuyuruModal() {
+            document.getElementById('duyuruModal').style.display = 'block';
+        }
+
+        function closeDuyuruModal() {
+            document.getElementById('duyuruModal').style.display = 'none';
         }
 
         // Discord butonu fonksiyonu
@@ -1680,9 +1777,10 @@
         window.onclick = function(event) {
             const modal = document.getElementById('adminModal');
             if (event.target === modal) closeAdminModal();
+            
+            const duyuruModal = document.getElementById('duyuruModal');
+            if (event.target === duyuruModal) closeDuyuruModal();
         }
     </script>
 </body>
 </html>
-
-
